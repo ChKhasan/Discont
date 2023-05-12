@@ -51,9 +51,20 @@
   box-sizing: border-box;
 }
 body {
-  font-family: "SB Sans Text";
+  font-family: var(--SB_text);
   font-style: normal;
   font-weight: 400;
+}
+:root {
+  --SF_400: "SF_400";
+  --SF_500: "SF_500";
+  --SF_600: "SF_500";
+  --SF_700: "SF_600";
+  --SB_400: "SB_400";
+  --SB_500: "SB_500";
+  --SB_600: "SB_500";
+  --SB_700: "SB_600";
+  --SB_text: "SB Sans Text";
 }
 p,
 h1,
@@ -84,41 +95,6 @@ ul {
     padding: 0;
   }
 }
-/* @media (min-width: 576px) {
-  .container_xl {
-    max-width: 540px;
-  }
-}
-@media (min-width: 768px) {
-  .container_xl {
-    max-width: 720px;
-  }
-}
-@media (min-width: 992px) {
-  .container_xl {
-    max-width: 960px;
-  }
-}
-@media (min-width: 1200px) {
-  .container_xl {
-    max-width: 1140px;
-  }
-}
-@media (max-width: 1360px) {
-  .container_xl {
-    max-width: 1240px;
-  }
-}
-@media (min-width: 1360px) {
-  .container_xl {
-    max-width: 95%;
-  }
-}
-@media (max-width: 1568px) and (min-width: 1330px) {
-  .container_xl {
-    max-width: 1328px;
-  }
-} */
 
 .bg-grey {
   background: #fbfbfb;

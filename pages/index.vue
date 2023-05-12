@@ -262,11 +262,16 @@
       </div>
     </div>
     <div class="container_xl mb-120">
+      <MainTitle title="Yangiliklar va bloglar" />
       <div class="posts-grid">
         <PostCard />
         <PostCard />
         <PostCard />
+        <PostCard />
       </div>
+    </div>
+    <div class="container_xl mb-120">
+      <DiscontBanner />
     </div>
   </div>
 </template>
@@ -287,6 +292,7 @@ import BannerCarouselRight from "../components/Banner-carousel-right.vue";
 import BrandCard from "../components/cards/BrandCard.vue";
 import BrandCarousel from "../components/brand-carousel.vue";
 import PostCard from "../components/cards/PostCard.vue";
+import DiscontBanner from "../components/discont-banner.vue";
 export default {
   name: "IndexPage",
 
@@ -305,6 +311,7 @@ export default {
     BrandCard,
     V2ProductCard,
     PostCard,
+    DiscontBanner
   },
 };
 </script>

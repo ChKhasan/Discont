@@ -30,5 +30,16 @@ export default {};
   font-size: 12px;
   line-height: 133.5%;
   color: rgba(0, 0, 0, 0.5);
+  margin-top: 14px;
+}
+.post-card-body h6 {
+  font-family: "SF_500";
+  font-style: normal;
+  font-weight: 500;
+  font-size: 18px;
+  line-height: 133.5%;
+  color: #000000;
+  margin-top: 14px;
+
 }
 </style>

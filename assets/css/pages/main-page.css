@@ -13,7 +13,7 @@
 }
 
 .to-page-underline {
-  font-family: "SB Sans Text";
+  font-family: var(--SB_text);
   font-style: normal;
   font-weight: 400;
   font-size: 18px;
@@ -55,7 +55,7 @@
 .h-catalog-tab ul li span {
   position: absolute;
   z-index: 100;
-  font-family: "SF_400";
+  font-family: var(--SF_400);
   font-style: normal;
   font-weight: 400;
   font-size: 14px;
@@ -72,7 +72,7 @@
   margin-right: 20px;
   cursor: pointer;
   transition: 0.3s;
-  font-family: "SF_400";
+  font-family: var(--SF_400);
   font-style: normal;
   font-weight: 400;
   font-size: 14px;
@@ -105,6 +105,7 @@
   margin-bottom: 120px;
 }
 .posts-grid {
-  display:grid;
-  grid-template-columns: repeat(3,1fr);
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  grid-gap: 26px;
 }

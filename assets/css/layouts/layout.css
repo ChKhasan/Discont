@@ -65,13 +65,12 @@
   width: 100%;
 }
 .header-navbar_navbar ul li {
-  font-family: "SB Sans Text";
+  font-family: var(--SB_text);
   font-style: normal;
   font-weight: 600;
   font-size: 12px;
   line-height: 8px;
   text-align: center;
-
   color: #ffffff;
   cursor: pointer;
   display: flex;
@@ -97,7 +96,7 @@
   margin-right: 14px;
 }
 .nav_profile p {
-  font-family: "SB Sans Text";
+  font-family: var(--SB_text);
   font-style: normal;
   font-weight: 400;
   font-size: 16px;
@@ -112,7 +111,7 @@
   background: #09454f;
   border-radius: 9px;
   padding: 8px 12px;
-  font-family: "SF_500";
+  font-family: var(--SF_500);
   font-style: normal;
   font-size: 18px;
   line-height: 21px;
@@ -193,7 +192,6 @@
   border-radius: 50%;
   color: #a5a5a5;
   margin-left: 12px;
-
 }
 /* footer */
 .footer {
