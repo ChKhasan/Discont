@@ -4,6 +4,7 @@
       <div class="home-banner-container">
         <BannerCarousel />
         <BannerCarouselRight />
+        <p>New branch</p>
       </div>
       <div class="home-categories mb-120">
         <MainTitle title="Kategoriyalar" />
