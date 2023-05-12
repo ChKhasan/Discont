@@ -10,7 +10,6 @@
             <li>Yuridik shaxslar uchun</li>
           </ul>
           <div class="d-flex header-top__right">
-            <p>Barcha mahsulotlar HALOL muddatli to'lovga</p>
             <p>Aloqa markazi: +712077788</p>
             <p>O’Z | ENG | РУ</p>
           </div>

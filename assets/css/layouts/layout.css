@@ -6,7 +6,7 @@
 }
 .header-top__right {
   width: 50%;
-  justify-content: space-between;
+  justify-content: flex-end;
 }
 
 .header-top ul li {
@@ -15,6 +15,9 @@
   font-size: 14px;
   line-height: 18px;
   color: #ffffff;
+}
+.header-top__right p:last-child {
+  margin-left: 76px;
 }
 .header-top__right p {
   font-size: 14px;
@@ -31,7 +34,7 @@
   border-radius: 143px;
   display: flex;
   align-items: center;
-  padding: 0 22px;
+  padding: 4px 6px 4px 16px;
 }
 .search_input_container input {
   border: none;
@@ -43,20 +46,17 @@
 .search_input_container input:focus {
   outline: none;
 }
-.search_input_container span:last-child {
-  margin-left: 23px;
-}
 .header-navbar_container > div:first-child {
-  width: 54%;
+  width: 65%;
 }
 .header-navbar_container > div:last-child {
-  width: 46%;
+  width: 35%;
 }
 .search_input_container > span {
   display: flex;
 }
 .nav_logo {
-  margin-right: 37px;
+  margin-right: 87px;
 }
 .search_input_container {
   display: flex;
@@ -65,41 +65,47 @@
   width: 100%;
 }
 .header-navbar_navbar ul li {
-  font-family: "SF_500";
+  font-family: "SB Sans Text";
   font-style: normal;
-  font-size: 14px;
-  line-height: 120%;
+  font-weight: 600;
+  font-size: 12px;
+  line-height: 8px;
+  text-align: center;
+
   color: #ffffff;
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
 }
 .header-navbar_navbar ul {
   padding-left: 65px;
 }
-.header-navbar_navbar ul li {
-  cursor: pointer;
-}
+
 .header-navbar_navbar ul li svg {
-  width: 30px;
-  height: 29px;
-  margin-right: 10px;
+  margin-bottom: 8px;
 }
 .nav_profile {
   background: rgba(255, 255, 255, 0.3);
   border-radius: 143px;
   display: flex;
-  padding: 9px 26px;
+  flex-direction: row;
+  padding: 6px 15px;
   align-items: center;
 }
 .nav_profile svg {
-  width: 18px !important;
-  height: 18px !important;
+  margin-bottom: 0 !important;
+  margin-right: 14px;
 }
 .nav_profile p {
-  font-family: "SF_500" !important;
-  font-style: normal !important;
-  font-size: 16px !important;
-  line-height: 19px !important;
-  text-transform: capitalize !important;
-  color: #fbc100 !important;
+  font-family: "SB Sans Text";
+  font-style: normal;
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 20px;
+  leading-trim: both;
+  text-edge: cap;
+  text-transform: capitalize;
+  color: #ffffff;
   margin-bottom: 0;
 }
 .header-category_container button {
@@ -125,14 +131,26 @@
   margin-left: 56px;
 }
 .header-category_container ul li a {
+  padding: 9px 12px;
   margin-right: 48px;
-  font-family: "SF_500";
+  font-family: "SB Sans Text";
   font-style: normal;
-  font-size: 18px;
-  line-height: 21px;
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 20px;
   text-transform: capitalize;
   text-decoration: none;
   color: #000000;
+  background: #f6f7f9;
+  border-radius: 9px;
+  display: flex;
+  white-space: nowrap;
+  align-items: center;
+}
+.header-category_container ul li a span {
+  margin-right: 13px;
+  display: flex;
+  align-items: center;
 }
 .coin_btn {
   position: relative;
@@ -150,7 +168,7 @@
   border-radius: 50%;
 }
 .coin_btn {
-  font-family: "Inter", sans-serif;
+  font-family: "Inter";
   font-style: normal;
   font-weight: 700;
   font-size: 14px;
@@ -160,15 +178,23 @@
 }
 .header-category_container a {
   font-family: "Inter", sans-serif;
-  margin-left: 9px;
   font-style: normal;
   font-weight: 400;
   font-size: 14px;
   line-height: 17px;
-  text-decoration-line: underline;
-  color: #b3b3b3;
 }
+.nav-info {
+  width: 25px;
+  height: 25px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #ededed;
+  border-radius: 50%;
+  color: #a5a5a5;
+  margin-left: 12px;
 
+}
 /* footer */
 .footer {
   padding-top: 34px;
@@ -251,4 +277,24 @@
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   grid-gap: 16px;
+}
+.search-btn {
+  background: #09454f;
+  border-radius: 56px;
+  padding: 0 14px;
+  font-family: "SB Sans Text";
+  font-style: normal;
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 18px;
+  color: #ffffff;
+  align-items: center;
+  height: 100%;
+  cursor: pointer;
+}
+.search-btn svg {
+  margin-right: 14px;
+}
+.search-btn svg path {
+  fill: #ffffff;
 }

@@ -8,6 +8,18 @@
   src: url("../fonts/SF_PRO/SFPRODISPLAYMEDIUM.otf"); /* IE9*/
 }
 @font-face {
+  font-family: "SB_700";
+  src: url("../fonts/SB_Sans_Text_Bold/SB Sans Text Bold.ttf"); /* IE9*/
+}
+@font-face {
+  font-family: "SB_500";
+  src: url("../fonts/SB_San_Interface/SB Sans Interface.ttf"); /* IE9*/
+}
+@font-face {
+  font-family: "SB_300";
+  src: url("../fonts/SB_Sans_Text_Thin/SB Sans Text Thin.ttf"); /* IE9*/
+}
+@font-face {
   font-family: "SF_600";
   src: url("../fonts/SF_PRO/SFPRODISPLAYSEMIBOLDITALIC.otf"); /* IE9*/
 }
@@ -56,15 +68,20 @@ ul {
   margin-bottom: 0;
   list-style: none;
 }
-@media (max-width: 1568px) {
+.container_xl {
+  margin: 0 auto;
+  padding: 0 15px;
+  width: 100%;
+}
+@media (max-width: 1600px) {
   .container_xl {
     padding: 0 15px;
   }
 }
-@media (min-width: 1920px) {
+@media (min-width: 1700px) {
   .container_xl {
-    max-width: 1568px;
-    margin: 0 auto;
+    max-width: 1632px;
+    padding: 0;
   }
 }
 /* @media (min-width: 576px) {
@@ -102,16 +119,10 @@ ul {
     max-width: 1328px;
   }
 } */
-.main-title {
-  margin-bottom: 24px;
-}
-.main-title h2 {
-  font-family: "SF_500";
-  font-style: normal;
-  font-size: 24px;
-  line-height: 29px;
-  color: #000000;
-}
+
 .bg-grey {
   background: #fbfbfb;
+}
+.mb-120 {
+  margin-bottom: 120px;
 }

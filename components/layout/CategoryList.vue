@@ -5,11 +5,25 @@
         <div class="d-flex">
           <button><span v-html="navCategory"></span>Katalog</button>
           <ul class="d-flex align-items-center">
-            <li><nuxt-link to="/">Aksiyalar</nuxt-link></li>
-            <li><nuxt-link to="/">Top tovarlar</nuxt-link></li>
-            <li><nuxt-link to="/">Brendlar</nuxt-link></li>
-            <li><nuxt-link to="/">yetkazib berish</nuxt-link></li>
-            <li><nuxt-link to="/">xabar qoldirish</nuxt-link></li>
+            <li>
+              <nuxt-link to="/"><span v-html="navCatIcon"></span> Aksiyalar</nuxt-link>
+            </li>
+            <li>
+              <nuxt-link to="/"><span v-html="navCatIcon2"></span>Top tovarlar</nuxt-link>
+            </li>
+            <li>
+              <nuxt-link to="/"><span v-html="navCatIcon"></span>Brendlar</nuxt-link>
+            </li>
+            <li>
+              <nuxt-link to="/"
+                ><span v-html="navCatIcon2"></span>yetkazib berish</nuxt-link
+              >
+            </li>
+            <li>
+              <nuxt-link to="/"
+                ><span v-html="navCatIcon"></span>xabar qoldirish</nuxt-link
+              >
+            </li>
           </ul>
         </div>
         <div class="d-flex align-items-center">
@@ -17,7 +31,7 @@
             <span><img src="../../assets/images/coin.png" alt="" /></span>
             65 di coin
           </div>
-          <nuxt-link to="/">Qanday ishlaydi?</nuxt-link>
+          <nuxt-link class="nav-info" to="/">?</nuxt-link>
         </div>
       </div>
     </div>
@@ -29,6 +43,8 @@ export default {
     return {
       navCategory: require("../../assets/svg/category_menu.svg?raw"),
       navCoin: require("../../assets/svg/coin.svg?raw"),
+      navCatIcon: require("../../assets/svg/Category-item.svg?raw"),
+      navCatIcon2: require("../../assets/svg/Cat-icon2.svg?raw"),
     };
   },
 };

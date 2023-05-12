@@ -1,5 +1,5 @@
 <template lang="html">
-  <div class="main-title">
+  <div class="main-big-title">
     <h2>{{ title }}</h2>
   </div>
 </template>
@@ -9,15 +9,15 @@ export default {
 };
 </script>
 <style lang="css">
-.main-title {
-  margin-bottom: 24px;
-}
-.main-title h2 {
-  font-family: "SB Sans Text";
+.main-big-title h2 {
+  font-family: "SF_700";
   font-style: normal;
   font-weight: 600;
-  font-size: 32px;
+  font-size: 40px;
   line-height: 48px;
-  color: #000000;
+  color: #09454f;
+}
+.main-big-title {
+  margin-bottom: 32px;
 }
 </style>
