@@ -30,7 +30,7 @@ export default {};
   background: linear-gradient(90deg, #09454f 0%, #068f96 100%);
 }
 .discont-banner-header h4 {
-  font-family: "SB_500";
+  font-family: var(--SB_500);
   font-style: normal;
   font-weight: 600;
   font-size: 30px;
@@ -39,7 +39,7 @@ export default {};
   margin-right: 21px;
 }
 .discont-banner-header p {
-  font-family: "SB_300";
+  font-family: var(--SB_300);
   font-style: normal;
   font-weight: 300;
   font-size: 20px;
@@ -48,19 +48,18 @@ export default {};
   display: flex;
   align-items: flex-end;
 }
-.discont-banner-body  {
-    width: 60%;
-    margin-top: 26px;
+.discont-banner-body {
+  width: 60%;
+  margin-top: 26px;
 }
 .discont-banner-body p {
-  font-family: "SB_300";
+  font-family: var(--SB_300);
   font-style: normal;
   font-weight: 300;
   font-size: 16px;
   line-height: 24px;
   color: #ffffff;
 }
-.discont-banner-footer div{
-
+.discont-banner-footer div {
 }
 </style>

@@ -101,8 +101,6 @@
   font-weight: 400;
   font-size: 16px;
   line-height: 20px;
-  leading-trim: both;
-  text-edge: cap;
   text-transform: capitalize;
   color: #ffffff;
   margin-bottom: 0;
@@ -132,7 +130,7 @@
 .header-category_container ul li a {
   padding: 9px 12px;
   margin-right: 48px;
-  font-family: "SB Sans Text";
+  font-family: var(--SB_text);
   font-style: normal;
   font-weight: 400;
   font-size: 16px;
@@ -203,7 +201,7 @@
   margin-bottom: 47px;
 }
 .main_info .footer-tel p {
-  font-family: "SF_400";
+  font-family: var(--SF_400);
   font-style: normal;
   font-size: 14px;
   line-height: 17px;
@@ -211,7 +209,7 @@
   margin-bottom: 8px;
 }
 .main_info .footer-tel a {
-  font-family: "SF_700";
+  font-family: var(--SF_700);
   font-style: normal;
   font-size: 18px;
   line-height: 21px;
@@ -219,7 +217,7 @@
   color: #06858c;
 }
 .main_info .footer-links {
-  font-family: "SF_400";
+  font-family: var(--SF_400);
   font-style: normal;
   font-size: 14px;
   line-height: 17px;
@@ -236,7 +234,7 @@
   margin-top: 16px;
 }
 .footer_menu h4 {
-  font-family: "SF_700";
+  font-family: var(--SF_700);
   font-style: normal;
   font-size: 18px;
   line-height: 21px;
@@ -250,7 +248,7 @@
   height: 17px;
 }
 .footer_menu ul li a {
-  font-family: "SF_400";
+  font-family: var(--SF_400);
   font-style: normal;
   font-size: 14px;
   line-height: 17px;
@@ -261,7 +259,7 @@
   border-top: 0.8px solid rgbA(0, 0, 0, 0.2);
 }
 .footer-bottom p {
-  font-family: "SF_400";
+  font-family: var(--SF_400);
   font-style: normal;
   font-size: 14px;
   line-height: 17px;
@@ -280,7 +278,7 @@
   background: #09454f;
   border-radius: 56px;
   padding: 0 14px;
-  font-family: "SB Sans Text";
+  font-family: var(--SB_text);
   font-style: normal;
   font-weight: 500;
   font-size: 14px;
