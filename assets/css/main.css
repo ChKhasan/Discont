@@ -21,11 +21,11 @@
 }
 @font-face {
   font-family: "SF_600";
-  src: url("../fonts/SF_PRO/SFPRODISPLAYSEMIBOLDITALIC.otf"); /* IE9*/
+  src: url("../fonts/SF_PRO/SFPRODISPLAYSEMIBOLDITALICS.OTF"); /* IE9*/
 }
 @font-face {
   font-family: "SF_700";
-  src: url("../fonts/SF_PRO/SFPRODISPLAYBOLD.otf"); /* IE9*/
+  src: url("../fonts/SF_PRO/SFPRODISPLAYBOLDS.OTF"); /* IE9*/
 }
 @font-face {
   font-family: "SB Sans Text";
