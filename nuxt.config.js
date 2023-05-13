@@ -13,9 +13,9 @@ export default {
     link: [{ rel: "icon", type: "image/x-icon", href: "/favicon.ico" }],
   },
 
-  css: ["@/assets/css/app.css"],
+  css: ["@/assets/css/app.css","ant-design-vue/dist/antd.css"],
 
-  plugins: [],
+  plugins: [{ src: "~plugins/antdv.js"}],
 
   components: true,
 

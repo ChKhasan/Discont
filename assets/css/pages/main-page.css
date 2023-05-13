@@ -109,3 +109,12 @@
   grid-template-columns: repeat(4, 1fr);
   grid-gap: 26px;
 }
+.home-bottom-desc {
+  font-family: var(--SB_500);
+  font-style: normal;
+  font-weight: 300;
+  font-size: 14px;
+  line-height: 150%;
+  letter-spacing: -0.03em;
+  color: #000000;
+}

@@ -58,14 +58,16 @@ body {
 :root {
   --SF_400: "SF_400";
   --SF_500: "SF_500";
-  --SF_600: "SF_500";
-  --SF_700: "SF_600";
+  --SF_600: "SF_600";
+  --SF_700: "SF_700";
   --SB_300: "SB_300";
-  --SB_400: "SB_400";
+  --SB_400: "SB_500";
   --SB_500: "SB_500";
-  --SB_600: "SB_600";
+  --SB_600: "SB_700";
   --SB_700: "SB_700";
   --SB_text: "SB Sans Text";
+  /* --TT_neue_400: "TT Firs Neue" */
+  --TT_neue_400: "SF_400"
 }
 p,
 h1,
@@ -74,10 +76,10 @@ h3,
 h4,
 h5,
 h6 {
-  margin-bottom: 0;
+  margin-bottom: 0 !important;
 }
 ul {
-  margin-bottom: 0;
+  margin-bottom: 0 !important;
   list-style: none;
 }
 .container_xl {
