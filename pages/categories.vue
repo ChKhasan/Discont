@@ -25,7 +25,7 @@
         </div>
         <div>
           <div>
-            <div class="categories-breadcrumb">
+            <div class="page-breadcrumb">
               <nuxt-link to="/">Diskont main page</nuxt-link>
               <nuxt-link to="/">
                 Smartfonlar

@@ -1,5 +1,5 @@
 <template lang="html">
-  <div class="categoies-card">
+  <div class="categoies-card" @click="$router.push('/categories-inner/1')">
     <div class="categoies-card-img">
       <img src="../../assets/images/dfzgdxhg 1.png" alt="" />
     </div>

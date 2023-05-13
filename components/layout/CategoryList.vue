@@ -6,21 +6,27 @@
           <button><span v-html="navCategory"></span>Katalog</button>
           <ul class="d-flex align-items-center">
             <li>
-              <nuxt-link to="/"><span v-html="navCatIcon"></span> Aksiyalar</nuxt-link>
+              <nuxt-link to="/categories"
+                ><span v-html="navCatIcon"></span> Aksiyalar</nuxt-link
+              >
             </li>
             <li>
-              <nuxt-link to="/"><span v-html="navCatIcon2"></span>Top tovarlar</nuxt-link>
+              <nuxt-link to="/categories"
+                ><span v-html="navCatIcon2"></span>Top tovarlar</nuxt-link
+              >
             </li>
             <li>
-              <nuxt-link to="/"><span v-html="navCatIcon"></span>Brendlar</nuxt-link>
+              <nuxt-link to="/categories"
+                ><span v-html="navCatIcon"></span>Brendlar</nuxt-link
+              >
             </li>
             <li>
-              <nuxt-link to="/"
+              <nuxt-link to="/categories"
                 ><span v-html="navCatIcon2"></span>yetkazib berish</nuxt-link
               >
             </li>
             <li>
-              <nuxt-link to="/"
+              <nuxt-link to="/categories"
                 ><span v-html="navCatIcon"></span>xabar qoldirish</nuxt-link
               >
             </li>

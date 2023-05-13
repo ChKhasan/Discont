@@ -63,15 +63,15 @@ export default {
   height: 30px;
   margin-bottom: 24px;
 }
-.categories-tab-carousel::after {
+.swiper-categories-tab::after {
   position: absolute;
   content: "";
-  width: 180px;
+  width: 90px;
   height: 100%;
-  right: -90px;
+  right: 0;
   top: 0;
   z-index: 1;
-  background: linear-gradient(270deg, #ffffff 66.07%, rgba(255, 255, 255, 0) 100%);
+  background: linear-gradient(270deg, #ffffff 33.07%, rgba(255, 255, 255, 0) 100%);
 }
 .categories-tab-carousel .swiper-button-next-c-inner,
 .categories-tab-carousel .swiper-button-prev-c-inner {

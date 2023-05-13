@@ -291,18 +291,18 @@
   </div>
 </template>
 <script>
-import MainTitle from "../../components/Main-title.vue";
-import CategoriesCard from "../../components/cards/CategoriesCard.vue";
-import ProductCard from "../../components/cards/ProductCard.vue";
-import CategoriesAppCard from "../../components/categories/categories-app-banner.vue";
-import CategoriesInnerBannerCarousel from "../../components/categories/categoriesInner-banner-carousel.vue";
-import CategoriesInnerBanner from "../../components/categories/categoriesInner-banner.vue";
-import CategoriesTabCarousel from "../../components/categories/categoriesInner-tab-carousel.vue";
+import MainTitle from "../components/Main-title.vue";
+import CategoriesCard from "../components/cards/CategoriesCard.vue";
+import ProductCard from "../components/cards/ProductCard.vue";
+import CategoriesAppCard from "../components/categories/categories-app-banner.vue";
+import CategoriesInnerBannerCarousel from "../components/categories/categoriesInner-banner-carousel.vue";
+import CategoriesInnerBanner from "../components/categories/categoriesInner-banner.vue";
+import CategoriesTabCarousel from "../components/categories/categoriesInner-tab-carousel.vue";
 export default {
   data() {
     return {
-      arrow: require("../../assets/svg/dropdown-icon.svg?raw"),
-      filterX: require("../../assets/svg/selected-filter-x.svg?raw"),
+      arrow: require("../assets/svg/dropdown-icon.svg?raw"),
+      filterX: require("../assets/svg/selected-filter-x.svg?raw"),
       value: "all",
       disabled: false,
       status: [
@@ -345,5 +345,5 @@ export default {
 };
 </script>
 <style lang="css">
-@import "../../assets/css/pages/categories.css";
+@import "../assets/css/pages/categories.css";
 </style>
