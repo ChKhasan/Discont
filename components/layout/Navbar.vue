@@ -3,7 +3,7 @@
     <div class="container_xl">
       <div class="d-flex header-navbar_container">
         <div class="d-flex align-items-center">
-          <span v-html="navLogo" class="nav_logo"></span>
+          <nuxt-link to="/"><span v-html="navLogo" class="nav_logo"></span></nuxt-link>
           <div class="search_input_container">
             <input type="text" placeholder="Noutbuk ..." />
             <span class="search-btn">
@@ -18,7 +18,7 @@
             <li><span v-html="navLike"></span> Sevimlilar</li>
             <li><span v-html="navBasket"></span>Savatcha</li>
             <li><span v-html="navComp"></span>Solishtirish</li>
-            <li class="nav_profile flex-row">
+            <li class="nav_profile flex-row" @click="$router.push('/profile/personal-info')">
               <span v-html="navUser"></span>
               <p>profil</p>
             </li>

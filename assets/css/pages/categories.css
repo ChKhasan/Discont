@@ -14,6 +14,9 @@
   grid-template-columns: 1fr 4fr;
   grid-gap: 24px;
 }
+.categories-list {
+  margin-bottom: 24px;
+}
 .categories-list h5 {
   font-family: var(--SB_600);
   font-style: normal;
