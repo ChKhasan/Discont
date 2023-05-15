@@ -10,8 +10,11 @@
             <li>Yuridik shaxslar uchun</li>
           </ul>
           <div class="d-flex header-top__right">
-            <p>Aloqa markazi: +712077788</p>
-            <p>O’Z | ENG | РУ</p>
+            <p>Aloqa markazi: <a href="tel:+712077788">+712077788</a></p>
+            <p>
+              <span class="header-lang-active">O’Z</span> | <span>ENG</span> |
+              <span>РУ</span>
+            </p>
           </div>
         </div>
       </div>

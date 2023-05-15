@@ -6,6 +6,8 @@ import {
   Select,
   Pagination,
   Slider,
+  Rate,
+  FormModel,
   // Button,
   // Table,
   // Upload,
@@ -19,7 +21,6 @@ import {
   // Layout,
   // TimePicker,
   // DatePicker,
-  FormModel,
   // notification,
   // message,
   // InputNumber,
@@ -37,6 +38,7 @@ Vue.use(Select);
 Vue.use(Switch);
 Vue.use(Pagination);
 Vue.use(Input);
+Vue.use(Rate);
 
 // Vue.use(Alert);
 // Vue.use(Empty);
