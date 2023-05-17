@@ -8,12 +8,11 @@
       <div class="home-categories mb-120">
         <MainTitle title="Kategoriyalar" />
         <div class="category-grid">
-          <HomeCategoryCard />
-          <HomeCategoryCard />
-          <HomeCategoryCard />
-          <HomeCategoryCard />
-          <HomeCategoryCard />
-          <HomeCategoryCard />
+          <HomeCategoryCard
+            v-for="category in categories"
+            :key="category.id"
+            :category="category"
+          />
         </div>
       </div>
     </div>
@@ -24,12 +23,11 @@
           <nuxt-link class="to-page-underline" to="/">Все товары</nuxt-link>
         </div>
         <div class="product-grid">
-          <ProductCard />
-          <ProductCard />
-          <ProductCard />
-          <ProductCard />
-          <ProductCard />
-          <ProductCard />
+          <ProductCard
+            v-for="product in bestsellersProducts"
+            :key="product.id"
+            :product="product"
+          />
         </div>
       </div>
     </div>
@@ -40,12 +38,11 @@
           <nuxt-link class="to-page-underline" to="/">Все товары</nuxt-link>
         </div>
         <div class="product-grid">
-          <ProductCard />
-          <ProductCard />
-          <ProductCard />
-          <ProductCard />
-          <ProductCard />
-          <ProductCard />
+          <ProductCard
+            v-for="product in topProducts"
+            :key="product.id"
+            :product="product"
+          />
         </div>
       </div>
     </div>
@@ -60,16 +57,11 @@
           <V2ProductCard :variant="false" />
         </div>
         <div class="products-grid-5">
-          <ProductCard />
-          <ProductCard />
-          <ProductCard />
-          <ProductCard />
-          <ProductCard />
-          <ProductCard />
-          <ProductCard />
-          <ProductCard />
-          <ProductCard />
-          <ProductCard />
+          <ProductCard
+            v-for="product in byCategoryProducts"
+            :key="product.id"
+            :product="product"
+          />
         </div>
       </div>
     </div>
@@ -81,35 +73,12 @@
         </div>
         <div class="">
           <ProductCarousel>
-            <div class="swiper-slide">
-              <ProductCard />
-            </div>
-            <div class="swiper-slide">
-              <ProductCard />
-            </div>
-            <div class="swiper-slide">
-              <ProductCard />
-            </div>
-            <div class="swiper-slide">
-              <ProductCard />
-            </div>
-            <div class="swiper-slide">
-              <ProductCard />
-            </div>
-            <div class="swiper-slide">
-              <ProductCard />
-            </div>
-            <div class="swiper-slide">
-              <ProductCard />
-            </div>
-            <div class="swiper-slide">
-              <ProductCard />
-            </div>
-            <div class="swiper-slide">
-              <ProductCard />
-            </div>
-            <div class="swiper-slide">
-              <ProductCard />
+            <div
+              class="swiper-slide"
+              v-for="product in byCategoryProducts"
+              :key="product.id"
+            >
+              <ProductCard :product="product" />
             </div>
           </ProductCarousel>
         </div>
@@ -123,35 +92,12 @@
         </div>
         <div class="">
           <ProductCarousel2>
-            <div class="swiper-slide">
-              <ProductCard />
-            </div>
-            <div class="swiper-slide">
-              <ProductCard />
-            </div>
-            <div class="swiper-slide">
-              <ProductCard />
-            </div>
-            <div class="swiper-slide">
-              <ProductCard />
-            </div>
-            <div class="swiper-slide">
-              <ProductCard />
-            </div>
-            <div class="swiper-slide">
-              <ProductCard />
-            </div>
-            <div class="swiper-slide">
-              <ProductCard />
-            </div>
-            <div class="swiper-slide">
-              <ProductCard />
-            </div>
-            <div class="swiper-slide">
-              <ProductCard />
-            </div>
-            <div class="swiper-slide">
-              <ProductCard />
+            <div
+              class="swiper-slide"
+              v-for="product in byCategoryProducts"
+              :key="product.id"
+            >
+              <ProductCard :product="product" />
             </div>
           </ProductCarousel2>
         </div>
@@ -210,28 +156,12 @@
       <MainTitle title="Top brendlar" />
       <div class="mb-120">
         <BrandCarousel>
-          <div class="swiper-slide">
-            <BrandCard />
-          </div>
-          <div class="swiper-slide">
-            <BrandCard />
-          </div>
-          <div class="swiper-slide">
-            <BrandCard />
-          </div>
-          <div class="swiper-slide">
-            <BrandCard />
-          </div>
-          <div class="swiper-slide">
-            <BrandCard />
-          </div>
-          <div class="swiper-slide">
-            <BrandCard />
-          </div>
-          <div class="swiper-slide">
-            <BrandCard />
-          </div>
-          <div class="swiper-slide">
+          <div
+            class="swiper-slide"
+            v-for="brand in brands"
+            :key="brand.id"
+            :brand="brand"
+          >
             <BrandCard />
           </div>
         </BrandCarousel>
@@ -248,26 +178,18 @@
           <VProductCard />
         </div>
         <div class="products-grid-5">
-          <ProductCard />
-          <ProductCard />
-          <ProductCard />
-          <ProductCard />
-          <ProductCard />
-          <ProductCard />
-          <ProductCard />
-          <ProductCard />
-          <ProductCard />
-          <ProductCard />
+          <ProductCard
+            v-for="product in byCategoryProducts"
+            :key="product.id"
+            :product="product"
+          />
         </div>
       </div>
     </div>
     <div class="container_xl mb-120">
       <MainTitle title="Yangiliklar va bloglar" />
       <div class="posts-grid">
-        <PostCard />
-        <PostCard />
-        <PostCard />
-        <PostCard />
+        <PostCard v-for="post in posts" :key="post.id" :post="post" />
       </div>
     </div>
     <div class="container_xl mb-120">
@@ -328,7 +250,73 @@ import DiscontBanner from "../components/discont-banner.vue";
 import ApplicationBanner from "../components/application-banner.vue";
 export default {
   name: "IndexPage",
-
+  data() {
+    return {
+      bestsellersProducts: [],
+      topProducts: [],
+      categories: [],
+      byCategoryProducts: [],
+      brands: [],
+      posts: [],
+    };
+  },
+  async asyncData({ $axios }) {
+    const [
+      products,
+      byCategory,
+      topProducts1,
+      categories1,
+      brands1,
+      posts1,
+    ] = await Promise.all([
+      $axios.$get(`/products`, {
+        params: {
+          type: "bestsellers",
+          limit: 6,
+        },
+      }),
+      $axios.$get(`/products`, {
+        params: {
+          limit: 10,
+        },
+      }),
+      $axios.$get(`/products`, {
+        params: {
+          type: "popular",
+          limit: 6,
+        },
+      }),
+      $axios.$get(`/categories`, {
+        params: {
+          limit: 6,
+        },
+      }),
+      $axios.$get(`/brands`, {
+        params: {
+          limit: 10,
+        },
+      }),
+      $axios.$get(`/posts`, {
+        params: {
+          limit: 4,
+        },
+      }),
+    ]);
+    const bestsellersProducts = products?.products?.data;
+    const byCategoryProducts = byCategory?.products?.data;
+    const topProducts = topProducts1?.products?.data;
+    const categories = categories1?.categories?.data;
+    const brands = brands1?.brands?.data;
+    const posts = posts1?.posts?.data;
+    return {
+      bestsellersProducts,
+      byCategoryProducts,
+      topProducts,
+      categories,
+      brands,
+      posts,
+    };
+  },
   components: {
     BannerCarousel,
     ProductCard,

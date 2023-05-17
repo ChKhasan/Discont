@@ -4,20 +4,34 @@
       <span class="hover-btns" v-html="like"></span>
       <span class="hover-btns" v-html="comp"></span>
       <span class="pc-img-container"
-        ><img src="../../assets/images/image 11.png" alt=""
-      /></span>
+        ><img
+          v-if="product?.images[0]?.sm_img"
+          :src="product?.images[0]?.sm_img"
+          alt=""
+        />
+        <img v-else :src="product?.images[0]?.sm_img" alt="" />
+      </span>
     </div>
     <div class="product-card-body">
-      <h3 class="product-card-title">Кир ювиш машинаси Samsung WW80K42E07SDLD</h3>
-      <p><span v-html="star"></span>5.9</p>
+      <h3 class="product-card-title">
+        {{
+          product?.info?.name?.ru
+            ? product?.info?.name?.ru
+            : "Кир ювиш машинаси Samsung WW80K42E07SDLD"
+        }}
+      </h3>
+      <p>
+        <span v-html="star"></span>{{ product?.info?.stars ? product?.info?.stars : "0" }}
+      </p>
       <span class="product-card-price"
-        ><h4>5 650 000 so’m</h4>
+        ><h4>{{ product?.price ? product?.price : "5 650 000" }} so’m</h4>
         <span> +5 ta dicoin</span></span
       >
     </div>
     <div class="product-discount">
-      <p>6 120 000</p>
+      <p v-if="product?.discount_price">{{ product?.discount_price }}</p>
     </div>
+
     <div class="product-card-footer">
       <div><span>В корзину</span>В корзину</div>
     </div>
@@ -25,6 +39,7 @@
 </template>
 <script>
 export default {
+  props: ["product"],
   data() {
     return {
       star: require("../../assets/svg/product-star.svg?raw"),
@@ -54,7 +69,7 @@ export default {
   cursor: pointer;
   position: absolute;
   transition: 0.3s;
-  right: -30px;
+  right: -35px;
   background: #ffffff;
   border-radius: 6.00364px;
   height: 30px;
@@ -62,6 +77,8 @@ export default {
   display: flex;
   align-items: center;
   justify-content: center;
+  z-index: 2;
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.06);
 }
 .hover-btns:first-child {
   top: 12px;
@@ -76,6 +93,8 @@ export default {
 }
 .pc-img-container img {
   object-fit: contain;
+  width: 100%;
+  height: 100%;
 }
 .hover-btns:nth-child(2) {
   transition-delay: 0.1s;

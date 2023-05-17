@@ -13,18 +13,25 @@ export default {
     link: [{ rel: "icon", type: "image/x-icon", href: "/favicon.ico" }],
   },
 
-  css: ["@/assets/css/app.css","ant-design-vue/dist/antd.css"],
+  css: ["@/assets/css/app.css", "ant-design-vue/dist/antd.css"],
 
-  plugins: [{ src: "~plugins/antdv.js"}],
+  plugins: [{ src: "~plugins/antdv.js" }],
 
   components: true,
 
   buildModules: ["@nuxtjs/svg"],
 
-  modules: ["bootstrap-vue/nuxt"],
+  modules: ["bootstrap-vue/nuxt", "@nuxtjs/axios"],
   server: {
     port: 8000,
     host: "localhost",
+  },
+  axios: {
+    credentials: false,
+    init(axios) {
+      axios.defaults.withCredentials = true;
+    },
+    baseURL: "https://test.loftcity.uz/api",
   },
   build: {
     babel: {

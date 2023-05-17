@@ -116,7 +116,8 @@
   flex-direction: column;
   margin-left: 24px;
 }
-.child-categories-list a {
+.child-categories-list a,
+.categories-list a {
   font-family: var(--SB_400);
   font-style: normal;
   font-weight: 400;

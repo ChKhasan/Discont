@@ -8,7 +8,7 @@
             <input type="text" placeholder="Noutbuk ..." />
             <span class="search-btn">
               <span v-html="navMic"></span>
-              <p>Qidiruv</p>
+              Qidiruv
             </span>
           </div>
         </div>
@@ -18,7 +18,10 @@
             <li><span class="nav-icons" v-html="navLike"></span> Sevimlilar</li>
             <li><span class="nav-icons" v-html="navBasket"></span>Savatcha</li>
             <li><span class="nav-icons" v-html="navComp"></span>Solishtirish</li>
-            <li class="nav_profile flex-row" @click="$router.push('/profile/personal-info')">
+            <li
+              class="nav_profile flex-row"
+              @click="$router.push('/profile/personal-info')"
+            >
               <span v-html="navUser"></span>
               <p>profil</p>
             </li>

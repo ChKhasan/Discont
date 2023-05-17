@@ -1,13 +1,21 @@
 <template lang="html">
-  <div class="categoies-card" @click="$router.push('/categories-inner/1')">
+  <div
+    class="categoies-card"
+    @click="$router.push(`/categories-inner/${category?.slug}`)"
+  >
     <div class="categoies-card-img">
-      <img src="../../assets/images/dfzgdxhg 1.png" alt="" />
+      <img :src="category?.sm_img" alt="" />
+      <!-- <img src="../../assets/images/dfzgdxhg 1.png" alt="" /> -->
     </div>
-    <div class="categoies-card-title"><h6>Смартфоны</h6></div>
+    <div class="categoies-card-title">
+      <h6>{{ category?.name?.ru }}</h6>
+    </div>
   </div>
 </template>
 <script>
-export default {};
+export default {
+  props: ["category"],
+};
 </script>
 <style lang="css">
 .categoies-card {
@@ -19,6 +27,7 @@ export default {};
   display: flex;
   flex-direction: column;
   justify-content: space-between;
+  cursor: pointer;
 }
 .categoies-card-img img {
   width: 100%;
@@ -31,7 +40,7 @@ export default {};
   justify-content: center;
   margin-top: 32px;
 }
-.categoies-card-title h4 {
+.categoies-card-title h6 {
   font-family: var(--SB_400);
   font-style: normal;
   font-weight: 400;

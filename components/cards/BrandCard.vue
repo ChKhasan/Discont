@@ -1,10 +1,13 @@
 <template lang="html">
   <div class="brand-card" @click="$router.push('/brands')">
-    <img src="../../assets/images/image 56.png" alt="" />
+    <img v-if="brand?.logo" :src="brand?.logo" alt="" />
+    <img v-else src="../../assets/images/image 56.png" alt="" />
   </div>
 </template>
 <script>
-export default {};
+export default {
+  props: ["brand"],
+};
 </script>
 <style lang="css">
 .brand-card {

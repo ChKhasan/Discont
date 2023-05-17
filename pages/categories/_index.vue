@@ -5,21 +5,23 @@
         <div class="categories-list">
           <h5>Категория</h5>
           <ul>
-            <li>
-              <span>Televizor</span>
-              <div class="child-categories-list">
-                <nuxt-link to="/">Smart TV</nuxt-link>
-                <nuxt-link to="/">Televizor</nuxt-link>
-                <nuxt-link to="/">Smart TV</nuxt-link>
+            <li
+              v-for="category in categories"
+              :key="category.id"
+              @click="$router.push(`/categories/${category?.slug}`)"
+            >
+              <span>{{ category?.name?.ru }}</span>
+              <div
+                class="child-categories-list"
+                v-if="
+                  category?.slug == $route.params.index && category?.children.length > 0
+                "
+              >
+                <nuxt-link to="/" v-for="childs in category?.children" :key="childs.id">{{
+                  childs?.name?.ru
+                }}</nuxt-link>
               </div>
             </li>
-            <li><span>Smartfonlar</span></li>
-            <li><span>Samokatlar</span></li>
-            <li><span>Planshetlar</span></li>
-            <li><span>Televizor</span></li>
-            <li><span>Televizor</span></li>
-            <li><span>Smartfonlar</span></li>
-            <li><span>Planshetlar</span></li>
           </ul>
           <span class="categories-list_show-more">Показать еще</span>
         </div>
@@ -38,13 +40,11 @@
             </div>
           </div>
           <div class="categories-card-grid">
-            <CategoriesCard />
-            <CategoriesCard />
-            <CategoriesCard />
-            <CategoriesCard />
-            <CategoriesCard />
-            <CategoriesCard />
-            <CategoriesCard />
+            <CategoriesCard
+              v-for="category in categoryChilds?.children"
+              :key="category.id"
+              :category="category"
+            />
           </div>
         </div>
       </div>
@@ -114,19 +114,38 @@
   </div>
 </template>
 <script>
-import MainTitle from "../components/Main-title.vue";
-import CategoriesCard from "../components/cards/CategoriesCard.vue";
-import ProductCard from "../components/cards/ProductCard.vue";
-import CategoriesAppCard from "../components/categories/categories-app-banner.vue";
+import MainTitle from "../../components/Main-title.vue";
+import CategoriesCard from "../../components/cards/CategoriesCard.vue";
+import ProductCard from "../../components/cards/ProductCard.vue";
+import CategoriesAppCard from "../../components/categories/categories-app-banner.vue";
 export default {
   data() {
     return {
-      arrow: require("../assets/svg/dropdown-icon.svg?raw"),
+      arrow: require("../../assets/svg/dropdown-icon.svg?raw"),
+      //   categoryChilds: [],
     };
   },
+  async asyncData({ $axios, params }) {
+    const [categoriesData, categoryChildsData] = await Promise.all([
+      $axios.$get(`/categories`, {
+        params: {
+          limit: 10,
+        },
+      }),
+      $axios.$get(`/categories/${params.index}`),
+    ]);
+    const categories = categoriesData?.categories?.data;
+    const categoryChilds = categoryChildsData?.category;
+    return {
+      categories,
+      categoryChilds,
+    };
+  },
+
   components: { MainTitle, CategoriesCard, ProductCard, CategoriesAppCard },
 };
 </script>
 <style lang="css">
-@import "../assets/css/pages/categories.css";
+@import "../../assets/css/pages/categories.css";
+
 </style>

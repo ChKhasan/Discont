@@ -103,13 +103,61 @@
       </div>
       <div class="categories-page-inner-grid">
         <div class="categories-filter-list">
+          <div class="categories-list">
+            <h5>Категория</h5>
+            <nuxt-link to="/">{{
+              categoryChilds?.parent?.parent?.name?.ru
+                ? categoryChilds?.parent?.parent?.name?.ru
+                : categoryChilds?.parent?.name?.ru
+            }}</nuxt-link>
+            <ul class="category-inner-list">
+              <li>
+                <span
+                  @click="
+                    $router.push(
+                      `/categories-inner/${
+                        categoryChilds?.parent?.slug
+                          ? categoryChilds?.parent?.slug
+                          : categoryChilds?.slug
+                      }`
+                    )
+                  "
+                  :class="{
+                    'active-category': $route.params.index == categoryChilds?.slug,
+                  }"
+                  >{{
+                    categoryChilds?.parent?.parent?.name?.ru
+                      ? categoryChilds?.parent?.name?.ru
+                      : categoryChilds?.name?.ru
+                  }}</span
+                >
+                <div class="child-categories-list">
+                  <nuxt-link
+                    v-if="categoryChilds?.children.length === 0"
+                    :to="`/categories-inner/${categoryChilds?.slug}`"
+                    >{{ categoryChilds?.name?.ru }}</nuxt-link
+                  >
+                  <nuxt-link
+                    v-else
+                    v-for="childs in categoryChilds?.children"
+                    :to="`/categories-inner/${childs?.slug}`"
+                    :class="{ 'active-category': $route.params.index == childs?.slug }"
+                    :key="childs.id"
+                    >{{ childs?.name?.ru }}</nuxt-link
+                  >
+                </div>
+              </li>
+            </ul>
+            <span class="categories-list_show-more">Показать еще</span>
+          </div>
           <div class="filter-range">
             <h5>Категория</h5>
+
             <a-slider
               range
               :step="10"
               :default-value="[20, 50]"
-              @change="onChange"
+              @change="onChangeSlider"
               @afterChange="onAfterChange"
             />
             <div class="filter-slider-inputs">
@@ -123,72 +171,38 @@
               </span>
             </div>
           </div>
-          <h5>ОС тури</h5>
-          <div class="categories-checkbox-list">
-            <a-checkbox class="filter-checkbox" @change="onChange">
-              Android 13
-            </a-checkbox>
-            <a-checkbox class="filter-checkbox" @change="onChange">
-              Android 13
-            </a-checkbox>
-            <a-checkbox class="filter-checkbox" @change="onChange">
-              Android 13
-            </a-checkbox>
-            <a-checkbox class="filter-checkbox" @change="onChange">
-              Android 13
-            </a-checkbox>
-            <a-checkbox class="filter-checkbox" @change="onChange">
-              Android 13
-            </a-checkbox>
-            <a-checkbox class="filter-checkbox" @change="onChange">
-              Android 13
-            </a-checkbox>
-            <span class="categories-list_show-more">Показать еще</span>
-          </div>
-          <h5>Аккумулятор ҳажми</h5>
-          <div class="categories-checkbox-list">
-            <a-checkbox class="filter-checkbox" @change="onChange">
-              4250 мА / соат
-            </a-checkbox>
-            <a-checkbox class="filter-checkbox" @change="onChange">
-              4250 мА / соат
-            </a-checkbox>
-            <a-checkbox class="filter-checkbox" @change="onChange">
-              4250 мА / соат
-            </a-checkbox>
-            <a-checkbox class="filter-checkbox" @change="onChange">
-              4250 мА / соат
-            </a-checkbox>
-            <a-checkbox class="filter-checkbox" @change="onChange">
-              4250 мА / соат
-            </a-checkbox>
-            <a-checkbox class="filter-checkbox" @change="onChange">
-              4250 мА / соат
-            </a-checkbox>
-            <span class="categories-list_show-more"
-              >Показать еще <span v-html="arrow"></span
-            ></span>
-          </div>
-          <h5>Диагональ</h5>
-          <div class="categories-checkbox-list">
-            <a-checkbox class="filter-checkbox" @change="onChange"> 6,36" </a-checkbox>
-            <a-checkbox class="filter-checkbox" @change="onChange"> 6,36" </a-checkbox>
-            <a-checkbox class="filter-checkbox" @change="onChange"> 6,36" </a-checkbox>
-            <a-checkbox class="filter-checkbox" @change="onChange"> 6,36" </a-checkbox>
-            <a-checkbox class="filter-checkbox" @change="onChange"> 6,36" </a-checkbox>
-            <a-checkbox class="filter-checkbox" @change="onChange"> 6,36" </a-checkbox>
-            <span class="categories-list_show-more"
-              >Показать еще <span v-html="arrow"></span
-            ></span>
+          <div v-for="attribit in attributes" :key="attribit.id">
+            <h5>{{ attribit?.name?.ru }}</h5>
+            <div class="categories-checkbox-list">
+              <a-checkbox
+                class="filter-checkbox"
+                v-for="option in attribit.options"
+                :key="option.id"
+                :checked="$route.query?.attributes?.includes(option.id)"
+                @change="onChange(option.id)"
+                >{{ option?.name?.ru }}
+              </a-checkbox>
+
+              <span class="categories-list_show-more">Показать еще</span>
+            </div>
           </div>
         </div>
         <div class="categories-products">
           <div class="d-flex justify-content-between w-100">
             <div class="select-filters">
-              <span>48 MP camera <span v-html="filterX"></span></span>
-              <span>48 MP camera <span v-html="filterX"></span></span>
-              <span>48 MP camera <span v-html="filterX"></span></span>
-              <div class="clear-filter">Filtrni tozalash</div>
+              <span
+                v-for="filterItem in filterOptions"
+                :key="filterItem.id"
+                @click="deleteFilterItem(filterItem.id)"
+                >{{ filterItem?.name?.ru }}<span v-html="filterX"></span
+              ></span>
+              <div
+                class="clear-filter"
+                @click="clearFilter"
+                v-if="filterOptions.length > 0"
+              >
+                Filtrni tozalash
+              </div>
             </div>
             <a-select
               v-model="value"
@@ -205,22 +219,21 @@
               </a-select-option>
             </a-select>
           </div>
-          <div class="categories-card-grid">
-            <ProductCard />
-            <ProductCard />
-            <ProductCard />
-            <ProductCard />
-            <ProductCard />
-            <ProductCard />
-            <ProductCard />
-            <ProductCard />
-            <ProductCard />
-            <ProductCard />
-            <ProductCard />
-            <ProductCard />
+          <div class="categories-card-grid" v-if="products.length > 0">
+            <ProductCard
+              v-for="product in products"
+              :key="product.id"
+              :product="product?.default_product"
+            />
           </div>
-          <div class="categories-products-show-more">Показать еще 44</div>
-          <div class="products-pagination">
+          <div class="comments-empty" v-else>
+            <img src="../../assets/images/comments-empty.png" alt="" />
+            <h4>Mahsulot topilmadi</h4>
+          </div>
+          <div class="categories-products-show-more" v-if="products.length > 30">
+            Показать еще 44
+          </div>
+          <div class="products-pagination" v-if="products.length > 30">
             <a-pagination size="small" :default-current="6" :total="500" />
           </div>
         </div>
@@ -305,6 +318,9 @@ export default {
       filterX: require("../../assets/svg/selected-filter-x.svg?raw"),
       value: "all",
       disabled: false,
+      filterOptions: [],
+      products: [],
+      atr: [],
       status: [
         {
           value: "all",
@@ -325,12 +341,142 @@ export default {
       ],
     };
   },
+  async asyncData({ $axios, params, query }) {
+    const [categoriesData, categoryChildsData] = await Promise.all([
+      $axios.$get(`/categories`, {
+        params: {
+          limit: 10,
+        },
+      }),
+      $axios.$get(`/categories/${params.index}`),
+    ]);
+    const categories = categoriesData?.categories?.data;
+    const categoryChilds = categoryChildsData?.category;
+    const products = categoryChildsData?.product_infos;
+    const attributes = categoryChildsData?.attributes;
+    const options = [];
+    categoryChildsData?.attributes.forEach((item) => {
+      options.push(...item.options);
+    });
+    const filterOptions = [];
+    if (query.attributes) {
+      let atr = query.attributes.split(",");
+      atr.forEach((item) => {
+        let findItem = options.find((elem) => elem.id == item);
+        filterOptions.push(findItem);
+      });
+    }
+    const allInfo = categoryChildsData;
+    return {
+      categoryChilds,
+      products,
+      attributes,
+      allInfo,
+      options,
+      filterOptions,
+      categories,
+    };
+  },
+
+  mounted() {
+    console.log(this.allInfo);
+  },
+  computed: {
+    filterAtributs() {
+      let arr = [];
+      if (this.$route.query?.attributes) {
+        arr = this.$route.query?.attributes.split(",");
+      }
+      return arr.length;
+    },
+  },
   methods: {
-    onChange(value) {
-      console.log("change: ", value);
+    clearFilter() {
+      this.$router.replace({
+        path: `/categories-inner/${this.$route.params.index}`,
+        query: {},
+      });
+      this.filterOptions = [];
+    },
+    async __GET_PRODUCTS() {
+      const data = await this.$axios.$get(`/categories/${this.$route.params.index}`,{params: {...this.$route.query}});
+      this.products = data?.product_infos;
+    },
+    async onChange(value) {
+      let atr = [];
+      if (this.$route.query.attributes) {
+        atr = await this.$route.query.attributes.split(",");
+      }
+      if (atr.includes(`${value}`)) {
+        atr.splice(atr.indexOf(`${value}`), 1);
+      } else {
+        atr.push(value);
+      }
+      let string = await atr.join(",");
+      if (!this.$route.query.attributes || this.$route.query.attributes != string) {
+        let query = { ...this.$route.query, attributes: string };
+        await this.$router.replace({
+          path: `/categories-inner/${this.$route.params.index}`,
+          query: query,
+        });
+      }
+      this.filterOptions = [];
+      if (this.$route.query.attributes) {
+        let filterAtr = this.$route.query.attributes.split(",");
+        filterAtr.forEach((item) => {
+          let findItem = this.options.find((elem) => elem.id == item);
+          this.filterOptions.push(findItem);
+        });
+      }
+    },
+    onChangeSlider(val) {
+      console.log(val);
+    },
+    async deleteFilterItem(id) {
+      let atr = await this.$route.query.attributes.split(",");
+      atr.splice(atr.indexOf(`${id}`), 1);
+      let query = { ...this.$route.query, attributes: atr.join(",") };
+      await this.$router.replace({
+        path: `/categories-inner/${this.$route.params.index}`,
+        query: query,
+      });
     },
     onAfterChange(value) {
-      console.log("afterChange: ", value);
+      if (
+        !this.$route.query.max_price ||
+        this.$route.query.min_price != value[0] ||
+        this.$route.query.max_price != value[1]
+      ) {
+        let query = { ...this.$route.query, min_price: value[0], max_price: value[1] };
+        this.$router.replace({
+          path: `/categories-inner/${this.$route.params.index}`,
+          query: query,
+        });
+      }
+    },
+  },
+  watch: {
+    filterAtributs(val) {
+      this.__GET_PRODUCTS();
+      if (val == 0 && this.$route.query.attributes == "") {
+        let query = { ...this.$route.query };
+        delete query.attributes;
+        this.$router.replace({
+          path: `/categories-inner/${this.$route.params.index}`,
+          query: query,
+        });
+      }
+      if (val > 0) {
+        this.filterOptions = [];
+        if (this.$route.query.attributes) {
+          let filterAtr = this.$route.query.attributes.split(",");
+          filterAtr.forEach((item) => {
+            let findItem = this.options.find((elem) => elem.id == item);
+            this.filterOptions.push(findItem);
+          });
+        }
+      }
+      console.log(this.$route.query);
     },
   },
   components: {
@@ -346,4 +492,34 @@ export default {
 </script>
 <style lang="css">
 @import "../../assets/css/pages/categories.css";
+.comments-empty {
+  width: 100%;
+  height: calc(100vh - 400px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+}
+.comments-empty h4 {
+  font-family: var(--SF_500);
+  font-style: normal;
+  font-weight: 510;
+  font-size: 18px;
+  line-height: 150%;
+  text-align: center;
+  color: #000000;
+  margin-bottom: 32px;
+  margin-top: 32px;
+}
+.category-inner-list {
+  padding-left: 16px;
+}
+.category-inner-list li span {
+  color: #9a9a9a !important;
+}
+.active-category {
+  color: #000 !important;
+}
+.categories-list a {
+}
 </style>

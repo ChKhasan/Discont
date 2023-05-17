@@ -35,7 +35,6 @@ export default {
       navigation: false,
     });
     swiper.on("activeIndexChange", (swiper) => {
-      console.log(swiper);
     });
   },
 };

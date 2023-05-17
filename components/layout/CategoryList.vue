@@ -51,7 +51,20 @@ export default {
       navCoin: require("../../assets/svg/coin.svg?raw"),
       navCatIcon: require("../../assets/svg/Category-item.svg?raw"),
       navCatIcon2: require("../../assets/svg/Cat-icon2.svg?raw"),
+      categories: [],
     };
+  },
+  async fetch() {
+    const [categories] = await Promise.all([
+      this.$axios.$get(`/categories`, {
+        params: {
+          type: "bestsellers",
+          limit: 6,
+        },
+      }),
+    ]);
+
+    this.categories = categories?.categories?.data;
   },
 };
 </script>
