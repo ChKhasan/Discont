@@ -8,7 +8,7 @@ import {
   // Modal,
   // Popconfirm,
   // Radio,
-  // Icon,
+  Icon,
   Input,
   // Spin,
   Pagination,
@@ -25,6 +25,7 @@ import {
   // Skeleton,
   // Empty,
   // Alert,
+  Rate,
   Slider,
 } from "ant-design-vue";
 // const { info, success, error, warning, confirm } = Modal;
@@ -50,9 +51,10 @@ Vue.use(Checkbox);
 // Vue.use(Modal);
 // Vue.use(Popconfirm);
 // Vue.use(Radio);
-// Vue.use(Icon);
+Vue.use(Icon);
 Vue.use(Input);
 // Vue.use(Spin);
 Vue.use(Pagination);
 // Vue.use(Dropdown);
 // Vue.use(Menu);
+Vue.use(Rate);
