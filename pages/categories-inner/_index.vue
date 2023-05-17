@@ -520,6 +520,4 @@ export default {
 .active-category {
   color: #000 !important;
 }
-.categories-list a {
-}
 </style>
