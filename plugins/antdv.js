@@ -14,7 +14,7 @@ import {
   // Modal,
   // Popconfirm,
   // Radio,
-  // Icon,
+  Icon,
   // Spin,
   // Dropdown,
   // Menu,
@@ -54,7 +54,8 @@ Vue.use(FormModel);
 // Vue.use(Modal);
 // Vue.use(Popconfirm);
 // Vue.use(Radio);
-// Vue.use(Icon);
+Vue.use(Icon);
+Vue.use(Input);
 // Vue.use(Spin);
 // Vue.use(Dropdown);
 // Vue.use(Menu);
