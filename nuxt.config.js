@@ -1,6 +1,6 @@
 export default {
   head: {
-    title: "discont",
+    title: "Diskont",
     htmlAttrs: {
       lang: "en",
     },

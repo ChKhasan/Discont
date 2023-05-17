@@ -9,100 +9,49 @@
             <span v-html="arrow"></span>
           </nuxt-link>
         </div>
-        <div class="d-flex categories-page-title">
-          <MainTitle title="Smartfonlar" />
-          <span>8 288 товаров</span>
-        </div>
-        <div>
-          <CategoriesTabCarousel>
-            <div class="swiper-slide d-inline">
-              <span class="categories-tab-link">Ayollar uchun smartfonlar</span>
-            </div>
-            <div class="swiper-slide d-inline">
-              <span class="categories-tab-link">Bolalar uchun smartfonlar</span>
-            </div>
-            <div class="swiper-slide d-inline">
-              <span class="categories-tab-link">Ximoyalangan smartfonlar</span>
-            </div>
-            <div class="swiper-slide d-inline">
-              <span class="categories-tab-link">Yengil smartfonlar</span>
-            </div>
-            <div class="swiper-slide d-inline">
-              <span class="categories-tab-link">Защищенные смартфоны</span>
-            </div>
-            <div class="swiper-slide d-inline">
-              <span class="categories-tab-link">Смартфоны с мощным аккумулятором</span>
-            </div>
-            <div class="swiper-slide d-inline">
-              <span class="categories-tab-link">Смартфоны с хорошей камерой</span>
-            </div>
-            <div class="swiper-slide d-inline">
-              <span class="categories-tab-link">с большой памятью</span>
-            </div>
-            <div class="swiper-slide d-inline">
-              <span class="categories-tab-link">с большой памятью</span>
-            </div>
-            <div class="swiper-slide d-inline">
-              <span class="categories-tab-link">goodbek</span>
-            </div>
-            <div class="swiper-slide d-inline">
-              <span class="categories-tab-link">goodbek</span>
-            </div>
-            <div class="swiper-slide d-inline">
-              <span class="categories-tab-link">goodbek</span>
-            </div>
-
-            <div class="swiper-slide d-inline">
-              <span class="categories-tab-link">goodbek</span>
-            </div>
-            <div class="swiper-slide d-inline">
-              <span class="categories-tab-link">goodbek</span>
-            </div>
-            <div class="swiper-slide d-inline">
-              <span class="categories-tab-link">goodbek</span>
-            </div>
-
-            <div class="swiper-slide d-inline">
-              <span class="categories-tab-link">goodbek</span>
-            </div>
-            <div class="swiper-slide d-inline">
-              <span class="categories-tab-link">goodbek</span>
-            </div>
-            <div class="swiper-slide d-inline">
-              <span class="categories-tab-link">goodbek@1312</span>
-            </div>
-            <div class="swiper-slide d-inline">
-              <span class="categories-tab-link">goodbek123123</span>
-            </div>
-            <div class="swiper-slide d-inline">
-              <span class="categories-tab-link categories-tab-link-last"
-                >goodbek00000</span
-              >
-            </div>
-          </CategoriesTabCarousel>
-        </div>
-        <div class="mt-4">
-          <CategoriesInnerBannerCarousel>
-            <div class="swiper-slide">
-              <CategoriesInnerBanner />
-            </div>
-            <div class="swiper-slide">
-              <CategoriesInnerBanner />
-            </div>
-            <div class="swiper-slide">
-              <CategoriesInnerBanner />
-            </div>
-            <div class="swiper-slide">
-              <CategoriesInnerBanner />
-            </div>
-            <div class="swiper-slide">
-              <CategoriesInnerBanner />
-            </div>
-          </CategoriesInnerBannerCarousel>
+        <div class="d-flex categories-page-title justify-content-between">
+          <div class="d-flex justify-content-between">
+            <MainTitle title="Каталог Apple" /> <span>8 288 товаров</span>
+          </div>
+          <a-select
+            v-model="value"
+            class="categories-filter-select"
+            placeholder="Select good person"
+            style="width: 252px"
+          >
+            <a-select-option
+              v-for="item in status"
+              :key="item?.value"
+              :label="item.label"
+              :value="item.value"
+              >{{ item.label }}
+            </a-select-option>
+          </a-select>
         </div>
       </div>
       <div class="categories-page-inner-grid">
         <div class="categories-filter-list">
+          <div class="categories-list">
+            <h5>Категория</h5>
+            <ul>
+              <li>
+                <span>Televizor</span>
+                <div class="child-categories-list">
+                  <nuxt-link to="/">Smart TV</nuxt-link>
+                  <nuxt-link to="/">Televizor</nuxt-link>
+                  <nuxt-link to="/">Smart TV</nuxt-link>
+                </div>
+              </li>
+              <li><span>Smartfonlar</span></li>
+              <li><span>Samokatlar</span></li>
+              <li><span>Planshetlar</span></li>
+              <li><span>Televizor</span></li>
+              <li><span>Televizor</span></li>
+              <li><span>Smartfonlar</span></li>
+              <li><span>Planshetlar</span></li>
+            </ul>
+            <span class="categories-list_show-more">Показать еще</span>
+          </div>
           <div class="filter-range">
             <h5>Категория</h5>
             <a-slider
@@ -183,28 +132,7 @@
           </div>
         </div>
         <div class="categories-products">
-          <div class="d-flex justify-content-between w-100">
-            <div class="select-filters">
-              <span>48 MP camera <span v-html="filterX"></span></span>
-              <span>48 MP camera <span v-html="filterX"></span></span>
-              <span>48 MP camera <span v-html="filterX"></span></span>
-              <div class="clear-filter">Filtrni tozalash</div>
-            </div>
-            <a-select
-              v-model="value"
-              class="categories-filter-select"
-              placeholder="Select good person"
-              style="width: 252px"
-            >
-              <a-select-option
-                v-for="item in status"
-                :key="item?.value"
-                :label="item.label"
-                :value="item.value"
-                >{{ item.label }}
-              </a-select-option>
-            </a-select>
-          </div>
+          <div class="d-flex justify-content-end w-100"></div>
           <div class="categories-card-grid">
             <ProductCard />
             <ProductCard />

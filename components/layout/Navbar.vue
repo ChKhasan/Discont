@@ -3,22 +3,22 @@
     <div class="container_xl">
       <div class="d-flex header-navbar_container">
         <div class="d-flex align-items-center">
-          <span v-html="navLogo" class="nav_logo"></span>
+          <nuxt-link to="/"><span v-html="navLogo" class="nav_logo"></span></nuxt-link>
           <div class="search_input_container">
             <input type="text" placeholder="Noutbuk ..." />
             <span class="search-btn">
               <span v-html="navMic"></span>
-              Qidiruv
+              <p>Qidiruv</p>
             </span>
           </div>
         </div>
         <div class="header-navbar_navbar d-flex">
           <ul class="d-flex justify-content-between w-100 align-items-center">
-            <li><span v-html="navOrder"></span>Buyurtmalar</li>
-            <li><span v-html="navLike"></span> Sevimlilar</li>
-            <li><span v-html="navBasket"></span>Savatcha</li>
-            <li><span v-html="navComp"></span>Solishtirish</li>
-            <li class="nav_profile flex-row">
+            <li><span class="nav-icons" v-html="navOrder"></span>Buyurtmalar</li>
+            <li><span class="nav-icons" v-html="navLike"></span> Sevimlilar</li>
+            <li><span class="nav-icons" v-html="navBasket"></span>Savatcha</li>
+            <li><span class="nav-icons" v-html="navComp"></span>Solishtirish</li>
+            <li class="nav_profile flex-row" @click="$router.push('/profile/personal-info')">
               <span v-html="navUser"></span>
               <p>profil</p>
             </li>

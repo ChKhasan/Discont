@@ -1,5 +1,6 @@
 @import "./main.css";
 @import "./layouts/layout.css";
+@import "./components/form.css";
 
 p,
 h1,
@@ -9,4 +10,9 @@ h4,
 h5,
 h6 {
   margin-bottom: 0;
+}
+body {
+  font-family: var(--SB_text) !important;
+  font-style: normal;
+  font-weight: 400;
 }

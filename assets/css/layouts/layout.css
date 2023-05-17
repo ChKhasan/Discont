@@ -11,7 +11,6 @@
 
 .header-top ul li {
   margin-right: 32px;
-
   font-size: 14px;
   line-height: 18px;
   color: #ffffff;
@@ -23,6 +22,24 @@
   font-size: 14px;
   line-height: 18px;
   color: #ffffff;
+}
+.header-top__right p a {
+  font-family: "SB Sans Text";
+  font-style: normal;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 18px;
+  color: #ffffff;
+  text-decoration: underline;
+}
+
+.header-top__right p span {
+  cursor: pointer;
+}
+.header-lang-active {
+  font-family: var(--SB_700);
+  font-weight: 700;
+  text-decoration: underline;
 }
 .header-navbar {
   background: #09454f;
@@ -75,11 +92,22 @@
   cursor: pointer;
   display: flex;
   flex-direction: column;
+  transition: 0.3s;
+}
+.header-navbar_navbar ul li:hover {
+  color: #04babe;
 }
 .header-navbar_navbar ul {
   padding-left: 65px;
 }
-
+.header-navbar_navbar ul li:hover .nav-icons svg rect,
+.header-navbar_navbar ul li:hover .nav-icons svg path {
+  stroke: #04babe;
+}
+.header-navbar_navbar ul li svg rect,
+.header-navbar_navbar ul li svg path {
+  transition: 0.3s;
+}
 .header-navbar_navbar ul li svg {
   margin-bottom: 8px;
 }
@@ -129,7 +157,7 @@
 }
 .header-category_container ul li a {
   padding: 9px 12px;
-  margin-right: 48px;
+  margin-right: 18px;
   font-family: var(--SB_text);
   font-style: normal;
   font-weight: 400;
@@ -138,7 +166,7 @@
   text-transform: capitalize;
   text-decoration: none;
   color: #000000;
-  background: #f6f7f9;
+  background: #2d3138;
   border-radius: 9px;
   display: flex;
   white-space: nowrap;
@@ -156,6 +184,7 @@
   height: 38px;
   display: flex;
   align-items: center;
+  overflow: hidden;
 }
 .coin_btn span {
   position: absolute;
@@ -274,16 +303,45 @@
   grid-template-columns: repeat(3, 1fr);
   grid-gap: 16px;
 }
-.search-btn {
+.search-btn::after {
+  content: "";
+  position: absolute;
+  width: 10px;
+  height: 10px;
+  left: 16px;
+  background: transparent;
+  border-radius: 50%;
+  transition: 0.2s;
+}
+.search-btn:hover::after {
+  width: 100%;
+  height: 100%;
+  border-radius: 0;
+  left: 0;
   background: #09454f;
+}
+.search-btn:hover svg path {
+  fill: #fff;
+}
+.search-btn:hover span {
+  z-index: 1;
+  position: relative;
+  color: #fff;
+}
+.search-btn {
+  background: #ffffff;
+  overflow: hidden;
+  position: relative;
+  border: 1.5px solid rgba(31, 138, 112, 0.2);
   border-radius: 56px;
   padding: 0 14px;
-  font-family: var(--SB_text);
+  font-family: var(--SB_500);
   font-style: normal;
   font-weight: 500;
   font-size: 14px;
   line-height: 18px;
-  color: #ffffff;
+  display: flex;
+  color: #09454f;
   align-items: center;
   height: 100%;
   cursor: pointer;
@@ -292,5 +350,6 @@
   margin-right: 14px;
 }
 .search-btn svg path {
-  fill: #ffffff;
+  fill: #09454f;
+  transition: 0.2s;
 }
