@@ -118,7 +118,7 @@
         <div class="col-md-4 col-xs-12 stats">
           <div class="widther">
             <div class="specs">
-              <p class="lil">Маҳсулот ҳақида қисқача</p>
+              <p class="lil">Махсулот хакида кискача</p>
 
               <div class="spec">
                 <p class="question">Бренд</p>
@@ -168,32 +168,23 @@
         <div class="col-md-3 col-xs-12 order">
           <div class="cardo">
             <div class="cardo__header">
+              <div class="discount">
+                <p class="tag">-12%</p>
+                <p class="dis__price">10 540 000 so’m</p>
+                <p class="dis__txt">Chegirma narxida</p>
+              </div>
+
               <p class="price">12 000 000 so’m</p>
 
-              <p class="coin">+5 ta dis coin</p>
+              <p class="delivery">Yetkazib berish - 0 so’m (21-may)</p>
+
+              <p class="coin">
+                <img src="@/assets/images/coin.svg" alt="" /> +5 ta dis coin
+              </p>
             </div>
 
             <div class="buttons">
-              <button class="cart">
-                <svg
-                  width="24"
-                  height="24"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  xmlns="http://www.w3.org/2000/svg"
-                >
-                  <path
-                    d="M18.7903 17.8667C18.2594 17.8667 17.7404 18.0239 17.299 18.3184C16.8575 18.6128 16.5135 19.0314 16.3103 19.5211C16.1071 20.0108 16.054 20.5497 16.1575 21.0696C16.2611 21.5894 16.5168 22.067 16.8922 22.4418C17.2676 22.8166 17.7459 23.0718 18.2666 23.1752C18.7873 23.2786 19.327 23.2256 19.8175 23.0227C20.308 22.8199 20.7273 22.4764 21.0222 22.0356C21.3172 21.5949 21.4746 21.0768 21.4746 20.5467C21.4738 19.8362 21.1908 19.155 20.6875 18.6525C20.1843 18.1501 19.502 17.8675 18.7903 17.8667ZM18.7903 21.44C18.6133 21.44 18.4403 21.3877 18.2932 21.2895C18.146 21.1913 18.0313 21.0518 17.9636 20.8886C17.8959 20.7253 17.8782 20.5457 17.9127 20.3724C17.9472 20.1991 18.0324 20.04 18.1576 19.915C18.2827 19.7901 18.4422 19.705 18.6157 19.6705C18.7893 19.6361 18.9692 19.6538 19.1327 19.7214C19.2962 19.789 19.4359 19.9035 19.5343 20.0504C19.6326 20.1973 19.6851 20.37 19.6851 20.5467C19.6848 20.7835 19.5904 21.0106 19.4226 21.1781C19.2549 21.3455 19.0275 21.4397 18.7903 21.44Z"
-                    fill="#09454F"
-                  />
-                  <path
-                    d="M13.4216 17.8667H6.26343C6.02612 17.8667 5.79853 17.7726 5.63073 17.6051C5.46292 17.4375 5.36865 17.2103 5.36865 16.9734C5.36865 16.7364 5.46292 16.5092 5.63073 16.3417C5.79853 16.1742 6.02612 16.08 6.26343 16.08H20.5798C20.7916 16.08 20.9965 16.005 21.1581 15.8684C21.3197 15.7317 21.4275 15.5423 21.4624 15.3337L23.2519 4.61372C23.2733 4.48574 23.2665 4.35464 23.232 4.22954C23.1975 4.10444 23.1361 3.98835 23.0521 3.88934C22.9682 3.79032 22.8636 3.71076 22.7457 3.65619C22.6278 3.60162 22.4994 3.57335 22.3694 3.57334H8.05298C7.81567 3.57334 7.58808 3.66746 7.42028 3.83499C7.25248 4.00253 7.15821 4.22975 7.15821 4.46668C7.15821 4.7036 7.25248 4.93083 7.42028 5.09836C7.58808 5.26589 7.81567 5.36001 8.05298 5.36001H21.3129L19.8218 14.2934H8.67288L3.52228 0.579685C3.45827 0.40942 3.34375 0.262704 3.19403 0.159125C3.0443 0.0555458 2.86648 3.35227e-05 2.68433 0H0.894776C0.657466 0 0.429877 0.0941189 0.262074 0.261652C0.0942707 0.429185 0 0.656408 0 0.893335C0 1.13026 0.0942707 1.35749 0.262074 1.52502C0.429877 1.69255 0.657466 1.78667 0.894776 1.78667H2.06434L6.76191 14.2934H6.26343C5.61146 14.2887 4.98022 14.5219 4.48834 14.9492C3.99645 15.3765 3.67776 15.9683 3.59215 16.6137C3.50655 17.259 3.65991 17.9133 4.02343 18.4536C4.38695 18.994 4.93561 19.3833 5.56631 19.5482C5.39811 19.9517 5.33114 20.3902 5.37122 20.8254C5.4113 21.2606 5.5572 21.6795 5.79627 22.0456C6.03534 22.4118 6.36033 22.7141 6.74301 22.9263C7.1257 23.1386 7.55451 23.2543 7.99218 23.2635C8.42985 23.2727 8.86315 23.1751 9.25444 22.9791C9.64573 22.7831 9.98316 22.4947 10.2374 22.1389C10.4917 21.7831 10.6551 21.3708 10.7135 20.9376C10.7719 20.5044 10.7234 20.0636 10.5724 19.6534H13.4216C13.6589 19.6534 13.8865 19.5593 14.0543 19.3917C14.2221 19.2242 14.3164 18.997 14.3164 18.76C14.3164 18.5231 14.2221 18.2959 14.0543 18.1284C13.8865 17.9608 13.6589 17.8667 13.4216 17.8667ZM8.94776 20.5467C8.94776 20.7234 8.89528 20.8961 8.79696 21.043C8.69864 21.1899 8.5589 21.3044 8.3954 21.372C8.2319 21.4397 8.05199 21.4573 7.87842 21.4229C7.70485 21.3884 7.54542 21.3033 7.42028 21.1784C7.29514 21.0535 7.20992 20.8943 7.1754 20.721C7.14087 20.5477 7.15859 20.3681 7.22632 20.2048C7.29404 20.0416 7.40872 19.9021 7.55587 19.8039C7.70301 19.7058 7.87601 19.6534 8.05298 19.6534C8.2902 19.6537 8.51761 19.7479 8.68534 19.9154C8.85308 20.0828 8.94745 20.3099 8.94776 20.5467Z"
-                    fill="#09454F"
-                  />
-                </svg>
-
-                Savatchaga solish
-              </button>
+              <button class="cart">Savatchaga solish</button>
               <button class="click">Birgina click orqali sotib olish</button>
             </div>
           </div>
@@ -201,6 +192,21 @@
           <div class="credit">
             <p>Муддатли тўлов 139 333 сўмдан / 24 ой</p>
             <button>Xalol bo’lib to’lashga olish</button>
+          </div>
+
+          <div class="credit__items">
+            <div>
+              <img src="@/assets/images/credit-1.svg" alt="" />
+              <p>100 % Halol nasiya savdo</p>
+            </div>
+            <div>
+              <img src="@/assets/images/credit-2.svg" alt="" />
+              <p>Hech qanday penyalarsiz</p>
+            </div>
+            <div>
+              <img src="@/assets/images/credit-3.svg" alt="" />
+              <p>1 yil kafolat va service</p>
+            </div>
           </div>
         </div>
       </div>
@@ -244,6 +250,7 @@ export default {
 .wrap {
   padding-top: 32px;
   min-height: 100vh;
+  color: black;
 }
 .swiper {
   width: 100%;
@@ -279,21 +286,23 @@ export default {
 }
 
 .mySwiper2 {
-  height: 500px;
+  height: 580px;
   width: 80%;
 }
-
+.mySwiper2 .swiper-slide {
+  border-radius: 20px;
+}
 .mySwiper {
   width: 20%;
-  height: 500px;
+  height: 480px;
   box-sizing: border-box;
   padding: 10px 0;
-  border-radius: 20px;
+  padding: 0;
 }
 
 .mySwiper .swiper-slide {
   height: 25%;
-  width: 100%;
+  width: 100px;
   opacity: 0.4;
   padding: 8px 0;
 }
@@ -313,7 +322,7 @@ export default {
   object-fit: contain;
 }
 .title {
-  font-weight: 510;
+  font-weight: 600;
   font-size: 24px;
   line-height: 29px;
   margin-bottom: 14px;
@@ -383,8 +392,8 @@ export default {
   max-width: 70%;
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
   height: 100%;
+  gap: 32px;
 }
 
 .colors .grid,
@@ -406,13 +415,14 @@ export default {
   background: lightpink;
 }
 .variation {
-  font-weight: 500;
-  font-size: 12px;
+  font-weight: 600;
+  font-size: 13px;
   line-height: 14px;
   padding: 8px 24px;
   border: 1px solid rgba(0, 0, 0, 0.1);
   border-radius: 6px;
   cursor: pointer;
+  color: black;
 }
 .all {
   font-weight: 400;
@@ -427,6 +437,10 @@ export default {
   align-items: center;
   gap: 24px;
   padding: 12px 16px;
+  font-weight: 400;
+  font-size: 20px;
+  line-height: 24px;
+  color: black;
 }
 .number button {
   color: #9a999b;
@@ -438,5 +452,146 @@ export default {
   align-items: center;
   justify-content: center;
   font-size: 16px;
+}
+.cardo {
+  box-shadow: 0px 0px 26px rgba(0, 0, 0, 0.05);
+  border-radius: 12px;
+  padding: 20px 14px;
+  background: white;
+  margin-bottom: 18px;
+}
+.discount {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 20px;
+}
+.tag {
+  background: #e90a0a;
+  padding: 6px 14px;
+  font-weight: 700;
+  font-size: 14px;
+  line-height: 17px;
+  color: #ffffff;
+}
+.dis__price {
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 17px;
+  color: #9c9c9c;
+  text-decoration: line-through;
+}
+.dis__txt {
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 17px;
+  color: #9c9c9c;
+}
+.price {
+  font-weight: 700;
+  font-size: 24px;
+  line-height: 29px;
+  margin-bottom: 20px;
+}
+.delivery {
+  font-weight: 500;
+  font-size: 16px;
+  line-height: 19px;
+  color: #9c9c9c;
+  margin-bottom: 20px;
+}
+.coin {
+  font-weight: 500;
+  font-size: 16px;
+  line-height: 19px;
+  color: #1f8a70;
+  margin-bottom: 20px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.cart {
+  background: #f5f5f5;
+  border-radius: 10px;
+  font-weight: 500;
+  font-size: 16px;
+  line-height: 19px;
+  color: #1f8a70;
+  width: 100%;
+  padding: 12px 0;
+  display: flex;
+  justify-content: center;
+  text-align: center;
+  align-items: center;
+  border: none;
+  margin-bottom: 20px;
+}
+.click {
+  background: #1f8a70;
+  border-radius: 10px;
+  width: 100%;
+  padding: 12px 0;
+  display: flex;
+  justify-content: center;
+  text-align: center;
+  align-items: center;
+  border: none;
+  font-weight: 500;
+  font-size: 16px;
+  line-height: 19px;
+  color: white;
+}
+.credit {
+  background: #ffffff;
+  border: 1px solid #f1f1f1;
+  border-radius: 12px;
+  padding: 14px 20px;
+  margin-bottom: 40px;
+}
+.credit p {
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 17px;
+  margin-bottom: 20px;
+}
+.credit button {
+  background: #f5f5f5;
+  border-radius: 10px;
+  font-weight: 500;
+  font-size: 16px;
+  line-height: 19px;
+  color: black;
+  width: 100%;
+  padding: 12px 0;
+  display: flex;
+  justify-content: center;
+  text-align: center;
+  align-items: center;
+  border: none;
+}
+.credit__items {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.credit__items div {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+}
+.credit__items p {
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 18px;
+  color: #707070;
+  max-width: 90%;
+  margin: 0 auto;
+  text-align: center;
+}
+.credit__items img {
+  width: 40px;
+  height: 40px;
+  object-fit: contain;
 }
 </style>

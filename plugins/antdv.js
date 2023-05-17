@@ -15,7 +15,6 @@ import {
   // Popconfirm,
   // Radio,
   Icon,
-  Input,
   // Spin,
   // Dropdown,
   // Menu,
@@ -28,8 +27,6 @@ import {
   // Skeleton,
   // Empty,
   // Alert,
-  Rate,
-  Slider,
 } from "ant-design-vue";
 // const { info, success, error, warning, confirm } = Modal;
 // Vue.prototype.$notification = notification;
@@ -62,4 +59,3 @@ Vue.use(Input);
 // Vue.use(Spin);
 // Vue.use(Dropdown);
 // Vue.use(Menu);
-Vue.use(Rate);
