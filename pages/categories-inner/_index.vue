@@ -520,4 +520,7 @@ export default {
 .active-category {
   color: #000 !important;
 }
+.text-test {
+  color: red;
+}
 </style>
