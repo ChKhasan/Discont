@@ -2,8 +2,24 @@
   <div>
     <div class="container_xl">
       <div class="home-banner-container">
-        <BannerCarousel />
-        <BannerCarouselRight />
+        <BannerCarousel>
+          <div
+            class="swiper-slide"
+            v-for="product in bestsellersProducts"
+            :key="product.id"
+          >
+            <div class="banner"></div>
+          </div>
+        </BannerCarousel>
+        <BannerCarouselRight>
+          <div
+            class="swiper-slide"
+            v-for="product in bestsellersProducts"
+            :key="product.id"
+          >
+            <div class="banner"></div>
+          </div>
+        </BannerCarouselRight>
       </div>
       <div class="home-categories mb-120">
         <MainTitle title="Kategoriyalar" />
@@ -347,5 +363,10 @@ h4,
 h5,
 h6 {
   margin-bottom: 0;
+}
+.banner-carousel .banner {
+  width: 100%;
+  height: 354px !important;
+  background: red;
 }
 </style>

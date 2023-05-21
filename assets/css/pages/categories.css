@@ -14,10 +14,12 @@
   grid-template-columns: 1fr 4fr;
   grid-gap: 24px;
 }
-.categories-list {
+.categories-list,
+.categories-list-inner {
   margin-bottom: 24px;
 }
-.categories-list h5 {
+.categories-list h5,
+.categories-list-inner h5 {
   font-family: var(--SB_600);
   font-style: normal;
   font-weight: 600;
@@ -29,6 +31,7 @@
   color: #1c1f22;
   margin-bottom: 12px;
 }
+.categories-list-inner ul li span,
 .categories-list ul li span {
   font-family: var(--SB_500);
   font-style: normal;
@@ -38,11 +41,19 @@
   display: flex;
   align-items: center;
   letter-spacing: -0.28px;
-  color: #1c1f22;
   margin-bottom: 12px;
   cursor: pointer;
 }
+.categories-list-inner {
+  padding-left: 16px;
+}
 
+.categories-list-inner ul li span {
+  color: #9a9a9a;
+}
+.categories-list ul li span {
+  color: #1c1f22;
+}
 .categories-list_show-more {
   font-family: var(--SB_400);
   font-style: normal;
@@ -117,7 +128,8 @@
   margin-left: 24px;
 }
 .child-categories-list a,
-.categories-list a {
+.categories-list a,
+.categories-list-inner a {
   font-family: var(--SB_400);
   font-style: normal;
   font-weight: 400;

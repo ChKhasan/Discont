@@ -42,44 +42,35 @@
             <div class="swiper-slide d-inline">
               <span class="categories-tab-link">с большой памятью</span>
             </div>
-            <div class="swiper-slide d-inline">
-              <span class="categories-tab-link">goodbek</span>
-            </div>
-            <div class="swiper-slide d-inline">
-              <span class="categories-tab-link">goodbek</span>
-            </div>
-            <div class="swiper-slide d-inline">
-              <span class="categories-tab-link">goodbek</span>
-            </div>
 
-            <div class="swiper-slide d-inline">
-              <span class="categories-tab-link">goodbek</span>
+             <div class="swiper-slide d-inline">
+              <span class="categories-tab-link">Ayollar uchun smartfonlar</span>
             </div>
             <div class="swiper-slide d-inline">
-              <span class="categories-tab-link">goodbek</span>
+              <span class="categories-tab-link">Bolalar uchun smartfonlar</span>
             </div>
             <div class="swiper-slide d-inline">
-              <span class="categories-tab-link">goodbek</span>
-            </div>
-
-            <div class="swiper-slide d-inline">
-              <span class="categories-tab-link">goodbek</span>
+              <span class="categories-tab-link">Ximoyalangan smartfonlar</span>
             </div>
             <div class="swiper-slide d-inline">
-              <span class="categories-tab-link">goodbek</span>
+              <span class="categories-tab-link">Yengil smartfonlar</span>
             </div>
             <div class="swiper-slide d-inline">
-              <span class="categories-tab-link">goodbek@1312</span>
+              <span class="categories-tab-link">Защищенные смартфоны</span>
             </div>
             <div class="swiper-slide d-inline">
-              <span class="categories-tab-link">goodbek123123</span>
+              <span class="categories-tab-link">Смартфоны с мощным аккумулятором</span>
             </div>
             <div class="swiper-slide d-inline">
-              <span class="categories-tab-link categories-tab-link-last"
-                >goodbek00000</span
-              >
+              <span class="categories-tab-link">Смартфоны с хорошей камерой</span>
             </div>
-          </CategoriesTabCarousel>
+            <div class="swiper-slide d-inline">
+              <span class="categories-tab-link">с большой памятью</span>
+            </div>
+            <div class="swiper-slide d-inline">
+              <span class="categories-tab-link">с большой памятью</span>
+            </div>
+                     </CategoriesTabCarousel>
         </div>
         <div class="mt-4">
           <CategoriesInnerBannerCarousel>
@@ -103,16 +94,20 @@
       </div>
       <div class="categories-page-inner-grid">
         <div class="categories-filter-list">
-          <div class="categories-list">
+          <div class="categories-list-inner">
             <h5>Категория</h5>
             <nuxt-link to="/">{{
               categoryChilds?.parent?.parent?.name?.ru
                 ? categoryChilds?.parent?.parent?.name?.ru
                 : categoryChilds?.parent?.name?.ru
             }}</nuxt-link>
-            <ul class="category-inner-list">
+            <ul class="categories-list-inner">
               <li>
                 <span
+                  :class="{
+                    'active-category':
+                      $route.params.index == categoryChilds?.slug,
+                  }"
                   @click="
                     $router.push(
                       `/categories-inner/${
@@ -122,9 +117,6 @@
                       }`
                     )
                   "
-                  :class="{
-                    'active-category': $route.params.index == categoryChilds?.slug,
-                  }"
                   >{{
                     categoryChilds?.parent?.parent?.name?.ru
                       ? categoryChilds?.parent?.name?.ru
@@ -135,6 +127,9 @@
                   <nuxt-link
                     v-if="categoryChilds?.children.length === 0"
                     :to="`/categories-inner/${categoryChilds?.slug}`"
+                    :class="{
+                      'active-category': $route.params.index == categoryChilds?.slug,
+                    }"
                     >{{ categoryChilds?.name?.ru }}</nuxt-link
                   >
                   <nuxt-link
@@ -399,7 +394,9 @@ export default {
       this.filterOptions = [];
     },
     async __GET_PRODUCTS() {
-      const data = await this.$axios.$get(`/categories/${this.$route.params.index}`,{params: {...this.$route.query}});
+      const data = await this.$axios.$get(`/categories/${this.$route.params.index}`, {
+        params: { ...this.$route.query },
+      });
       this.products = data?.product_infos;
     },
     async onChange(value) {
@@ -496,6 +493,7 @@ export default {
   width: 100%;
   height: calc(100vh - 400px);
   display: flex;
+  max-height: 720px;
   align-items: center;
   justify-content: center;
   flex-direction: column;
@@ -511,12 +509,7 @@ export default {
   margin-bottom: 32px;
   margin-top: 32px;
 }
-.category-inner-list {
-  padding-left: 16px;
-}
-.category-inner-list li span {
-  color: #9a9a9a !important;
-}
+
 .active-category {
   color: #000 !important;
 }

@@ -58,6 +58,9 @@
   width: 100%;
   font-size: 16px;
   line-height: 19px;
+  color: #000000;
+}
+.search_input_container input::placeholder {
   color: #939393;
 }
 .search_input_container input:focus {

@@ -1,28 +1,13 @@
 <template lang="html">
   <div class="banner-carousel">
     <div class="flex items-center justify-center">
-      <div class="swiper-banner mySwiper">
-        <div class="swiper-wrapper">
-          <div class="swiper-slide">
-            <div class="banner"></div>
-          </div>
-          <div class="swiper-slide">
-            <div class="banner"></div>
-          </div>
-          <div class="swiper-slide">
-            <div class="banner"></div>
-          </div>
-          <div class="swiper-slide">
-            <div class="banner"></div>
-          </div>
-          <div class="swiper-slide">
-            <div class="banner"></div>
-          </div>
-          <div class="swiper-slide">
-            <div class="banner"></div>
+      <only-client>
+        <div class="swiper-banner mySwiper" style="overflow: hidden; height: 354px">
+          <div class="swiper-wrapper">
+            <slot></slot>
           </div>
         </div>
-      </div>
+      </only-client>
       <div class="swiper-pagination-banner"></div>
       <div class="swiper-button-prev-banner">
         <span
