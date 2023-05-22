@@ -293,7 +293,7 @@ export default {
       posts: [],
     };
   },
-  async asyncData({ $axios }) {
+  async asyncData({ $axios, store }) {
     const [
       products,
       byCategory,
@@ -302,37 +302,25 @@ export default {
       brands1,
       posts1,
     ] = await Promise.all([
-      $axios.$get(`/products`, {
-        params: {
-          type: "bestsellers",
-          limit: 6,
-        },
+      store.dispatch("fetchProducts/getProducts", {
+        type: "bestsellers",
+        limit: 6,
       }),
-      $axios.$get(`/products`, {
-        params: {
-          limit: 10,
-        },
+      store.dispatch("fetchProducts/getProducts", {
+        limit: 10,
       }),
-      $axios.$get(`/products`, {
-        params: {
-          type: "popular",
-          limit: 6,
-        },
+      store.dispatch("fetchProducts/getProducts", {
+        type: "popular",
+        limit: 6,
       }),
-      $axios.$get(`/categories`, {
-        params: {
-          limit: 6,
-        },
+      store.dispatch("fetchCategories/getCategories", {
+        limit: 6,
       }),
-      $axios.$get(`/brands`, {
-        params: {
-          limit: 10,
-        },
+      store.dispatch("fetchBrands/getBrands", {
+        limit: 10,
       }),
-      $axios.$get(`/posts`, {
-        params: {
-          limit: 4,
-        },
+      store.dispatch("fetchPosts/getPosts", {
+        limit: 4,
       }),
     ]);
     const bestsellersProducts = products?.products?.data;

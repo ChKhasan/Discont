@@ -1,7 +1,7 @@
 <template lang="html">
   <div class="brand-card" @click="$router.push(`/brand-categories/${brand?.slug}`)">
-    <img v-if="brand?.logo" :src="brand?.logo" alt="" />
-    <img v-else src="../../assets/images/image 56.png" alt="" />
+    <!-- <img v-if="brand?.logo" :src="brand?.logo" alt="" /> -->
+    <img src="../../assets/images/image 56.png" alt="" />
   </div>
 </template>
 <script>

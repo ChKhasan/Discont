@@ -247,7 +247,18 @@ export default {
   //     productAttributes,
   //   };
   // },
-  async fetch() {
+  // async fetch() {
+  //   const [productData] = await Promise.all([
+  //     this.$store.dispatch("fetchProducts/getProductsBySlug", this.$route.params.index),
+  //   ]);
+  //   this.product = productData.product;
+  //   this.productCharacteristic = productData?.product?.characteristic_options.splice(
+  //     0,
+  //     4
+  //   );
+  //   this.productAttributes = productData?.attributes;
+  // },
+  async mounted() {
     const [productData] = await Promise.all([
       this.$store.dispatch("fetchProducts/getProductsBySlug", this.$route.params.index),
     ]);
@@ -257,8 +268,6 @@ export default {
       4
     );
     this.productAttributes = productData?.attributes;
-  },
-  mounted() {
     var swiper = new Swiper(".mySwiper", {
       spaceBetween: 16,
       slidesPerView: 4,
@@ -273,9 +282,6 @@ export default {
         swiper: swiper,
       },
     });
-    setTimeout(() => {
-      this.swiperReload();
-    }, 1000);
   },
 
   methods: {
