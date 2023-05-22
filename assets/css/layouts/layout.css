@@ -307,9 +307,9 @@
   grid-gap: 16px;
 }
 
-.search-btn:hover svg path {
+/* .search-btn:hover svg path {
   fill: #fff;
-}
+} */
 /* .search-btn:hover span {
   z-index: 1;
   position: relative;
@@ -317,8 +317,6 @@
 } */
 .search-btn {
   background: #ffffff;
-  overflow: hidden;
-  position: relative;
   border: 1.5px solid rgba(31, 138, 112, 0.2);
   border-radius: 56px;
   padding: 0 14px;

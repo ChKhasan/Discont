@@ -43,7 +43,7 @@
               <span class="categories-tab-link">с большой памятью</span>
             </div>
 
-             <div class="swiper-slide d-inline">
+            <div class="swiper-slide d-inline">
               <span class="categories-tab-link">Ayollar uchun smartfonlar</span>
             </div>
             <div class="swiper-slide d-inline">
@@ -70,7 +70,7 @@
             <div class="swiper-slide d-inline">
               <span class="categories-tab-link">с большой памятью</span>
             </div>
-                     </CategoriesTabCarousel>
+          </CategoriesTabCarousel>
         </div>
         <div class="mt-4">
           <CategoriesInnerBannerCarousel>
@@ -106,7 +106,8 @@
                 <span
                   :class="{
                     'active-category':
-                      $route.params.index == categoryChilds?.slug,
+                      $route.params.index ==
+                      (!categoryChilds?.parent?.parent?.slug && categoryChilds.slug),
                   }"
                   @click="
                     $router.push(

@@ -2,13 +2,13 @@
   <div class="wrap">
     <div class="container_xl">
       <div class="top">
-        <h4 class="title">Smartfon Samsung Galaxy s22</h4>
+        <h4 class="title">{{ product?.info?.name?.ru }}</h4>
         <div class="flexer">
           <div class="left">
             <div class="stars">
-              <template>
-                <a-rate v-model="value" />
-              </template>
+              <div v-if="product?.info?.stars != null">
+                <a-rate v-model="product.info.stars" />
+              </div>
             </div>
             <p class="reviews">(12 ta feedbacks)</p>
           </div>
@@ -70,46 +70,19 @@
         <div class="col-md-5 col-xs-12 images">
           <div class="world">
             <div thumbsSlider="" class="swiper mySwiper">
-              <div class="swiper-wrapper">
-                <div class="swiper-slide">
-                  <img src="@/assets/images/delete/prod-5.webp" />
-                </div>
-                <div class="swiper-slide">
-                  <img src="@/assets/images/delete/prod-4.jpg" />
-                </div>
-                <div class="swiper-slide">
-                  <img src="@/assets/images/delete/prod-3.jpg" />
-                </div>
-                <div class="swiper-slide">
-                  <img src="@/assets/images/delete/prod-2.jpg" />
-                </div>
-                <div class="swiper-slide">
-                  <img src="@/assets/images/delete/prod-1.jpg" />
+              <div class="swiper-wrapper flex-column">
+                <div class="swiper-slide" v-for="img in product?.images" :key="img.id">
+                  <img :src="img?.sm_img" />
                 </div>
               </div>
             </div>
             <div
-              style="
-                --swiper-navigation-color: #fff;
-                --swiper-pagination-color: #fff;
-              "
+              style="--swiper-navigation-color: #fff; --swiper-pagination-color: #fff"
               class="swiper mySwiper2"
             >
               <div class="swiper-wrapper">
-                <div class="swiper-slide">
-                  <img src="@/assets/images/delete/prod-5.webp" />
-                </div>
-                <div class="swiper-slide">
-                  <img src="@/assets/images/delete/prod-4.jpg" />
-                </div>
-                <div class="swiper-slide">
-                  <img src="@/assets/images/delete/prod-3.jpg" />
-                </div>
-                <div class="swiper-slide">
-                  <img src="@/assets/images/delete/prod-2.jpg" />
-                </div>
-                <div class="swiper-slide">
-                  <img src="@/assets/images/delete/prod-1.jpg" />
+                <div class="swiper-slide" v-for="img in product?.images" :key="img.id">
+                  <img :src="img?.sm_img" />
                 </div>
               </div>
             </div>
@@ -120,11 +93,11 @@
             <div class="specs">
               <p class="lil">Махсулот хакида кискача</p>
 
-              <div class="spec">
-                <p class="question">Бренд</p>
-                <p class="answer">Samsung</p>
+              <div class="spec" v-for="characteristic in productCharacteristic">
+                <p class="question">{{ characteristic?.characteristic?.name?.ru }}</p>
+                <p class="answer">{{ characteristic?.name?.ru }}</p>
               </div>
-              <div class="spec">
+              <!-- <div class="spec">
                 <p class="question">Диагональ</p>
                 <p class="answer">6,5"</p>
               </div>
@@ -135,9 +108,17 @@
               <div class="spec">
                 <p class="question">Экраннинг янгиланиш тезлиги</p>
                 <p class="answer">60 Гц</p>
-              </div>
+              </div> -->
 
-              <p class="all">Barcha xarakteristikalar</p>
+              <p
+                class="all"
+                @click="allCharacteristic"
+                v-if="
+                  productCharacteristic?.length < product?.characteristic_options?.length
+                "
+              >
+                Barcha xarakteristikalar
+              </p>
             </div>
             <div class="colors">
               <p class="lil">Цвета</p>
@@ -146,13 +127,34 @@
                 <div class="color"></div>
               </div>
             </div>
-            <div class="variations">
+            <div
+              class="variations"
+              v-for="(atribut, atributIndex) in productAttributes"
+              :key="atributIndex"
+            >
+              <p class="lil">{{ atribut?.title?.ru }}</p>
+              <div class="grid">
+                <div
+                  class="variation"
+                  v-for="(option, optionIndex) in atribut?.options"
+                  @click="$router.push(`/product/${option?.slug}`)"
+                  :class="{
+                    'active-attribute': option?.active,
+                    'disabled-attribute': !option?.available,
+                  }"
+                  :key="optionIndex"
+                >
+                  {{ option?.title?.ru }}
+                </div>
+              </div>
+            </div>
+            <!-- <div class="variations">
               <p class="lil">Емкость</p>
               <div class="grid">
                 <div class="variation">64 GB</div>
                 <div class="variation">128 GB</div>
               </div>
-            </div>
+            </div> -->
             <div class="counter">
               <p class="lil">Кол-во</p>
               <div class="grid">
@@ -174,7 +176,12 @@
                 <p class="dis__txt">Chegirma narxida</p>
               </div>
 
-              <p class="price">12 000 000 so’m</p>
+              <p class="price" v-if="product?.price">
+                {{
+                  product?.price.replace(".", ",").replace(/\B(?=(\d{3})+(?!\d))/g, " ")
+                }}
+                so’m
+              </p>
 
               <p class="delivery">Yetkazib berish - 0 so’m (21-may)</p>
 
@@ -222,9 +229,35 @@ export default {
   name: "DiscontSlug",
 
   data() {
-    return { value: 2 };
+    return { value: 2, product: {}, productCharacteristic: [], productAttributes: [] };
   },
-
+  // async asyncData({ store, params }) {
+  //   const [productData] = await Promise.all([
+  //     store.dispatch("fetchProducts/getProductsBySlug", params.index),
+  //   ]);
+  //   const product = productData.product;
+  //   const productCharacteristic = productData?.product?.characteristic_options.splice(
+  //     0,
+  //     4
+  //   );
+  //   const productAttributes = productData?.attributes;
+  //   return {
+  //     product,
+  //     productCharacteristic,
+  //     productAttributes,
+  //   };
+  // },
+  async fetch() {
+    const [productData] = await Promise.all([
+      this.$store.dispatch("fetchProducts/getProductsBySlug", this.$route.params.index),
+    ]);
+    this.product = productData.product;
+    this.productCharacteristic = productData?.product?.characteristic_options.splice(
+      0,
+      4
+    );
+    this.productAttributes = productData?.attributes;
+  },
   mounted() {
     var swiper = new Swiper(".mySwiper", {
       spaceBetween: 16,
@@ -240,9 +273,33 @@ export default {
         swiper: swiper,
       },
     });
+    setTimeout(() => {
+      this.swiperReload();
+    }, 1000);
   },
 
-  methods: {},
+  methods: {
+    swiperReload() {
+      var swiper = new Swiper(".mySwiper", {
+        spaceBetween: 16,
+        slidesPerView: 4,
+        freeMode: true,
+        watchSlidesProgress: true,
+        direction: "vertical",
+      });
+      var swiper2 = new Swiper(".mySwiper2", {
+        loop: true,
+        spaceBetween: 10,
+        thumbs: {
+          swiper: swiper,
+        },
+      });
+    },
+    allCharacteristic() {
+      this.productCharacteristic = [...this.product?.characteristic_options];
+      this.swiperReload();
+    },
+  },
 };
 </script>
 
@@ -401,6 +458,7 @@ export default {
   display: flex;
   align-items: center;
   gap: 8px;
+  flex-wrap: wrap;
 }
 .color {
   width: 50px;
@@ -429,6 +487,7 @@ export default {
   font-size: 14.4812px;
   line-height: 17px;
   color: #00b2a9;
+  cursor: pointer;
 }
 .number {
   border: 1px solid rgba(0, 0, 0, 0.1);
@@ -593,5 +652,11 @@ export default {
   width: 40px;
   height: 40px;
   object-fit: contain;
+}
+.active-attribute {
+  border: 0.628429px solid #04babe;
+}
+.disabled-attribute {
+  pointer-events: none;
 }
 </style>

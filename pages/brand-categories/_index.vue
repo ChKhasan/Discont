@@ -11,7 +11,7 @@
         </div>
         <div class="d-flex categories-page-title justify-content-between">
           <div class="d-flex justify-content-between">
-            <MainTitle title="Каталог Apple" /> <span>8 288 товаров</span>
+            <MainTitle :title="`Каталог ${brand?.name}`" /> <span>8 288 товаров</span>
           </div>
           <a-select
             v-model="value"
@@ -34,23 +34,20 @@
           <div class="categories-list">
             <h5>Категория</h5>
             <ul>
-              <li>
-                <span>Televizor</span>
-                <div class="child-categories-list">
-                  <nuxt-link to="/">Smart TV</nuxt-link>
-                  <nuxt-link to="/">Televizor</nuxt-link>
-                  <nuxt-link to="/">Smart TV</nuxt-link>
-                </div>
+              <li v-for="brand in brands" :key="brand.id">
+                <span
+                  :class="{ 'active-brand': $route.params.index == brand?.slug }"
+                  @click="$router.push(`/brand-categories/${brand?.slug}`)"
+                  >{{ brand?.name }}</span
+                >
               </li>
-              <li><span>Smartfonlar</span></li>
-              <li><span>Samokatlar</span></li>
-              <li><span>Planshetlar</span></li>
-              <li><span>Televizor</span></li>
-              <li><span>Televizor</span></li>
-              <li><span>Smartfonlar</span></li>
-              <li><span>Planshetlar</span></li>
             </ul>
-            <span class="categories-list_show-more">Показать еще</span>
+            <span
+              class="categories-list_show-more"
+              @click="showAll"
+              v-if="brands?.length < brandsAll?.length"
+              >Показать еще</span
+            >
           </div>
           <div class="filter-range">
             <h5>Категория</h5>
@@ -219,20 +216,24 @@
   </div>
 </template>
 <script>
-import MainTitle from "../components/Main-title.vue";
-import CategoriesCard from "../components/cards/CategoriesCard.vue";
-import ProductCard from "../components/cards/ProductCard.vue";
-import CategoriesAppCard from "../components/categories/categories-app-banner.vue";
-import CategoriesInnerBannerCarousel from "../components/categories/categoriesInner-banner-carousel.vue";
-import CategoriesInnerBanner from "../components/categories/categoriesInner-banner.vue";
-import CategoriesTabCarousel from "../components/categories/categoriesInner-tab-carousel.vue";
+import MainTitle from "../../components/Main-title.vue";
+import CategoriesCard from "../../components/cards/CategoriesCard.vue";
+import ProductCard from "../../components/cards/ProductCard.vue";
+import CategoriesAppCard from "../../components/categories/categories-app-banner.vue";
+import CategoriesInnerBannerCarousel from "../../components/categories/categoriesInner-banner-carousel.vue";
+import CategoriesInnerBanner from "../../components/categories/categoriesInner-banner.vue";
+import CategoriesTabCarousel from "../../components/categories/categoriesInner-tab-carousel.vue";
 export default {
   data() {
     return {
-      arrow: require("../assets/svg/dropdown-icon.svg?raw"),
-      filterX: require("../assets/svg/selected-filter-x.svg?raw"),
+      arrow: require("../../assets/svg/dropdown-icon.svg?raw"),
+      filterX: require("../../assets/svg/selected-filter-x.svg?raw"),
       value: "all",
       disabled: false,
+      brands: [],
+      brandProducts: [],
+      brandsAll: [],
+      brand: {},
       status: [
         {
           value: "all",
@@ -253,12 +254,26 @@ export default {
       ],
     };
   },
+  async fetch() {
+    const [brandsData, brandData] = await Promise.all([
+      this.$store.dispatch("fetchBrands/getBrands"),
+      this.$store.dispatch("fetchBrands/getBrandsBySlug", this.$route.params.index),
+    ]);
+    this.brandsAll = brandsData.brands?.data;
+    this.brands = [...brandsData.brands?.data];
+    this.brands = [...this.brands.splice(0, 6)];
+    this.brandProducts = brandData.products?.data;
+    this.brand = brandData.brand;
+  },
   methods: {
     onChange(value) {
       console.log("change: ", value);
     },
     onAfterChange(value) {
       console.log("afterChange: ", value);
+    },
+    showAll() {
+      this.brands = this.brandsAll;
     },
   },
   components: {
@@ -273,5 +288,8 @@ export default {
 };
 </script>
 <style lang="css">
-@import "../assets/css/pages/categories.css";
+@import "../../assets/css/pages/categories.css";
+.active-brand {
+  color: #1f8a70 !important;
+}
 </style>

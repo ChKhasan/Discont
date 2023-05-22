@@ -3,10 +3,8 @@ export const actions = {
     const res = await this.$axios.$get(`/products`, { params: payload });
     return res;
   },
-  async getProductsById({}, id) {
-    const res = await this.$axios.$get(
-      `https://test.loftcity.uz/api/admin/products/${id}`
-    );
+  async getProductsBySlug({}, id) {
+    const res = await this.$axios.$get(`/products/${id}`);
     return res;
   },
 };

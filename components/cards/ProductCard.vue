@@ -13,18 +13,27 @@
       </span>
     </div>
     <div class="product-card-body">
-      <h3 class="product-card-title">
-        {{
-          product?.info?.name?.ru
-            ? product?.info?.name?.ru
-            : "Кир ювиш машинаси Samsung WW80K42E07SDLD"
-        }}
-      </h3>
+      <nuxt-link :to="`/product/${product?.slug}`">
+        <h3 class="product-card-title">
+          {{
+            product?.info?.name?.ru
+              ? product?.info?.name?.ru
+              : "Кир ювиш машинаси Samsung WW80K42E07SDLD"
+          }}
+        </h3>
+      </nuxt-link>
       <p>
         <span v-html="star"></span>{{ product?.info?.stars ? product?.info?.stars : "0" }}
       </p>
       <span class="product-card-price"
-        ><h4>{{ product?.price ? product?.price : "5 650 000" }} so’m</h4>
+        ><h4>
+          {{
+            product?.price
+              ? product?.price.replace(".", ",").replace(/\B(?=(\d{3})+(?!\d))/g, " ")
+              : "5 650 000"
+          }}
+          so’m
+        </h4>
         <span> +5 ta dicoin</span></span
       >
     </div>
@@ -62,6 +71,7 @@ export default {
 .product-card-header:hover .hover-btns {
   right: 12px;
 }
+
 .product-card-header:hover .pc-img-container {
   transform: scale(1.1);
 }
@@ -82,6 +92,15 @@ export default {
 }
 .hover-btns:first-child {
   top: 12px;
+}
+.hover-btns:hover svg path {
+  transition: 0.3s;
+}
+.hover-btns:hover {
+  background: var(--color_green);
+}
+.hover-btns:hover svg path {
+  fill: #fff;
 }
 .pc-img-container {
   width: 100%;

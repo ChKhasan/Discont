@@ -68,6 +68,8 @@ body {
   --SB_text: "SB Sans Text";
   /* --TT_neue_400: "TT Firs Neue" */
   --TT_neue_400: "SF_400";
+  --color_green: #1f8a70;
+  --color_dark_green: #09454f;
 }
 p,
 h1,

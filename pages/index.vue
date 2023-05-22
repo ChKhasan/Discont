@@ -3,21 +3,43 @@
     <div class="container_xl">
       <div class="home-banner-container">
         <BannerCarousel>
-          <div
-            class="swiper-slide"
-            v-for="product in bestsellersProducts"
-            :key="product.id"
-          >
-            <div class="banner"></div>
+          <div class="swiper-slide">
+            <img src="../assets/images/iPhone (2) 1.png" alt="" />
+          </div>
+          <div class="swiper-slide">
+            <img src="../assets/images/iPhone (2) 1.png" alt="" />
+          </div>
+          <div class="swiper-slide">
+            <img src="../assets/images/iPhone (2) 1.png" alt="" />
+          </div>
+          <div class="swiper-slide">
+            <img src="../assets/images/iPhone (2) 1.png" alt="" />
+          </div>
+          <div class="swiper-slide">
+            <img src="../assets/images/iPhone (2) 1.png" alt="" />
+          </div>
+          <div class="swiper-slide">
+            <img src="../assets/images/iPhone (2) 1.png" alt="" />
           </div>
         </BannerCarousel>
         <BannerCarouselRight>
-          <div
-            class="swiper-slide"
-            v-for="product in bestsellersProducts"
-            :key="product.id"
-          >
-            <div class="banner"></div>
+          <div class="swiper-slide">
+            <img src="../assets/images/Frame 1000005383.png" alt="" />
+          </div>
+          <div class="swiper-slide">
+            <img src="../assets/images/Frame 1000005383.png" alt="" />
+          </div>
+          <div class="swiper-slide">
+            <img src="../assets/images/Frame 1000005383.png" alt="" />
+          </div>
+          <div class="swiper-slide">
+            <img src="../assets/images/Frame 1000005383.png" alt="" />
+          </div>
+          <div class="swiper-slide">
+            <img src="../assets/images/Frame 1000005383.png" alt="" />
+          </div>
+          <div class="swiper-slide">
+            <img src="../assets/images/Frame 1000005383.png" alt="" />
           </div>
         </BannerCarouselRight>
       </div>
@@ -172,13 +194,8 @@
       <MainTitle title="Top brendlar" />
       <div class="mb-120">
         <BrandCarousel>
-          <div
-            class="swiper-slide"
-            v-for="brand in brands"
-            :key="brand.id"
-            :brand="brand"
-          >
-            <BrandCard />
+          <div class="swiper-slide" v-for="brand in brands" :key="brand.id">
+            <BrandCard :brand="brand" />
           </div>
         </BrandCarousel>
       </div>
@@ -368,5 +385,10 @@ h6 {
   width: 100%;
   height: 354px !important;
   background: red;
+}
+.home-banner-container .swiper-slide img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
 }
 </style>

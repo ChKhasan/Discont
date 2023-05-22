@@ -30,6 +30,11 @@ import CategoryList from "./CategoryList.vue";
 import Navbar from "./Navbar.vue";
 
 export default {
+  computed: {
+    routerName() {
+      return this.$route.path;
+    },
+  },
   mounted() {
     var header = this.$refs.navScroll;
 
@@ -51,6 +56,16 @@ export default {
       }
       this.lastScrollTop = scrollTop;
     });
+  },
+  watch: {
+    routerName() {
+      var header = this.$refs.navScroll;
+      header.style.top = "0";
+      header.style.marginTop = "0";
+      header.style.boxShadow = "none";
+      header.style.background = "#04babe";
+      console.log(header.style);
+    },
   },
   components: { Navbar, CategoryList },
 };
