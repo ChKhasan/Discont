@@ -71,17 +71,28 @@
           <div class="world">
             <div thumbsSlider="" class="swiper mySwiper">
               <div class="swiper-wrapper flex-column">
-                <div class="swiper-slide" v-for="img in product?.images" :key="img.id">
+                <div
+                  class="swiper-slide"
+                  v-for="img in product?.images"
+                  :key="img.id"
+                >
                   <img :src="img?.sm_img" />
                 </div>
               </div>
             </div>
             <div
-              style="--swiper-navigation-color: #fff; --swiper-pagination-color: #fff"
+              style="
+                --swiper-navigation-color: #fff;
+                --swiper-pagination-color: #fff;
+              "
               class="swiper mySwiper2"
             >
               <div class="swiper-wrapper">
-                <div class="swiper-slide" v-for="img in product?.images" :key="img.id">
+                <div
+                  class="swiper-slide"
+                  v-for="img in product?.images"
+                  :key="img.id"
+                >
                   <img :src="img?.sm_img" />
                 </div>
               </div>
@@ -93,28 +104,22 @@
             <div class="specs">
               <p class="lil">Махсулот хакида кискача</p>
 
-              <div class="spec" v-for="characteristic in productCharacteristic">
-                <p class="question">{{ characteristic?.characteristic?.name?.ru }}</p>
+              <div
+                class="spec"
+                v-for="characteristic in productCharacteristic"
+                :key="characteristic.id"
+              >
+                <p class="question">
+                  {{ characteristic?.characteristic?.name?.ru }}
+                </p>
                 <p class="answer">{{ characteristic?.name?.ru }}</p>
               </div>
-              <!-- <div class="spec">
-                <p class="question">Диагональ</p>
-                <p class="answer">6,5"</p>
-              </div>
-              <div class="spec">
-                <p class="question">Экран тури</p>
-                <p class="answer">PLS</p>
-              </div>
-              <div class="spec">
-                <p class="question">Экраннинг янгиланиш тезлиги</p>
-                <p class="answer">60 Гц</p>
-              </div> -->
-
               <p
                 class="all"
                 @click="allCharacteristic"
                 v-if="
-                  productCharacteristic?.length < product?.characteristic_options?.length
+                  productCharacteristic?.length <
+                  product?.characteristic_options?.length
                 "
               >
                 Barcha xarakteristikalar
@@ -148,13 +153,6 @@
                 </div>
               </div>
             </div>
-            <!-- <div class="variations">
-              <p class="lil">Емкость</p>
-              <div class="grid">
-                <div class="variation">64 GB</div>
-                <div class="variation">128 GB</div>
-              </div>
-            </div> -->
             <div class="counter">
               <p class="lil">Кол-во</p>
               <div class="grid">
@@ -178,7 +176,9 @@
 
               <p class="price" v-if="product?.price">
                 {{
-                  product?.price.replace(".", ",").replace(/\B(?=(\d{3})+(?!\d))/g, " ")
+                  product?.price
+                    .replace(".", ",")
+                    .replace(/\B(?=(\d{3})+(?!\d))/g, " ")
                 }}
                 so’m
               </p>
@@ -217,6 +217,242 @@
           </div>
         </div>
       </div>
+      <div class="tabs">
+        <div class="butns">
+          <button
+            :class="{ active: aboutHandle }"
+            @click="
+              (aboutHandle = true),
+                (specsHandle = false),
+                (locationsHandle = false),
+                (reviewsHandle = false)
+            "
+          >
+            Mahsulot haqida
+          </button>
+          <button
+            :class="{ active: specsHandle }"
+            @click="
+              (specsHandle = true),
+                (aboutHandle = false),
+                (locationsHandle = false),
+                (reviewsHandle = false)
+            "
+          >
+            Xarakteristikalari
+          </button>
+          <button
+            :class="{ active: locationsHandle }"
+            @click="
+              (locationsHandle = true),
+                (specsHandle = false),
+                (aboutHandle = false),
+                (reviewsHandle = false)
+            "
+          >
+            Дўконларда мавжудлиги
+          </button>
+          <button
+            :class="{ active: reviewsHandle }"
+            @click="
+              (reviewsHandle = true),
+                (specsHandle = false),
+                (locationsHandle = false),
+                (aboutHandle = false)
+            "
+          >
+            Мижозларнинг шарҳлари
+          </button>
+        </div>
+        <div class="contents">
+          <div :class="{ active: aboutHandle }" class="about">
+            <div class="about__wrap">
+              <h4 class="paragraph">Основные характеристики</h4>
+              <p>
+                is simply dummy text of the printing and typesetting industry.
+                Lorem Ipsum has been the industry's standard dummy text ever
+                since the 1500s, when an unknown printer took a galley of type
+                and scrambled it to make a type specimen book. It has survived
+                not only five centuries, but also the leap into electronic
+                typesetting, remaining essentially unchanged. It was popularised
+                in the 1960s with the release of Letraset sheets containing
+                Lorem Ipsum passages, and more recently with desktop publishing
+                software like Aldus PageMaker including versions of Lorem
+                Ipsum.is simply dummy text of the printing and typesetting
+                industry. Lorem Ipsum has been the industry's standard dummy
+                text ever since the 1500s, when an unknown printer took a galley
+                of type and scrambled it to make a type specimen book. It has
+                survived not only five centuries, but also the leap into
+                electronic typesetting, remaining essentially unchanged. It was
+                popularised in the 1960s with the release of Letraset sheets
+                containing Lorem Ipsum passages, and more recently
+              </p>
+            </div>
+          </div>
+          <div :class="{ active: specsHandle }" class="specifications">
+            <div class="spec__wrap">
+              <div class="items">
+                <h4 class="paragraph">Основные характеристики</h4>
+                <div class="grider">
+                  <div class="item">
+                    <p class="question">Бренд</p>
+                    <p class="answer">Xiaomi</p>
+                  </div>
+                  <div class="item">
+                    <p class="question">Бренд</p>
+                    <p class="answer">Xiaomi</p>
+                  </div>
+                  <div class="item">
+                    <p class="question">Бренд</p>
+                    <p class="answer">Xiaomi</p>
+                  </div>
+                </div>
+              </div>
+              <div class="items">
+                <h4 class="paragraph">Питание</h4>
+                <div class="grider">
+                  <div class="item">
+                    <p class="question">Бренд</p>
+                    <p class="answer">Xiaomi</p>
+                  </div>
+                  <div class="item">
+                    <p class="question">Бренд</p>
+                    <p class="answer">Xiaomi</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div :class="{ active: locationsHandle }" class="locations">
+            <table>
+              <thead>
+                <tr>
+                  <th>
+                    <p>Manzil</p>
+                  </th>
+                  <th>
+                    <p>Ish vaqti</p>
+                  </th>
+                  <th>
+                    <p>Telefon raqami</p>
+                  </th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>
+                    <div class="cyber">
+                      <div class="img">
+                        <img src="@/assets/images/logo/map.svg" alt="" />
+                      </div>
+                      <p>
+                        Фарғона вилояти, Маргилон ш. Тошлоқ тумани, Алишер
+                        Навоий кўчаси, 94 уй. Мўлжал: "Tabassum" мехмонхонаси
+                      </p>
+                    </div>
+                  </td>
+                  <td>
+                    <div class="cyber">
+                      <div class="img">
+                        <img src="@/assets/images/logo/clock.svg" alt="" />
+                      </div>
+                      <p>09:00 - 20:30</p>
+                    </div>
+                  </td>
+                  <td>
+                    <div class="cyber">
+                      <div class="img">
+                        <img src="@/assets/images/logo/call.svg" alt="" />
+                      </div>
+                      <p>+998 55 503 6006</p>
+                    </div>
+                  </td>
+                </tr>
+                <tr>
+                  <td>
+                    <div class="cyber">
+                      <div class="img">
+                        <img src="@/assets/images/logo/map.svg" alt="" />
+                      </div>
+                      <p>
+                        Фарғона вилояти, Маргилон ш. Тошлоқ тумани, Алишер
+                        Навоий кўчаси, 94 уй. Мўлжал: "Tabassum" мехмонхонаси
+                      </p>
+                    </div>
+                  </td>
+                  <td>
+                    <div class="cyber">
+                      <div class="img">
+                        <img src="@/assets/images/logo/clock.svg" alt="" />
+                      </div>
+                      <p>09:00 - 20:30</p>
+                    </div>
+                  </td>
+                  <td>
+                    <div class="cyber">
+                      <div class="img">
+                        <img src="@/assets/images/logo/call.svg" alt="" />
+                      </div>
+                      <p>+998 55 503 6006</p>
+                    </div>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <div :class="{ active: reviewsHandle }" class="reviews">
+            <div class="reviews__left">
+              <div class="review">
+                <p class="name">Abdulloh Aliyev</p>
+                <div class="flex">
+                  <div class="stars">
+                    <img src="@/assets/images/Star.svg" alt="" />
+                    <img src="@/assets/images/Star.svg" alt="" />
+                    <img src="@/assets/images/Star.svg" alt="" />
+                    <img src="@/assets/images/Star.svg" alt="" />
+                    <img src="@/assets/images/Star.svg" alt="" />
+                  </div>
+                  <p class="date">16 октября 2023 г.</p>
+                </div>
+                <div class="txt">
+                  <p>
+                    Нам телефончик очень понравились, покупкой довольны и всем
+                    советуем к приобретению. Главное, пользоваться только
+                    проверенными магазинами! Мы покупали почти на 30% дешевле в
+                    магазине SHOPMEONLINE RU Единственное, у них доставка
+                    долгая, так как товар везут с других стран, ждали 12 дней,
+                    ну ничего, главное, что всё приходит вовремя и за очень
+                    приятную цену.😍
+                  </p>
+                </div>
+              </div>
+            </div>
+            <div class="reviews__right">
+              <div class="leave">
+                <p class="leave__title">
+                  <img src="@/assets/images/like.svg" alt="" />
+                  O’z fikr va izohlaringizni qoldiring
+                </p>
+                <button class="leave__btn">Baho qoldirish</button>
+              </div>
+              <div class="rating">
+                <img src="@/assets/images/cheat.png" alt="" />
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="other">
+        <h4>O’xshash tovarlar</h4>
+
+        <div class="other__grid">
+          <ProductCardVue />
+          <ProductCardVue />
+          <ProductCardVue />
+          <ProductCardVue />
+        </div>
+      </div>
+      <ApplicationBanner class="app" />
     </div>
   </div>
 </template>
@@ -225,11 +461,28 @@
 import Swiper from "swiper/swiper-bundle.js";
 import "swiper/swiper-bundle.min.css";
 
+import ProductCardVue from "../../components/cards/ProductCard.vue";
+import applicationBannerVue from "../../components/application-banner.vue";
+
 export default {
   name: "DiscontSlug",
 
+  components: {
+    ProductCardVue,
+    applicationBannerVue,
+  },
+
   data() {
-    return { value: 2, product: {}, productCharacteristic: [], productAttributes: [] };
+    return {
+      value: 2,
+      product: {},
+      productCharacteristic: [],
+      productAttributes: [],
+      aboutHandle: true,
+      specsHandle: false,
+      locationsHandle: false,
+      reviewsHandle: false,
+    };
   },
   // async asyncData({ store, params }) {
   //   const [productData] = await Promise.all([
@@ -260,13 +513,14 @@ export default {
   // },
   async mounted() {
     const [productData] = await Promise.all([
-      this.$store.dispatch("fetchProducts/getProductsBySlug", this.$route.params.index),
+      this.$store.dispatch(
+        "fetchProducts/getProductsBySlug",
+        this.$route.params.index
+      ),
     ]);
     this.product = productData.product;
-    this.productCharacteristic = productData?.product?.characteristic_options.splice(
-      0,
-      4
-    );
+    this.productCharacteristic =
+      productData?.product?.characteristic_options.splice(0, 4);
     this.productAttributes = productData?.attributes;
     var swiper = new Swiper(".mySwiper", {
       spaceBetween: 16,
@@ -664,5 +918,201 @@ export default {
 }
 .disabled-attribute {
   pointer-events: none;
+}
+.tabs {
+  padding: 64px 0 144px 0;
+}
+.butns {
+  display: flex;
+  align-items: center;
+  gap: 24px;
+  margin-bottom: 32px;
+}
+.butns button {
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 18px;
+  color: var(--color_green);
+  padding: 12px 34px;
+  border: 1px solid #f1f1f1;
+  border-radius: 77px;
+}
+.butns button.active {
+  background: var(--color_green);
+  color: white;
+}
+.paragraph {
+  font-weight: 500;
+  font-size: 18px;
+  line-height: 24px;
+  color: black;
+  margin-bottom: 24px;
+}
+.about p {
+  font-weight: 400;
+  font-size: 18px;
+  line-height: 24px;
+  color: #414141;
+}
+.about__wrap {
+  max-width: 1200px;
+}
+.about,
+.specifications,
+.locations,
+.reviews {
+  display: none !important;
+}
+.about.active,
+.specifications.active,
+.locations.active,
+.reviews.active {
+  display: grid !important;
+}
+.spec__wrap {
+  max-width: 820px;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  column-gap: 164px;
+  row-gap: 42px;
+}
+.item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 24px;
+}
+.item .question {
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 20px;
+  color: #727474;
+}
+.item .answer {
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 20px;
+  color: #020105;
+}
+tr,
+td {
+  padding-right: 72px;
+}
+th p {
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 130%;
+  color: #000000;
+  opacity: 0.4;
+}
+thead th {
+  padding-bottom: 16px;
+}
+tbody td {
+  padding-bottom: 24px;
+}
+tbody td p {
+  font-weight: 600;
+  font-size: 14px;
+  line-height: 130%;
+  color: #000000;
+}
+tbody .img {
+  background: #fafafa;
+  padding: 8px;
+  border-radius: 50%;
+  display: inline-flex;
+  width: 40px;
+  height: 40px;
+  align-items: center;
+  justify-content: center;
+}
+.cyber {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+.reviews {
+  display: grid;
+  grid-template-columns: 8fr 2fr;
+  gap: 24px;
+}
+.review {
+  background: #ffffff;
+  border: 1px solid #f2f2fa;
+  border-radius: 12px;
+  padding: 18px;
+}
+.name {
+  font-weight: 600;
+  font-size: 18px;
+  line-height: 24px;
+  color: #000000;
+  margin-bottom: 22px;
+}
+.date {
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 20px;
+  color: #727474;
+}
+.flex {
+  display: flex;
+  align-items: center;
+  margin-bottom: 18px;
+  gap: 32px;
+}
+.txt p {
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 24px;
+  color: #000000;
+}
+.leave {
+  background: #fcfcfc;
+  border-radius: 12px;
+  padding: 24px;
+  margin-bottom: 34px;
+}
+.leave__title {
+  font-weight: 600;
+  font-size: 16px;
+  line-height: 130%;
+  color: #000000;
+  display: flex;
+  align-items: center;
+  gap: 24px;
+  margin-bottom: 24px;
+}
+.leave__btn {
+  font-weight: 500;
+  font-size: 16px;
+  line-height: 20px;
+  display: flex;
+  align-items: center;
+  text-align: center;
+  justify-content: center;
+  color: var(--color_green);
+  background: #e7faf5;
+  border-radius: 10px;
+  padding: 12px 0;
+  width: 100%;
+  border: none;
+}
+.other {
+  margin-bottom: 120px;
+}
+.other h4 {
+  font-weight: 600;
+  font-size: 32px;
+  line-height: 130%;
+  margin-bottom: 40px;
+}
+.other__grid {
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+}
+.app {
+  margin-bottom: 120px;
 }
 </style>
