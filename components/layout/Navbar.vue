@@ -4,6 +4,7 @@
       <div class="d-flex header-navbar_container">
         <div class="d-flex align-items-center">
           <nuxt-link to="/"><span v-html="navLogo" class="nav_logo"></span></nuxt-link>
+          <button class="catalog-btn"><span v-html="navCategory"></span>Katalog</button>
           <div class="search_input_container">
             <input type="text" placeholder="Noutbuk ..." />
             <span class="search-btn">
@@ -43,6 +44,7 @@ export default {
       navComp: require("../../assets/Buy.svg?raw"),
       navOrder: require("../../assets/svg/Order_light.svg?raw"),
       navUser: require("../../assets/svg/User_alt_light.svg?raw"),
+      navCategory: require("../../assets/svg/category_menu.svg?raw"),
     };
   },
 };

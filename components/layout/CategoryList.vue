@@ -3,7 +3,7 @@
     <div class="container_xl">
       <div class="d-flex header-category_container justify-content-between">
         <div class="d-flex">
-          <button><span v-html="navCategory"></span>Katalog</button>
+          <!-- <button><span v-html="navCategory"></span>Katalog</button> -->
           <ul class="d-flex align-items-center">
             <li>
               <nuxt-link to="/categories"
