@@ -22,7 +22,7 @@
   margin-top: 12px;
 }
 .product-card-body .product-card-title {
-  font-family: var(--SB_700);
+  font-family: var(--SB_500);
   font-style: normal;
   font-weight: 500;
   font-size: 14px;
@@ -37,7 +37,7 @@
   text-overflow: ellipsis;
 }
 .product-card-body p {
-  margin-top: 29px;
+  margin-top: 28px;
   font-family: "Inter";
   font-style: normal;
   font-weight: 400;
@@ -47,6 +47,9 @@
 }
 .product-card-body p span {
   margin-right: 3px;
+}
+.product-card-body p span svg path {
+  fill: #fbc100;
 }
 .product-card-price {
   display: flex;
@@ -67,14 +70,14 @@
   color: #000000;
 }
 .product-card-price h4 {
-  font-family: var(--SB_text);
+  font-family: var(--SB_700);
   font-style: normal;
   font-weight: 700;
   font-size: 18px;
-  height: 23px;
   line-height: 23px;
   letter-spacing: -0.02em;
   color: #000000;
+  height: 23px;
   margin-right: 6px;
 }
 

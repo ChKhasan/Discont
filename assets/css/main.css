@@ -1,72 +1,36 @@
 @import url("https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@400;500;600;700&family=Lato:wght@300;400;700;900&family=Mulish:wght@200;300;400;500;600;700;800&display=swap");
 @font-face {
-  font-family: "SF_400";
-  src: url("../fonts/SF_PRO/SFPRODISPLAYREGULARS.OTF"); /* IE9*/
-}
-@font-face {
-  font-family: "SF_500";
-  src: url("../fonts/SF_PRO/SFPRODISPLAYMEDIUMS.OTF"); /* IE9*/
-}
-@font-face {
-  font-family: "SB_700";
-  src: url("../fonts/SB_Sans_Text_Bold/SB Sans Text Bold.ttf"); /* IE9*/
+  font-family: "SB_400";
+  src: url("../fonts/SB_SANS/SB SANS TEXT.TTF"); /* IE9*/
 }
 @font-face {
   font-family: "SB_500";
-  src: url("../fonts/SB_San_Interface/SB Sans Interface.ttf"); /* IE9*/
+  src: url("../fonts/SB_SANS/SB SANS TEXT MEDIUM.TTF"); /* IE9*/
 }
 @font-face {
-  font-family: "SB_300";
-  src: url("../fonts/SB_Sans_Text_Thin/SB Sans Text Thin.ttf"); /* IE9*/
+  font-family: "SB_600";
+  src: url("../fonts/SB_SANS/SB SANS TEXT SEMIBOLD.TTF"); /* IE9*/
 }
 @font-face {
-  font-family: "SF_600";
-  src: url("../fonts/SF_PRO/SFPRODISPLAYSEMIBOLDITALICS.OTF"); /* IE9*/
+  font-family: "SB_700";
+  src: url("../fonts/SB_SANS/SB SANS TEXT BOLD.TTF"); /* IE9*/
 }
-@font-face {
-  font-family: "SF_700";
-  src: url("../fonts/SF_PRO/SFPRODISPLAYBOLDS.OTF"); /* IE9*/
-}
-@font-face {
-  font-family: "SB Sans Text";
-  src: url("../fonts/SB_Sans_Text/@font-face/c68e21ad1a10803b1ef491fd0392b067.eot"); /* IE9*/
-  src: url("../fonts/SB_Sans_Text/@font-face/c68e21ad1a10803b1ef491fd0392b067.eot?#iefix")
-      format("embedded-opentype"),
-    /* IE6-IE8 */
-      url("../fonts/SB_Sans_Text/@font-face/c68e21ad1a10803b1ef491fd0392b067.woff2")
-      format("woff2"),
-    /* chrome、firefox */
-      url("../fonts/SB_Sans_Text/@font-face/c68e21ad1a10803b1ef491fd0392b067.woff")
-      format("woff"),
-    /* chrome、firefox */
-      url("../fonts/SB_Sans_Text/@font-face/c68e21ad1a10803b1ef491fd0392b067.ttf")
-      format("truetype"),
-    /* chrome、firefox、opera、Safari, Android, iOS 4.2+*/
-      url("../fonts/SB_Sans_Text/@font-face/c68e21ad1a10803b1ef491fd0392b067.svg#SB Sans Text")
-      format("svg"); /* iOS 4.1- */
-}
+
 * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
 }
 body {
-  font-family: var(--SB_text);
+  font-family: var(--SB_400);
   font-style: normal;
   font-weight: 400;
 }
 :root {
-  --SF_400: "SF_400";
-  --SF_500: "SF_500";
-  --SF_600: "SF_700";
-  --SF_700: "SF_700";
-  --SB_300: "SB_300";
-  --SB_400: "SB_500";
+  --SB_400: "SB_400";
   --SB_500: "SB_500";
-  --SB_600: "SB_700";
+  --SB_600: "SB_600";
   --SB_700: "SB_700";
-  --SB_text: "SB Sans Text";
-  /* --TT_neue_400: "TT Firs Neue" */
   --TT_neue_400: "SF_400";
   --color_green: #1f8a70;
   --color_dark_green: #09454f;

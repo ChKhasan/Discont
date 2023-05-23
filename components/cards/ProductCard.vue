@@ -1,7 +1,10 @@
 <template lang="html">
   <div class="product-card">
     <div class="product-card-header">
-      <span class="hover-btns" v-html="like"></span>
+      <span class="hover-btns"
+        ><span class="like-inactive" v-html="like"> </span
+        ><span class="like-active" v-html="activeHeart"> </span
+      ></span>
       <span class="hover-btns" v-html="comp"></span>
       <span class="pc-img-container"
         ><img
@@ -29,7 +32,10 @@
         ><h4>
           {{
             product?.price
-              ? product?.price.replace(".", ",").replace(/\B(?=(\d{3})+(?!\d))/g, " ")
+              ? product?.price
+                  .slice(0, product?.price.indexOf("."))
+                  .replace(".", ",")
+                  .replace(/\B(?=(\d{3})+(?!\d))/g, " ")
               : "5 650 000"
           }}
           so’m
@@ -57,6 +63,7 @@ export default {
       buy: require("../../assets/svg/product-buy.svg?raw"),
       like: require("../../assets/svg/card-like.svg?raw"),
       view: require("../../assets/svg/view.svg?raw"),
+      activeHeart: require("../../assets/svg/active-heart.svg?raw"),
     };
   },
 };
@@ -68,9 +75,9 @@ export default {
   overflow: hidden;
   cursor: pointer;
 }
-.product-card-header:hover .hover-btns {
+/* .product-card-header:hover .hover-btns {
   right: 12px;
-}
+} */
 
 .product-card-header:hover .pc-img-container {
   transform: scale(1.1);
@@ -79,7 +86,7 @@ export default {
   cursor: pointer;
   position: absolute;
   transition: 0.3s;
-  right: -35px;
+  right: 12px;
   background: #ffffff;
   border-radius: 6.00364px;
   height: 30px;
@@ -90,18 +97,35 @@ export default {
   z-index: 2;
   box-shadow: 0 0 5px rgba(0, 0, 0, 0.06);
 }
+.hover-btns {
+  display: flex;
+  align-items: center;
+}
 .hover-btns:first-child {
   top: 12px;
+}
+.like-inactive {
+  display: flex;
+}
+.like-active {
+  display: none;
+}
+.hover-btns:hover .like-inactive {
+  display: none;
+}
+.hover-btns:hover .like-active {
+  display: flex;
 }
 .hover-btns:hover svg path {
   transition: 0.3s;
 }
-.hover-btns:hover {
-  background: var(--color_green);
+.hover-btns:hover > svg path {
+  fill: var(--color_green);
+  stroke: var(--color_green);
 }
-.hover-btns:hover svg path {
+/* .hover-btns:hover svg path {
   fill: #fff;
-}
+} */
 .pc-img-container {
   width: 100%;
   height: 100%;

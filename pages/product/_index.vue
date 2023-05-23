@@ -253,24 +253,8 @@
         <div class="contents">
           <div :class="{ active: aboutHandle }" class="about">
             <div class="about__wrap">
-              <h4 class="paragraph">Основные характеристики</h4>
-              <p>
-                is simply dummy text of the printing and typesetting industry. Lorem Ipsum
-                has been the industry's standard dummy text ever since the 1500s, when an
-                unknown printer took a galley of type and scrambled it to make a type
-                specimen book. It has survived not only five centuries, but also the leap
-                into electronic typesetting, remaining essentially unchanged. It was
-                popularised in the 1960s with the release of Letraset sheets containing
-                Lorem Ipsum passages, and more recently with desktop publishing software
-                like Aldus PageMaker including versions of Lorem Ipsum.is simply dummy
-                text of the printing and typesetting industry. Lorem Ipsum has been the
-                industry's standard dummy text ever since the 1500s, when an unknown
-                printer took a galley of type and scrambled it to make a type specimen
-                book. It has survived not only five centuries, but also the leap into
-                electronic typesetting, remaining essentially unchanged. It was
-                popularised in the 1960s with the release of Letraset sheets containing
-                Lorem Ipsum passages, and more recently
-              </p>
+              <h4 class="paragraph">Описание</h4>
+              <p v-html="product?.info?.desc?.ru"></p>
             </div>
           </div>
           <div :class="{ active: specsHandle }" class="specifications">
@@ -504,7 +488,8 @@ export default {
       4
     );
     this.productAttributes = productData?.attributes;
-
+    console.log(this.productCharacteristic);
+    console.log(this.product);
     var swiper = new Swiper(".mySwiper", {
       spaceBetween: 16,
       slidesPerView: 4,

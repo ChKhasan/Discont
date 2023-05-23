@@ -13,7 +13,7 @@ export default {
   margin-bottom: 24px;
 }
 .main-title h2 {
-  font-family: "SB Sans Text";
+  font-family: var(--SB_600);
   font-style: normal;
   font-weight: 600;
   font-size: 32px;

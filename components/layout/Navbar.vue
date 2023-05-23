@@ -35,7 +35,7 @@
 export default {
   data() {
     return {
-      navLogo: require("../../assets/svg/Mask group.svg?raw"),
+      navLogo: require("../../assets/svg/green-logo.svg?raw"),
       navMic: require("../../assets/svg/mic.svg?raw"),
       navSearch: require("../../assets/svg/search.svg?raw"),
       navLike: require("../../assets/svg/Heart.svg?raw"),
@@ -47,4 +47,8 @@ export default {
   },
 };
 </script>
-<style lang=""></style>
+<style lang="css">
+/* .nav-icons svg path {
+  fill: #1f8a70;
+} */
+</style>
