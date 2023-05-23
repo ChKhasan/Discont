@@ -200,9 +200,9 @@
         </BrandCarousel>
       </div>
     </div>
-    <div class="container_xl mb-120">
+    <!-- <div class="container_xl mb-120">
       <DiscountCarousel />
-    </div>
+    </div> -->
     <div class="container_xl">
       <MainTitle title="Gamerlar uchun komplektlar" />
       <div class="v-card-products-grid mb-120">
