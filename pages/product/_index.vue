@@ -409,14 +409,22 @@
           </div>
         </div>
       </div>
-      <div class="other">
+      <div class="other pb-5">
         <h4>O’xshash tovarlar</h4>
-
-        <div class="other__grid">
+        <ProductCarousel>
+            <div
+              class="swiper-slide"
+              v-for="product in productsOthers"
+              :key="product.id"
+            >
+              <ProductCardVue :product="product" />
+            </div>
+          </ProductCarousel>
+        <div class="other__grid mb-5">
+          <!-- <ProductCardVue />
           <ProductCardVue />
           <ProductCardVue />
-          <ProductCardVue />
-          <ProductCardVue />
+          <ProductCardVue /> -->
         </div>
       </div>
       <ApplicationBanner class="app" />
@@ -430,6 +438,7 @@ import "swiper/swiper-bundle.min.css";
 
 import ProductCardVue from "../../components/cards/ProductCard.vue";
 import applicationBannerVue from "../../components/application-banner.vue";
+import ProductCarousel from "../../components/product-carousel.vue";
 
 export default {
   name: "DiscontSlug",
@@ -437,7 +446,8 @@ export default {
   components: {
     ProductCardVue,
     applicationBannerVue,
-  },
+    ProductCarousel
+},
 
   data() {
     return {
@@ -449,6 +459,7 @@ export default {
       specsHandle: false,
       locationsHandle: false,
       reviewsHandle: false,
+      productsOthers: []
     };
   },
   // async asyncData({ store, params }) {
@@ -479,17 +490,19 @@ export default {
   //   this.productAttributes = productData?.attributes;
   // },
   async mounted() {
-    const [productData] = await Promise.all([
+    const [productData, productsData] = await Promise.all([
       this.$store.dispatch("fetchProducts/getProductsBySlug", this.$route.params.index),
+      this.$store.dispatch("fetchProducts/getProducts", {
+        limit: 12,
+      }),
     ]);
     this.product = productData.product;
+    this.productsOthers = productsData?.products?.data;
     this.productCharacteristic = productData?.product?.characteristic_options.splice(
       0,
       4
     );
     this.productAttributes = productData?.attributes;
-    console.log(this.productCharacteristic);
-    console.log(this.product);
     var swiper = new Swiper(".mySwiper", {
       spaceBetween: 16,
       slidesPerView: 4,

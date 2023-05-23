@@ -10,9 +10,10 @@
           </ul>
           <div class="d-flex header-top__right">
             <a href="tel:+998990118934">+998 99 011 89 34</a>
-            <p>
-              <span class="header-lang-active">O’Z</span> | <span>ENG</span> |
-              <span>РУ</span>
+            <p class="d-flex align-items-center">
+              <span class="header-lang-active" style="margin-right: 3px">O’Z</span> |
+              <span style="margin-right: 3px; margin-left: 3px">ENG</span> |
+              <span style="margin-right: 3px">РУ</span>
             </p>
           </div>
         </div>
