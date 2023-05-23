@@ -35,7 +35,7 @@
               </nuxt-link>
             </div>
             <div class="d-flex categories-page-title">
-              <MainTitle title="Smartfonlar" />
+              <MainTitle :title="categoryChilds?.name?.ru" />
               <span>8 288 товаров</span>
             </div>
           </div>
@@ -147,5 +147,4 @@ export default {
 </script>
 <style lang="css">
 @import "../../assets/css/pages/categories.css";
-
 </style>

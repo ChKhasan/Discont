@@ -10,7 +10,7 @@
           </nuxt-link>
         </div>
         <div class="d-flex categories-page-title">
-          <MainTitle title="Smartfonlar" />
+          <MainTitle :title="categoryChilds?.name?.ru" />
           <span>8 288 товаров</span>
         </div>
         <div>
@@ -96,7 +96,9 @@
         <div class="categories-filter-list">
           <div class="categories-list-inner">
             <h5>Категория</h5>
-            <nuxt-link to="/">{{
+            <nuxt-link :to="`/categories/${categoryChilds?.parent?.parent?.name?.ru
+                ? categoryChilds?.parent?.parent?.slug
+                : categoryChilds?.parent?.slug}`">{{
               categoryChilds?.parent?.parent?.name?.ru
                 ? categoryChilds?.parent?.parent?.name?.ru
                 : categoryChilds?.parent?.name?.ru
