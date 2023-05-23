@@ -71,7 +71,11 @@
           <div class="world">
             <div thumbsSlider="" class="swiper mySwiper">
               <div class="swiper-wrapper flex-column">
-                <div class="swiper-slide" v-for="img in product?.images" :key="img.id">
+                <div
+                  class="swiper-slide"
+                  v-for="img in product?.images"
+                  :key="`k${img.id}`"
+                >
                   <img :src="img?.sm_img" />
                 </div>
               </div>
@@ -268,20 +272,33 @@ export default {
       4
     );
     this.productAttributes = productData?.attributes;
-    var swiper = new Swiper(".mySwiper", {
-      spaceBetween: 16,
-      slidesPerView: 4,
-      freeMode: true,
-      watchSlidesProgress: true,
-      direction: "vertical",
-    });
-    var swiper2 = new Swiper(".mySwiper2", {
+    new Swiper(".mySwiper2", {
       loop: true,
       spaceBetween: 10,
       thumbs: {
-        swiper: swiper,
+        swiper: new Swiper(".mySwiper", {
+          spaceBetween: 16,
+          slidesPerView: 4,
+          freeMode: true,
+          watchSlidesProgress: true,
+          direction: "vertical",
+        }),
       },
     });
+    // var swiper = new Swiper(".mySwiper", {
+    //   spaceBetween: 16,
+    //   slidesPerView: 4,
+    //   freeMode: true,
+    //   watchSlidesProgress: true,
+    //   direction: "vertical",
+    // });
+    // var swiper2 = new Swiper(".mySwiper2", {
+    //   loop: true,
+    //   spaceBetween: 10,
+    //   thumbs: {
+    //     swiper: swiper,
+    //   },
+    // });
   },
 
   methods: {

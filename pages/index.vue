@@ -329,6 +329,7 @@ export default {
     const categories = categories1?.categories?.data;
     const brands = brands1?.brands?.data;
     const posts = posts1?.posts?.data;
+    console.log(categories);
     return {
       bestsellersProducts,
       byCategoryProducts,
