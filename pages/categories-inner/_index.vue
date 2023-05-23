@@ -248,18 +248,7 @@
           <MainTitle title="Kategoriyadagi top tavarlar" />
         </div>
         <div class="product-grid">
-          <ProductCard />
-          <ProductCard />
-          <ProductCard />
-          <ProductCard />
-          <ProductCard />
-          <ProductCard />
-          <ProductCard />
-          <ProductCard />
-          <ProductCard />
-          <ProductCard />
-          <ProductCard />
-          <ProductCard />
+          <ProductCard v-for="product in productsOthers" :key="product.id" :product="product" />
         </div>
       </div>
       <div class="categories-page-info">
@@ -346,14 +335,17 @@ export default {
       ],
     };
   },
-  async asyncData({ $axios, params, query }) {
-    const [categoriesData, categoryChildsData] = await Promise.all([
+  async asyncData({ $axios, params, query,store }) {
+    const [categoriesData, categoryChildsData,productsData] = await Promise.all([
       $axios.$get(`/categories`, {
         params: {
           limit: 10,
         },
       }),
       $axios.$get(`/categories/${params.index}`),
+      store.dispatch("fetchProducts/getProducts", {
+        limit: 12,
+      }),
     ]);
     const categories = categoriesData?.categories?.data;
     const categoryChilds = categoryChildsData?.category;
@@ -372,6 +364,7 @@ export default {
       });
     }
     const allInfo = categoryChildsData;
+    const productsOthers = productsData?.products?.data;
     return {
       categoryChilds,
       products,
@@ -380,6 +373,7 @@ export default {
       options,
       filterOptions,
       categories,
+      productsOthers
     };
   },
 
