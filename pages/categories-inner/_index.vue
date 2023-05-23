@@ -96,13 +96,18 @@
         <div class="categories-filter-list">
           <div class="categories-list-inner">
             <h5>Категория</h5>
-            <nuxt-link :to="`/categories/${categoryChilds?.parent?.parent?.name?.ru
-                ? categoryChilds?.parent?.parent?.slug
-                : categoryChilds?.parent?.slug}`">{{
-              categoryChilds?.parent?.parent?.name?.ru
-                ? categoryChilds?.parent?.parent?.name?.ru
-                : categoryChilds?.parent?.name?.ru
-            }}</nuxt-link>
+            <nuxt-link
+              :to="`/categories/${
+                categoryChilds?.parent?.parent?.name?.ru
+                  ? categoryChilds?.parent?.parent?.slug
+                  : categoryChilds?.parent?.slug
+              }`"
+              >{{
+                categoryChilds?.parent?.parent?.name?.ru
+                  ? categoryChilds?.parent?.parent?.name?.ru
+                  : categoryChilds?.parent?.name?.ru
+              }}</nuxt-link
+            >
             <ul class="categories-list-inner">
               <li>
                 <span
@@ -153,8 +158,10 @@
 
             <a-slider
               range
-              :step="10"
-              :default-value="[20, 50]"
+              :step="10000"
+              :max="20000000"
+              :min="10000"
+              :default-value="[10000, 20000000]"
               @change="onChangeSlider"
               @afterChange="onAfterChange"
             />
@@ -197,7 +204,7 @@
               <div
                 class="clear-filter"
                 @click="clearFilter"
-                v-if="filterOptions.length > 0"
+                v-if="Object.keys($route.query).length > 0"
               >
                 Filtrni tozalash
               </div>
@@ -326,15 +333,15 @@ export default {
         },
         {
           value: "qwerty1",
-          label: "Goodman",
+          label: "Others",
         },
         {
           value: "qwerty2",
-          label: "Goodman",
+          label: "Others",
         },
         {
           value: "qwerty3",
-          label: "Goodman",
+          label: "Others",
         },
       ],
     };
@@ -441,17 +448,18 @@ export default {
         query: query,
       });
     },
-    onAfterChange(value) {
+    async onAfterChange(value) {
       if (
         !this.$route.query.max_price ||
         this.$route.query.min_price != value[0] ||
         this.$route.query.max_price != value[1]
       ) {
         let query = { ...this.$route.query, min_price: value[0], max_price: value[1] };
-        this.$router.replace({
+        await this.$router.replace({
           path: `/categories-inner/${this.$route.params.index}`,
           query: query,
         });
+        this.__GET_PRODUCTS();
       }
     },
   },
@@ -476,7 +484,6 @@ export default {
           });
         }
       }
-      console.log(this.$route.query);
     },
   },
   components: {
