@@ -1,6 +1,6 @@
 /* header */
 .header-top {
-  padding: 12px 0;
+  padding: 11px 0;
   justify-content: space-between;
   background: #f2f5f7;
 }
@@ -219,11 +219,11 @@
   border-radius: 50%;
 }
 .coin_btn {
-  font-family: "Inter";
+  font-family: var(--SB_600);
   font-style: normal;
-  font-weight: 700;
+  font-weight: 600;
   font-size: 14px;
-  line-height: 17px;
+  line-height: 18px;
   color: #09454f;
   padding: 0 24px 0 57px;
 }
