@@ -33,7 +33,9 @@
   line-height: 24px;
   color: #1f8a70;
 }
-
+.header-top__right a:hover {
+  color: #04babe;
+}
 .header-top__right p span {
   cursor: pointer;
   font-family: var(--SB_400);
@@ -258,7 +260,7 @@
   margin-bottom: 47px;
 }
 .main_info .footer-tel p {
-  font-family: var(--SF_400);
+  font-family: var(--SB_400);
   font-style: normal;
   font-size: 14px;
   line-height: 17px;
@@ -266,7 +268,7 @@
   margin-bottom: 8px;
 }
 .main_info .footer-tel a {
-  font-family: var(--SF_700);
+  font-family: var(--SB_700);
   font-style: normal;
   font-size: 18px;
   line-height: 21px;
@@ -274,7 +276,7 @@
   color: #06858c;
 }
 .main_info .footer-links {
-  font-family: var(--SF_400);
+  font-family: var(--SB_400);
   font-style: normal;
   font-size: 14px;
   line-height: 17px;
@@ -291,11 +293,12 @@
   margin-top: 16px;
 }
 .footer_menu h4 {
-  font-family: var(--SF_700);
+  font-family: var(--SB_700);
   font-style: normal;
   font-size: 18px;
   line-height: 21px;
-  color: #06858c;
+  /* color: #06858c; */
+  color: #000;
 }
 .footer_menu ul {
   margin-top: 32px;
@@ -305,7 +308,7 @@
   height: 17px;
 }
 .footer_menu ul li a {
-  font-family: var(--SF_400);
+  font-family: var(--SB_400);
   font-style: normal;
   font-size: 14px;
   line-height: 17px;
@@ -316,7 +319,7 @@
   border-top: 0.8px solid rgbA(0, 0, 0, 0.2);
 }
 .footer-bottom p {
-  font-family: var(--SF_400);
+  font-family: var(--SB_400);
   font-style: normal;
   font-size: 14px;
   line-height: 17px;

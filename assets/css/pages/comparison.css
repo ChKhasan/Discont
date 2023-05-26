@@ -1,0 +1,58 @@
+.swiper-button-prev-comparison,
+.swiper-button-next-comparison {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  background: #fff;
+  box-shadow: 0px 0px 0px 0.5px rgba(0, 0, 0, 0.16);
+  transform: matrix(-1, 0, 0, 1, 0, 0);
+  position: absolute;
+  top: 158px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 10;
+  cursor: pointer;
+}
+.swiper-button-prev-comparison {
+  left: -24px;
+}
+.comparison-page-body .swiper-button-disabled {
+  opacity: 0.5;
+  pointer-events: none;
+}
+.swiper-button-next-comparison {
+  right: -24px;
+  transform: rotate(0deg);
+}
+.comparison-page-body {
+  position: relative;
+}
+.comparison-page {
+  padding-top: 33px;
+}
+.comparison-page-title {
+  margin-top: 16px;
+  margin-bottom: 33px;
+  display: flex;
+  justify-content: space-between;
+}
+.comparison-page-title span {
+  display: flex;
+  align-items: flex-end;
+  margin-bottom: 8px;
+  margin-left: 12px;
+  font-family: var(--SB_400);
+  font-style: normal;
+  font-weight: 400;
+  font-size: 12px;
+  line-height: 17px;
+  display: flex;
+  align-items: center;
+  letter-spacing: -0.24px;
+
+  color: #8c959c;
+}
+.comparison-page-title .main-title {
+  margin-bottom: 0;
+}

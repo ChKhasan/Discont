@@ -36,7 +36,7 @@ export default {};
   justify-content: space-between;
 }
 .discont-banner-header h4 {
-  font-family: var(--SB_500);
+  font-family: var(--SB_600);
   font-style: normal;
   font-weight: 600;
   font-size: 30px;
@@ -45,7 +45,7 @@ export default {};
   margin-right: 21px;
 }
 .discont-banner-header p {
-  font-family: var(--SB_300);
+  font-family: var(--SB_400);
   font-style: normal;
   font-weight: 300;
   font-size: 20px;
@@ -59,7 +59,7 @@ export default {};
   margin-top: 26px;
 }
 .discont-banner-body p {
-  font-family: var(--SB_300);
+  font-family: var(--SB_400);
   font-style: normal;
   font-weight: 300;
   font-size: 16px;

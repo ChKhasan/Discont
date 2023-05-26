@@ -1,7 +1,4 @@
-.categories-app-banner-container {
-  background: #f9f9f9;
-  margin-top: 64px;
-}
+
 .categories-page {
   padding-top: 32px;
 }
@@ -322,23 +319,7 @@
   align-items: center;
   letter-spacing: -0.256582px;
 }
-.categories-products-show-more {
-  background: #f6f7f9;
-  border: 1px solid #f6f7f9;
-  border-radius: 12px;
-  padding-top: 12px;
-  padding-bottom: 12px;
-  width: 100%;
-  font-family: var(--SB_600);
-  font-style: normal;
-  font-weight: 600;
-  font-size: 18px;
-  line-height: 24px;
-  color: #1f8a70;
-  display: flex;
-  justify-content: center;
-  cursor: pointer;
-}
+
 .categories-products-grid {
   margin-bottom: 74px;
 }

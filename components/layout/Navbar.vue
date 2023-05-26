@@ -18,9 +18,15 @@
         <div class="header-navbar_navbar d-flex">
           <ul class="d-flex justify-content-between w-100 align-items-center">
             <li><span class="nav-icons" v-html="navOrder"></span>Buyurtmalar</li>
-            <li><span class="nav-icons" v-html="navLike"></span> Sevimlilar</li>
-            <li><span class="nav-icons" v-html="navBasket"></span>Savatcha</li>
-            <li><span class="nav-icons" v-html="navComp"></span>Solishtirish</li>
+            <li @click="$router.push('/likes')">
+              <span class="nav-icons" v-html="navLike"></span> Sevimlilar
+            </li>
+            <li @click="$router.push('/basket')">
+              <span class="nav-icons" v-html="navBasket"></span>Savatcha
+            </li>
+            <li @click="$router.push('/comparison')">
+              <span class="nav-icons" v-html="navComp"></span>Solishtirish
+            </li>
             <li
               class="nav_profile flex-row"
               @click="$router.push('/profile/personal-info')"
@@ -50,6 +56,59 @@
                   <li>Хобби и творчество</li>
                 </ul>
               </div>
+              <div class="catalog-menu-body">
+                <div class="d-flex categories-page-title mt-0 mb-5 align-items-end">
+                  <MainTitle title="Электроника" />
+                  <span class="d-flex align-items-end">8 288 товаров</span>
+                </div>
+                <div class="catalog-menu-items">
+                  <ul>
+                    <h4>Телефоны и смарт-часы</h4>
+                    <li>Смартфоны</li>
+                    <li>Мобильные телефоны</li>
+                    <li>SIM-карты</li>
+                    <li>Смарт-часы</li>
+                    <li>Фитнес-браслеты</li>
+                    <li>Ремешки для смарт-часов и фитнес-браслетов</li>
+                  </ul>
+                  <ul>
+                    <h4>Телефоны и смарт-часы</h4>
+                    <li>Смартфоны</li>
+                    <li>Мобильные телефоны</li>
+                    <li>SIM-карты</li>
+                    <li>Смарт-часы</li>
+                    <li>Фитнес-браслеты</li>
+                    <li>Ремешки для смарт-часов и фитнес-браслетов</li>
+                  </ul>
+                  <ul>
+                    <h4>Телефоны и смарт-часы</h4>
+                    <li>Смартфоны</li>
+                    <li>Мобильные телефоны</li>
+                    <li>SIM-карты</li>
+                    <li>Смарт-часы</li>
+                    <li>Фитнес-браслеты</li>
+                    <li>Ремешки для смарт-часов и фитнес-браслетов</li>
+                  </ul>
+                  <ul>
+                    <h4>Телефоны и смарт-часы</h4>
+                    <li>Смартфоны</li>
+                    <li>Мобильные телефоны</li>
+                    <li>SIM-карты</li>
+                    <li>Смарт-часы</li>
+                    <li>Фитнес-браслеты</li>
+                    <li>Ремешки для смарт-часов и фитнес-браслетов</li>
+                  </ul>
+                  <ul>
+                    <h4>Телефоны и смарт-часы</h4>
+                    <li>Смартфоны</li>
+                    <li>Мобильные телефоны</li>
+                    <li>SIM-карты</li>
+                    <li>Смарт-часы</li>
+                    <li>Фитнес-браслеты</li>
+                    <li>Ремешки для смарт-часов и фитнес-браслетов</li>
+                  </ul>
+                </div>
+              </div>
             </div>
           </div>
         </div>
@@ -58,6 +117,8 @@
   </div>
 </template>
 <script>
+import MainTitle from "../Main-title.vue";
+
 export default {
   data() {
     return {
@@ -84,6 +145,7 @@ export default {
       }
     },
   },
+  components: { MainTitle },
 };
 </script>
 <style lang="css">
@@ -92,6 +154,12 @@ export default {
 } */
 .header-navbar {
   position: relative;
+}
+.catalog-menu-body .main-title {
+  margin-bottom: 0 !important;
+}
+.catalog-menu-body > span {
+  margin-left: 32px;
 }
 .catalog-menu-container {
   display: flex;
@@ -108,7 +176,9 @@ export default {
   margin-top: 63px;
   background: #fff;
   height: 100vh;
-  width: 70%;
+  width: 77%;
+  padding-right: 65px;
+  display: flex;
 }
 .catalog-menu-left-bg {
   position: absolute;
@@ -120,6 +190,7 @@ export default {
 }
 .catalog-menu-list {
   max-width: 253px;
+  margin-right: 28px;
 }
 .catalog-menu-list ul {
   display: grid;
@@ -201,5 +272,37 @@ export default {
   100% {
     transform: translateX(0px);
   }
+}
+.catalog-menu-items {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-gap: 60px;
+}
+.catalog-menu-items ul {
+  display: flex;
+  flex-direction: column;
+}
+.catalog-menu-items ul h4 {
+  font-family: var(--SB_400);
+  font-style: normal;
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 20px;
+  display: flex;
+  align-items: center;
+  letter-spacing: 0.2px;
+  color: #001a34;
+}
+.catalog-menu-items ul li {
+  font-family: var(--SB_400);
+  font-style: normal;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 18px;
+  display: flex;
+  align-items: center;
+  letter-spacing: 0.2px;
+  color: #5f5f5f;
+  margin-top: 8px;
 }
 </style>

@@ -59,7 +59,7 @@ export default {};
   margin-left: 75px;
 }
 .app-btn-container p {
-  font-family: var(--TT_neue_400);
+  font-family: var(--SB_400);
   font-style: normal;
   font-weight: 400;
   font-size: 24px;

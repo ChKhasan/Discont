@@ -6,6 +6,7 @@
         ><span class="like-active" v-html="activeHeart"> </span
       ></span>
       <span class="hover-btns" v-html="comp"></span>
+      <div class="fast_show">Быстрый просмотр</div>
       <span class="pc-img-container"
         ><img
           v-if="product?.images[0]?.sm_img"
@@ -45,6 +46,7 @@
     </div>
     <div class="product-discount">
       <p v-if="product?.discount_price">{{ product?.discount_price }}</p>
+      <p>6 120 000</p>
     </div>
 
     <div class="product-card-footer">
@@ -142,5 +144,26 @@ export default {
 .hover-btns:nth-child(2) {
   transition-delay: 0.1s;
   top: 48px;
+}
+.product-card-header:hover .fast_show {
+  bottom: 90px;
+}
+.fast_show {
+  position: absolute;
+  padding: 12px 16px 12px 16px;
+  background: #ffffff;
+  border: 1px solid #f1f1f1;
+  box-shadow: 0px 4px 27px rgba(2, 1, 5, 0.08);
+  border-radius: 19px;
+  font-family: var(--SB_400);
+  font-style: normal;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 16px;
+  color: #09454f;
+  z-index: 10;
+  bottom: -100%;
+  transition: 0.3s linear;
+  cursor: pointer;
 }
 </style>

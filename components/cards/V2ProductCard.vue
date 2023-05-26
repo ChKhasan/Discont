@@ -1,5 +1,5 @@
 <template lang="html">
-  <div class="v2-product-card" :class="variant ? 'yellow-variant':'green-variant'">
+  <div class="v2-product-card" :class="variant ? 'yellow-variant' : 'green-variant'">
     <div
       class="v2-product-card-title d-flex align-items-center justify-content-start w-100"
     >
@@ -50,21 +50,23 @@ export default {
   padding-top: 13px;
   padding-bottom: 13px;
   cursor: pointer;
-  font-family: "SB_500";
+  font-family: var(--SB_500);
   font-style: normal;
   font-weight: 500;
   font-size: 18px;
   line-height: 23px;
   text-align: center;
   letter-spacing: -0.02em;
+
   color: #000000;
 }
 .green-variant .v2-product-card-title h4 {
   color: #fff;
 }
 .v2-product-card-title h4 {
-  font-family: "SB_700";
+  font-family: var(--SB_600);
   font-style: normal;
+  font-weight: 600;
   font-size: 24px;
   line-height: 32px;
   color: #000000;

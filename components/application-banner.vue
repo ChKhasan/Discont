@@ -37,7 +37,7 @@ export default {};
   color: #030303;
 }
 .categories-application-banner-info p {
-  font-family: var(--SF_400);
+  font-family: var(--SB_400);
   font-style: normal;
   font-weight: 400;
   font-size: 24px;

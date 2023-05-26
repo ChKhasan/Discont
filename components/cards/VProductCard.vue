@@ -46,7 +46,7 @@ export default {};
   align-items: center;
   justify-content: center;
   width: 100%;
-  font-family: "SF_500";
+  font-family: var(--SB_400);
   font-style: normal;
   font-weight: 400;
   font-size: 14px;
@@ -57,8 +57,9 @@ export default {};
 }
 
 .v-product-card-title h4 {
-  font-family: "SF_500";
+  font-family: var(--SB_600);
   font-style: normal;
+  font-weight: 590;
   font-size: 24px;
   line-height: 29px;
   display: flex;
