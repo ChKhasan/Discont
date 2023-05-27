@@ -27,10 +27,7 @@
             <li @click="$router.push('/comparison')">
               <span class="nav-icons" v-html="navComp"></span>Solishtirish
             </li>
-            <li
-              class="nav_profile flex-row"
-              @click="$router.push('/profile/personal-info')"
-            >
+            <li class="nav_profile flex-row" @click="visible = true">
               <span v-html="navUser"></span>
               <p>profil</p>
             </li>
@@ -114,6 +111,56 @@
         </div>
       </div>
     </Transition>
+    <a-modal
+      v-model="visible"
+      :body-style="{ padding: '32px', borderRadius: '14px' }"
+      centered
+      :closable="false"
+      width="670px"
+      @ok="handleOk"
+    >
+      <div class="vmodal-anim-header">
+        <img class="shadow-ell-1" src="../../assets/images/Ellipse 57.png" alt="" />
+        <img class="shadow-ell-2" src="../../assets/images/Ellipse 59.png" alt="" />
+        <h5>Akauntingizga kiring yoki ro’yxatdan o’ting</h5>
+        <span @click="handleOk"
+          ><svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="20"
+            height="20"
+            viewBox="0 0 20 20"
+            fill="none"
+          >
+            <path
+              d="M17.9958 1.98438L2.00391 17.9762"
+              stroke="#1F8A70"
+              stroke-width="3.28586"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            />
+            <path
+              d="M18.0003 17.9861L1.99512 1.97754"
+              stroke="#1F8A70"
+              stroke-width="3.28586"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            /></svg
+        ></span>
+      </div>
+      <div class="vmodal-body">
+        <a-form-model :model="form" ref="ruleFormFaq" :rules="rules" layout="vertical">
+          <a-form-model-item
+            class="form-item register-input mb-0 pb-0"
+            label="Telefon raqamingiz"
+          ><the-mask :mask="['+998 (##) ### ## ##', '+998 (##) ### ## ##']" placeholder="+998 (__) ___ __ __" />
+            <!-- <a-input v-model="form.name" placeholder="Telefon raqamingiz" /> -->
+          </a-form-model-item>
+        </a-form-model>
+      </div>
+      <div class="vmodal-btn vmodal-btn-height">Manzilni qo’shish</div>
+      <div class="vmodal-btn-outline">Manzilni qo’shish</div>
+      <template slot="footer"> <h3></h3></template>
+    </a-modal>
   </div>
 </template>
 <script>
@@ -123,6 +170,13 @@ export default {
   data() {
     return {
       catalogMenu: false,
+      visible: false,
+      form: {
+        name: "",
+      },
+      rules: {
+        name: [{}],
+      },
       navLogo: require("../../assets/svg/green-logo.svg?raw"),
       navMic: require("../../assets/svg/mic.svg?raw"),
       navSearch: require("../../assets/svg/search.svg?raw"),
@@ -133,6 +187,12 @@ export default {
       navUser: require("../../assets/svg/User_alt_light.svg?raw"),
       navCategory: require("../../assets/svg/category_menu.svg?raw"),
     };
+  },
+  methods: {
+    handleOk() {
+      console.log("asdasdas");
+      this.visible = false;
+    },
   },
   watch: {
     catalogMenu(val) {
@@ -304,5 +364,78 @@ export default {
   letter-spacing: 0.2px;
   color: #5f5f5f;
   margin-top: 8px;
+}
+.vmodal-anim-header {
+  height: 285px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.vmodal-anim-header h5 {
+  font-family: var(--SB_600);
+  font-style: normal;
+  font-size: 32px;
+  line-height: 150%;
+  text-align: center;
+  letter-spacing: -0.02em;
+  color: #09454f;
+  position: relative;
+  display: flex;
+  justify-content: center;
+  width: 70%;
+}
+.vmodal-anim-header span,
+.vmodal-anim-header img {
+  position: absolute;
+}
+.vmodal-anim-header span {
+  top: 45px;
+  right: 45px;
+  cursor: pointer;
+}
+.vmodal-anim-header .shadow-ell-1 {
+  right: 50px;
+}
+.vmodal-anim-header .shadow-ell-2 {
+  left: 50px;
+}
+.vmodal-btn-outline {
+  border: 2px solid #1f8a70;
+  border-radius: 16px;
+  height: 59px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--SB_500);
+  font-style: normal;
+  font-size: 18px;
+  line-height: 150%;
+  letter-spacing: -0.02em;
+  color: #1f8a70;
+  margin-top: 10px;
+  cursor: pointer;
+}
+.vmodal-btn-height {
+  height: 59px !important;
+}
+.register-input input {
+  height: 60px;
+  background: #f9f9f9;
+  padding-left: 22px;
+  border-radius: 16px;
+  width: 100%;
+}
+.register-input input:focus {
+  outline: none;
+}
+.register-input label {
+  font-family: var(--SB_400);
+  font-style: normal;
+  font-size: 16px;
+  line-height: 20px;
+  text-align: right;
+  color: #7b7b7b;
+  margin-bottom: 6px !important;
+  padding-bottom: 0 !important;
 }
 </style>

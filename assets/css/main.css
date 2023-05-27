@@ -233,3 +233,36 @@ ul {
   justify-content: center;
   cursor: pointer;
 }
+.vmodal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.vmodal-header h5 {
+  font-family: var(--SB_600);
+  font-style: normal;
+  font-size: 24px;
+  line-height: 30px;
+  color: #000000;
+}
+.ant-modal-footer {
+  display: none !important;
+}
+.vmodal-btn {
+  background: #1f8a70;
+  border-radius: 12px;
+  font-family: var(--SB_600);
+  font-style: normal;
+  font-size: 18px;
+  line-height: 23px;
+  color: #ffffff;
+  display: flex;
+  justify-content: center;
+  margin-top: 18px;
+  height: 48px;
+  align-items: center;
+  cursor: pointer;
+}
+.ant-modal-content {
+  border-radius: 14px !important;
+}

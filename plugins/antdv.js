@@ -11,7 +11,7 @@ import {
   // Button,
   // Table,
   // Upload,
-  // Modal,
+  Modal,
   // Popconfirm,
   // Radio,
   Icon,
@@ -51,7 +51,7 @@ Vue.use(FormModel);
 // Vue.use(Button);
 // Vue.use(Table);
 // Vue.use(Upload);
-// Vue.use(Modal);
+Vue.use(Modal);
 // Vue.use(Popconfirm);
 // Vue.use(Radio);
 Vue.use(Icon);

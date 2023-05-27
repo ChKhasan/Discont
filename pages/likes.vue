@@ -13,20 +13,10 @@
           <MainTitle title="Menga yoqqan tovarlar" />
           <span class="d-flex align-items-end">8 288 товаров</span>
         </div>
-        <a-select
-          v-model="value"
-          class="categories-filter-select"
-          placeholder="Select good person"
-          style="width: 252px"
-        >
-          <a-select-option
-            v-for="item in status"
-            :key="item?.value"
-            :label="item.label"
-            :value="item.value"
-            >{{ item.label }}
-          </a-select-option>
-        </a-select>
+        <div class="likes-delete">
+          <span v-html="deleteIcon"></span>
+          Barchasini o’chirish
+        </div>
       </div>
       <div class="likes-page-body" v-if="true">
         <ProductCard
@@ -63,6 +53,7 @@ export default {
   data() {
     return {
       arrow: require("../assets/svg/dropdown-icon.svg?raw"),
+      deleteIcon: require("../assets/svg/delete.svg?raw"),
       status: [
         {
           value: "all",
@@ -106,5 +97,23 @@ export default {
   grid-template-columns: repeat(6, 1fr);
   grid-gap: 24px;
   margin-bottom: 60px;
+}
+.likes-delete {
+  background: #f8f8f8;
+  border-radius: 9px;
+  padding: 0 12px;
+  height: 42px;
+
+  display: flex;
+  align-items: center;
+  font-family: var(--SB_400);
+  font-style: normal;
+  font-size: 16px;
+  line-height: 20px;
+  color: #fc4141;
+  cursor: pointer;
+}
+.likes-delete span {
+  margin-right: 13px;
 }
 </style>

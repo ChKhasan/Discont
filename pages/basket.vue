@@ -201,7 +201,9 @@
                 <p>25 000 сум</p></span
               >
             </div>
-            <div class="basket-checkout-btn">Оформить заказ</div>
+            <div class="basket-checkout-btn" @click="$router.push('/checkout')">
+              Оформить заказ
+            </div>
             <div class="basket-checkout-bottom">
               <p>
                 Нажимая 'Оформить заказ', я соглашаюсь с
@@ -209,15 +211,17 @@
               </p>
             </div>
           </div>
+          <div class="basket-coin-block">
+            <img src="../assets/images/basket-2coin.png" alt="" />
+            <h3>+15 ta Dicoin</h3>
+            <p>Dicoinlar to’plang va keyingi xaridingizdan tejang!</p>
+          </div>
         </div>
       </div>
       <div class="empty-box-app" v-else>
-        <img src="../assets/images/packaging love.png" alt="" />
-        <h2>Hali sotib olishga tayyor emasmisiz?</h2>
-        <p>
-          Mahsulot sahifasida ♡ tugmasini bosing va <br />
-          o'zingizga yoqqan narsani shu yerga qo'shing.
-        </p>
+        <img src="../assets/images/packaging cancel.png" alt="" />
+        <h2>Savatingiz bo'sh holatda</h2>
+        <p>Buyurtma qilingan narsalar shu yerda paydo bo'ladi.</p>
       </div>
     </div>
     <div class="categories-app-banner-container">
@@ -236,6 +240,7 @@ export default {
       arrow: require("../assets/svg/dropdown-icon.svg?raw"),
       like: require("../assets/svg/card-like.svg?raw"),
       deleteIcon: require("../assets/svg/basket-delete.svg?raw"),
+      // twoCoin: require("../assets/svg/basket-2coin.svg?raw"),
     };
   },
 
@@ -494,7 +499,7 @@ export default {
   cursor: pointer;
 }
 .basket-checkout-bottom {
-    margin-top: 15px;
+  margin-top: 15px;
 }
 .basket-checkout-bottom p {
   font-family: var(--SB_500);
@@ -505,5 +510,38 @@ export default {
 }
 .basket-checkout-bottom p span {
   color: #2b71f8;
+}
+.basket-coin-block {
+  padding: 18px;
+  background: #e9fcfb;
+  border-radius: 12px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  margin-top: 23px;
+}
+.basket-coin-block h3 {
+  font-family: var(--SB_600);
+  font-style: normal;
+  font-size: 22px;
+  line-height: 20px;
+  letter-spacing: -0.28px;
+  color: #1f8a70;
+  margin-bottom: 24px;
+}
+.basket-coin-block p {
+  font-family: var(--SB_400);
+  font-style: normal;
+  font-size: 14px;
+  line-height: 18px;
+  color: #1f8a70;
+  text-align: center;
+}
+.basket-coin-block img {
+  position: absolute;
+  left: 5px;
+  top: -20px;
 }
 </style>
