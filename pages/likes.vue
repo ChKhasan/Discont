@@ -53,7 +53,7 @@ export default {
   data() {
     return {
       arrow: require("../assets/svg/dropdown-icon.svg?raw"),
-      deleteIcon: require("../assets/svg/delete.svg?raw"),
+      deleteIcon: require("../assets/svg/Delete.svg?raw"),
       status: [
         {
           value: "all",
