@@ -366,3 +366,21 @@
   fill: #09454f;
   transition: 0.2s;
 }
+.chekout-footer-head {
+  display: flex;
+}
+.chekout-footer-head p {
+  font-family: var(--SB_400);
+  font-style: normal;
+  font-size: 16px;
+  line-height: 19px;
+  letter-spacing: 0.03em;
+  color: #000000;
+  margin-left: 32px;
+}
+.footer-checkout {
+  background-color: #fafafa;
+}
+.footer-checkout .footer-bottom {
+  background-color: #fafafa;
+}

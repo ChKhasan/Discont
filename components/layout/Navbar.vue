@@ -43,19 +43,28 @@
             <div class="catalog-menu-content">
               <div class="catalog-menu-list">
                 <ul>
-                  <li class="catalog-menu-list-active">Электроника</li>
-                  <li>Дом и сад</li>
+                  <li
+                    v-for="category in categories"
+                    :key="category?.id"
+                    @mouseover="targetCategory(category)"
+                    :class="{
+                      'catalog-menu-list-active': activeCategory?.id == category?.id,
+                    }"
+                  >
+                    {{ category?.name?.ru }}
+                  </li>
+                  <!-- <li>Дом и сад</li>
                   <li>Детские товары</li>
                   <li>Бытовая техника</li>
                   <li>Спорт и отдых</li>
                   <li>Строительство и ремонт</li>
                   <li>Автотовары</li>
-                  <li>Хобби и творчество</li>
+                  <li>Хобби и творчество</li> -->
                 </ul>
               </div>
               <div class="catalog-menu-body">
                 <div class="d-flex categories-page-title mt-0 mb-5 align-items-end">
-                  <MainTitle title="Электроника" />
+                  <MainTitle :title="activeCategory?.name?.ru" />
                   <span class="d-flex align-items-end">8 288 товаров</span>
                 </div>
                 <div class="catalog-menu-items">
@@ -148,17 +157,101 @@
         ></span>
       </div>
       <div class="vmodal-body">
-        <a-form-model :model="form" ref="ruleFormFaq" :rules="rules" layout="vertical">
+        <a-form-model
+          :model="formCheckNumber"
+          ref="ruleFormCheckNumber"
+          :rules="rulesCheckNumber"
+          layout="vertical"
+        >
           <a-form-model-item
             class="form-item register-input mb-0 pb-0"
             label="Telefon raqamingiz"
-          ><the-mask :mask="['+998 (##) ### ## ##', '+998 (##) ### ## ##']" placeholder="+998 (__) ___ __ __" />
+            prop="phone_number"
+          >
+            <span class="position-relative d-flex align-items-center justify-content-end">
+              <!-- <span class="position-absolute number-error"
+                >Raqam noto’g’ri kiritildi</span
+              > -->
+              <the-mask
+                :mask="['+998 (##) ### ## ##', '+998 (##) ### ## ##']"
+                placeholder="+998 (__) ___ __ __"
+                v-model="formCheckNumber.phone_number"
+              />
+            </span>
             <!-- <a-input v-model="form.name" placeholder="Telefon raqamingiz" /> -->
           </a-form-model-item>
         </a-form-model>
       </div>
-      <div class="vmodal-btn vmodal-btn-height">Manzilni qo’shish</div>
-      <div class="vmodal-btn-outline">Manzilni qo’shish</div>
+      <div class="vmodal-btn vmodal-btn-height" @click="submitCheckNumber()">
+        Manzilni qo’shish
+      </div>
+      <div class="vmodal-btn-outline" @click="visibleLogin = true">Manzilni qo’shish</div>
+      <template slot="footer"> <h3></h3></template>
+    </a-modal>
+    <a-modal
+      v-model="visibleLogin"
+      :body-style="{ padding: '32px', borderRadius: '14px' }"
+      centered
+      :closable="false"
+      width="670px"
+      @ok="handleOkLogin"
+    >
+      <div class="vmodal-header">
+        <h5>Akauntingizga kiring yoki ro’yxatdan o’ting</h5>
+        <span @click="handleOkLogin"
+          ><svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="20"
+            height="20"
+            viewBox="0 0 20 20"
+            fill="none"
+          >
+            <path
+              d="M17.9958 1.98438L2.00391 17.9762"
+              stroke="#1F8A70"
+              stroke-width="3.28586"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            />
+            <path
+              d="M18.0003 17.9861L1.99512 1.97754"
+              stroke="#1F8A70"
+              stroke-width="3.28586"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            /></svg
+        ></span>
+      </div>
+      <div class="vmodal-body">
+        <a-form-model
+          :model="formLogin"
+          ref="ruleFormLogin"
+          :rules="rulesLogin"
+          layout="vertical"
+        >
+          <a-form-model-item
+            class="form-item register-input mb-3 pb-0"
+            label="Telefon raqamingiz"
+          >
+            <the-mask
+              v-model="formLogin.phone_number"
+              :mask="['+998 (##) ### ## ##', '+998 (##) ### ## ##']"
+              placeholder="+998 (__) ___ __ __"
+            />
+          </a-form-model-item>
+          <a-form-model-item class="form-item register-input mb-0 pb-0" label="Parol">
+            <a-input
+              v-model="formLogin.password"
+              type="password"
+              placeholder="Telefon raqamingiz"
+            />
+          </a-form-model-item>
+        </a-form-model>
+      </div>
+      <div class="vmodal-btn vmodal-btn-height" @click="submitLogin()">
+        Akauntga Kirish
+      </div>
+      <div class="vmodal-forget-password">Parolni unutdingizmi?</div>
       <template slot="footer"> <h3></h3></template>
     </a-modal>
   </div>
@@ -171,10 +264,30 @@ export default {
     return {
       catalogMenu: false,
       visible: false,
-      form: {
-        name: "",
+      visibleLogin: false,
+      formLogin: {
+        phone_number: "",
+        password: "",
       },
-      rules: {
+      formCheckNumber: {
+        phone_number: "",
+      },
+      formRegisterWidthSms: {
+        phone_number: "",
+        sms_code: "",
+      },
+      rulesLogin: {
+        name: [{}],
+      },
+      rulesCheckNumber: {
+        phone_number: [
+          {
+            required: true,
+            trigger: "change",
+          },
+        ],
+      },
+      rulesRegisterWidthSms: {
         name: [{}],
       },
       navLogo: require("../../assets/svg/green-logo.svg?raw"),
@@ -186,15 +299,88 @@ export default {
       navOrder: require("../../assets/svg/Order_light.svg?raw"),
       navUser: require("../../assets/svg/User_alt_light.svg?raw"),
       navCategory: require("../../assets/svg/category_menu.svg?raw"),
+      categories: [],
+      activeCategory: null,
     };
   },
+  async fetch() {
+    const [categoriesData] = await Promise.all([
+      this.$store.dispatch("fetchCategories/getCategories", {
+        limit: 6,
+      }),
+    ]);
+
+    this.categories = categoriesData?.categories?.data;
+    this.activeCategory = categoriesData?.categories?.data[0];
+  },
+  computed: {
+    routerPath() {
+      return this.$route.path;
+    },
+  },
   methods: {
+    targetCategory(obj) {
+      this.activeCategory = obj;
+    },
     handleOk() {
-      console.log("asdasdas");
       this.visible = false;
+    },
+    handleOkLogin() {
+      this.visibleLogin = false;
+    },
+    submitCheckNumber() {
+      const data = {
+        phone_number: `998${this.formCheckNumber.phone_number}`,
+      };
+      this.$refs["ruleFormCheckNumber"].validate((valid) => {
+        if (valid) {
+          this.__CHECK_NUMBER(data);
+        } else {
+          return false;
+        }
+      });
+    },
+    submitLogin() {
+      const data = {
+        phone_number: `998${this.formLogin.phone_number}`,
+        password: this.formLogin.password,
+      };
+      this.$refs["ruleFormLogin"].validate((valid) => {
+        if (valid) {
+          this.__LOGIN(data);
+        } else {
+          return false;
+        }
+      });
+    },
+    async __CHECK_NUMBER(formData) {
+      try {
+        const data = await this.$store.dispatch("fetchAuth/postCheckNumber", formData);
+        console.log(data);
+      } catch (e) {
+        console.log(e);
+      }
+    },
+    async __LOGIN(formData) {
+      try {
+        const data = await this.$store.dispatch("fetchAuth/postLogin", formData);
+        console.log(data);
+      } catch (e) {
+        console.log(e);
+      }
     },
   },
   watch: {
+    routerPath() {
+      this.catalogMenu = false;
+    },
+    visible(val) {
+      if (val) this.visibleLogin = false;
+    },
+    visibleLogin(val) {
+      if (val) this.visible = false;
+    },
+
     catalogMenu(val) {
       if (val) {
         document.body.style.height = "100vh";
@@ -437,5 +623,30 @@ export default {
   color: #7b7b7b;
   margin-bottom: 6px !important;
   padding-bottom: 0 !important;
+}
+.number-error {
+  font-family: var(--SB_400);
+  font-style: normal;
+  font-size: 14px;
+  text-align: right;
+  right: 21px;
+  color: #ff3f3f;
+}
+.vmodal-forget-password {
+  font-family: var(--SB_500);
+  font-style: normal;
+  font-weight: 500;
+  font-size: 18px;
+  line-height: 150%;
+  text-align: center;
+  letter-spacing: -0.02em;
+  color: #06858c;
+  margin-top: 22px;
+  display: flex;
+  justify-content: center;
+  cursor: pointer;
+}
+.ant-form-item-required::before {
+  display: none;
 }
 </style>

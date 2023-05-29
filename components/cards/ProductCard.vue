@@ -1,11 +1,28 @@
 <template lang="html">
   <div class="product-card">
     <div class="product-card-header">
-      <span class="hover-btns"
-        ><span class="like-inactive" v-html="like"> </span
-        ><span class="like-active" v-html="activeHeart"> </span
+      <span class="hover-btns">
+        <span
+          class="like-active"
+          v-html="activeHeart"
+          v-if="$store.state.like.includes(product.id)"
+          @click="$store.commit('addToStore', { id: product.id, name: 'like' })"
+        >
+        </span>
+        <span
+          class="like-inactive"
+          v-else
+          v-html="like"
+          @click="$store.commit('addToStore', { id: product.id, name: 'like' })"
+        >
+        </span>
+      </span>
+      <span
+        class="hover-btns"
+        v-html="comp"
+        :class="{ 'active-comparison': $store.state.comparison.includes(product.id) }"
+        @click="$store.commit('addToStore', { id: product.id, name: 'comparison' })"
       ></span>
-      <span class="hover-btns" v-html="comp"></span>
       <div class="fast_show">Быстрый просмотр</div>
       <span class="pc-img-container"
         ><img
@@ -50,7 +67,22 @@
     </div>
 
     <div class="product-card-footer">
-      <div><span>В корзину</span>В корзину</div>
+      <div
+        class="to-basket-count"
+        v-if="$store.state.cart.find((item) => item.id == product.id)"
+      >
+        <span @click="$store.commit('productCountDown', { id: product.id })">-</span>{{$store.state.cart.find((item) => item.id == product.id)?.count}}
+        <span @click="$store.commit('productCountUp', { id: product.id })">+</span>
+      </div>
+      <div
+        class="to-basket-btn"
+        v-else
+        @click="
+          $store.commit('addToCart', { obj: { id: product.id, count: 1 }, name: 'cart' })
+        "
+      >
+        <span>В корзину</span>В корзину
+      </div>
     </div>
   </div>
 </template>
@@ -106,22 +138,26 @@ export default {
 .hover-btns:first-child {
   top: 12px;
 }
-.like-inactive {
-  display: flex;
+.like-inactive:hover svg path {
+  fill: #ff2525;
 }
-.like-active {
+/* .like-active {
   display: none;
-}
-.hover-btns:hover .like-inactive {
+} */
+/* .hover-btns:hover .like-inactive {
   display: none;
-}
-.hover-btns:hover .like-active {
+} */
+/* .hover-btns:hover .like-active {
   display: flex;
-}
+} */
 .hover-btns:hover svg path {
   transition: 0.3s;
 }
 .hover-btns:hover > svg path {
+  fill: var(--color_green);
+  stroke: var(--color_green);
+}
+.active-comparison > svg path {
   fill: var(--color_green);
   stroke: var(--color_green);
 }

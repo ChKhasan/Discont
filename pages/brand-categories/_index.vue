@@ -34,7 +34,7 @@
           <div class="categories-list">
             <h5>Категория</h5>
             <ul>
-              <li v-for="brand in brands" :key="brand.id">
+              <li v-for="brand in brands" :key="brand?.id">
                 <span
                   :class="{ 'active-brand': $route.params.index == brand?.slug }"
                   @click="$router.push(`/brand-categories/${brand?.slug}`)"
@@ -131,6 +131,7 @@
         <div class="categories-products">
           <div class="d-flex justify-content-end w-100"></div>
           <div class="categories-card-grid">
+            <!-- <ProductCard />
             <ProductCard />
             <ProductCard />
             <ProductCard />
@@ -141,11 +142,14 @@
             <ProductCard />
             <ProductCard />
             <ProductCard />
-            <ProductCard />
-            <ProductCard />
+            <ProductCard /> -->
           </div>
-          <div class="categories-products-show-more">Показать еще 44</div>
-          <div class="products-pagination">
+            <div class="comments-empty" v-if="true">
+              <img src="../../assets/images/comments-empty.png" alt="" />
+              <h4>Mahsulot topilmadi</h4>
+            </div>
+          <div class="categories-products-show-more" v-if="false">Показать еще 44</div>
+          <div class="products-pagination" v-if="false">
             <a-pagination size="small" :default-current="6" :total="500" />
           </div>
         </div>
@@ -155,6 +159,7 @@
           <MainTitle title="Kategoriyadagi top tavarlar" />
         </div>
         <div class="product-grid">
+          <!-- <ProductCard />
           <ProductCard />
           <ProductCard />
           <ProductCard />
@@ -165,8 +170,7 @@
           <ProductCard />
           <ProductCard />
           <ProductCard />
-          <ProductCard />
-          <ProductCard />
+          <ProductCard /> -->
         </div>
       </div>
       <div class="categories-page-info">
@@ -264,6 +268,7 @@ export default {
     this.brands = [...this.brands.splice(0, 6)];
     this.brandProducts = brandData.products?.data;
     this.brand = brandData.brand;
+    console.log(this.brand);
   },
   methods: {
     onChange(value) {

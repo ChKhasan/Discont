@@ -41,7 +41,8 @@
           </div>
           <div class="radio-card-grid">
             <div class="radio-card">
-              <span> </span>
+              <span :class="{ 'active-radio': typePayment }" @click="typePayment = true">
+              </span>
               <div class="radio-card-body">
                 <h6>Naqd pul bilan to’lash</h6>
                 <p>
@@ -51,32 +52,101 @@
               </div>
             </div>
             <div class="radio-card">
-              <span> </span>
+              <span
+                :class="{ 'active-radio': !typePayment }"
+                @click="typePayment = false"
+              >
+              </span>
               <div class="radio-card-body">
                 <h6>Bank kartasi orqali to’lash</h6>
                 <p>
                   Lorem Ipsum has been the industry's standard dummy text ever since the
                   1500s, when an unknown Lorem Ipsum has been the industry's standard
                 </p>
-                <div class="pay-cards-grid">
-                  <div class="pay-card">
-                    <span></span>
+                <div class="pay-cards-grid" v-if="!typePayment">
+                  <div class="pay-card" @click="paymentElement = 'apelsin'">
+                    <span v-if="paymentElement == 'apelsin'" class="step-active"
+                      ><svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        width="13"
+                        height="9"
+                        viewBox="0 0 13 9"
+                        fill="none"
+                      >
+                        <path
+                          d="M12.8148 0.767054L12.2128 0.181052C11.9648 -0.0603507 11.56 -0.0603507 11.3098 0.181052L4.99759 6.3279L1.69096 3.10901C1.44297 2.86758 1.03811 2.86758 0.787992 3.10901L0.185988 3.69502C-0.0619959 3.93645 -0.0619959 4.33054 0.185988 4.57402L4.54399 8.81635C4.66906 8.9381 4.83012 9 4.99335 9C5.15657 9 5.31977 8.9381 5.44274 8.81635L12.8084 1.64609C13.0628 1.40056 13.0628 1.00851 12.8148 0.767054Z"
+                          fill="white"
+                        /></svg
+                    ></span>
+                    <span v-else ></span>
                     <img src="../assets/images/apelsin.uz.png" alt="" />
                   </div>
-                  <div class="pay-card">
-                    <span></span>
+                  <div class="pay-card" @click="paymentElement = 'uzcard'">
+                    <span v-if="paymentElement == 'uzcard'" class="step-active"
+                      ><svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        width="13"
+                        height="9"
+                        viewBox="0 0 13 9"
+                        fill="none"
+                      >
+                        <path
+                          d="M12.8148 0.767054L12.2128 0.181052C11.9648 -0.0603507 11.56 -0.0603507 11.3098 0.181052L4.99759 6.3279L1.69096 3.10901C1.44297 2.86758 1.03811 2.86758 0.787992 3.10901L0.185988 3.69502C-0.0619959 3.93645 -0.0619959 4.33054 0.185988 4.57402L4.54399 8.81635C4.66906 8.9381 4.83012 9 4.99335 9C5.15657 9 5.31977 8.9381 5.44274 8.81635L12.8084 1.64609C13.0628 1.40056 13.0628 1.00851 12.8148 0.767054Z"
+                          fill="white"
+                        /></svg
+                    ></span>
+                    <span v-else ></span>
                     <img src="../assets/images/uzcard.uz.png" alt="" />
                   </div>
-                  <div class="pay-card">
-                    <span></span>
+                  <div class="pay-card" @click="paymentElement = 'click'">
+                    <span v-if="paymentElement == 'click'" class="step-active"
+                      ><svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        width="13"
+                        height="9"
+                        viewBox="0 0 13 9"
+                        fill="none"
+                      >
+                        <path
+                          d="M12.8148 0.767054L12.2128 0.181052C11.9648 -0.0603507 11.56 -0.0603507 11.3098 0.181052L4.99759 6.3279L1.69096 3.10901C1.44297 2.86758 1.03811 2.86758 0.787992 3.10901L0.185988 3.69502C-0.0619959 3.93645 -0.0619959 4.33054 0.185988 4.57402L4.54399 8.81635C4.66906 8.9381 4.83012 9 4.99335 9C5.15657 9 5.31977 8.9381 5.44274 8.81635L12.8084 1.64609C13.0628 1.40056 13.0628 1.00851 12.8148 0.767054Z"
+                          fill="white"
+                        /></svg
+                    ></span>
+                    <span v-else ></span>
                     <img src="../assets/images/click.uz.png" alt="" />
                   </div>
-                  <div class="pay-card">
-                    <span></span>
+                  <div class="pay-card" @click="paymentElement = 'payme'">
+                    <span v-if="paymentElement == 'payme'" class="step-active"
+                      ><svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        width="13"
+                        height="9"
+                        viewBox="0 0 13 9"
+                        fill="none"
+                      >
+                        <path
+                          d="M12.8148 0.767054L12.2128 0.181052C11.9648 -0.0603507 11.56 -0.0603507 11.3098 0.181052L4.99759 6.3279L1.69096 3.10901C1.44297 2.86758 1.03811 2.86758 0.787992 3.10901L0.185988 3.69502C-0.0619959 3.93645 -0.0619959 4.33054 0.185988 4.57402L4.54399 8.81635C4.66906 8.9381 4.83012 9 4.99335 9C5.15657 9 5.31977 8.9381 5.44274 8.81635L12.8084 1.64609C13.0628 1.40056 13.0628 1.00851 12.8148 0.767054Z"
+                          fill="white"
+                        /></svg
+                    ></span>
+                    <span v-else ></span>
                     <img src="../assets/images/payme.uz.png" alt="" />
                   </div>
-                  <div class="pay-card">
-                    <span></span>
+                  <div class="pay-card" @click="paymentElement = 'humocard'">
+                    <span v-if="paymentElement == 'humocard'" class="step-active"
+                      ><svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        width="13"
+                        height="9"
+                        viewBox="0 0 13 9"
+                        fill="none"
+                      >
+                        <path
+                          d="M12.8148 0.767054L12.2128 0.181052C11.9648 -0.0603507 11.56 -0.0603507 11.3098 0.181052L4.99759 6.3279L1.69096 3.10901C1.44297 2.86758 1.03811 2.86758 0.787992 3.10901L0.185988 3.69502C-0.0619959 3.93645 -0.0619959 4.33054 0.185988 4.57402L4.54399 8.81635C4.66906 8.9381 4.83012 9 4.99335 9C5.15657 9 5.31977 8.9381 5.44274 8.81635L12.8084 1.64609C13.0628 1.40056 13.0628 1.00851 12.8148 0.767054Z"
+                          fill="white"
+                        /></svg
+                    ></span>
+                    <span v-else ></span>
                     <img src="../assets/images/humocard.uz.png" alt="" />
                   </div>
                 </div>
@@ -89,7 +159,11 @@
           </div>
           <div class="radio-card-grid-horizontal">
             <div class="radio-card radio-card-horizontal">
-              <span> </span>
+              <span
+                :class="{ 'active-radio': deliveryService }"
+                @click="deliveryService = true"
+              >
+              </span>
               <div class="radio-card-body">
                 <h6>Diskont do’konlaridan borib olib ketish</h6>
                 <p>
@@ -98,7 +172,11 @@
               </div>
             </div>
             <div class="radio-card radio-card-horizontal">
-              <span> </span>
+              <span
+                :class="{ 'active-radio': !deliveryService }"
+                @click="deliveryService = false"
+              >
+              </span>
               <div class="radio-card-body">
                 <h6>Diskont yetkazib berish xizmati</h6>
                 <p>Lorem Ipsum has been the industry's stand</p>
@@ -319,11 +397,15 @@
 </template>
 <script>
 export default {
+  layout: 'checkoutLayout',
   data() {
     return {
       form: {
         name: "",
       },
+      typePayment: true,
+      paymentElement: "payme",
+      deliveryService: true,
       visible: false,
       categories: [
         {
@@ -460,7 +542,7 @@ export default {
 .radio-card-horizontal span {
   margin-right: 24px;
 }
-.radio-card > span::after {
+.active-radio::after {
   content: "";
   position: absolute;
   width: 20px;
@@ -468,6 +550,14 @@ export default {
   background: #1f8a70;
   border-radius: 50%;
 }
+/* .radio-card > span::after {
+  content: "";
+  position: absolute;
+  width: 20px;
+  height: 20px;
+  background: #1f8a70;
+  border-radius: 50%;
+} */
 .radio-card-body h6 {
   font-family: var(--SB_500);
   font-style: normal;
@@ -483,9 +573,7 @@ export default {
   color: rgba(0, 0, 0, 0.7);
   margin-top: 14px;
 }
-.step-active {
-  background: #1f8a70;
-}
+
 .pay-cards-grid {
   display: grid;
   grid-template-columns: repeat(3, 150px);
@@ -502,6 +590,7 @@ export default {
   border: 1px solid #f1f1f1;
   border-radius: 10px;
   justify-content: space-between;
+  cursor: pointer;
 }
 .pay-card > span {
   background: #ffffff;
@@ -510,6 +599,9 @@ export default {
   height: 21px;
   border-radius: 50%;
   cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 .pay-card img {
   width: 82px;
@@ -554,7 +646,6 @@ export default {
   display: flex;
   flex-direction: column;
   margin-top: 60px;
-
 }
 .bottom-text > span {
   display: flex;
@@ -813,5 +904,8 @@ export default {
   height: 48px;
   align-items: center;
   cursor: pointer;
+}
+.step-active {
+  background: #1f8a70 !important;
 }
 </style>

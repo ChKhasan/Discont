@@ -2,18 +2,18 @@
   <div style="margin-top: 170px">
     <Header />
     <Nuxt />
-    <Footer />
+    <CheckOutFooter />
   </div>
 </template>
 <script>
-import Footer from "../components/layout/Footer.vue";
+import CheckOutFooter from "../components/layout/CheckOutFooter.vue";
 import Header from "../components/layout/Header.vue";
 
 export default {
   mounted() {
     this.$store.commit("reloadStore");
   },
-  components: { Header, Footer },
+  components: { Header, CheckOutFooter },
 };
 </script>
 <style lang=""></style>

@@ -16,7 +16,7 @@
               >
             </li>
             <li>
-              <nuxt-link to="/categories"
+              <nuxt-link to="/brands"
                 ><span v-html="navCatIcon"></span>Brendlar</nuxt-link
               >
             </li>
