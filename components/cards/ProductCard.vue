@@ -71,14 +71,15 @@
         class="to-basket-count"
         v-if="$store.state.cart.find((item) => item.id == product.id)"
       >
-        <span @click="$store.commit('productCountDown', { id: product.id })">-</span>{{$store.state.cart.find((item) => item.id == product.id)?.count}}
+        <span @click="$store.commit('productCountDown', { id: product.id })">-</span
+        >{{ $store.state.cart.find((item) => item.id == product.id)?.count }}
         <span @click="$store.commit('productCountUp', { id: product.id })">+</span>
       </div>
       <div
         class="to-basket-btn"
         v-else
         @click="
-          $store.commit('addToCart', { obj: { id: product.id, count: 1 }, name: 'cart' })
+          $store.commit('addToCart', { obj: { ...product, count: 1 }, name: 'cart' })
         "
       >
         <span>В корзину</span>В корзину

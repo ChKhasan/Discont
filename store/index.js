@@ -7,7 +7,6 @@ export const state = () => ({
 
 export const mutations = {
   addToStore(state, payload) {
-    console.log(payload);
     let cart = JSON.parse(localStorage.getItem(payload.name));
     if (cart.includes(payload.id)) {
       cart.splice(cart.indexOf(payload.id), 1);
@@ -26,6 +25,12 @@ export const mutations = {
     }
     localStorage.setItem(payload.name, JSON.stringify(cart));
     state[payload.name] = cart;
+  },
+  deleteToCart(state, payload) {
+    let cart = JSON.parse(localStorage.getItem("cart"));
+    cart = cart.filter((item) => item.id != payload);
+    localStorage.setItem("cart", JSON.stringify(cart));
+    state.cart = cart;
   },
   productCountUp(state, payload) {
     let cart = JSON.parse(localStorage.getItem("cart"));

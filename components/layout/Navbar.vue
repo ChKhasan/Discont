@@ -8,7 +8,7 @@
             <span v-html="navCategory"></span>Katalog
           </button>
           <div class="search_input_container">
-            <input type="text" placeholder="Noutbuk ..." />
+            <input type="text" placeholder="Search ..." />
             <span class="search-btn">
               <span v-html="navMic"></span>
               Qidiruv
@@ -17,14 +17,28 @@
         </div>
         <div class="header-navbar_navbar d-flex">
           <ul class="d-flex justify-content-between w-100 align-items-center">
-            <li><span class="nav-icons" v-html="navOrder"></span>Buyurtmalar</li>
+            <li>
+              <!-- <span class="count-index">12</span> -->
+              <span class="nav-icons" v-html="navOrder"></span>Buyurtmalar
+            </li>
             <li @click="$router.push('/likes')">
+              <span class="count-index" v-if="$store.state.like.length > 0">{{
+                $store.state.like.length
+              }}</span>
+
               <span class="nav-icons" v-html="navLike"></span> Sevimlilar
             </li>
             <li @click="$router.push('/basket')">
+              <span class="count-index" v-if="$store.state.cart.length > 0">{{
+                $store.state.cart.length
+              }}</span>
+
               <span class="nav-icons" v-html="navBasket"></span>Savatcha
             </li>
             <li @click="$router.push('/comparison')">
+              <span class="count-index" v-if="$store.state.comparison.length > 0">{{
+                $store.state.comparison.length
+              }}</span>
               <span class="nav-icons" v-html="navComp"></span>Solishtirish
             </li>
             <li class="nav_profile flex-row" @click="visible = true">
@@ -648,5 +662,22 @@ export default {
 }
 .ant-form-item-required::before {
   display: none;
+}
+.count-index {
+  width: 19px;
+  height: 19px;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: #ff3a55;
+  font-family: var(--SB_700);
+  font-style: normal;
+  font-size: 10px;
+  line-height: 120%;
+  color: #ffffff;
+  right: 2px;
+  top: -6px;
+  position: absolute;
 }
 </style>

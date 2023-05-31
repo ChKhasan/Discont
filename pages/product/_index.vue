@@ -771,11 +771,16 @@ export default {
 }
 .tag {
   background: #e90a0a;
-  padding: 6px 14px;
+  height: 22px;
+  width: 64px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   font-weight: 700;
   font-size: 14px;
   line-height: 17px;
   color: #ffffff;
+  clip-path: polygon(13% 1%, 100% 0%, 87% 100%, 0% 100%);
 }
 .dis__price {
   font-weight: 400;

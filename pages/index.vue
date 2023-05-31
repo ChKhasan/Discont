@@ -329,7 +329,6 @@ export default {
     const categories = categories1?.categories?.data;
     const brands = brands1?.brands?.data;
     const posts = posts1?.posts?.data;
-    console.log(categories);
     return {
       bestsellersProducts,
       byCategoryProducts,
@@ -338,6 +337,15 @@ export default {
       brands,
       posts,
     };
+  },
+  async mounted() {
+    const [
+      products
+    ] = await Promise.all([
+      this.$store.dispatch("fetchProducts/getProducts", {
+        type: "bestsellers",
+        limit: 6,
+      })])
   },
   components: {
     BannerCarousel,

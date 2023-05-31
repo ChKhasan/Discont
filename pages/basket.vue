@@ -14,63 +14,87 @@
           <span class="d-flex align-items-end">4 товаров</span>
         </div>
       </div>
-      <div class="basket-page-body" v-if="true">
-        <div class="basket-cards-grid">
-          <div class="basket-card">
-            <div class="basket-img-container">
-              <img src="../assets/images/BASKET.png" alt="" />
-            </div>
-            <div class="basket-card-body">
-              <div class="basket-card-text-block">
-                <h4>Телефон Apple iPhone 13 mini 128Gb (Black)</h4>
-                <p>Category: Smartfon</p>
-                <p>Brend: Apple</p>
+      <div class="basket-page-body" v-if="$store.state.cart.length > 0">
+        <div>
+          <div class="basket-cards-grid">
+            <div class="basket-card" v-for="product in $store.state.cart">
+              <div class="basket-img-container">
+                <img :src="product.images[0].sm_img" alt="" />
               </div>
-              <div class="basket-card-count">
-                <div class="basket-count-btn">
-                  <span
-                    ><svg
-                      width="12"
-                      height="2"
-                      viewBox="0 0 12 2"
-                      fill="none"
-                      xmlns="http://www.w3.org/2000/svg"
-                    >
-                      <path
-                        d="M1 2C0.734784 2 0.48043 1.89464 0.292893 1.70711C0.105357 1.51957 0 1.26522 0 1C0 0.734784 0.105357 0.48043 0.292893 0.292893C0.48043 0.105357 0.734784 0 1 0L11 0C11.2652 0 11.5196 0.105357 11.7071 0.292893C11.8946 0.48043 12 0.734784 12 1C12 1.26522 11.8946 1.51957 11.7071 1.70711C11.5196 1.89464 11.2652 2 11 2H1Z"
-                        fill="#1F8A70"
-                      /></svg></span
-                  >2
-                  <span
-                    ><svg
-                      width="11"
-                      height="11"
-                      viewBox="0 0 11 11"
-                      fill="none"
-                      xmlns="http://www.w3.org/2000/svg"
-                    >
-                      <path
-                        d="M5.5 0C5.68234 0 5.8572 0.0724328 5.98614 0.201364C6.11507 0.330295 6.1875 0.505164 6.1875 0.6875V4.8125H10.3125C10.4948 4.8125 10.6697 4.88493 10.7986 5.01386C10.9276 5.1428 11 5.31766 11 5.5C11 5.68234 10.9276 5.8572 10.7986 5.98614C10.6697 6.11507 10.4948 6.1875 10.3125 6.1875H6.1875V10.3125C6.1875 10.4948 6.11507 10.6697 5.98614 10.7986C5.8572 10.9276 5.68234 11 5.5 11C5.31766 11 5.1428 10.9276 5.01386 10.7986C4.88493 10.6697 4.8125 10.4948 4.8125 10.3125V6.1875H0.6875C0.505164 6.1875 0.330295 6.11507 0.201364 5.98614C0.0724328 5.8572 0 5.68234 0 5.5C0 5.31766 0.0724328 5.1428 0.201364 5.01386C0.330295 4.88493 0.505164 4.8125 0.6875 4.8125H4.8125V0.6875C4.8125 0.505164 4.88493 0.330295 5.01386 0.201364C5.1428 0.0724328 5.31766 0 5.5 0Z"
-                        fill="#1F8A70"
-                      />
-                    </svg>
+              <div class="basket-card-body">
+                <div class="basket-card-text-block">
+                  <h4>{{ product?.info?.name?.ru }}</h4>
+                  <p>Category: {{ product?.info?.category.name?.ru }}</p>
+                  <p>Brend: {{ product?.info?.brand.name }}</p>
+                </div>
+                <div class="basket-card-count">
+                  <div class="basket-count-btn">
+                    <span @click="$store.commit('productCountDown', { id: product.id })"
+                      ><svg
+                        width="12"
+                        height="2"
+                        viewBox="0 0 12 2"
+                        fill="none"
+                        xmlns="http://www.w3.org/2000/svg"
+                      >
+                        <path
+                          d="M1 2C0.734784 2 0.48043 1.89464 0.292893 1.70711C0.105357 1.51957 0 1.26522 0 1C0 0.734784 0.105357 0.48043 0.292893 0.292893C0.48043 0.105357 0.734784 0 1 0L11 0C11.2652 0 11.5196 0.105357 11.7071 0.292893C11.8946 0.48043 12 0.734784 12 1C12 1.26522 11.8946 1.51957 11.7071 1.70711C11.5196 1.89464 11.2652 2 11 2H1Z"
+                          fill="#1F8A70"
+                        /></svg
+                    ></span>
+                    {{ $store.state.cart.find((item) => item.id == product.id)?.count }}
+                    <span @click="$store.commit('productCountUp', { id: product.id })"
+                      ><svg
+                        width="11"
+                        height="11"
+                        viewBox="0 0 11 11"
+                        fill="none"
+                        xmlns="http://www.w3.org/2000/svg"
+                      >
+                        <path
+                          d="M5.5 0C5.68234 0 5.8572 0.0724328 5.98614 0.201364C6.11507 0.330295 6.1875 0.505164 6.1875 0.6875V4.8125H10.3125C10.4948 4.8125 10.6697 4.88493 10.7986 5.01386C10.9276 5.1428 11 5.31766 11 5.5C11 5.68234 10.9276 5.8572 10.7986 5.98614C10.6697 6.11507 10.4948 6.1875 10.3125 6.1875H6.1875V10.3125C6.1875 10.4948 6.11507 10.6697 5.98614 10.7986C5.8572 10.9276 5.68234 11 5.5 11C5.31766 11 5.1428 10.9276 5.01386 10.7986C4.88493 10.6697 4.8125 10.4948 4.8125 10.3125V6.1875H0.6875C0.505164 6.1875 0.330295 6.11507 0.201364 5.98614C0.0724328 5.8572 0 5.68234 0 5.5C0 5.31766 0.0724328 5.1428 0.201364 5.01386C0.330295 4.88493 0.505164 4.8125 0.6875 4.8125H4.8125V0.6875C4.8125 0.505164 4.88493 0.330295 5.01386 0.201364C5.1428 0.0724328 5.31766 0 5.5 0Z"
+                          fill="#1F8A70"
+                        />
+                      </svg>
+                    </span>
+                  </div>
+                  <p>
+                    {{ product?.price.replace(/\B(?=(\d{3})+(?!\d))/g, " ") }}
+                    so’mdan/donasi
+                  </p>
+                </div>
+                <div class="basket-price-block">
+                  <span>
+                    <span
+                      v-html="activeHeart"
+                      v-if="$store.state.like.includes(product.id)"
+                      @click="
+                        $store.commit('addToStore', { id: product.id, name: 'like' })
+                      "
+                    ></span>
+                    <span
+                      class="basket-like"
+                      v-html="like"
+                      v-else
+                      @click="
+                        $store.commit('addToStore', { id: product.id, name: 'like' })
+                      "
+                    ></span>
+                    <p @click="$store.commit('deleteToCart', product.id)">
+                      <span v-html="deleteIcon"></span>O’chirish
+                    </p>
                   </span>
-                </div>
-                <p>14 000 000 so’mdan/donasi</p>
-              </div>
-              <div class="basket-price-block">
-                <span>
-                  <span class="basket-like" v-html="like"></span>
-                  <p><span v-html="deleteIcon"></span>O’chirish</p>
-                </span>
-                <div class="basket-card-price">
-                  <span>+5 ta dicoin</span>
-                  <h4>28 000 000 so’m</h4>
+                  <div class="basket-card-price">
+                    <span>+5 ta dicoin</span>
+                    <h4>
+                      {{ productTotalPrice(product) }}
+                      so’m
+                    </h4>
+                  </div>
                 </div>
               </div>
             </div>
-          </div>
-          <div class="basket-card">
+            <!-- <div class="basket-card">
             <div class="basket-img-container">
               <img src="../assets/images/BASKET.png" alt="" />
             </div>
@@ -120,57 +144,7 @@
                 <h4>28 000 000 so’m</h4>
               </div>
             </div>
-          </div>
-          <div class="basket-card">
-            <div class="basket-img-container">
-              <img src="../assets/images/BASKET.png" alt="" />
-            </div>
-            <div class="basket-card-body">
-              <div class="basket-card-text-block">
-                <h4>Телефон Apple iPhone 13 mini 128Gb (Black)</h4>
-                <p>Category: Smartfon</p>
-                <p>Brend: Apple</p>
-              </div>
-              <div class="basket-card-count">
-                <div class="basket-count-btn">
-                  <span
-                    ><svg
-                      width="12"
-                      height="2"
-                      viewBox="0 0 12 2"
-                      fill="none"
-                      xmlns="http://www.w3.org/2000/svg"
-                    >
-                      <path
-                        d="M1 2C0.734784 2 0.48043 1.89464 0.292893 1.70711C0.105357 1.51957 0 1.26522 0 1C0 0.734784 0.105357 0.48043 0.292893 0.292893C0.48043 0.105357 0.734784 0 1 0L11 0C11.2652 0 11.5196 0.105357 11.7071 0.292893C11.8946 0.48043 12 0.734784 12 1C12 1.26522 11.8946 1.51957 11.7071 1.70711C11.5196 1.89464 11.2652 2 11 2H1Z"
-                        fill="#1F8A70"
-                      /></svg></span
-                  >2
-                  <span
-                    ><svg
-                      width="11"
-                      height="11"
-                      viewBox="0 0 11 11"
-                      fill="none"
-                      xmlns="http://www.w3.org/2000/svg"
-                    >
-                      <path
-                        d="M5.5 0C5.68234 0 5.8572 0.0724328 5.98614 0.201364C6.11507 0.330295 6.1875 0.505164 6.1875 0.6875V4.8125H10.3125C10.4948 4.8125 10.6697 4.88493 10.7986 5.01386C10.9276 5.1428 11 5.31766 11 5.5C11 5.68234 10.9276 5.8572 10.7986 5.98614C10.6697 6.11507 10.4948 6.1875 10.3125 6.1875H6.1875V10.3125C6.1875 10.4948 6.11507 10.6697 5.98614 10.7986C5.8572 10.9276 5.68234 11 5.5 11C5.31766 11 5.1428 10.9276 5.01386 10.7986C4.88493 10.6697 4.8125 10.4948 4.8125 10.3125V6.1875H0.6875C0.505164 6.1875 0.330295 6.11507 0.201364 5.98614C0.0724328 5.8572 0 5.68234 0 5.5C0 5.31766 0.0724328 5.1428 0.201364 5.01386C0.330295 4.88493 0.505164 4.8125 0.6875 4.8125H4.8125V0.6875C4.8125 0.505164 4.88493 0.330295 5.01386 0.201364C5.1428 0.0724328 5.31766 0 5.5 0Z"
-                        fill="#1F8A70"
-                      />
-                    </svg>
-                  </span>
-                </div>
-                <p>14 000 000 so’mdan/donasi</p>
-              </div>
-              <div class="basket-price-block">
-                <span>
-                  <span class="basket-like" v-html="like"></span>
-                  <p><span v-html="deleteIcon"></span>O’chirish</p>
-                </span>
-                <h4>28 000 000 so’m</h4>
-              </div>
-            </div>
+          </div> -->
           </div>
         </div>
         <div class="basket-checkout-container">
@@ -240,10 +214,29 @@ export default {
       arrow: require("../assets/svg/dropdown-icon.svg?raw"),
       like: require("../assets/svg/card-like.svg?raw"),
       deleteIcon: require("../assets/svg/basket-delete.svg?raw"),
+      activeHeart: require("../assets/svg/active-heart.svg?raw"),
       // twoCoin: require("../assets/svg/basket-2coin.svg?raw"),
+      products: [],
     };
   },
-
+   mounted() {
+   this.$store.commit("reloadStore");
+  },
+  methods: {
+    productTotalPrice(product) {
+      let price =
+        product?.price *
+        this.$store.state.cart.find((item) => item.id == product.id)?.count;
+      console.log(price);
+      return (
+        price +
+        ""
+          .slice(0, product?.price.indexOf("."))
+          .replace(".", ",")
+          .replace(/\B(?=(\d{3})+(?!\d))/g, " ")
+      );
+    },
+  },
   components: { MainTitle, CategoriesAppCard },
 };
 </script>
@@ -271,6 +264,7 @@ export default {
 .basket-card:last-child {
   padding-bottom: 0;
   margin-bottom: 0;
+  border-bottom: none;
 }
 .basket-img-container {
   padding-top: 13px;
