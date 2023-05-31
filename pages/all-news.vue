@@ -2,7 +2,7 @@
   <div class="comparison-page">
     <div class="container_xl">
       <div class="page-breadcrumb">
-        <nuxt-link to="/">Barcha yangiliklar</nuxt-link>
+        <nuxt-link to="/">Diskont main page</nuxt-link>
         <nuxt-link to="/">
           Barcha yangiliklar
           <span v-html="arrow"></span>
@@ -10,7 +10,7 @@
       </div>
       <div class="d-flex comparison-page-title">
         <div class="d-flex align-items-end">
-          <MainTitle title="Menga yoqqan tovarlar" />
+          <MainTitle title="Barcha yangiliklar" />
           <span class="d-flex align-items-end">8 288 товаров</span>
         </div>
       </div>
@@ -18,12 +18,12 @@
         <PostCard v-for="post in posts" :key="post.id" :post="post" />
       </div>
       <div class="empty-box-app" v-else>
-        <img src="../assets/images/packaging love.png" alt="" />
-        <h2>Hali sotib olishga tayyor emasmisiz?</h2>
-        <p>
+        <img src="../assets/images/comments-empty.png" alt="" />
+        <h2>Yangiliklar mavjud emas</h2>
+        <!-- <p>
           Mahsulot sahifasida ♡ tugmasini bosing va <br />
           o'zingizga yoqqan narsani shu yerga qo'shing.
-        </p>
+        </p> -->
       </div>
       <div class="categories-products-show-more">Показать еще 44</div>
       <div class="products-pagination">

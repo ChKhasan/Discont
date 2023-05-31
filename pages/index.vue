@@ -24,22 +24,22 @@
         </BannerCarousel>
         <BannerCarouselRight>
           <div class="swiper-slide">
-            <img src="../assets/images/Frame 1000005383.png" alt="" />
+            <DayProductCard />
           </div>
           <div class="swiper-slide">
-            <img src="../assets/images/Frame 1000005383.png" alt="" />
+            <DayProductCard />
           </div>
           <div class="swiper-slide">
-            <img src="../assets/images/Frame 1000005383.png" alt="" />
+            <DayProductCard />
           </div>
           <div class="swiper-slide">
-            <img src="../assets/images/Frame 1000005383.png" alt="" />
+            <DayProductCard />
           </div>
           <div class="swiper-slide">
-            <img src="../assets/images/Frame 1000005383.png" alt="" />
+            <DayProductCard />
           </div>
           <div class="swiper-slide">
-            <img src="../assets/images/Frame 1000005383.png" alt="" />
+            <DayProductCard />
           </div>
         </BannerCarouselRight>
       </div>
@@ -220,7 +220,10 @@
       </div>
     </div>
     <div class="container_xl mb-120">
-      <MainTitle title="Yangiliklar va bloglar" />
+      <div class="d-flex justify-content-between align-items-end">
+        <MainTitle title="Yangiliklar va bloglar" />
+        <nuxt-link class="to-page-underline" to="/all-news">Все блоги</nuxt-link>
+      </div>
       <div class="posts-grid">
         <PostCard v-for="post in posts" :key="post.id" :post="post" />
       </div>
@@ -281,6 +284,7 @@ import BrandCarousel from "../components/brand-carousel.vue";
 import PostCard from "../components/cards/PostCard.vue";
 import DiscontBanner from "../components/discont-banner.vue";
 import ApplicationBanner from "../components/application-banner.vue";
+import DayProductCard from "../components/cards/DayProductCard.vue";
 export default {
   name: "IndexPage",
   data() {
@@ -339,13 +343,12 @@ export default {
     };
   },
   async mounted() {
-    const [
-      products
-    ] = await Promise.all([
+    const [products] = await Promise.all([
       this.$store.dispatch("fetchProducts/getProducts", {
         type: "bestsellers",
         limit: 6,
-      })])
+      }),
+    ]);
   },
   components: {
     BannerCarousel,
@@ -364,6 +367,7 @@ export default {
     PostCard,
     DiscontBanner,
     ApplicationBanner,
+    DayProductCard,
   },
 };
 </script>
@@ -383,9 +387,9 @@ h6 {
   height: 354px !important;
   background: red;
 }
-.home-banner-container .swiper-slide img {
+/* .home-banner-container .swiper-slide img {
   width: 100%;
   height: 100%;
   object-fit: cover;
-}
+} */
 </style>

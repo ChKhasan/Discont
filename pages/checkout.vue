@@ -78,7 +78,7 @@
                           fill="white"
                         /></svg
                     ></span>
-                    <span v-else ></span>
+                    <span v-else></span>
                     <img src="../assets/images/apelsin.uz.png" alt="" />
                   </div>
                   <div class="pay-card" @click="paymentElement = 'uzcard'">
@@ -95,7 +95,7 @@
                           fill="white"
                         /></svg
                     ></span>
-                    <span v-else ></span>
+                    <span v-else></span>
                     <img src="../assets/images/uzcard.uz.png" alt="" />
                   </div>
                   <div class="pay-card" @click="paymentElement = 'click'">
@@ -112,7 +112,7 @@
                           fill="white"
                         /></svg
                     ></span>
-                    <span v-else ></span>
+                    <span v-else></span>
                     <img src="../assets/images/click.uz.png" alt="" />
                   </div>
                   <div class="pay-card" @click="paymentElement = 'payme'">
@@ -129,7 +129,7 @@
                           fill="white"
                         /></svg
                     ></span>
-                    <span v-else ></span>
+                    <span v-else></span>
                     <img src="../assets/images/payme.uz.png" alt="" />
                   </div>
                   <div class="pay-card" @click="paymentElement = 'humocard'">
@@ -146,7 +146,7 @@
                           fill="white"
                         /></svg
                     ></span>
-                    <span v-else ></span>
+                    <span v-else></span>
                     <img src="../assets/images/humocard.uz.png" alt="" />
                   </div>
                 </div>
@@ -201,7 +201,7 @@
                 </h6>
               </div>
             </div>
-            <div class="add-adress-btn">
+            <div class="add-adress-btn"  @click="visible = true">
               <span
                 ><svg
                   xmlns="http://www.w3.org/2000/svg"
@@ -228,7 +228,7 @@
               >
               <nuxt-link to="/">Sotib olishda muammoga duch keldizmi?</nuxt-link>
             </div>
-            <div class="checkout-btn" @click="visible = true">
+            <div class="checkout-btn">
               Xaridni rasmiylashtirish
             </div>
           </div>
@@ -254,7 +254,29 @@
               >
             </div>
             <div class="checkout-info-products">
-              <div class="checkout-info-product-card">
+              <div
+                class="checkout-info-product-card"
+                v-for="product in $store.state.cart"
+                :key="product.id"
+              >
+                <div class="checkout-info-product-card-img">
+                  <img :src="product.images[0].sm_img" alt="" />
+                </div>
+                <div class="checkout-info-product-card-body">
+                  <p>{{ product?.info?.name?.ru }}</p>
+                  <span>Soni: {{ product.count }} dona</span>
+                  <h5>
+                    {{
+                      `${product.price * product.count}`.replace(
+                        /\B(?=(\d{3})+(?!\d))/g,
+                        " "
+                      )
+                    }}
+                    сўм
+                  </h5>
+                </div>
+              </div>
+              <!-- <div class="checkout-info-product-card">
                 <div class="checkout-info-product-card-img">
                   <img src="../assets/images/BASKET.png" alt="" />
                 </div>
@@ -273,17 +295,7 @@
                   <span>Soni: 1 dona</span>
                   <h5>1 788 000 сўм</h5>
                 </div>
-              </div>
-              <div class="checkout-info-product-card">
-                <div class="checkout-info-product-card-img">
-                  <img src="../assets/images/BASKET.png" alt="" />
-                </div>
-                <div class="checkout-info-product-card-body">
-                  <p>Смартфон Samsung Galaxy A04e 3/64Gb Тўқ сариқ A04e 3/64Gb</p>
-                  <span>Soni: 1 dona</span>
-                  <h5>1 788 000 сўм</h5>
-                </div>
-              </div>
+              </div> -->
             </div>
           </div>
         </div>
@@ -397,7 +409,7 @@
 </template>
 <script>
 export default {
-  layout: 'checkoutLayout',
+  layout: "checkoutLayout",
   data() {
     return {
       form: {
@@ -439,6 +451,9 @@ export default {
         ],
       },
     };
+  },
+  mounted() {
+    this.$store.commit("reloadStore");
   },
   methods: {
     handleOk() {

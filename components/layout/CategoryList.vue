@@ -6,28 +6,24 @@
           <!-- <button><span v-html="navCategory"></span>Katalog</button> -->
           <ul class="d-flex align-items-center">
             <li>
-              <nuxt-link to="/categories"
+              <nuxt-link to="/stocks/stocks"
                 ><span v-html="navCatIcon"></span> Aksiyalar</nuxt-link
               >
             </li>
             <li>
-              <nuxt-link to="/categories"
+              <nuxt-link to="/stocks/top-products"
                 ><span v-html="navCatIcon2"></span>Top tovarlar</nuxt-link
               >
             </li>
+
             <li>
-              <nuxt-link to="/brands"
-                ><span v-html="navCatIcon"></span>Brendlar</nuxt-link
+              <nuxt-link to="/stocks/seasonal-discounts"
+                ><span v-html="navCatIcon2"></span>Сезонные скидки</nuxt-link
               >
             </li>
             <li>
-              <nuxt-link to="/categories"
-                ><span v-html="navCatIcon2"></span>yetkazib berish</nuxt-link
-              >
-            </li>
-            <li>
-              <nuxt-link to="/categories"
-                ><span v-html="navCatIcon"></span>xabar qoldirish</nuxt-link
+              <nuxt-link to="/stocks/best-seller"
+                ><span v-html="navCatIcon"></span>Best seller</nuxt-link
               >
             </li>
           </ul>

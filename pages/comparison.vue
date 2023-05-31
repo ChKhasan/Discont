@@ -61,7 +61,7 @@
           <span v-html="arrowCarousel"></span>
         </div>
       </div>
-      <div class="empty-box-app">
+      <div class="empty-box-app" v-else>
         <img src="../assets/images/parcel.png" alt="" />
         <h2>Biror narsani solishtiraylikmi?</h2>
         <p>

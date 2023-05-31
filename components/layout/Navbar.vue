@@ -387,6 +387,8 @@ export default {
   watch: {
     routerPath() {
       this.catalogMenu = false;
+      document.body.style.height = "auto";
+      document.body.style.overflow = "auto";
     },
     visible(val) {
       if (val) this.visibleLogin = false;

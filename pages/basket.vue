@@ -18,12 +18,17 @@
         <div>
           <div class="basket-cards-grid">
             <div class="basket-card" v-for="product in $store.state.cart">
-              <div class="basket-img-container">
+              <div
+                class="basket-img-container"
+                @click="$router.push(`/product/${product.slug}`)"
+              >
                 <img :src="product.images[0].sm_img" alt="" />
               </div>
               <div class="basket-card-body">
                 <div class="basket-card-text-block">
-                  <h4>{{ product?.info?.name?.ru }}</h4>
+                  <h4 @click="$router.push(`/product/${product.slug}`)">
+                    {{ product?.info?.name?.ru }}
+                  </h4>
                   <p>Category: {{ product?.info?.category.name?.ru }}</p>
                   <p>Brend: {{ product?.info?.brand.name }}</p>
                 </div>
@@ -151,7 +156,7 @@
           <div class="basket-checkout-block">
             <div class="basket-checkout-price">
               <h3>Jami:</h3>
-              <h3>16 120 000 сум</h3>
+              <h3>{{ totalPrice }} сум</h3>
             </div>
             <div class="basket-promo-input">
               <input placeholder="Введите промокод" type="text" />
@@ -219,22 +224,29 @@ export default {
       products: [],
     };
   },
-   mounted() {
-   this.$store.commit("reloadStore");
+  mounted() {
+    this.$store.commit("reloadStore");
+  },
+  computed: {
+    totalPrice() {
+      const totalSum = this.$store.state.cart.reduce((summ, item) => {
+        return summ + item.price * item.count;
+      }, 0);
+      console.log(totalSum);
+
+      return `${totalSum}`.replace(/\B(?=(\d{3})+(?!\d))/g, " ");
+    },
   },
   methods: {
     productTotalPrice(product) {
       let price =
         product?.price *
         this.$store.state.cart.find((item) => item.id == product.id)?.count;
-      console.log(price);
-      return (
-        price +
-        ""
-          .slice(0, product?.price.indexOf("."))
-          .replace(".", ",")
-          .replace(/\B(?=(\d{3})+(?!\d))/g, " ")
-      );
+      let strPrice = `${price}`;
+      return `${price}`
+        .slice(0, product?.price.indexOf("."))
+        .replace(".", ",")
+        .replace(/\B(?=(\d{3})+(?!\d))/g, " ");
     },
   },
   components: { MainTitle, CategoriesAppCard },
@@ -272,6 +284,7 @@ export default {
   background: #f6f7f9;
   border-radius: 12px;
   height: 118px;
+  cursor: pointer;
 }
 .basket-img-container img {
   width: 100%;
@@ -292,6 +305,7 @@ export default {
   letter-spacing: -0.28px;
   color: #1c1f22;
   margin-bottom: 10px;
+  cursor: pointer;
 }
 .basket-card-text-block p {
   font-family: var(--SB_400);
@@ -306,7 +320,7 @@ export default {
 }
 .basket-card-body {
   display: grid;
-  grid-template-columns: 3fr 1fr 2fr;
+  grid-template-columns: 3fr 2fr 2fr;
 }
 .basket-card-count {
   display: flex;
