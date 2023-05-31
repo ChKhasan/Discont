@@ -300,12 +300,12 @@ export default {
   border-radius: 4px !important;
 }
 .bounce-enter-active {
-  animation: bounce-in 0.5s;
+  animation: bounce-in2 0.5s;
 }
 .bounce-leave-active {
   animation: bounce-in 0.5s reverse;
 }
-@keyframes bounce-in {
+@keyframes bounce-in2 {
   0% {
     transform: translateY(30px);
     opacity: 0;

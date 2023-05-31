@@ -527,12 +527,15 @@ export default {
 @keyframes bounce-in {
   0% {
     transform: translateX(-100%);
+    opacity: 0;
   }
   50% {
     transform: translateX(40px);
+    opacity: 1;
   }
   100% {
     transform: translateX(0px);
+    opacity: 1;
   }
 }
 .catalog-menu-items {
