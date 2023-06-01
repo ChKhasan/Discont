@@ -246,18 +246,6 @@
       <div class="categories-page-inner-grid">
         <span></span>
         <div>
-          <div class="">
-            <div class="d-flex justify-content-between align-items-end">
-              <MainTitle title="Kategoriyadagi top tavarlar" />
-            </div>
-            <div class="product-grid">
-              <ProductCard
-                v-for="product in productsOthers"
-                :key="product.id"
-                :product="product"
-              />
-            </div>
-          </div>
           <div class="categories-page-info">
             <h5>
               ШИРОКИЙ АССОРТИМЕНТ МЕБЕЛИ В ТАШКЕНТЕ ПРЕДСТАВЛЕН В ИНТЕРНЕТ-МАГАЗИНЕ

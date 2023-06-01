@@ -41,7 +41,7 @@
               }}</span>
               <span class="nav-icons" v-html="navComp"></span>Solishtirish
             </li>
-            <li class="nav_profile flex-row" @click="visible = true">
+            <li class="nav_profile flex-row" @click="visibleLogin = true">
               <span v-html="navUser"></span>
               <p>profil</p>
             </li>

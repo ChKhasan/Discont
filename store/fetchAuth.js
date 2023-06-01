@@ -1,6 +1,10 @@
 export const actions = {
   async postLogin({}, data) {
-    const res = await this.$axios.$post(`/auth/login`, data);
+    const res = await this.$axios.$post(`/auth/login`, data, {
+      headers: {
+        Accept: "application/json",
+      },
+    });
     return res;
   },
   async postCheckNumber({}, data) {
