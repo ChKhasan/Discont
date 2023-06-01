@@ -303,7 +303,7 @@ export default {
   animation: bounce-in2 0.5s;
 }
 .bounce-leave-active {
-  animation: bounce-in 0.5s reverse;
+  animation: bounce-in2 0.5s reverse;
 }
 @keyframes bounce-in2 {
   0% {
@@ -319,7 +319,7 @@ export default {
     opacity: 1;
   }
 }
-.rotate180 svg{
+.rotate180 svg {
   transform: rotate(180deg) !important;
 }
 </style>
