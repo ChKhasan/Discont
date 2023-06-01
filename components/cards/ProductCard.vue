@@ -495,7 +495,6 @@ export default {
 }
 .hover-btns:hover > svg path {
   fill: var(--color_green);
-  stroke: var(--color_green);
 }
 .active-comparison > svg path {
   fill: var(--color_green);
