@@ -1,11 +1,15 @@
 export const state = () => ({
   auth: false,
+  authVisible: false,
   cart: [],
   like: [],
   comparison: [],
 });
 
 export const mutations = {
+  authVisibleChange(state, payload) {
+    state.authVisible = payload;
+  },
   addToStore(state, payload) {
     let cart = JSON.parse(localStorage.getItem(payload.name));
     if (cart.includes(payload.id)) {

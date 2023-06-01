@@ -23,14 +23,14 @@
           <a-form-model :model="form" ref="ruleForm" :rules="rules" layout="vertical">
             <div class="checkout-form">
               <a-form-model-item class="mb-3">
-                <a-input placeholder="Telefon raqamingiz*" v-model="form.name" />
+                <a-input placeholder="Telefon raqamingiz*" v-model="form.phone_number" />
               </a-form-model-item>
               <div class="checkout-input-grid">
                 <a-form-model-item class="mb-0">
-                  <a-input placeholder="Telefon raqamingiz*" v-model="form.name" />
+                  <a-input placeholder="Ismingiz (to’liq)*" v-model="form.name" />
                 </a-form-model-item>
                 <a-form-model-item class="mb-0">
-                  <a-input placeholder="Telefon raqamingiz*" v-model="form.name" />
+                  <a-input placeholder="Familiyangiz (to’liq)*" v-model="form.name" />
                 </a-form-model-item>
               </div>
             </div>
@@ -64,8 +64,8 @@
                   1500s, when an unknown Lorem Ipsum has been the industry's standard
                 </p>
                 <div class="pay-cards-grid" v-if="!typePayment">
-                  <div class="pay-card" @click="paymentElement = 'apelsin'">
-                    <span v-if="paymentElement == 'apelsin'" class="step-active"
+                  <div class="pay-card" @click="form.payment_method = 'uzum'">
+                    <span v-if="form.payment_method == 'uzum'" class="step-active"
                       ><svg
                         xmlns="http://www.w3.org/2000/svg"
                         width="13"
@@ -81,8 +81,8 @@
                     <span v-else></span>
                     <img src="../assets/images/apelsin.uz.png" alt="" />
                   </div>
-                  <div class="pay-card" @click="paymentElement = 'uzcard'">
-                    <span v-if="paymentElement == 'uzcard'" class="step-active"
+                  <div class="pay-card" @click="form.payment_method = 'cash'">
+                    <span v-if="form.payment_method == 'cash'" class="step-active"
                       ><svg
                         xmlns="http://www.w3.org/2000/svg"
                         width="13"
@@ -98,8 +98,8 @@
                     <span v-else></span>
                     <img src="../assets/images/uzcard.uz.png" alt="" />
                   </div>
-                  <div class="pay-card" @click="paymentElement = 'click'">
-                    <span v-if="paymentElement == 'click'" class="step-active"
+                  <div class="pay-card" @click="form.payment_method = 'click'">
+                    <span v-if="form.payment_method == 'click'" class="step-active"
                       ><svg
                         xmlns="http://www.w3.org/2000/svg"
                         width="13"
@@ -115,8 +115,8 @@
                     <span v-else></span>
                     <img src="../assets/images/click.uz.png" alt="" />
                   </div>
-                  <div class="pay-card" @click="paymentElement = 'payme'">
-                    <span v-if="paymentElement == 'payme'" class="step-active"
+                  <div class="pay-card" @click="form.payment_method = 'payme'">
+                    <span v-if="form.payment_method == 'payme'" class="step-active"
                       ><svg
                         xmlns="http://www.w3.org/2000/svg"
                         width="13"
@@ -132,8 +132,8 @@
                     <span v-else></span>
                     <img src="../assets/images/payme.uz.png" alt="" />
                   </div>
-                  <div class="pay-card" @click="paymentElement = 'humocard'">
-                    <span v-if="paymentElement == 'humocard'" class="step-active"
+                  <div class="pay-card" @click="form.payment_method = 'payze'">
+                    <span v-if="form.payment_method == 'payze'" class="step-active"
                       ><svg
                         xmlns="http://www.w3.org/2000/svg"
                         width="13"
@@ -160,8 +160,8 @@
           <div class="radio-card-grid-horizontal">
             <div class="radio-card radio-card-horizontal">
               <span
-                :class="{ 'active-radio': deliveryService }"
-                @click="deliveryService = true"
+                :class="{ 'active-radio': form.delivery_method == 'pickup' }"
+                @click="form.delivery_method = 'pickup'"
               >
               </span>
               <div class="radio-card-body">
@@ -173,8 +173,8 @@
             </div>
             <div class="radio-card radio-card-horizontal">
               <span
-                :class="{ 'active-radio': !deliveryService }"
-                @click="deliveryService = false"
+                :class="{ 'active-radio': form.delivery_method == 'courier' }"
+                @click="form.delivery_method = 'courier'"
               >
               </span>
               <div class="radio-card-body">
@@ -228,9 +228,7 @@
               >
               <nuxt-link to="/">Sotib olishda muammoga duch keldizmi?</nuxt-link>
             </div>
-            <div class="checkout-btn" @click="$router.push('/identification')">
-              Xaridni rasmiylashtirish
-            </div>
+            <div class="checkout-btn" @click="submit()">Xaridni rasmiylashtirish</div>
           </div>
         </div>
         <div class="checkout-info-block">
@@ -394,6 +392,17 @@ export default {
     return {
       form: {
         name: "",
+        delivery_method: "pickup",
+        phone_number: "998913722502",
+        region_id: null,
+        district_id: null,
+        address: null,
+        postcode: null,
+        email: null,
+        comments: null,
+        payment_method: "cash",
+        products: [],
+        amount: "",
       },
       typePayment: true,
       paymentElement: "payme",
@@ -434,8 +443,28 @@ export default {
   },
   mounted() {
     this.$store.commit("reloadStore");
+    this.form.products = this.$store.state.cart.map((item) => {
+      return {
+        count: item.count,
+        product_id: item.id,
+        price: item.price,
+      };
+    });
+    this.form.amount = this.$store.state.cart.reduce((summ, item) => {
+      return summ + item.price * item.count;
+    }, 0);
   },
   methods: {
+    submit() {
+      this.__POST_ORDER(this.form);
+    },
+    async __POST_ORDER(formData) {
+      try {
+        const data = await this.$store.dispatch("fetchAuth/postOrder", formData);
+      } catch (e) {
+        console.log(e);
+      }
+    },
     handleOk() {
       this.visible = false;
     },

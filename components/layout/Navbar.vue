@@ -41,7 +41,10 @@
               }}</span>
               <span class="nav-icons" v-html="navComp"></span>Solishtirish
             </li>
-            <li class="nav_profile flex-row" @click="visibleLogin = true">
+            <li
+              class="nav_profile flex-row"
+              @click="$store.commit('authVisibleChange', true)"
+            >
               <span v-html="navUser"></span>
               <p>profil</p>
             </li>
@@ -331,6 +334,9 @@ export default {
     routerPath() {
       return this.$route.path;
     },
+    authVisible() {
+      return this.$store.state.authVisible;
+    },
   },
   methods: {
     targetCategory(obj) {
@@ -340,7 +346,8 @@ export default {
       this.visible = false;
     },
     handleOkLogin() {
-      this.visibleLogin = false;
+      console.log("asdasdasdasdas");
+      this.$store.commit("authVisibleChange", false);
     },
     submitCheckNumber() {
       const data = {
@@ -377,13 +384,17 @@ export default {
     async __LOGIN(formData) {
       try {
         const data = await this.$store.dispatch("fetchAuth/postLogin", formData);
-        console.log(data);
+        localStorage.setItem("dis_auth_token", data.token);
+        this.$store.commit("authVisibleChange", false);
       } catch (e) {
         console.log(e);
       }
     },
   },
   watch: {
+    authVisible(val) {
+      this.visibleLogin = val;
+    },
     routerPath() {
       this.catalogMenu = false;
       document.body.style.height = "auto";
@@ -393,6 +404,7 @@ export default {
       if (val) this.visibleLogin = false;
     },
     visibleLogin(val) {
+      this.$store.commit("authVisibleChange", val);
       if (val) this.visible = false;
     },
 

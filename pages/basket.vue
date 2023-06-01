@@ -180,9 +180,7 @@
                 <p>25 000 сум</p></span
               >
             </div>
-            <div class="basket-checkout-btn" @click="$router.push('/checkout')">
-              Оформить заказ
-            </div>
+            <div class="basket-checkout-btn" @click="checkoutCheck()">Оформить заказ</div>
             <div class="basket-checkout-bottom">
               <p>
                 Нажимая 'Оформить заказ', я соглашаюсь с
@@ -237,6 +235,15 @@ export default {
     },
   },
   methods: {
+    checkoutCheck() {
+      const auth = localStorage.getItem("dis_auth_token");
+      console.log(auth);
+      if (auth) {
+        this.$router.push("/checkout");
+      } else {
+        this.$store.commit("authVisibleChange", true);
+      }
+    },
     productTotalPrice(product) {
       let price =
         product?.price *
