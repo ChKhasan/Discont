@@ -58,7 +58,6 @@ export default {
       },
     });
     swiper.on("activeIndexChange", (swiper) => {
-      console.log(swiper);
     });
   },
 };

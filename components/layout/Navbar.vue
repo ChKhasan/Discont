@@ -370,7 +370,6 @@ export default {
     async __CHECK_NUMBER(formData) {
       try {
         const data = await this.$store.dispatch("fetchAuth/postCheckNumber", formData);
-        console.log(data);
       } catch (e) {
         console.log(e);
       }

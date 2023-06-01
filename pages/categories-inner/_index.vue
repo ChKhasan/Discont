@@ -382,7 +382,6 @@ export default {
   },
 
   mounted() {
-    console.log(this.allInfo);
   },
   computed: {
     filterAtributs() {
@@ -435,7 +434,6 @@ export default {
       }
     },
     onChangeSlider(val) {
-      console.log(val);
     },
     async deleteFilterItem(id) {
       let atr = await this.$route.query.attributes.split(",");

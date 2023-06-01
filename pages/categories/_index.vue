@@ -129,7 +129,6 @@ export default {
     const categories = categoriesData?.categories?.data;
     const categoryChilds = categoryChildsData?.category;
     const products = productsData?.products?.data;
-    console.log(products);
     return {
       categories,
       categoryChilds,

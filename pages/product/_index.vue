@@ -412,14 +412,10 @@
       <div class="other pb-5">
         <h4>O’xshash tovarlar</h4>
         <ProductCarousel>
-            <div
-              class="swiper-slide"
-              v-for="product in productsOthers"
-              :key="product.id"
-            >
-              <ProductCardVue :product="product" />
-            </div>
-          </ProductCarousel>
+          <div class="swiper-slide" v-for="product in productsOthers" :key="product.id">
+            <ProductCardVue :product="product" />
+          </div>
+        </ProductCarousel>
         <div class="other__grid mb-5">
           <!-- <ProductCardVue />
           <ProductCardVue />
@@ -446,8 +442,8 @@ export default {
   components: {
     ProductCardVue,
     applicationBannerVue,
-    ProductCarousel
-},
+    ProductCarousel,
+  },
 
   data() {
     return {
@@ -459,7 +455,7 @@ export default {
       specsHandle: false,
       locationsHandle: false,
       reviewsHandle: false,
-      productsOthers: []
+      productsOthers: [],
     };
   },
   // async asyncData({ store, params }) {
@@ -548,6 +544,7 @@ export default {
 </script>
 
 <style scoped>
+@import "../../assets/css/pages/product.css";
 .wrap {
   padding-top: 32px;
   min-height: 100vh;
@@ -755,99 +752,6 @@ export default {
   align-items: center;
   justify-content: center;
   font-size: 16px;
-}
-.cardo {
-  box-shadow: 0px 0px 26px rgba(0, 0, 0, 0.05);
-  border-radius: 12px;
-  padding: 20px 14px;
-  background: white;
-  margin-bottom: 18px;
-}
-.discount {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  margin-bottom: 20px;
-}
-.tag {
-  background: #e90a0a;
-  height: 22px;
-  width: 64px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-weight: 700;
-  font-size: 14px;
-  line-height: 17px;
-  color: #ffffff;
-  clip-path: polygon(13% 1%, 100% 0%, 87% 100%, 0% 100%);
-}
-.dis__price {
-  font-weight: 400;
-  font-size: 14px;
-  line-height: 17px;
-  color: #9c9c9c;
-  text-decoration: line-through;
-}
-.dis__txt {
-  font-weight: 400;
-  font-size: 14px;
-  line-height: 17px;
-  color: #9c9c9c;
-}
-.price {
-  font-weight: 700;
-  font-size: 24px;
-  line-height: 29px;
-  margin-bottom: 20px;
-}
-.delivery {
-  font-weight: 500;
-  font-size: 16px;
-  line-height: 19px;
-  color: #9c9c9c;
-  margin-bottom: 20px;
-}
-.coin {
-  font-weight: 500;
-  font-size: 16px;
-  line-height: 19px;
-  color: #1f8a70;
-  margin-bottom: 20px;
-  display: flex;
-  align-items: center;
-  gap: 8px;
-}
-.cart {
-  background: #f5f5f5;
-  border-radius: 10px;
-  font-weight: 500;
-  font-size: 16px;
-  line-height: 19px;
-  color: #1f8a70;
-  width: 100%;
-  padding: 12px 0;
-  display: flex;
-  justify-content: center;
-  text-align: center;
-  align-items: center;
-  border: none;
-  margin-bottom: 20px;
-}
-.click {
-  background: #1f8a70;
-  border-radius: 10px;
-  width: 100%;
-  padding: 12px 0;
-  display: flex;
-  justify-content: center;
-  text-align: center;
-  align-items: center;
-  border: none;
-  font-weight: 500;
-  font-size: 16px;
-  line-height: 19px;
-  color: white;
 }
 .credit {
   background: #ffffff;

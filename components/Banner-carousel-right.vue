@@ -1,7 +1,6 @@
 <template lang="html">
   <div class="banner-carousel-right">
     <div class="flex items-center justify-center">
-      <only-client>
         <div
           class="swiper-banner-right mySwiper2"
           style="overflow: hidden; height: 354px"
@@ -10,20 +9,15 @@
             <slot></slot>
           </div>
         </div>
-      </only-client>
       <div class="swiper-pagination-banner-right"></div>
     </div>
     <div></div>
   </div>
 </template>
 <script>
-import { Swiper, Navigation, Pagination, EffectCards, Autoplay } from "swiper";
+import { Swiper, Navigation, Pagination, Autoplay } from "swiper";
 import "swiper/swiper-bundle.min.css";
 export default {
-  name: "IndexPage",
-  data() {
-    return {};
-  },
   mounted() {
     const swiper = new Swiper(".swiper-banner-right", {
       effect: "flip",
@@ -31,7 +25,7 @@ export default {
         slideShadows: false,
       },
 
-      modules: [Navigation, Pagination, EffectCards, Autoplay],
+      modules: [Navigation, Pagination, Autoplay],
       pagination: false,
       autoplay: {
         delay: 1000,
@@ -42,9 +36,6 @@ export default {
         clickable: true,
       },
       navigation: false,
-    });
-    swiper.on("activeIndexChange", (swiper) => {
-      console.log(swiper);
     });
   },
 };

@@ -232,7 +232,6 @@ export default {
       const totalSum = this.$store.state.cart.reduce((summ, item) => {
         return summ + item.price * item.count;
       }, 0);
-      console.log(totalSum);
 
       return `${totalSum}`.replace(/\B(?=(\d{3})+(?!\d))/g, " ");
     },

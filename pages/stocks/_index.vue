@@ -84,16 +84,14 @@
                 <span><a-checkbox @change="onChange"> Маиший техника </a-checkbox></span>
                 <span><a-checkbox @change="onChange"> Маиший техника </a-checkbox></span>
                 <span
-                  ><a-checkbox @change="onChange">
-                    Автомобил учун маҳсулотлар
-                  </a-checkbox></span
+                  ><a-checkbox @change="onChange"
+                    >Автомобил учун маҳсулотлар</a-checkbox
+                  ></span
                 >
                 <span><a-checkbox @change="onChange"> Маиший техника </a-checkbox></span>
-                <span
-                  ><a-checkbox @change="onChange">
-                    Автомобил учун маҳсулотлар
-                  </a-checkbox></span
-                >
+                <span>
+                  <a-checkbox @change="onChange"> Автомобил учун маҳсулотлар </a-checkbox>
+                </span>
                 <span
                   ><a-checkbox @change="onChange">
                     Автомобил учун маҳсулотлар
@@ -171,6 +169,11 @@ export default {
       arrow: require("../../assets/svg/dropdown-icon.svg?raw"),
       stockCategory: false,
     };
+  },
+  methods: {
+    onChange() {
+
+    }
   },
   components: { StocksCard, CategoriesAppCard },
 };

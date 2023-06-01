@@ -268,7 +268,6 @@ export default {
     this.brands = [...this.brands.splice(0, 6)];
     this.brandProducts = brandData.products?.data;
     this.brand = brandData.brand;
-    console.log(this.brand);
   },
   methods: {
     onChange(value) {

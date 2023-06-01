@@ -8,6 +8,7 @@ import {
   Slider,
   Rate,
   FormModel,
+  Carousel,
   // Button,
   // Table,
   // Upload,
@@ -39,6 +40,7 @@ Vue.use(Switch);
 Vue.use(Pagination);
 Vue.use(Input);
 Vue.use(Rate);
+Vue.use(Carousel);
 
 // Vue.use(Alert);
 // Vue.use(Empty);

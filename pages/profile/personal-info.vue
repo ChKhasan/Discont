@@ -206,9 +206,6 @@ export default {
       },
     };
   },
-  mounted() {
-    console.log(this.$route);
-  },
   methods: {
     onChange(checked) {
       console.log(`a-switch to ${checked}`);

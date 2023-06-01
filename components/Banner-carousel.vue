@@ -1,13 +1,11 @@
 <template lang="html">
   <div class="banner-carousel">
     <div class="flex items-center justify-center">
-      <only-client>
-        <div class="swiper-banner mySwiper" style="overflow: hidden; height: 354px">
-          <div class="swiper-wrapper">
-            <slot></slot>
-          </div>
+      <div class="swiper-banner mySwiper" style="overflow: hidden; height: 354px">
+        <div class="swiper-wrapper">
+          <slot></slot>
         </div>
-      </only-client>
+      </div>
       <div class="swiper-pagination-banner"></div>
       <div class="swiper-button-prev-banner">
         <span
@@ -67,7 +65,6 @@
 import { Swiper, Navigation, Pagination, EffectCards, Autoplay } from "swiper";
 import "swiper/swiper-bundle.min.css";
 export default {
-  name: "IndexPage",
   data() {
     return {};
   },
@@ -92,9 +89,6 @@ export default {
         nextEl: ".swiper-button-next-banner",
         prevEl: ".swiper-button-prev-banner",
       },
-    });
-    swiper.on("activeIndexChange", (swiper) => {
-      console.log(swiper);
     });
   },
 };
