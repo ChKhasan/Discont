@@ -131,7 +131,18 @@
           <div class="basket-checkout-block">
             <div class="basket-checkout-price">
               <h3>Jami:</h3>
-              <h3>{{ totalPrice }} сум</h3>
+              <h3>
+                {{
+                  products.reduce((summ, item) => {
+                    return (
+                      summ +
+                      item.price *
+                        $store.state.cart.find((elem) => elem.id == item.id)?.count
+                    );
+                  }, 0)
+                }}
+                сум
+              </h3>
             </div>
             <div class="basket-promo-input">
               <input placeholder="Введите промокод" type="text" />
