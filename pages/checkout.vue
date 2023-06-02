@@ -22,15 +22,18 @@
           </div>
           <a-form-model :model="form" ref="ruleForm" :rules="rules" layout="vertical">
             <div class="checkout-form">
-              <a-form-model-item class="mb-3">
+              <a-form-model-item class="mb-3" prop="phone_number">
                 <a-input placeholder="Telefon raqamingiz*" v-model="form.phone_number" />
               </a-form-model-item>
               <div class="checkout-input-grid">
-                <a-form-model-item class="mb-0">
+                <a-form-model-item class="mb-0" prop="name">
                   <a-input placeholder="Ismingiz (to’liq)*" v-model="form.name" />
                 </a-form-model-item>
-                <a-form-model-item class="mb-0">
-                  <a-input placeholder="Familiyangiz (to’liq)*" v-model="form.name" />
+                <a-form-model-item class="mb-0" prop="last_name">
+                  <a-input
+                    placeholder="Familiyangiz (to’liq)*"
+                    v-model="form.last_name"
+                  />
                 </a-form-model-item>
               </div>
             </div>
@@ -240,7 +243,18 @@
             <div class="checkout-info-body">
               <span
                 ><p>Tovarlar</p>
-                <p>5 230 000 so’m</p></span
+                <p>
+                  {{
+                    products.reduce((summ, item) => {
+                      return (
+                        summ +
+                        item.price *
+                          $store.state.cart.find((elem) => elem.id == item.id)?.count
+                      );
+                    }, 0)
+                  }}
+                  so’m
+                </p></span
               >
               <span
                 ><p>Скидка</p>
@@ -254,7 +268,7 @@
             <div class="checkout-info-products">
               <div
                 class="checkout-info-product-card"
-                v-for="product in $store.state.cart"
+                v-for="product in products"
                 :key="product.id"
               >
                 <div class="checkout-info-product-card-img">
@@ -262,13 +276,17 @@
                 </div>
                 <div class="checkout-info-product-card-body">
                   <p>{{ product?.info?.name?.ru }}</p>
-                  <span>Soni: {{ product.count }} dona</span>
+                  <span
+                    >Soni:
+                    {{ $store.state.cart.find((item) => item.id == product.id)?.count }}
+                    dona</span
+                  >
                   <h5>
                     {{
-                      `${product.price * product.count}`.replace(
-                        /\B(?=(\d{3})+(?!\d))/g,
-                        " "
-                      )
+                      `${
+                        product.price *
+                        $store.state.cart.find((item) => item.id == product.id)?.count
+                      }`.replace(/\B(?=(\d{3})+(?!\d))/g, " ")
                     }}
                     сўм
                   </h5>
@@ -393,7 +411,7 @@ export default {
       form: {
         name: "",
         delivery_method: "pickup",
-        phone_number: "998913722502",
+        phone_number: "",
         region_id: null,
         district_id: null,
         address: null,
@@ -403,6 +421,7 @@ export default {
         payment_method: "cash",
         products: [],
         amount: "",
+        last_name: "",
       },
       typePayment: true,
       paymentElement: "payme",
@@ -430,8 +449,23 @@ export default {
           value: "asfdsase3adf",
         },
       ],
+      products: [],
       rules: {
         name: [
+          {
+            required: true,
+            message: "This field is required",
+            trigger: "change",
+          },
+        ],
+        last_name: [
+          {
+            required: true,
+            message: "This field is required",
+            trigger: "change",
+          },
+        ],
+        phone_number: [
           {
             required: true,
             message: "This field is required",
@@ -443,20 +477,52 @@ export default {
   },
   mounted() {
     this.$store.commit("reloadStore");
-    this.form.products = this.$store.state.cart.map((item) => {
-      return {
-        count: item.count,
-        product_id: item.id,
-        price: item.price,
-      };
-    });
-    this.form.amount = this.$store.state.cart.reduce((summ, item) => {
-      return summ + item.price * item.count;
-    }, 0);
+    let storeProducts = JSON.parse(localStorage.getItem("cart"));
+    this.__GET_PROFILE_INFO();
+    if (storeProducts.length > 0) {
+      this.skeletonLoad = true;
+      this.__GET_PRODUCTS_BY_ID({ products: storeProducts.map((item) => item.id) });
+    }
   },
   methods: {
     submit() {
-      this.__POST_ORDER(this.form);
+      const data = {
+        ...this.form,
+        products: this.products.map((item) => {
+          return {
+            count: this.$store.state.cart.find((elem) => elem.id == item.id)?.count,
+            product_id: item.id,
+            price: item.price,
+          };
+        }),
+        amount: this.products.reduce((summ, item) => {
+          return (
+            summ +
+            item.price * this.$store.state.cart.find((elem) => elem.id == item.id)?.count
+          );
+        }, 0),
+      };
+
+      this.$refs["ruleForm"].validate((valid) => {
+        if (valid) {
+          this.__POST_ORDER(data);
+        } else {
+          return false;
+        }
+      });
+    },
+    async __GET_PROFILE_INFO() {
+      const profileData = await this.$store.dispatch("fetchAuth/getProfileInfo");
+      this.profile = profileData?.user;
+      this.form = {
+        ...this.form,
+        name: this.profile.name ? this.profile.name : "",
+        phone_number: this.profile.login ? this.profile.login : "",
+      };
+    },
+    async __GET_PRODUCTS_BY_ID(dataForm) {
+      const data = await this.$store.dispatch("fetchProducts/getProductsById", dataForm);
+      this.products = data?.products;
     },
     async __POST_ORDER(formData) {
       try {

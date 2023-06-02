@@ -296,7 +296,7 @@
                 }"
                 @click="
                   $store.commit('addToCart', {
-                    obj: { ...product, count: 1 },
+                    obj: { id: product.id, count: 1 },
                     name: 'cart',
                   })
                 "

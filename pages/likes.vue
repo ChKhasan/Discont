@@ -18,7 +18,7 @@
           Barchasini o’chirish
         </div>
       </div>
-      <div class="likes-page-body" v-if="true">
+      <div class="likes-page-body" v-if="likeProducts.length > 0">
         <ProductCard
           v-for="product in likeProducts"
           :key="product.id"
@@ -33,8 +33,8 @@
           o'zingizga yoqqan narsani shu yerga qo'shing.
         </p>
       </div>
-      <div class="categories-products-show-more">Показать еще 44</div>
-      <div class="products-pagination">
+      <div class="categories-products-show-more" v-if="likeProducts.length > 0">Показать еще 44</div>
+      <div class="products-pagination" v-if="likeProducts.length > 0">
         <a-pagination size="small" :default-current="6" :total="500" />
       </div>
     </div>
@@ -73,19 +73,29 @@ export default {
         },
       ],
       value: "all",
+      likeProducts: [],
     };
   },
-  async asyncData({ store }) {
-    const [products] = await Promise.all([
-      store.dispatch("fetchProducts/getProducts", {
-        limit: 12,
-      }),
-    ]);
-    const likeProducts = products?.products?.data;
-
-    return {
-      likeProducts,
-    };
+  computed: {
+    likesChange() {
+      return this.$store.state.like.length;
+    },
+  },
+  mounted() {
+    let likesProducts = JSON.parse(localStorage.getItem("like"));
+    this.__GET_PRODUCTS_BY_ID({ products: likesProducts });
+  },
+  methods: {
+    async __GET_PRODUCTS_BY_ID(dataForm) {
+      const data = await this.$store.dispatch("fetchProducts/getProductsById", dataForm);
+      this.likeProducts = data?.products;
+    },
+  },
+  watch: {
+    likesChange() {
+      let likesProducts = JSON.parse(localStorage.getItem("like"));
+      this.__GET_PRODUCTS_BY_ID({ products: likesProducts });
+    },
   },
   components: { MainTitle, CategoriesAppCard, ProductCard },
 };

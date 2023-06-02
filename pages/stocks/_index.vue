@@ -322,7 +322,5 @@ export default {
     opacity: 1;
   }
 }
-.rotate180 svg {
-  transform: rotate(180deg) !important;
-}
+
 </style>

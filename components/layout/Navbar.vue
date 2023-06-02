@@ -41,12 +41,9 @@
               }}</span>
               <span class="nav-icons" v-html="navComp"></span>Solishtirish
             </li>
-            <li
-              class="nav_profile flex-row"
-              @click="$store.commit('authVisibleChange', true)"
-            >
+            <li class="nav_profile flex-row" @click="toProfile">
               <span v-html="navUser"></span>
-              <p>profil</p>
+              <p>{{ $store.state.auth ? "user" : "profil" }}</p>
             </li>
           </ul>
         </div>
@@ -138,7 +135,7 @@
       </div>
     </Transition>
     <a-modal
-      v-model="visible"
+      v-model="visibleCheck"
       :body-style="{ padding: '32px', borderRadius: '14px' }"
       centered
       :closable="false"
@@ -202,7 +199,7 @@
       <div class="vmodal-btn vmodal-btn-height" @click="submitCheckNumber()">
         Manzilni qo’shish
       </div>
-      <div class="vmodal-btn-outline" @click="visibleLogin = true">Manzilni qo’shish</div>
+      <!-- <div class="vmodal-btn-outline" @click="visibleLogin = true">Manzilni qo’shish</div> -->
       <template slot="footer"> <h3></h3></template>
     </a-modal>
     <a-modal
@@ -260,7 +257,7 @@
             <a-input
               v-model="formLogin.password"
               type="password"
-              placeholder="Telefon raqamingiz"
+              placeholder="Password"
             />
           </a-form-model-item>
         </a-form-model>
@@ -269,6 +266,133 @@
         Akauntga Kirish
       </div>
       <div class="vmodal-forget-password">Parolni unutdingizmi?</div>
+      <template slot="footer"> <h3></h3></template>
+    </a-modal>
+    <a-modal
+      v-model="visibleSms"
+      :body-style="{ padding: '32px', borderRadius: '14px' }"
+      centered
+      :closable="false"
+      width="670px"
+      @ok="handleOkSms"
+    >
+      <div class="vmodal-header">
+        <h5>Akauntingizga kiring yoki ro’yxatdan o’ting</h5>
+        <span @click="handleOkSms"
+          ><svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="20"
+            height="20"
+            viewBox="0 0 20 20"
+            fill="none"
+          >
+            <path
+              d="M17.9958 1.98438L2.00391 17.9762"
+              stroke="#1F8A70"
+              stroke-width="3.28586"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            />
+            <path
+              d="M18.0003 17.9861L1.99512 1.97754"
+              stroke="#1F8A70"
+              stroke-width="3.28586"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            /></svg
+        ></span>
+      </div>
+      <div class="vmodal-body">
+        <a-form-model
+          :model="formSms"
+          ref="ruleFormSms"
+          :rules="rulesSms"
+          layout="vertical"
+        >
+          <a-form-model-item
+            class="form-item register-input mb-3 pb-0"
+            label="Telefon raqamingiz"
+          >
+            <the-mask
+              v-model="formSms.phone_number"
+              :mask="['+998 (##) ### ## ##', '+998 (##) ### ## ##']"
+              placeholder="+998 (__) ___ __ __"
+            />
+          </a-form-model-item>
+          <a-form-model-item
+            class="form-item register-input mb-0 pb-0"
+            label="Sms kodni kiriting"
+          >
+            <a-input v-model="formSms.sms_code" type="text" placeholder="sms" />
+          </a-form-model-item>
+        </a-form-model>
+      </div>
+      <div class="vmodal-btn vmodal-btn-height" @click="submitSms()">Sms kodni olish</div>
+      <div class="vmodal-forget-password">Ko’dni qayta yuborish</div>
+      <template slot="footer"> <h3></h3></template>
+    </a-modal>
+    <a-modal
+      v-model="visibleName"
+      :body-style="{ padding: '32px', borderRadius: '14px' }"
+      centered
+      :closable="false"
+      width="670px"
+      @ok="handleOkName"
+    >
+      <div class="vmodal-header">
+        <h5>Akkauntingizga ro‘yxatdan o‘ting</h5>
+        <span @click="handleOkName"
+          ><svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="20"
+            height="20"
+            viewBox="0 0 20 20"
+            fill="none"
+          >
+            <path
+              d="M17.9958 1.98438L2.00391 17.9762"
+              stroke="#1F8A70"
+              stroke-width="3.28586"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            />
+            <path
+              d="M18.0003 17.9861L1.99512 1.97754"
+              stroke="#1F8A70"
+              stroke-width="3.28586"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            /></svg
+        ></span>
+      </div>
+      <div class="vmodal-body">
+        <a-form-model
+          :model="formName"
+          ref="ruleFormName"
+          :rules="rulesName"
+          layout="vertical"
+        >
+          <a-form-model-item
+            class="form-item register-input mb-3 pb-0"
+            label="Ismingizni kiriting"
+          >
+            <a-input v-model="formName.name" type="text" placeholder="Name" />
+          </a-form-model-item>
+          <a-form-model-item
+            class="form-item register-input mb-0 pb-0"
+            label="Telefon raqamingiz"
+          >
+            <the-mask
+              v-model="formSms.phone_number"
+              :mask="['+998 (##) ### ## ##', '+998 (##) ### ## ##']"
+              placeholder="+998 (__) ___ __ __"
+            />
+          </a-form-model-item>
+        </a-form-model>
+      </div>
+      <div class="vmodal-btn vmodal-btn-height" @click="submitName()">
+        Sms kodni olish
+      </div>
       <template slot="footer"> <h3></h3></template>
     </a-modal>
   </div>
@@ -280,8 +404,10 @@ export default {
   data() {
     return {
       catalogMenu: false,
-      visible: false,
+      visibleCheck: false,
       visibleLogin: false,
+      visibleSms: false,
+      visibleName: false,
       formLogin: {
         phone_number: "",
         password: "",
@@ -289,7 +415,10 @@ export default {
       formCheckNumber: {
         phone_number: "",
       },
-      formRegisterWidthSms: {
+      formName: {
+        name: "",
+      },
+      formSms: {
         phone_number: "",
         sms_code: "",
       },
@@ -304,9 +433,10 @@ export default {
           },
         ],
       },
-      rulesRegisterWidthSms: {
+      rulesSms: {
         name: [{}],
       },
+      rulesName: {},
       navLogo: require("../../assets/svg/green-logo.svg?raw"),
       navMic: require("../../assets/svg/mic.svg?raw"),
       navSearch: require("../../assets/svg/search.svg?raw"),
@@ -339,15 +469,29 @@ export default {
     },
   },
   methods: {
+    toProfile() {
+      if (this.$store.state.auth) {
+        this.$router.push("/profile/personal-info");
+      } else {
+        console.log("asdsadsa");
+        this.$store.commit("authVisibleChange", true);
+      }
+    },
     targetCategory(obj) {
       this.activeCategory = obj;
     },
     handleOk() {
-      this.visible = false;
+      this.visibleCheck = false;
     },
     handleOkLogin() {
-      console.log("asdasdasdasdas");
+      this.visibleLogin = false;
       this.$store.commit("authVisibleChange", false);
+    },
+    handleOkSms() {
+      this.visibleSms = false;
+    },
+    handleOkName() {
+      this.visibleName = false;
     },
     submitCheckNumber() {
       const data = {
@@ -356,6 +500,19 @@ export default {
       this.$refs["ruleFormCheckNumber"].validate((valid) => {
         if (valid) {
           this.__CHECK_NUMBER(data);
+        } else {
+          return false;
+        }
+      });
+    },
+    submitSms() {
+      const data = {
+        phone_number: `998${this.formSms.phone_number}`,
+        sms_code: this.formSms.sms_code,
+      };
+      this.$refs["ruleFormSms"].validate((valid) => {
+        if (valid) {
+          this.__REGISTER_SMS(data);
         } else {
           return false;
         }
@@ -374,9 +531,54 @@ export default {
         }
       });
     },
+    submitName() {
+      const data = {
+        name: this.formName.name,
+      };
+      this.$refs["ruleFormName"].validate((valid) => {
+        if (valid) {
+          this.__PROFILE_NAME(data);
+        } else {
+          return false;
+        }
+      });
+    },
+    async __REGISTER_SMS(formData) {
+      try {
+        const data = await this.$store.dispatch(
+          "fetchAuth/postRegisterWithSms",
+          formData
+        );
+        console.log(data);
+        localStorage.setItem("dis_auth_token", data.token);
+        this.$store.commit("authHandler");
+        this.visibleSms = false;
+        this.visibleName = true;
+      } catch (e) {
+        console.log(e);
+      }
+    },
+    // putProfileName
+    async __PROFILE_NAME(formData) {
+      try {
+        const data = await this.$store.dispatch("fetchAuth/putProfileName", formData);
+        this.$router.push("/profile/personal-info");
+        this.visibleName = false;
+      } catch (e) {
+        console.log(e);
+      }
+    },
     async __CHECK_NUMBER(formData) {
       try {
         const data = await this.$store.dispatch("fetchAuth/postCheckNumber", formData);
+        console.log(data);
+        if (data?.authorized) {
+          this.visibleLogin = true;
+        } else {
+          this.visibleSms = true;
+        }
+        this.formLogin.phone_number = `998${this.formCheckNumber.phone_number}`;
+        this.formSms.phone_number = `998${this.formCheckNumber.phone_number}`;
       } catch (e) {
         console.log(e);
       }
@@ -385,7 +587,9 @@ export default {
       try {
         const data = await this.$store.dispatch("fetchAuth/postLogin", formData);
         localStorage.setItem("dis_auth_token", data.token);
+        this.$store.commit("authHandler");
         this.$store.commit("authVisibleChange", false);
+        this.$router.push("/profile/personal-info");
       } catch (e) {
         console.log(e);
       }
@@ -393,21 +597,24 @@ export default {
   },
   watch: {
     authVisible(val) {
-      this.visibleLogin = val;
+      this.visibleCheck = val;
     },
     routerPath() {
       this.catalogMenu = false;
       document.body.style.height = "auto";
       document.body.style.overflow = "auto";
     },
-    visible(val) {
+    visibleCheck(val) {
+      this.$store.commit("authVisibleChange", val);
       if (val) this.visibleLogin = false;
     },
     visibleLogin(val) {
       this.$store.commit("authVisibleChange", val);
-      if (val) this.visible = false;
+      if (val) this.visibleCheck = false;
     },
-
+    visibleSms(val) {
+      if (val) this.visibleCheck = false;
+    },
     catalogMenu(val) {
       if (val) {
         document.body.style.height = "100vh";

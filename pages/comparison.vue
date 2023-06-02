@@ -31,7 +31,10 @@
       <div class="comparison-page-body" v-if="true">
         <div class="swiper-comparison mySwiper" style="overflow: hidden">
           <div class="swiper-wrapper">
-            <div class="swiper-slide">
+            <div class="swiper-slide" v-for="product in compProducts" :key="product?.id">
+              <ComparisonCard :product="product"/>
+            </div>
+            <!-- <div class="swiper-slide">
               <ComparisonCard />
             </div>
             <div class="swiper-slide">
@@ -48,10 +51,7 @@
             </div>
             <div class="swiper-slide">
               <ComparisonCard />
-            </div>
-            <div class="swiper-slide">
-              <ComparisonCard />
-            </div>
+            </div> -->
           </div>
         </div>
         <div class="swiper-button-prev-comparison">
@@ -108,6 +108,7 @@ export default {
         },
       ],
       value: "all",
+      compProducts: [],
     };
   },
   mounted() {
@@ -134,8 +135,29 @@ export default {
         prevEl: ".swiper-button-prev-comparison",
       },
     });
-    swiper.on("activeIndexChange", (swiper) => {
-    });
+    swiper.on("activeIndexChange", (swiper) => {});
+  },
+  computed: {
+    comparisonChange() {
+      return this.$store.state.comparison.length;
+    },
+  },
+  mounted() {
+    let compProducts = JSON.parse(localStorage.getItem("comparison"));
+    this.__GET_PRODUCTS_BY_ID({ products: compProducts });
+  },
+  methods: {
+    async __GET_PRODUCTS_BY_ID(dataForm) {
+      const data = await this.$store.dispatch("fetchProducts/getProductsById", dataForm);
+      this.compProducts = data?.products;
+      console.log(this.compProducts);
+    },
+  },
+  watch: {
+    comparisonChange() {
+      let compProducts = JSON.parse(localStorage.getItem("comparison"));
+      this.__GET_PRODUCTS_BY_ID({ products: compProducts });
+    },
   },
   components: { MainTitle, ComparisonCard, CategoriesAppCard },
 };

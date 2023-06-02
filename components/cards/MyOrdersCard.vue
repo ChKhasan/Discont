@@ -1,33 +1,82 @@
 <template lang="html">
   <div class="my-orders-card">
     <div class="my-orders-card-header">
-      <h4>#986250233</h4>
-      <span
-        >Narxi:
-        <p>14 540 000 so’m</p></span
-      >
+      <div class="d-flex flex-column">
+        <h4>ID заказа {{ order?.id }}</h4>
+        <p>Обновлен 8 ноября 2022 г., 13:00</p>
+      </div>
+      <span>Olib ketildi</span>
     </div>
-    <div class="my-orders-card-body">
-      <p>Nomi: Samsung kir yuvish mashinasi</p>
+    <div class="my-orders-card-body" @click="productDrop = !productDrop">
+      <div class="order-products">
+        <div
+          class="order-product"
+          v-for="product in order?.products.filter((item, index) => index == 0)"
+          :key="product?.product_id"
+        >
+          <div class="order-product-img">
+            <img src="../../assets/images/BASKET.png" alt="" />
+          </div>
+          <div class="order-product-body">
+            <p>
+              Смартфон Самсунг Галахй А33 6/128Гб Тўқ сариқ ранг (Ёрқин Шафтоли)Смартфон
+              Самсунг Галахй А33 6/128Гб Тўқ сариқ ранг (Ёрқин
+            </p>
+          </div>
+        </div>
+      </div>
+      <span v-html="arrow" :class="{ rotate180: productDrop }"></span>
+    </div>
+    <div class="order-products" v-if="productDrop == true">
+      <div
+        class="order-product"
+        v-for="product in order?.products.filter((item, index) => index != 0)"
+        :key="product?.product_id"
+      >
+        <div class="order-product-img">
+          <img src="../../assets/images/BASKET.png" alt="" />
+        </div>
+        <div class="order-product-body">
+          <p>
+            Смартфон Самсунг Галахй А33 6/128Гб Тўқ сариқ ранг (Ёрқин Шафтоли)Смартфон
+            Самсунг Галахй А33 6/128Гб Тўқ сариқ ранг (Ёрқин
+          </p>
+        </div>
+      </div>
     </div>
     <div class="my-orders-card-footer">
-      <div class="d-flex">
-        <div class="my-orders-card-status">
-          <span></span>
-          <p>Olib ketildi</p>
-        </div>
-        <div class="order-date">21.05.2022</div>
+      <div>
+        <p>Дата заказа</p>
+        <span>Вторник, 8 ноября 2022 г., 12:59</span>
       </div>
-      <span v-html="arrow"></span>
+      <div>
+        <p>Способ доставки</p>
+        <span>Доствака</span>
+      </div>
+      <div>
+        <p>Способ оплаты</p>
+        <span>Payme</span>
+      </div>
+
+      <div>
+        <p>Сумма заказа</p>
+        <span>250 000 сум</span>
+      </div>
     </div>
   </div>
 </template>
 <script>
+import moment from "moment";
 export default {
+  props: ["order"],
   data() {
     return {
       arrow: require("../../assets/svg/dropdown-icon.svg?raw"),
+      productDrop: false,
     };
+  },
+  methods: {
+    moment,
   },
 };
 </script>
@@ -39,78 +88,126 @@ export default {
 }
 .my-orders-card-header {
   display: flex;
-  align-items: center;
   justify-content: space-between;
-  margin-bottom: 12px;
+
+  margin-bottom: 32px;
 }
 .my-orders-card-header h4 {
-  font-family: "Inter";
+  font-family: var(--SB_400);
   font-style: normal;
-  font-weight: 500;
-  font-size: 17.9395px;
-  line-height: 22px;
+  font-weight: 400;
+  font-size: 20px;
+  line-height: 28px;
   color: #000000;
 }
 .my-orders-card-header span {
-  font-family: "Inter";
+  padding: 14px 16px;
+  padding-left: 34px;
+  background: #fafafa;
+  border-radius: 4px;
+  font-family: var(--SB_400);
   font-style: normal;
-  font-weight: 300;
+  font-weight: 400;
   font-size: 14px;
-  line-height: 17px;
-  color: #000000;
+  line-height: 18px;
+  color: #1f8a70;
+  position: relative;
   display: flex;
   align-items: center;
+  max-height: 42px;
 }
-.my-orders-card-header span p {
-  font-weight: 500;
-  margin-left: 4px;
+.my-orders-card-header span::after {
+  content: "";
+  position: absolute;
+  width: 13px;
+  height: 13px;
+  background: #1f8a70;
+  border-radius: 50%;
+  left: 16px;
 }
-.my-orders-card-body p {
-  font-family: "Inter";
+.my-orders-card-header p {
+  font-family: var(--SB_400);
   font-style: normal;
-  font-weight: 500;
+  font-weight: 400;
   font-size: 14px;
-  line-height: 17px;
-  color: rgba(0, 0, 0, 0.5);
+  line-height: 24px;
+  color: #727474;
+  margin-top: 10px;
 }
-.my-orders-card-footer {
+.my-orders-card-body {
   display: flex;
   justify-content: space-between;
-  align-items: center;
+}
+
+.my-orders-card-footer {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  grid-gap: 32px;
   margin-top: 48px;
 }
-.my-orders-card-footer .my-orders-card-status {
-  display: flex;
-  align-items: center;
-}
-.my-orders-card-footer .my-orders-card-status span {
-  display: flex;
-  background: #16d884;
-  width: 11px;
-  height: 11px;
-  border-radius: 50%;
-  margin-right: 7px;
-}
-.my-orders-card-footer .my-orders-card-status p {
-  font-family: "Inter";
+.my-orders-card-footer div p {
+  font-family: var(--SB_400);
   font-style: normal;
   font-weight: 400;
   font-size: 14px;
-  line-height: 17px;
-
-  color: #16d884;
+  line-height: 20px;
+  color: #727474;
 }
-.my-orders-card-footer .order-date {
-  font-family: "Inter";
+.my-orders-card-footer div span {
+  font-family: var(--SB_400);
   font-style: normal;
   font-weight: 400;
-  font-size: 12px;
-  line-height: 15px;
-  color: rgba(0, 0, 0, 0.5);
-  margin-left: 47px;
+  font-size: 16px;
+  line-height: 24px;
+  color: #000000;
+  margin-top: 4px;
 }
-.my-orders-card-footer > span svg {
+.my-orders-card-body > span svg {
   width: 20px;
   height: 10px;
+}
+.my-orders-card-body > span {
+  display: flex;
+  align-items: center;
+  margin-right: 4px;
+}
+.order-product {
+  display: grid;
+  grid-template-columns: 80px auto;
+}
+.my-orders-card-body {
+  margin-bottom: 32px;
+}
+.order-products {
+  width: 90%;
+  display: grid;
+  grid-template-columns: 1fr;
+  grid-gap: 32px;
+}
+.order-product-img {
+  width: 80px;
+  height: 80px;
+  background: rgba(217, 217, 217, 0.2);
+  border-radius: 10px;
+}
+.order-product-img img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+.order-product-body {
+  padding-left: 24px;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+}
+.order-product-body p {
+  font-family: var(--SB_400);
+  font-style: normal;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 160%;
+  color: rgba(114, 116, 116, 0.6);
 }
 </style>

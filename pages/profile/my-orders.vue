@@ -32,18 +32,17 @@
               :class="{ 'profile-menu-active': $route.name == 'profile-my-comments' }"
               ><span v-html="myComments"></span>Mening izohlarim</nuxt-link
             >
-            <div class="profile-exit"><span v-html="logout"></span>Chiqish</div>
+            <div class="profile-exit" @click="$store.commit('logout')">
+              <span v-html="logout"></span>Chiqish
+            </div>
           </div>
         </div>
         <div>
           <div class="my-orders-grid" v-if="empty">
             <div class="order-card-grid">
-              <MyOrdersCard />
-              <MyOrdersCard />
-              <MyOrdersCard />
-              <MyOrdersCard />
+              <MyOrdersCard v-for="order in orders" :key="order.id" :order="order" />
             </div>
-            <div>
+            <!-- <div>
               <div class="orders-price-card">
                 <div class="orders-price-card-top">
                   <div class="orders-price-card-header">
@@ -69,7 +68,7 @@
                   <div class="orders-ticket-btn">Chekni yuklab olish</div>
                 </div>
               </div>
-            </div>
+            </div> -->
           </div>
           <div class="orders-empty" v-else>
             <img src="../../assets/images/orders-empty.png" alt="" />
@@ -87,11 +86,14 @@
 </template>
 <script>
 import MyOrdersCard from "../../components/cards/MyOrdersCard.vue";
-
+import moment from "moment";
 export default {
+  middleware: "auth",
+
   data() {
     return {
       empty: true,
+      orders: [],
       profileInfo: require("../../assets/svg/profile-info.svg?raw"),
       myOrders: require("../../assets/svg/my-orders.svg?raw"),
       myComments: require("../../assets/svg/my-comments.svg?raw"),
@@ -101,20 +103,30 @@ export default {
       arrow: require("../../assets/svg/dropdown-icon.svg?raw"),
     };
   },
-  mounted() {},
+  mounted() {
+    this.__GET_PROFILE_INFO();
+  },
+  methods: {
+    moment,
+    async __GET_PROFILE_INFO() {
+      const profileData = await this.$store.dispatch("fetchAuth/getProfileInfo");
+      this.orders = profileData?.user?.orders;
+    },
+  },
   components: { MyOrdersCard },
 };
 </script>
 <style lang="css">
 @import "../../assets/css/pages/profile-page.css";
 .my-orders-grid {
-  display: grid;
+  /* display: grid;
   grid-template-columns: 8.2fr 4fr;
-  grid-gap: 21px;
+  grid-gap: 21px; */
 }
 .order-card-grid {
   display: grid;
-  grid-gap: 16px;
+  grid-template-columns: auto auto;
+  grid-gap: 24px;
 }
 .orders-price-card {
   border: 1px solid #f1f1f1;

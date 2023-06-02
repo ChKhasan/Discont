@@ -60,6 +60,8 @@ import MyOrdersCard from "../../components/cards/MyOrdersCard.vue";
 import ProfileCommentCard from "../../components/cards/ProfileCommentCard.vue";
 
 export default {
+  middleware: "auth",
+
   data() {
     return {
       empty: true,

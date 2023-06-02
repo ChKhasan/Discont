@@ -7,6 +7,14 @@ export const state = () => ({
 });
 
 export const mutations = {
+  logout(state) {
+    localStorage.removeItem("dis_auth_token");
+    state.auth = false;
+  },
+  authHandler(state) {
+    const token = localStorage.getItem("dis_auth_token");
+    token ? (state.auth = true) : (state.auth = false);
+  },
   authVisibleChange(state, payload) {
     state.authVisible = payload;
   },

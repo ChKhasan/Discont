@@ -32,7 +32,9 @@
               :class="{ 'profile-menu-active': $route.name == 'profile-my-comments' }"
               ><span v-html="myComments"></span>Mening izohlarim</nuxt-link
             >
-            <div class="profile-exit"><span v-html="logout"></span>Chiqish</div>
+            <div class="profile-exit" @click="$store.commit('logout')">
+              <span v-html="logout"></span>Chiqish
+            </div>
           </div>
         </div>
         <div>
@@ -49,17 +51,25 @@
                 <div>
                   <div>
                     <p>
-                      Ф.И.О:<span>Muhammadrizoyev Muhammadloiq Muhammadsodiq o’gli</span>
+                      Ф.И.О:<span>{{ profile?.name ? profile?.name : "-----" }}</span>
                     </p>
-                    <p>E-mail:<span>info@discont.uz</span></p>
+                    <p>
+                      E-mail:<span>{{ profile?.email ? profile?.email : "-----" }}</span>
+                    </p>
                     <p>Пароль:<span>12****AA</span></p>
                   </div>
                 </div>
                 <div>
                   <div>
-                    <p>Телефон:<span>+998(93) 567 93 83</span></p>
                     <p>
-                      Адресс:<span>г.Ташкент, р.Шайхантахур,ул.Караташ 11, 100088</span>
+                      Телефон:<span>{{
+                        profile?.login ? `${profile?.login}` : "-----"
+                      }}</span>
+                    </p>
+                    <p>
+                      Адресс:<span>{{
+                        profile?.address ? profile?.address : "-----"
+                      }}</span>
                     </p>
                   </div>
                 </div>
@@ -89,18 +99,18 @@
               >
                 <h3>Ma’lumotlarni ozgartirish</h3>
 
-                <span class="personal-info-save-btn" @click="profileEdit = false"
+                <span class="personal-info-save-btn" @click="submitForm()"
                   ><span v-html="save"></span> Saqlash</span
                 >
               </div>
               <div class="personal-info-card-body2">
                 <h4 class="form-title">Shaxsiy</h4>
                 <div class="form-grid-3">
-                  <a-form-model-item class="form-item mb-0" label="Ism">
+                  <a-form-model-item class="form-item mb-0" label="Ism" prop="name">
                     <a-input v-model="form.name" placeholder="Name" />
                   </a-form-model-item>
                   <a-form-model-item class="form-item mb-0" label="Telefon raqam">
-                    <a-input v-model="form.name" placeholder="Number" />
+                    <a-input v-model="form.phone_number" placeholder="Number" />
                   </a-form-model-item>
                   <a-form-model-item class="form-item mb-0" label="Email">
                     <a-input v-model="form.name" placeholder="Email" />
@@ -109,16 +119,16 @@
                 <h4 class="form-title">Manzil</h4>
                 <div class="form-grid-3">
                   <a-form-model-item class="form-item mb-0" label="Viloyat yoki shahar">
-                    <a-input v-model="form.name" placeholder="City" />
+                    <a-input v-model="form.address" placeholder="City" />
                   </a-form-model-item>
                   <a-form-model-item class="form-item mb-0" label="Tuman">
-                    <a-input v-model="form.name" placeholder="Adress" />
+                    <a-input v-model="form.address" placeholder="Adress" />
                   </a-form-model-item>
                   <a-form-model-item
                     class="form-item mb-0"
                     label="Ko’cha va uy raqamingiz"
                   >
-                    <a-input v-model="form.name" placeholder="Adress" />
+                    <a-input v-model="form.address" placeholder="Adress" />
                   </a-form-model-item>
                 </div>
                 <h4 class="form-title">Password</h4>
@@ -126,14 +136,25 @@
                   <a-form-model-item class="form-item mb-0" label="Hozirgi parolingiz">
                     <a-input-password v-model="form.name" placeholder="Last password" />
                   </a-form-model-item>
-                  <a-form-model-item class="form-item mb-0" label="Yangi parol">
-                    <a-input-password v-model="form.name" placeholder="New password" />
+                  <a-form-model-item
+                    class="form-item mb-0"
+                    label="Yangi parol"
+                    prop="password"
+                  >
+                    <a-input-password
+                      v-model="form.password"
+                      placeholder="New password"
+                    />
                   </a-form-model-item>
                   <a-form-model-item
                     class="form-item mb-0"
                     label="Yangi parolni takrorlang"
+                    prop="password_confirmation"
                   >
-                    <a-input-password v-model="form.name" placeholder="New password" />
+                    <a-input-password
+                      v-model="form.password_confirmation"
+                      placeholder="New password"
+                    />
                   </a-form-model-item>
                 </div>
               </div>
@@ -156,6 +177,7 @@
 </template>
 <script>
 export default {
+  middleware: "auth",
   data() {
     return {
       profileEdit: false,
@@ -169,50 +191,81 @@ export default {
       save: require("../../assets/svg/Stroke 3.svg?raw"),
       form: {
         name: "",
-        region: undefined,
-        date1: undefined,
-        delivery: false,
-        type: [],
-        resource: "",
-        desc: "",
+        password: "",
+        password_confirmation: "",
+        phone_number: "",
+        address: "",
+        postcode: "",
       },
       rules: {
         name: [
           { required: true, message: "Please input Activity name", trigger: "blur" },
-          { min: 3, max: 5, message: "Length should be 3 to 5", trigger: "blur" },
         ],
-        region: [
-          { required: true, message: "Please select Activity zone", trigger: "change" },
+        password: [
+          { required: true, message: "Please input Activity name", trigger: "blur" },
         ],
-        date1: [{ required: true, message: "Please pick a date", trigger: "change" }],
-        type: [
-          {
-            type: "array",
-            required: true,
-            message: "Please select at least one activity type",
-            trigger: "change",
-          },
-        ],
-        resource: [
-          {
-            required: true,
-            message: "Please select activity resource",
-            trigger: "change",
-          },
-        ],
-        desc: [
-          { required: true, message: "Please input activity form", trigger: "blur" },
+        password_confirmation: [
+          { required: true, message: "Please input Activity name", trigger: "blur" },
         ],
       },
+      profile: {},
     };
   },
+  computed: {
+    checkAuth() {
+      return this.$store.state.auth;
+    },
+  },
+
+  async mounted() {
+    this.__GET_PROFILE_INFO();
+  },
   methods: {
+    async __GET_PROFILE_INFO() {
+      const profileData = await this.$store.dispatch("fetchAuth/getProfileInfo");
+      this.profile = profileData?.user;
+      this.form = {
+        ...this.form,
+        name: this.profile.name ? this.profile.name : "",
+        address: this.profile.address ? this.profile.address : "",
+        postcode: this.profile.postcode ? this.profile.postcode : "",
+        name: this.profile.name ? this.profile.name : "",
+      };
+    },
+    async __PROFILE_INFO(dataForm) {
+      try {
+        const data = await this.$store.dispatch("fetchAuth/putProfileInfo", dataForm);
+        this.profileEdit = false;
+      } catch (e) {
+        console.log(e);
+      }
+    },
+    submitForm() {
+      console.log(this.form);
+      this.$refs["ruleForm"].validate((valid) => {
+        if (valid) {
+          this.__PROFILE_INFO(this.form);
+        } else {
+          return false;
+        }
+      });
+    },
     onChange(checked) {
       console.log(`a-switch to ${checked}`);
+    },
+  },
+  watch: {
+    checkAuth(val) {
+      if (!val) {
+        this.$router.push("/");
+      }
     },
   },
 };
 </script>
 <style lang="css">
 @import "../../assets/css/pages/profile-page.css";
+.ant-form-explain {
+  display: none;
+}
 </style>

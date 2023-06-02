@@ -3,12 +3,36 @@ export const actions = {
     const res = await this.$axios.$post(`/auth/login`, data);
     return res;
   },
+  async getProfileInfo({}) {
+    const res = await this.$axios.$get(`/profile/me`, {
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem("dis_auth_token")}`,
+      },
+    });
+    return res;
+  },
+  async putProfileInfo({}, data) {
+    const res = await this.$axios.$put(`/profile/update`, data, {
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem("dis_auth_token")}`,
+      },
+    });
+    return res;
+  },
   async postCheckNumber({}, data) {
     const res = await this.$axios.$post(`/auth/check`, data);
     return res;
   },
   async postRegisterWithSms({}, data) {
     const res = await this.$axios.$post(`/auth/register`, data);
+    return res;
+  },
+  async putProfileName({}, data) {
+    const res = await this.$axios.$put(`/profile/edit_name`, data, {
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem("dis_auth_token")}`,
+      },
+    });
     return res;
   },
   async postOrder({}, data) {

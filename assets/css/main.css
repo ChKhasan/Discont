@@ -267,3 +267,6 @@ ul {
 .ant-modal-content {
   border-radius: 14px !important;
 }
+.rotate180 svg {
+  transform: rotate(180deg) !important;
+}
