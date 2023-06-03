@@ -131,7 +131,8 @@
           <div class="basket-checkout-block">
             <div class="basket-checkout-price">
               <h3>Jami:</h3>
-              <h3>
+              <b-skeleton v-if="skeletonLoad" width="40%"></b-skeleton>
+              <h3 v-else>
                 {{
                   products.reduce((summ, item) => {
                     return (
@@ -228,6 +229,7 @@ export default {
   },
   methods: {
     async __GET_PRODUCTS_BY_ID(dataForm) {
+      console.log(dataForm);
       const data = await this.$store.dispatch("fetchProducts/getProductsById", dataForm);
       this.skeletonLoad = false;
       this.products = data?.products;

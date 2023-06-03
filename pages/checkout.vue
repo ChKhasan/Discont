@@ -527,6 +527,7 @@ export default {
     async __POST_ORDER(formData) {
       try {
         const data = await this.$store.dispatch("fetchAuth/postOrder", formData);
+        this.$router.push("/");
       } catch (e) {
         console.log(e);
       }

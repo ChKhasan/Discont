@@ -5,23 +5,23 @@
         <span
           class="like-active"
           v-html="activeHeart"
-          v-if="$store.state.like.includes(product.id)"
-          @click="$store.commit('addToStore', { id: product.id, name: 'like' })"
+          v-if="$store.state.like.includes(product?.id)"
+          @click="$store.commit('addToStore', { id: product?.id, name: 'like' })"
         >
         </span>
         <span
           class="like-inactive"
           v-else
           v-html="like"
-          @click="$store.commit('addToStore', { id: product.id, name: 'like' })"
+          @click="$store.commit('addToStore', { id: product?.id, name: 'like' })"
         >
         </span>
       </span>
       <span
         class="hover-btns"
         v-html="comp"
-        :class="{ 'active-comparison': $store.state.comparison.includes(product.id) }"
-        @click="$store.commit('addToStore', { id: product.id, name: 'comparison' })"
+        :class="{ 'active-comparison': $store.state.comparison.includes(product?.id) }"
+        @click="$store.commit('addToStore', { id: product?.id, name: 'comparison' })"
       ></span>
       <div class="fast_show" @click="visible = true">Быстрый просмотр</div>
       <span class="pc-img-container"
@@ -30,7 +30,7 @@
           :src="product?.images[0]?.sm_img"
           alt=""
         />
-        <img v-else :src="product?.images[0]?.sm_img" alt="" />
+        <img v-else src="../../assets/images/empty-img.png" alt="" />
       </span>
     </div>
     <div class="product-card-body">
@@ -69,13 +69,22 @@
     <div class="product-card-footer">
       <div
         class="to-basket-count"
-        v-if="$store.state.cart.find((item) => item.id == product.id)"
+        v-if="$store.state.cart.find((item) => item.id == product?.id)"
       >
-        <span @click="$store.commit('productCountDown', { id: product.id })">-</span
-        >{{ $store.state.cart.find((item) => item.id == product.id)?.count }}
-        <span @click="$store.commit('productCountUp', { id: product.id })">+</span>
+        <span @click="$store.commit('productCountDown', { id: product?.id })">-</span
+        >{{ $store.state.cart.find((item) => item.id == product?.id)?.count }}
+        <span @click="$store.commit('productCountUp', { id: product?.id })">+</span>
       </div>
-      <div class="to-basket-btn" v-else @click="visibleBuy = true">
+      <div
+        class="to-basket-btn"
+        v-else
+        @click="
+          $store.commit('addToCart', {
+            obj: { id: product?.id, count: 1 },
+            name: 'cart',
+          })
+        "
+      >
         <span>В корзину</span>В корзину
       </div>
     </div>
@@ -199,7 +208,7 @@
         </div>
       </div>
     </a-modal>
-    <a-modal
+    <!-- <a-modal
       v-model="visibleBuy"
       :body-style="{ padding: '24px', borderRadius: '14px', minHeight: '613px' }"
       centered
@@ -344,7 +353,7 @@
           </div>
         </div>
       </div>
-    </a-modal>
+    </a-modal> -->
   </div>
 </template>
 <script>

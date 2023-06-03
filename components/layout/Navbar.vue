@@ -210,7 +210,7 @@
       width="670px"
       @ok="handleOkLogin"
     >
-      <div class="vmodal-header">
+      <div class="vmodal-header auth-modal">
         <h5>Akauntingizga kiring yoki ro’yxatdan o’ting</h5>
         <span @click="handleOkLogin"
           ><svg
@@ -276,7 +276,7 @@
       width="670px"
       @ok="handleOkSms"
     >
-      <div class="vmodal-header">
+      <div class="vmodal-header auth-modal">
         <h5>Akauntingizga kiring yoki ro’yxatdan o’ting</h5>
         <span @click="handleOkSms"
           ><svg
@@ -339,7 +339,7 @@
       width="670px"
       @ok="handleOkName"
     >
-      <div class="vmodal-header">
+      <div class="vmodal-header auth-modal">
         <h5>Akkauntingizga ro‘yxatdan o‘ting</h5>
         <span @click="handleOkName"
           ><svg
@@ -395,10 +395,14 @@
       </div>
       <template slot="footer"> <h3></h3></template>
     </a-modal>
+    <Transition name="bounce-toast">
+      <Vnotification v-if="buyToast" />
+    </Transition>
   </div>
 </template>
 <script>
 import MainTitle from "../Main-title.vue";
+import Vnotification from "../vnotification.vue";
 
 export default {
   data() {
@@ -408,6 +412,7 @@ export default {
       visibleLogin: false,
       visibleSms: false,
       visibleName: false,
+      buyToast: false,
       formLogin: {
         phone_number: "",
         password: "",
@@ -466,6 +471,12 @@ export default {
     },
     authVisible() {
       return this.$store.state.authVisible;
+    },
+    storeCartLength() {
+      return this.$store.state.cart.length;
+    },
+    storeLikeLength() {
+      return this.$store.state.like.length;
     },
   },
   methods: {
@@ -596,6 +607,23 @@ export default {
     },
   },
   watch: {
+    buyToast(val) {
+      if (val) {
+        setTimeout(() => {
+          this.buyToast = false;
+        }, 1000);
+      }
+    },
+    storeLikeLength(newVal, oldVal) {
+      if (newVal > oldVal) {
+        this.buyToast = true;
+      }
+    },
+    storeCartLength(newVal, oldVal) {
+      if (newVal > oldVal) {
+        this.buyToast = true;
+      }
+    },
     authVisible(val) {
       this.visibleCheck = val;
     },
@@ -625,13 +653,32 @@ export default {
       }
     },
   },
-  components: { MainTitle },
+  components: { MainTitle, Vnotification },
 };
 </script>
 <style lang="css">
 /* .nav-icons svg path {
   fill: #1f8a70;
 } */
+.bounce-toast-enter-active {
+  animation: bounce-toast-in 0.5s;
+}
+.bounce-toast-leave-active {
+  animation: bounce-toast-in 0.5s reverse;
+}
+@keyframes bounce-toast-in {
+  0% {
+    transform: translateX(100%);
+    opacity: 0;
+  }
+  50% {
+    transform: translateX(160px);
+    opacity: 1;
+  }
+  100% {
+    transform: translateX(144px);
+  }
+}
 .header-navbar {
   position: relative;
 }
@@ -902,5 +949,8 @@ export default {
   right: 2px;
   top: -6px;
   position: absolute;
+}
+.auth-modal {
+  margin-bottom: 40px;
 }
 </style>
