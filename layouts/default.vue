@@ -4,7 +4,27 @@
     <Nuxt />
     <Footer />
     <Transition name="bounce-toast">
-      <Vnotification v-if="buyToast" />
+      <Vnotification
+        v-if="buyToast"
+        title="Mahsulot savatchaga muvaffaqiyatli qo’shildi. "
+        @click="toastClose()"
+      >
+        <span v-html="iconBuy"></span>
+      </Vnotification>
+      <Vnotification
+        v-if="likeToast"
+        title="Mahsulot Like ga muvaffaqiyatli qo’shildi. "
+        @click="toastClose()"
+      >
+        <span v-html="iconLike"></span>
+      </Vnotification>
+      <Vnotification
+        v-if="compToast"
+        title="Mahsulot Taqqoslash ga muvaf-faqiyatli qo’shildi. "
+        @click="toastClose()"
+      >
+        <span v-html="iconComp"></span>
+      </Vnotification>
     </Transition>
   </div>
 </template>
@@ -16,7 +36,12 @@ export default {
   data() {
     return {
       buyToast: false,
+      likeToast: false,
+      compToast: false,
       afterReload: false,
+      iconBuy: require("../assets/svg/toast-buy.svg?raw"),
+      iconLike: require("../assets/svg/toast-like.svg?raw"),
+      iconComp: require("../assets/svg/toast-comparison.svg?raw"),
     };
   },
   async mounted() {
@@ -31,6 +56,9 @@ export default {
     storeLikeLength() {
       return this.$store.state.like.length;
     },
+    storeCompLength() {
+      return this.$store.state.comparison.length;
+    },
     localStorageHandler() {
       if (process.client) {
         let cart = JSON.parse(localStorage.getItem("like"));
@@ -38,24 +66,46 @@ export default {
       }
     },
   },
+  methods: {
+    toastClose() {
+      this.buyToast = false;
+      this.likeToast = false;
+      this.compToast = false;
+    },
+  },
   watch: {
-    localStorageHandler(val) {
-      console.log(val);
-    },
-
-    storeLikeLength(newVal, oldVal) {
-      if (newVal > oldVal && this.afterReload) {
-        this.buyToast = true;
-      }
-    },
     buyToast(val) {
       if (val) {
         setTimeout(() => {
           this.buyToast = false;
-        }, 1000);
+        }, 2000);
+      }
+    },
+    likeToast(val) {
+      if (val) {
+        setTimeout(() => {
+          this.likeToast = false;
+        }, 2000);
+      }
+    },
+    compToast(val) {
+      if (val) {
+        setTimeout(() => {
+          this.compToast = false;
+        }, 2000);
+      }
+    },
+    storeLikeLength(newVal, oldVal) {
+      if (newVal > oldVal && this.afterReload) {
+        this.likeToast = true;
       }
     },
 
+    storeCompLength(newVal, oldVal) {
+      if (newVal > oldVal && this.afterReload) {
+        this.compToast = true;
+      }
+    },
     storeCartLength(newVal, oldVal) {
       if (newVal > oldVal && this.afterReload) {
         this.buyToast = true;

@@ -1,45 +1,41 @@
 <template lang="html">
   <div class="v-notification">
     <div class="v-notification-icon">
-      <span v-html="iconBuy"></span>
+      <slot></slot>
     </div>
     <div class="v-notification-body">
-      <h4>Mahsulot Taqqoslash ga muvaf-faqiyatli qo’shildi.</h4>
+      <h4>{{ title }}</h4>
       <p>Haridlar qilishda davom eting!</p>
+      <span class="toast-close" @click="$emit('click')">
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          width="16"
+          height="16"
+          viewBox="0 0 16 16"
+          fill="none"
+        >
+          <path
+            d="M13.9959 2.00586L2.00586 13.9434"
+            stroke="#D9D9D9"
+            stroke-width="2.20091"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          />
+          <path
+            d="M14 13.95L2 2"
+            stroke="#D9D9D9"
+            stroke-width="2.20091"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          />
+        </svg>
+      </span>
     </div>
-    <!-- <span>
-      <svg
-        xmlns="http://www.w3.org/2000/svg"
-        width="16"
-        height="16"
-        viewBox="0 0 16 16"
-        fill="none"
-      >
-        <path
-          d="M13.9959 2.00586L2.00586 13.9434"
-          stroke="#D9D9D9"
-          stroke-width="2.20091"
-          stroke-linecap="round"
-          stroke-linejoin="round"
-        />
-        <path
-          d="M14 13.95L2 2"
-          stroke="#D9D9D9"
-          stroke-width="2.20091"
-          stroke-linecap="round"
-          stroke-linejoin="round"
-        />
-      </svg>
-    </span> -->
   </div>
 </template>
 <script>
 export default {
-  data() {
-    return {
-      iconBuy: require("../assets/svg/toast-buy.svg?raw"),
-    };
-  },
+  props: ["title"],
 };
 </script>
 <style lang="css">
@@ -61,6 +57,8 @@ export default {
   display: flex;
   flex-direction: column;
   padding-left: 32px;
+  position: relative;
+  padding-right: 20px;
 }
 .v-notification-body h4 {
   font-family: var(--SB_600);
@@ -78,5 +76,11 @@ export default {
   font-size: 14px;
   line-height: 150%;
   color: #949494;
+}
+.toast-close {
+  position: absolute;
+  top: 0;
+  right: 0;
+  cursor: pointer;
 }
 </style>
