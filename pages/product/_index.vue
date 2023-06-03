@@ -141,13 +141,17 @@
                 </div>
               </div>
             </div>
-            <div class="counter">
+            <div class="counter"  v-if="$store.state.cart.find((item) => item.id == product?.id)">
               <p class="lil">Кол-во</p>
               <div class="grid">
                 <div class="number">
-                  <button><a-icon type="minus" /></button>
-                  1
-                  <button><a-icon type="plus" /></button>
+                  <button @click="$store.commit('productCountDown', { id: product?.id })">
+                    <a-icon type="minus" />
+                  </button>
+                  {{ $store.state.cart.find((item) => item.id == product?.id)?.count }}
+                  <button @click="$store.commit('productCountUp', { id: product?.id })">
+                    <a-icon type="plus" />
+                  </button>
                 </div>
               </div>
             </div>
@@ -177,7 +181,18 @@
             </div>
 
             <div class="buttons">
-              <button class="cart">Savatchaga solish</button>
+              <button
+                v-if="!$store.state.cart.find((item) => item.id == product?.id)"
+                class="cart"
+                @click="
+                  $store.commit('addToCart', {
+                    obj: { id: product?.id, count: 1 },
+                    name: 'cart',
+                  })
+                "
+              >
+                Savatchaga solish
+              </button>
               <button class="click">Birgina click orqali sotib olish</button>
             </div>
           </div>
