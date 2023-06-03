@@ -395,9 +395,7 @@
       </div>
       <template slot="footer"> <h3></h3></template>
     </a-modal>
-    <Transition name="bounce-toast">
-      <Vnotification v-if="buyToast" />
-    </Transition>
+   
   </div>
 </template>
 <script>
@@ -412,7 +410,7 @@ export default {
       visibleLogin: false,
       visibleSms: false,
       visibleName: false,
-      buyToast: false,
+     
       formLogin: {
         phone_number: "",
         password: "",
@@ -473,14 +471,14 @@ export default {
       return this.$store.state.authVisible;
     },
     localStoreLength() {
-
+      // let cart = JSON.parse(localStorage.getItem("cart"));
+      // return cart.length;
     },
-    storeCartLength() {
-      return this.$store.state.cart.length;
-    },
-    storeLikeLength() {
-      return this.$store.state.like.length;
-    },
+  
+  },
+  mounted() {
+    let cart = JSON.parse(localStorage.getItem("cart"));
+     console.log(cart);
   },
   methods: {
     toProfile() {
@@ -610,23 +608,7 @@ export default {
     },
   },
   watch: {
-    buyToast(val) {
-      if (val) {
-        setTimeout(() => {
-          this.buyToast = false;
-        }, 1000);
-      }
-    },
-    storeLikeLength(newVal, oldVal) {
-      if (newVal > oldVal) {
-        this.buyToast = true;
-      }
-    },
-    storeCartLength(newVal, oldVal) {
-      if (newVal > oldVal) {
-        this.buyToast = true;
-      }
-    },
+  
     authVisible(val) {
       this.visibleCheck = val;
     },
@@ -663,26 +645,7 @@ export default {
 /* .nav-icons svg path {
   fill: #1f8a70;
 } */
-.bounce-toast-enter-active {
-  animation: bounce-toast-in 0.5s;
-}
-.bounce-toast-leave-active {
-  animation: bounce-toast-in 0.5s reverse;
-}
-@keyframes bounce-toast-in {
-  0% {
-    right: -100%;
-    opacity: 0;
-  }
-  50% {
-    right: 160px;
-    opacity: 1;
-  }
-  100% {
-    right: 144px;
 
-  }
-}
 .header-navbar {
   position: relative;
 }

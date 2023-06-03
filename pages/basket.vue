@@ -48,7 +48,7 @@
                 class="basket-img-container"
                 @click="$router.push(`/product/${product.slug}`)"
               >
-                <img :src="product.images[0].sm_img" alt="" />
+                <img :src="product.images[0]?.sm_img" alt="" />
               </div>
               <div class="basket-card-body">
                 <div class="basket-card-text-block">
