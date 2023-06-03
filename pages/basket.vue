@@ -14,12 +14,12 @@
           <span class="d-flex align-items-end">4 товаров</span>
         </div>
       </div>
-      <div class="basket-page-body" v-if="products.length > 0">
+      <div class="basket-page-body" v-if="products.length > 0 || skeletonLoad">
         <div>
           <div class="basket-cards-grid">
             <div
               class="basket-card"
-              v-for="skeletonItem in [1, 2]"
+              v-for="skeletonItem in [1, 2, 3, 4]"
               :key="skeletonItem"
               v-if="skeletonLoad"
             >
@@ -202,7 +202,7 @@ export default {
   data() {
     return {
       skeletonList: [1, 2, 3],
-      skeletonLoad: false,
+      skeletonLoad: true,
       arrow: require("../assets/svg/dropdown-icon.svg?raw"),
       like: require("../assets/svg/card-like.svg?raw"),
       deleteIcon: require("../assets/svg/basket-delete.svg?raw"),
@@ -229,10 +229,16 @@ export default {
   },
   methods: {
     async __GET_PRODUCTS_BY_ID(dataForm) {
-      console.log(dataForm);
-      const data = await this.$store.dispatch("fetchProducts/getProductsById", dataForm);
-      this.skeletonLoad = false;
-      this.products = data?.products;
+      try {
+        const data = await this.$store.dispatch(
+          "fetchProducts/getProductsById",
+          dataForm
+        );
+        this.skeletonLoad = false;
+        this.products = data?.products;
+      } catch (e) {
+        this.skeletonLoad = false;
+      }
     },
     async deleteProduct(id) {
       this.skeletonLoad = true;
