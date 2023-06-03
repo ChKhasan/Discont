@@ -472,6 +472,9 @@ export default {
     authVisible() {
       return this.$store.state.authVisible;
     },
+    localStoreLength() {
+
+    },
     storeCartLength() {
       return this.$store.state.cart.length;
     },
@@ -668,15 +671,16 @@ export default {
 }
 @keyframes bounce-toast-in {
   0% {
-    transform: translateX(100%);
+    right: -100%;
     opacity: 0;
   }
   50% {
-    transform: translateX(160px);
+    right: 160px;
     opacity: 1;
   }
   100% {
-    transform: translateX(144px);
+    right: 144px;
+
   }
 }
 .header-navbar {
