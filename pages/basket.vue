@@ -11,7 +11,9 @@
       <div class="d-flex comparison-page-title">
         <div class="d-flex align-items-end">
           <MainTitle title="Savatcha" />
-          <span class="d-flex align-items-end">4 товаров</span>
+          <span class="d-flex align-items-end"
+            >{{ $store.state.cart.length }} товаров</span
+          >
         </div>
       </div>
       <div class="basket-page-body" v-if="products.length > 0 || skeletonLoad">
