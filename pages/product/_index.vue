@@ -500,12 +500,14 @@
             <a-form-model-item
               class="form-item register-input mb-3 pb-0"
               label="Ismingizni kiriting"
+              prop="name"
             >
               <a-input v-model="formName.name" type="text" placeholder="Name" />
             </a-form-model-item>
             <a-form-model-item
               class="form-item register-input mb-0 pb-0"
               label="Telefon raqamingiz"
+              prop="phone_number"
             >
               <the-mask
                 v-model="formName.phone_number"
@@ -522,7 +524,11 @@
       </a-modal>
     </div>
     <Transition name="bounce-toast">
-      <Vnotification v-if="compToast" title="Buyurtma muvaffaqiyatli jo'natildi. " @click="toastClose()">
+      <Vnotification
+        v-if="compToast"
+        title="Buyurtma muvaffaqiyatli jo'natildi. "
+        @click="toastClose()"
+      >
         <span v-html="iconComp"></span>
       </Vnotification>
     </Transition>
@@ -565,7 +571,21 @@ export default {
         product_id: null,
       },
       rulesName: {
-        name: [{}],
+        name: [
+          {
+            required: true,
+            message: "This field is required",
+            trigger: "change",
+          },
+        ],
+        phone_number: [
+          {
+            required: true,
+            message: "This field is required",
+            trigger: "change",
+          },
+          { min: 9, message: "Length should be 9", trigger: "blur" },
+        ],
       },
     };
   },
