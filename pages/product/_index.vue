@@ -208,7 +208,9 @@
               >
                 Savatchaga solish
               </button>
-              <button class="click">Birgina click orqali sotib olish</button>
+              <button class="click" @click="visibleName = true">
+                Birgina click orqali sotib olish
+              </button>
             </div>
           </div>
 
@@ -454,6 +456,71 @@
         </div>
       </div>
       <ApplicationBanner class="app" />
+      <a-modal
+        v-model="visibleName"
+        :body-style="{ padding: '32px', borderRadius: '14px' }"
+        centered
+        :closable="false"
+        width="670px"
+        @ok="handleOkName"
+      >
+        <div class="vmodal-header auth-modal">
+          <h5>Birgina click orqali sotib olish</h5>
+          <span @click="handleOkName"
+            ><svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="20"
+              height="20"
+              viewBox="0 0 20 20"
+              fill="none"
+            >
+              <path
+                d="M17.9958 1.98438L2.00391 17.9762"
+                stroke="#1F8A70"
+                stroke-width="3.28586"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              />
+              <path
+                d="M18.0003 17.9861L1.99512 1.97754"
+                stroke="#1F8A70"
+                stroke-width="3.28586"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              /></svg
+          ></span>
+        </div>
+        <div class="vmodal-body">
+          <a-form-model
+            :model="formName"
+            ref="ruleFormNameClick"
+            :rules="rulesName"
+            layout="vertical"
+          >
+            <a-form-model-item
+              class="form-item register-input mb-3 pb-0"
+              label="Ismingizni kiriting"
+            >
+              <a-input v-model="formName.name" type="text" placeholder="Name" />
+            </a-form-model-item>
+            <a-form-model-item
+              class="form-item register-input mb-0 pb-0"
+              label="Telefon raqamingiz"
+            >
+              
+              <the-mask
+                v-model="formName.phone_number"
+                :mask="['+998 (##) ### ## ##', '+998 (##) ### ## ##']"
+                placeholder="+998 (__) ___ __ __"
+              />
+            </a-form-model-item>
+          </a-form-model>
+        </div>
+        <div class="vmodal-btn vmodal-btn-height" @click="submitName()">
+         Zakaz berish
+        </div>
+        <template slot="footer"> <h3></h3></template>
+      </a-modal>
     </div>
   </div>
 </template>
@@ -478,6 +545,7 @@ export default {
   data() {
     return {
       value: 2,
+      visibleName: false,
       product: {},
       productCharacteristic: [],
       productAttributes: [],
@@ -486,6 +554,14 @@ export default {
       locationsHandle: false,
       reviewsHandle: false,
       productsOthers: [],
+      formName: {
+        name: "",
+        phone_number: "",
+        product_id: null,
+      },
+      rulesName: {
+        name: [{}],
+      },
     };
   },
   // async asyncData({ store, params }) {
@@ -549,6 +625,32 @@ export default {
   },
 
   methods: {
+    submitName() {
+      const data = {
+        ...this.formName,
+        phone_number: `998${this.formName.phone_number}`,
+        product_id: this.product.id,
+      };
+      this.$refs["ruleFormNameClick"].validate((valid) => {
+        if (valid) {
+          this.__POST_ORDER(data);
+        } else {
+          return false;
+        }
+      });
+    },
+    handleOkName() {
+      this.visibleName = false;
+    },
+    // postClickOrder
+    async __POST_ORDER(formData) {
+      try {
+        const data = await this.$store.dispatch("fetchAuth/postClickOrder", formData);
+        this.visibleName = false;
+      } catch (e) {
+        console.log(e);
+      }
+    },
     swiperReload() {
       var swiper = new Swiper(".mySwiper", {
         spaceBetween: 16,

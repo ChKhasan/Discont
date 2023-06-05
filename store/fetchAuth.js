@@ -43,4 +43,8 @@ export const actions = {
     });
     return res;
   },
+  async postClickOrder({}, data) {
+    const res = await this.$axios.$post(`/order/one_click`, data);
+    return res;
+  },
 };
