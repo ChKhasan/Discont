@@ -507,7 +507,6 @@
               class="form-item register-input mb-0 pb-0"
               label="Telefon raqamingiz"
             >
-              
               <the-mask
                 v-model="formName.phone_number"
                 :mask="['+998 (##) ### ## ##', '+998 (##) ### ## ##']"
@@ -517,18 +516,22 @@
           </a-form-model>
         </div>
         <div class="vmodal-btn vmodal-btn-height" @click="submitName()">
-         Zakaz berish
+          Buyurtma berish
         </div>
         <template slot="footer"> <h3></h3></template>
       </a-modal>
     </div>
+    <Transition name="bounce-toast">
+      <Vnotification v-if="compToast" title="Buyurtma muvaffaqiyatli jo'natildi. " @click="toastClose()">
+        <span v-html="iconComp"></span>
+      </Vnotification>
+    </Transition>
   </div>
 </template>
 
 <script>
 import Swiper from "swiper/swiper-bundle.js";
 import "swiper/swiper-bundle.min.css";
-
 import ProductCardVue from "../../components/cards/ProductCard.vue";
 import applicationBannerVue from "../../components/application-banner.vue";
 import ProductCarousel from "../../components/product-carousel.vue";
@@ -544,6 +547,8 @@ export default {
 
   data() {
     return {
+      iconComp: require("../../assets/svg/toast-comparison.svg?raw"),
+      compToast: false,
       value: 2,
       visibleName: false,
       product: {},
@@ -625,6 +630,9 @@ export default {
   },
 
   methods: {
+    toastClose() {
+      this.compToast = false;
+    },
     submitName() {
       const data = {
         ...this.formName,
@@ -647,6 +655,7 @@ export default {
       try {
         const data = await this.$store.dispatch("fetchAuth/postClickOrder", formData);
         this.visibleName = false;
+        this.compToast = true;
       } catch (e) {
         console.log(e);
       }
@@ -670,6 +679,15 @@ export default {
     allCharacteristic() {
       this.productCharacteristic = [...this.product?.characteristic_options];
       this.swiperReload();
+    },
+  },
+  watch: {
+    compToast(val) {
+      if (val) {
+        setTimeout(() => {
+          this.compToast = false;
+        }, 2000);
+      }
     },
   },
 };
