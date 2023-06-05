@@ -7,7 +7,7 @@
             <span v-html="footerLogo"></span>
             <span class="footer-tel"
               ><p>Телефон поддержки</p>
-              <a href=""> +998 (71) 207 77 88</a></span
+              <a href="tel:+998712077788"> +998 (71) 207 77 88</a></span
             >
             <nuxt-link class="footer-links" to="/"
               ><span v-html="footerLocation"></span> Бизнинг доконлар</nuxt-link
