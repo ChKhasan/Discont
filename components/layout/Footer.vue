@@ -7,7 +7,7 @@
             <span v-html="footerLogo"></span>
             <span class="footer-tel"
               ><p>Телефон поддержки</p>
-              <a href=""> +998 (71) 202 202 1</a></span
+              <a href=""> +998 (71) 207 77 88</a></span
             >
             <nuxt-link class="footer-links" to="/"
               ><span v-html="footerLocation"></span> Бизнинг доконлар</nuxt-link

@@ -50,11 +50,18 @@ export const mutations = {
     findItem.count = findItem.count + 1;
     localStorage.setItem("cart", JSON.stringify(cart));
     state.cart = cart;
+
+
+
   },
   productCountDown(state, payload) {
     let cart = JSON.parse(localStorage.getItem("cart"));
     let findItem = cart.find((item) => item.id == payload.id);
-    if (findItem.count > 1) findItem.count = findItem.count - 1;
+    if (findItem.count > 1) {
+      findItem.count = findItem.count - 1;
+    } else {
+      cart = cart.filter((item) => item.id != payload.id);
+    }
     localStorage.setItem("cart", JSON.stringify(cart));
     state.cart = cart;
   },

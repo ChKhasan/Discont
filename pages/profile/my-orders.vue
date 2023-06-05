@@ -106,11 +106,23 @@ export default {
   mounted() {
     this.__GET_PROFILE_INFO();
   },
+  computed: {
+    checkAuth() {
+      return this.$store.state.auth;
+    },
+  },
   methods: {
     moment,
     async __GET_PROFILE_INFO() {
       const profileData = await this.$store.dispatch("fetchAuth/getProfileInfo");
       this.orders = profileData?.user?.orders;
+    },
+  },
+  watch: {
+    checkAuth(val) {
+      if (!val) {
+        this.$router.push("/");
+      }
     },
   },
   components: { MyOrdersCard },

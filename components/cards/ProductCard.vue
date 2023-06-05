@@ -58,12 +58,13 @@
           }}
           so’m
         </h4>
-        <span> +5 ta dicoin</span></span
+        <!-- <span> +5 ta dicoin</span> -->
+        </span
       >
     </div>
     <div class="product-discount">
       <p v-if="product?.discount_price">{{ product?.discount_price }}</p>
-      <p>6 120 000</p>
+      <!-- <p>6 120 000</p> -->
     </div>
 
     <div class="product-card-footer">

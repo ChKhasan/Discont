@@ -401,6 +401,47 @@
       <div class="vmodal-btn">Manzilni qo’shish</div>
       <template slot="footer"> <h3></h3></template>
     </a-modal>
+    <a-modal
+      v-model="visibleSuccess"
+      :body-style="{ padding: '32px', borderRadius: '14px' }"
+      centered
+      :closable="false"
+      width="671px"
+      @ok="handleOk"
+    >
+      <div class="vmodal-header">
+        <h5></h5>
+        <span @click="handleOk"
+          ><svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="20"
+            height="20"
+            viewBox="0 0 20 20"
+            fill="none"
+          >
+            <path
+              d="M17.9958 1.98438L2.00391 17.9762"
+              stroke="#1F8A70"
+              stroke-width="3.28586"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            />
+            <path
+              d="M18.0003 17.9861L1.99512 1.97754"
+              stroke="#1F8A70"
+              stroke-width="3.28586"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            /></svg
+        ></span>
+      </div>
+      <div class="vmodal-body success-vmodal">
+        <img src="../assets/images/modal-success.png" alt="" />
+        <p>Siz muvaffaqiyatli zakaz berdingiz. Haridlarda davom eting.</p>
+      </div>
+      <div class="vmodal-btn" @click="$router.push('/')">Haridni davom ettirish</div>
+      <template slot="footer"> <h3></h3></template>
+    </a-modal>
   </div>
 </template>
 <script>
@@ -423,6 +464,7 @@ export default {
         amount: "",
         last_name: "",
       },
+      visibleSuccess: false,
       typePayment: true,
       paymentElement: "payme",
       deliveryService: true,
@@ -527,6 +569,9 @@ export default {
     async __POST_ORDER(formData) {
       try {
         const data = await this.$store.dispatch("fetchAuth/postOrder", formData);
+        this.visibleSuccess = true;
+        localStorage.setItem("cart", JSON.stringify([]));
+        this.$store.commit("reloadStore");
         this.$router.push("/");
       } catch (e) {
         console.log(e);
@@ -534,6 +579,7 @@ export default {
     },
     handleOk() {
       this.visible = false;
+      this.visibleSuccess = false;
     },
     onChange(e) {
       console.log(`checked = ${e.target.checked}`);
@@ -543,4 +589,21 @@ export default {
 </script>
 <style lang="css">
 @import "../assets/css/pages/checkout.css";
+.success-vmodal {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  padding: 43px;
+}
+.success-vmodal p {
+  margin-top: 16px;
+  font-family: var(--SB_500);
+  font-style: normal;
+  font-weight: 500;
+  font-size: 18px;
+  line-height: 150%;
+  text-align: center;
+  color: #000000;
+}
 </style>

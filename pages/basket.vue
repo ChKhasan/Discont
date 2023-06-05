@@ -62,7 +62,12 @@
                 </div>
                 <div class="basket-card-count">
                   <div class="basket-count-btn">
-                    <span @click="$store.commit('productCountDown', { id: product.id })"
+                    <span
+                      @click="
+                        $store.state.cart.find((item) => item.id == product.id)?.count > 1
+                          ? $store.commit('productCountDown', { id: product.id })
+                          : deleteProduct(product.id)
+                      "
                       ><svg
                         width="12"
                         height="2"
@@ -219,6 +224,8 @@ export default {
     if (storeProducts.length > 0) {
       this.skeletonLoad = true;
       this.__GET_PRODUCTS_BY_ID({ products: storeProducts.map((item) => item.id) });
+    } else {
+      this.skeletonLoad = false;
     }
   },
   computed: {
@@ -236,8 +243,8 @@ export default {
           "fetchProducts/getProductsById",
           dataForm
         );
-        this.skeletonLoad = false;
         this.products = data?.products;
+        this.skeletonLoad = false;
       } catch (e) {
         this.skeletonLoad = false;
       }

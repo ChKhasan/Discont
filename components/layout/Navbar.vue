@@ -53,7 +53,7 @@
       <div class="catalog-menu-container outer" v-if="catalogMenu">
         <div class="position-relative w-100 inner">
           <div class="catalog-menu-left-bg"></div>
-          <div class="container_xl position-relative" style="z-index: 2">
+          <div class="container_xl d-flex position-relative" style="z-index: 2">
             <div class="catalog-menu-content">
               <div class="catalog-menu-list">
                 <ul>
@@ -130,6 +130,7 @@
                 </div>
               </div>
             </div>
+            <div class="close-space" @click="catalogMenu = false"></div>
           </div>
         </div>
       </div>
@@ -197,7 +198,7 @@
         </a-form-model>
       </div>
       <div class="vmodal-btn vmodal-btn-height" @click="submitCheckNumber()">
-        Manzilni qo’shish
+        Akauntga Kirish
       </div>
       <!-- <div class="vmodal-btn-outline" @click="visibleLogin = true">Manzilni qo’shish</div> -->
       <template slot="footer"> <h3></h3></template>
@@ -327,7 +328,9 @@
           </a-form-model-item>
         </a-form-model>
       </div>
-      <div class="vmodal-btn vmodal-btn-height" @click="submitSms()">Sms kodni olish</div>
+      <div class="vmodal-btn vmodal-btn-height" @click="submitSms()">
+        Sms kodni yuborish
+      </div>
       <div class="vmodal-forget-password">Ko’dni qayta yuborish</div>
       <template slot="footer"> <h3></h3></template>
     </a-modal>
@@ -382,8 +385,9 @@
             class="form-item register-input mb-0 pb-0"
             label="Telefon raqamingiz"
           >
+            {{ formName.phone_number }}
             <the-mask
-              v-model="formSms.phone_number"
+              v-model="formName.phone_number"
               :mask="['+998 (##) ### ## ##', '+998 (##) ### ## ##']"
               placeholder="+998 (__) ___ __ __"
             />
@@ -391,11 +395,75 @@
         </a-form-model>
       </div>
       <div class="vmodal-btn vmodal-btn-height" @click="submitName()">
-        Sms kodni olish
+        Akkauntga kirish
       </div>
       <template slot="footer"> <h3></h3></template>
     </a-modal>
-   
+    <a-modal
+      v-model="visibleName"
+      :body-style="{ padding: '32px', borderRadius: '14px' }"
+      centered
+      :closable="false"
+      width="670px"
+      @ok="handleOkName"
+    >
+      <div class="vmodal-header auth-modal">
+        <h5>Akkauntingizga ro‘yxatdan o‘ting</h5>
+        <span @click="handleOkName"
+          ><svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="20"
+            height="20"
+            viewBox="0 0 20 20"
+            fill="none"
+          >
+            <path
+              d="M17.9958 1.98438L2.00391 17.9762"
+              stroke="#1F8A70"
+              stroke-width="3.28586"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            />
+            <path
+              d="M18.0003 17.9861L1.99512 1.97754"
+              stroke="#1F8A70"
+              stroke-width="3.28586"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            /></svg
+        ></span>
+      </div>
+      <div class="vmodal-body">
+        <a-form-model
+          :model="formName"
+          ref="ruleFormName"
+          :rules="rulesName"
+          layout="vertical"
+        >
+          <a-form-model-item
+            class="form-item register-input mb-3 pb-0"
+            label="Ismingizni kiriting"
+          >
+            <a-input v-model="formName.name" type="text" placeholder="Name" />
+          </a-form-model-item>
+          <a-form-model-item
+            class="form-item register-input mb-0 pb-0"
+            label="Telefon raqamingiz"
+          >
+            {{ formName.phone_number }}
+            <the-mask
+              v-model="formName.phone_number"
+              :mask="['+998 (##) ### ## ##', '+998 (##) ### ## ##']"
+              placeholder="+998 (__) ___ __ __"
+            />
+          </a-form-model-item>
+        </a-form-model>
+      </div>
+      <div class="vmodal-btn vmodal-btn-height" @click="submitName()">
+        Akkauntga kirish
+      </div>
+      <template slot="footer"> <h3></h3></template>
+    </a-modal>
   </div>
 </template>
 <script>
@@ -410,7 +478,6 @@ export default {
       visibleLogin: false,
       visibleSms: false,
       visibleName: false,
-     
       formLogin: {
         phone_number: "",
         password: "",
@@ -421,6 +488,7 @@ export default {
       formName: {
         name: "",
       },
+
       formSms: {
         phone_number: "",
         sms_code: "",
@@ -474,11 +542,10 @@ export default {
       // let cart = JSON.parse(localStorage.getItem("cart"));
       // return cart.length;
     },
-  
   },
   mounted() {
     let cart = JSON.parse(localStorage.getItem("cart"));
-     console.log(cart);
+    console.log(cart);
   },
   methods: {
     toProfile() {
@@ -522,6 +589,7 @@ export default {
         phone_number: `998${this.formSms.phone_number}`,
         sms_code: this.formSms.sms_code,
       };
+      this.formName.phone_number = `998${this.formSms.phone_number}`;
       this.$refs["ruleFormSms"].validate((valid) => {
         if (valid) {
           this.__REGISTER_SMS(data);
@@ -608,7 +676,6 @@ export default {
     },
   },
   watch: {
-  
     authVisible(val) {
       this.visibleCheck = val;
     },
@@ -645,7 +712,9 @@ export default {
 /* .nav-icons svg path {
   fill: #1f8a70;
 } */
-
+.close-space {
+  width: 33%;
+}
 .header-navbar {
   position: relative;
 }

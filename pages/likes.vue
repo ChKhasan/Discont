@@ -33,8 +33,8 @@
           o'zingizga yoqqan narsani shu yerga qo'shing.
         </p>
       </div>
-      <div class="categories-products-show-more" v-if="likeProducts.length > 0">Показать еще 44</div>
-      <div class="products-pagination" v-if="likeProducts.length > 0">
+      <div class="categories-products-show-more" v-if="likeProducts.length > 44">Показать еще 44</div>
+      <div class="products-pagination" v-if="likeProducts.length > 44">
         <a-pagination size="small" :default-current="6" :total="500" />
       </div>
     </div>

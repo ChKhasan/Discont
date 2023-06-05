@@ -74,7 +74,19 @@ export default {
       arrow: require("../../assets/svg/dropdown-icon.svg?raw"),
     };
   },
+  computed: {
+    checkAuth() {
+      return this.$store.state.auth;
+    },
+  },
   mounted() {},
+  watch: {
+    checkAuth(val) {
+      if (!val) {
+        this.$router.push("/");
+      }
+    },
+  },
   components: { MyOrdersCard, ProfileCommentCard },
 };
 </script>
