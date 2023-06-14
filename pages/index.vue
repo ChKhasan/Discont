@@ -57,12 +57,12 @@
     <div class="container_xl product_container">
       <div class="">
         <div class="d-flex justify-content-between align-items-end">
-          <MainTitle title="Best seller" />
+          <MainTitle :title="showcases[0]?.name?.ru" />
           <nuxt-link class="to-page-underline" to="/">Все товары</nuxt-link>
         </div>
         <div class="product-grid">
           <ProductCard
-            v-for="product in bestsellersProducts"
+            v-for="product in showcases[0]?.products"
             :key="product.id"
             :product="product"
           />
@@ -72,12 +72,12 @@
     <div class="container_xl product_container">
       <div class="">
         <div class="d-flex justify-content-between align-items-end">
-          <MainTitle title="Top tovarlar" />
+          <MainTitle :title="showcases[1]?.name?.ru" />
           <nuxt-link class="to-page-underline" to="/">Все товары</nuxt-link>
         </div>
         <div class="product-grid">
           <ProductCard
-            v-for="product in topProducts"
+            v-for="product in showcases[1]?.products"
             :key="product.id"
             :product="product"
           />
@@ -88,32 +88,34 @@
       <HomeBanner />
     </div>
     <div class="container_xl">
-      <MainTitle title="Gamerlar uchun komplektlar" />
-      <div class="v-card-products-grid mb-120">
-        <div class="v-card-grid">
-          <V2ProductCard :variant="true" />
-          <V2ProductCard :variant="false" />
-        </div>
-        <div class="products-grid-5">
+      <MainTitle :title="showcases[2]?.name?.ru" />
+      <div class="mb-120">
+        <div class="products-grid-6">
           <ProductCard
-            v-for="product in byCategoryProducts"
+            v-for="product in showcases[2]?.products"
             :key="product.id"
             :product="product"
           />
+          <span class="grid-banner-card-1 d-flex">
+            <V2ProductCard :variant="true" />
+          </span>
+          <span class="grid-banner-card-2 d-flex">
+            <V2ProductCard :variant="false" />
+          </span>
         </div>
       </div>
     </div>
     <div class="container_xl product_container">
       <div class="">
         <div class="d-flex justify-content-between align-items-end">
-          <MainTitle title="Eng arzon" />
+          <MainTitle :title="showcases[3]?.name?.ru" />
           <nuxt-link class="to-page-underline" to="/">Все товары</nuxt-link>
         </div>
         <div class="">
           <ProductCarousel>
             <div
               class="swiper-slide"
-              v-for="product in byCategoryProducts"
+              v-for="product in showcases[3]?.products"
               :key="product.id"
             >
               <ProductCard :product="product" />
@@ -125,14 +127,14 @@
     <div class="container_xl product_container">
       <div class="">
         <div class="d-flex justify-content-between align-items-end">
-          <MainTitle title="Yangi tovarlar" />
+          <MainTitle :title="showcases[4]?.name?.ru" />
           <nuxt-link class="to-page-underline" to="/">Все товары</nuxt-link>
         </div>
         <div class="">
           <ProductCarousel2>
             <div
               class="swiper-slide"
-              v-for="product in byCategoryProducts"
+              v-for="product in showcases[4]?.products"
               :key="product.id"
             >
               <ProductCard :product="product" />
@@ -203,8 +205,8 @@
     <!-- <div class="container_xl mb-120">
       <DiscountCarousel />
     </div> -->
-    <div class="container_xl">
-      <MainTitle title="Gamerlar uchun komplektlar" />
+    <!-- <div class="container_xl">
+      <MainTitle :title="showcases[5]?.name?.ru" />
       <div class="v-card-products-grid mb-120">
         <div class="v-card-grid">
           <VProductCard />
@@ -212,10 +214,29 @@
         </div>
         <div class="products-grid-5">
           <ProductCard
-            v-for="product in byCategoryProducts"
+            v-for="product in showcases[5]?.products"
             :key="product.id"
             :product="product"
           />
+        </div>
+      </div>
+    </div> -->
+    <div class="container_xl">
+      <MainTitle :title="showcases[5]?.name?.ru" />
+      <div class="mb-120">
+        <div class="products-grid-6">
+          <ProductCard
+            v-for="product in showcases[5]?.products"
+            :key="product.id"
+            :product="product"
+          />
+
+          <span class="grid-banner-card-1">
+            <VProductCard />
+          </span>
+          <span class="grid-banner-card-2">
+            <VProductCard />
+          </span>
         </div>
       </div>
     </div>
@@ -224,9 +245,11 @@
         <MainTitle title="Yangiliklar va bloglar" />
         <nuxt-link class="to-page-underline" to="/all-news">Все блоги</nuxt-link>
       </div>
-      <div class="posts-grid">
-        <PostCard v-for="post in posts" :key="post.id" :post="post" />
-      </div>
+      <PostsCarousel>
+        <div class="swiper-slide" v-for="post in posts" :key="post.id">
+          <PostCard :post="post" />
+        </div>
+      </PostsCarousel>
     </div>
     <div class="container_xl mb-120">
       <DiscontBanner />
@@ -285,6 +308,7 @@ import PostCard from "../components/cards/PostCard.vue";
 import DiscontBanner from "../components/discont-banner.vue";
 import ApplicationBanner from "../components/application-banner.vue";
 import DayProductCard from "../components/cards/DayProductCard.vue";
+import PostsCarousel from "../components/posts-carousel.vue";
 export default {
   name: "IndexPage",
   data() {
@@ -305,6 +329,7 @@ export default {
       categories1,
       brands1,
       posts1,
+      showcasesData,
     ] = await Promise.all([
       store.dispatch("fetchProducts/getProducts", {
         type: "bestsellers",
@@ -324,6 +349,9 @@ export default {
         limit: 10,
       }),
       store.dispatch("fetchPosts/getPosts", {
+        limit: 10,
+      }),
+      store.dispatch("fetchProducts/getShowcases", {
         limit: 4,
       }),
     ]);
@@ -333,6 +361,7 @@ export default {
     const categories = categories1?.categories?.data;
     const brands = brands1?.brands?.data;
     const posts = posts1?.posts?.data;
+    const showcases = showcasesData.showcases;
     return {
       bestsellersProducts,
       byCategoryProducts,
@@ -340,6 +369,7 @@ export default {
       categories,
       brands,
       posts,
+      showcases,
     };
   },
   async mounted() {
@@ -368,6 +398,7 @@ export default {
     DiscontBanner,
     ApplicationBanner,
     DayProductCard,
+    PostsCarousel,
   },
 };
 </script>
@@ -392,4 +423,19 @@ h6 {
   height: 100%;
   object-fit: cover;
 } */
+.products-grid-6 {
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  grid-gap: 20px;
+}
+.grid-banner-card-1 {
+  grid-row-start: 1;
+  grid-column-start: 1;
+  grid-column-end: 2;
+}
+.grid-banner-card-2 {
+  grid-row-start: 2;
+  grid-column-start: 1;
+  grid-column-end: 2;
+}
 </style>

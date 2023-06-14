@@ -61,6 +61,7 @@ export default {
     ]);
 
     this.categories = categories?.categories?.data;
+    console.log(this.categories);
   },
 };
 </script>

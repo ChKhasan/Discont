@@ -11,50 +11,29 @@
       <div class="d-flex comparison-page-title">
         <div class="d-flex align-items-end">
           <MainTitle title="Yangilik" />
-          <span class="d-flex align-items-end">21.05.2023</span>
+          <span class="d-flex align-items-end">{{moment(post?.created_at).format('DD.MM.YYYY')}}</span>
         </div>
       </div>
       <div class="post-page-body">
         <div class="post-page-img">
-          <img src="../../assets/images/image 317.png" alt="" />
+          <img v-if="post?.sm_img" :src="post?.sm_img" alt="" />
+          <img v-else src="../../assets/images/image 317.png" alt="" />
         </div>
         <div class="post-page-info">
-          <h1>Diskont konditsioner o’rnatish xizmati.</h1>
+          <h1>{{ post?.title?.ru }}</h1>
           <p>
-            simply dummy text of the printing and typesetting industry. Lorem Ipsum has
-            been the industry's standard dummy text ever since the 1500s, when an unknown
-            printer took a galley of type and scrambled it to make a type specimen book.
-            It has survived not only five centuries, but also the leap into electronic
-            typesetting, remaining essentially unchanged. It was popularised in the 1960s
-            with the release of Letraset sheets containing Lorem Ipsum passages, and more
-            recently with desktop publishing software like Aldus PageMaker including
-            versions of Lorem Ipsum.simply dummy text of the printing and typesetting
-            industry. Lorem Ipsum has been the industry's standard dummy text ever since
-            the 1500s, when an unknown printer took a galley of type and scrambled it to
-            make a type specimen book. It has survived not only five centuries, but also
-            the leap into electronic typesetting, remaining essentially unchanged. It was
-            popularised in the 1960s with the release of Letraset sheets containing Lorem
-            Ipsum passages, and more recently with desktop publishing software like Aldus
-            PageMaker including versions of Lorem Ipsum.simply dummy text of the printing
-            and typesetting industry. Lorem Ipsum has been the industry's standard dummy
-            text ever since the 1500s, when an unknown printer took a galley of type and
-            scrambled it to make a type specimen book. It has survived not only five
-            centuries, but also the leap into electronic typesetting, remaining
-            essentially unchanged. It was popularised in the 1960s with the release of
-            Letraset sheets containing Lorem Ipsum passages, and more recently with
-            desktop publishing software like Aldus PageMaker including versions of Lorem
-            Ipsum.simply dummy text of the printing and typesetting industry. Lorem Ipsum
-            has been the industry's standard dummy text ever since the 1500s, when an
-            unknown printer took a galley of type and scrambled it to make a type specimen
-            book. It has survived not only five centuries, but also the leap into
-            electronic typesetting, remaining essentially unchanged. It was popularised in
-            th
+            {{ post?.desc?.ru }}
           </p>
         </div>
       </div>
       <div class="last-news">
         <h2>So’nggi yangiliklar</h2>
       </div>
+      <PostsCarousel>
+        <div class="swiper-slide" v-for="post in posts" :key="post.id">
+          <PostCard :post="post" />
+        </div>
+      </PostsCarousel>
     </div>
     <div class="categories-app-banner-container">
       <div class="container_xl">
@@ -67,6 +46,9 @@
 import MainTitle from "../../components/Main-title.vue";
 import CategoriesAppCard from "../../components/categories/categories-app-banner.vue";
 import ProductCard from "../../components/cards/ProductCard.vue";
+import moment from "moment"
+import PostsCarousel from "../../components/posts-carousel.vue";
+import PostCard from "../../components/cards/PostCard.vue";
 export default {
   data() {
     return {
@@ -93,18 +75,22 @@ export default {
       value: "all",
     };
   },
-  async asyncData({ store }) {
-    const [posts1] = await Promise.all([
-      store.dispatch("fetchPosts/getPosts", {
-        limit: 4,
-      }),
+  async asyncData({ store, params }) {
+    const [postData] = await Promise.all([
+      store.dispatch("fetchPosts/getPostsBySlug", params.index),
     ]);
-    const posts = posts1?.posts?.data;
+    console.log(postData);
+    const post = postData?.post;
+    const posts = postData?.other_posts;
     return {
-      posts,
+      post,
+      posts
     };
   },
-  components: { MainTitle, CategoriesAppCard, ProductCard },
+  methods: {
+    moment 
+  },
+  components: { MainTitle, CategoriesAppCard, ProductCard, PostsCarousel, PostCard },
 };
 </script>
 <style lang="css">
@@ -141,12 +127,13 @@ export default {
   line-height: 150%;
   color: #696969;
 }
-.last-news h2{
+.last-news h2 {
   font-family: var(--SB_600);
   font-style: normal;
   font-weight: 600;
   font-size: 24px;
   line-height: 130%;
   color: #000000;
+  margin-bottom: 24px;
 }
 </style>

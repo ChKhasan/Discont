@@ -69,64 +69,6 @@
               </span>
             </div>
           </div>
-          <h5>ОС тури</h5>
-          <div class="categories-checkbox-list">
-            <a-checkbox class="filter-checkbox" @change="onChange">
-              Android 13
-            </a-checkbox>
-            <a-checkbox class="filter-checkbox" @change="onChange">
-              Android 13
-            </a-checkbox>
-            <a-checkbox class="filter-checkbox" @change="onChange">
-              Android 13
-            </a-checkbox>
-            <a-checkbox class="filter-checkbox" @change="onChange">
-              Android 13
-            </a-checkbox>
-            <a-checkbox class="filter-checkbox" @change="onChange">
-              Android 13
-            </a-checkbox>
-            <a-checkbox class="filter-checkbox" @change="onChange">
-              Android 13
-            </a-checkbox>
-            <span class="categories-list_show-more">Показать еще</span>
-          </div>
-          <h5>Аккумулятор ҳажми</h5>
-          <div class="categories-checkbox-list">
-            <a-checkbox class="filter-checkbox" @change="onChange">
-              4250 мА / соат
-            </a-checkbox>
-            <a-checkbox class="filter-checkbox" @change="onChange">
-              4250 мА / соат
-            </a-checkbox>
-            <a-checkbox class="filter-checkbox" @change="onChange">
-              4250 мА / соат
-            </a-checkbox>
-            <a-checkbox class="filter-checkbox" @change="onChange">
-              4250 мА / соат
-            </a-checkbox>
-            <a-checkbox class="filter-checkbox" @change="onChange">
-              4250 мА / соат
-            </a-checkbox>
-            <a-checkbox class="filter-checkbox" @change="onChange">
-              4250 мА / соат
-            </a-checkbox>
-            <span class="categories-list_show-more"
-              >Показать еще <span v-html="arrow"></span
-            ></span>
-          </div>
-          <h5>Диагональ</h5>
-          <div class="categories-checkbox-list">
-            <a-checkbox class="filter-checkbox" @change="onChange"> 6,36" </a-checkbox>
-            <a-checkbox class="filter-checkbox" @change="onChange"> 6,36" </a-checkbox>
-            <a-checkbox class="filter-checkbox" @change="onChange"> 6,36" </a-checkbox>
-            <a-checkbox class="filter-checkbox" @change="onChange"> 6,36" </a-checkbox>
-            <a-checkbox class="filter-checkbox" @change="onChange"> 6,36" </a-checkbox>
-            <a-checkbox class="filter-checkbox" @change="onChange"> 6,36" </a-checkbox>
-            <span class="categories-list_show-more"
-              >Показать еще <span v-html="arrow"></span
-            ></span>
-          </div>
         </div>
         <div class="categories-products">
           <div class="d-flex justify-content-end w-100"></div>
@@ -144,10 +86,10 @@
             <ProductCard />
             <ProductCard /> -->
           </div>
-            <div class="comments-empty" v-if="true">
-              <img src="../../assets/images/comments-empty.png" alt="" />
-              <h4>Mahsulot topilmadi</h4>
-            </div>
+          <div class="comments-empty" v-if="true">
+            <img src="../../assets/images/comments-empty.png" alt="" />
+            <h4>Mahsulot topilmadi</h4>
+          </div>
           <div class="categories-products-show-more" v-if="false">Показать еще 44</div>
           <div class="products-pagination" v-if="false">
             <a-pagination size="small" :default-current="6" :total="500" />
@@ -188,9 +130,9 @@
           долгие утомительные разъезды по множеству мебельных магазинов и рынков Ташкента,
           где можно купить хорошую недорогую мебель. Но! Поскольку их ассортимент сильно
           отличается, и вы вынуждены тратить время и силы на перемещения из одной точки
-          Ташкента в другую. А на DISKONT собраны лучшие предложения многих
-          производителей по выгодным ценам! Покупая мебель у нас вы гарантированно
-          получаете качественный товар, оперативную доставку и сборку мебели у вас дома.
+          Ташкента в другую. А на DISKONT собраны лучшие предложения многих производителей
+          по выгодным ценам! Покупая мебель у нас вы гарантированно получаете качественный
+          товар, оперативную доставку и сборку мебели у вас дома.
         </p>
         <p>
           Модельный ряд мебели пополняется практически ежедневно, следите за нашими

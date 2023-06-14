@@ -141,13 +141,15 @@
               <b-skeleton v-if="skeletonLoad" width="40%"></b-skeleton>
               <h3 v-else>
                 {{
-                  products.reduce((summ, item) => {
-                    return (
-                      summ +
-                      item.price *
-                        $store.state.cart.find((elem) => elem.id == item.id)?.count
-                    );
-                  }, 0)
+                  products
+                    .reduce((summ, item) => {
+                      return (
+                        summ +
+                        item.price *
+                          $store.state.cart.find((elem) => elem.id == item.id)?.count
+                      );
+                    }, 0)
+                    .toFixed(2)
                 }}
                 сум
               </h3>
@@ -159,7 +161,19 @@
             <div class="basket-checkout-body">
               <span
                 ><p>Стоимость:</p>
-                <p>16 120 000 сум</p></span
+                <p>
+                  {{
+                    products
+                      .reduce((summ, item) => {
+                        return (
+                          summ +
+                          item.price *
+                            $store.state.cart.find((elem) => elem.id == item.id)?.count
+                        );
+                      }, 0)
+                      .toFixed(2)
+                  }}
+                </p></span
               >
               <span
                 ><p>Промокод:</p>

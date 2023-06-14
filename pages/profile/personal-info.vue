@@ -25,7 +25,7 @@
             <nuxt-link
               to="/profile/my-orders"
               :class="{ 'profile-menu-active': $route.name == 'profile-my-orders' }"
-              ><span v-html="myOrders"></span>Mening buyurtmaalrim</nuxt-link
+              ><span v-html="myOrders"></span>Mening buyurtmalarim</nuxt-link
             >
             <nuxt-link
               to="/profile/my-comments"
@@ -118,11 +118,37 @@
                 </div>
                 <h4 class="form-title">Manzil</h4>
                 <div class="form-grid-3">
-                  <a-form-model-item class="form-item mb-0" label="Viloyat yoki shahar">
-                    <a-input v-model="form.address" placeholder="City" />
+                  <a-form-model-item
+                    class="form-item mb-0"
+                    label="Viloyat yoki shahar"
+                    :class="{ 'select-placeholder': form.address == '' }"
+                  >
+                    <a-select
+                      class="checkout-select"
+                      v-model="form.address"
+                      placeholder="Viloyatni tanlang"
+                    >
+                      <a-select-option
+                        v-for="(region, index) in regions"
+                        :key="region?.id"
+                      >
+                        {{ region?.name?.ru }}
+                      </a-select-option>
+                    </a-select>
                   </a-form-model-item>
-                  <a-form-model-item class="form-item mb-0" label="Tuman">
-                    <a-input v-model="form.address" placeholder="Adress" />
+                  <a-form-model-item class="form-item mb-0" label="Tuman"  :class="{ 'select-placeholder': form.address == '' }">
+                    <a-select
+                      class="checkout-select"
+                      v-model="form.address"
+                      placeholder="Tuman"
+                    >
+                      <a-select-option
+                        v-for="(region, index) in regions"
+                        :key="region?.id"
+                      >
+                        {{ region?.name?.ru }}
+                      </a-select-option>
+                    </a-select>
                   </a-form-model-item>
                   <a-form-model-item
                     class="form-item mb-0"
@@ -219,6 +245,7 @@ export default {
 
   async mounted() {
     this.__GET_PROFILE_INFO();
+    this.__GET_REGIONS();
   },
   methods: {
     async __GET_PROFILE_INFO() {
@@ -231,6 +258,11 @@ export default {
         postcode: this.profile.postcode ? this.profile.postcode : "",
         name: this.profile.name ? this.profile.name : "",
       };
+    },
+    async __GET_REGIONS() {
+      const data = await this.$store.dispatch("fetchRegions/getRegions");
+      this.regions = data?.regions;
+      console.log(data);
     },
     async __PROFILE_INFO(dataForm) {
       try {

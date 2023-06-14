@@ -31,6 +31,7 @@ export default {
   display: flex;
   flex-direction: column;
   justify-content: space-between;
+  min-height: 485px;
 }
 .v2-product-card-img {
   height: 60%;

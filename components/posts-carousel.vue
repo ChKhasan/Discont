@@ -1,14 +1,14 @@
 <template lang="html">
   <div class="container_xl">
-    <div class="brand-carousel">
-      <div class="flex items-center justify-center">
-        <div class="brand-swiper">
+    <div class="posts-carousel">
+      <div class="d-flex align-items-center">
+        <div class="posts-swiper">
           <div class="swiper-wrapper">
             <slot></slot>
           </div>
         </div>
-        <div class="swiper-button-prev-brand"><span v-html="arrow"></span></div>
-        <div class="swiper-button-next-brand"><span v-html="arrow"></span></div>
+        <div class="swiper-button-prev-posts"><span v-html="arrow"></span></div>
+        <div class="swiper-button-next-posts"><span v-html="arrow"></span></div>
       </div>
       <div></div>
     </div>
@@ -25,8 +25,8 @@ export default {
     };
   },
   mounted() {
-    const swiper = new Swiper(`.brand-swiper`, {
-      slidesPerView: 6,
+    const swiper = new Swiper(`.posts-swiper`, {
+      slidesPerView: 4,
       spaceBetween: 24,
       effect: "flip",
       flipEffect: {
@@ -38,23 +38,21 @@ export default {
         delay: 40000,
       },
       navigation: {
-        nextEl: ".swiper-button-next-brand",
-        prevEl: ".swiper-button-prev-brand",
+        nextEl: ".swiper-button-next-posts",
+        prevEl: ".swiper-button-prev-posts",
       },
     });
-
   },
 };
 </script>
 <style>
-.brand-carousel {
+.posts-carousel {
   position: relative;
 }
-.brand-carousel .swiper-button-prev-brand,
-.brand-carousel .swiper-button-next-brand {
+.posts-carousel .swiper-button-prev-posts,
+.posts-carousel .swiper-button-next-posts {
   position: absolute;
   border-radius: 50%;
-  top: 25px;
   z-index: 100;
   width: 48px;
   height: 48px;
@@ -67,38 +65,38 @@ export default {
 
   cursor: pointer;
 }
-.brand-carousel .swiper-button-prev-brand svg,
-.brand-carousel .swiper-button-next-brand svg {
+.posts-carousel .swiper-button-prev-posts svg,
+.posts-carousel .swiper-button-next-posts svg {
   z-index: 1;
   width: 8px;
   height: 14px;
 }
-.brand-carousel .swiper-button-prev-brand svg path,
-.brand-carousel .swiper-button-next-brand svg path {
+.posts-carousel .swiper-button-prev-posts svg path,
+.posts-carousel .swiper-button-next-posts svg path {
   fill: #000;
 }
-.brand-carousel .swiper-button-disabled {
+.posts-carousel .swiper-button-disabled {
   opacity: 0.4;
   pointer-events: none;
   opacity: 0;
 }
-.swiper-button-prev-brand {
+.swiper-button-prev-posts {
   left: -28px;
 }
-.swiper-button-next-brand {
+.swiper-button-next-posts {
   right: -28px;
 }
-.swiper-button-prev-brand span,
-.swiper-button-next-brand span {
+.swiper-button-prev-posts span,
+.swiper-button-next-posts span {
   display: flex;
   align-items: center;
   justify-content: center;
 }
-.swiper-button-prev-brand span {
+.swiper-button-prev-posts span {
   transform: rotate(180deg);
 }
 
-.brand-swiper {
+.posts-swiper {
   overflow: hidden;
 }
 </style>

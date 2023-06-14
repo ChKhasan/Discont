@@ -9,7 +9,9 @@
         {{ moment(post?.created_at).format("DD.MM.YYYY") }}
       </p>
       <p v-else>27.03.2023</p>
-      <h6 v-if="post?.title?.ru">{{ post?.title?.ru }}</h6>
+      <h6 v-if="post?.title?.ru" @click="$router.push(`/news/${post?.slug}`)">
+        {{ post?.title?.ru }}
+      </h6>
       <h6 v-else>Apple запатентовала складной экран смартфона.</h6>
     </div>
   </div>
@@ -42,7 +44,7 @@ export default {
   height: 100%;
 }
 .post-card-body p {
-  font-family: "SF_500";
+  font-family: var(--SB_500);
   font-style: normal;
   font-weight: 500;
   font-size: 12px;
@@ -52,7 +54,7 @@ export default {
 }
 .post-card-body h6 {
   cursor: pointer;
-  font-family: "SF_500";
+  font-family: var(--SB_500);
   font-style: normal;
   font-weight: 500;
   font-size: 18px;

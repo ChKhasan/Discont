@@ -5,7 +5,22 @@
         <div class="d-flex align-items-center">
           <nuxt-link to="/"><span v-html="navLogo" class="nav_logo"></span></nuxt-link>
           <button class="catalog-btn" @click="catalogMenu = !catalogMenu">
-            <span v-html="navCategory"></span>Katalog
+            <span v-if="catalogMenu"
+              ><svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="11"
+                height="12"
+                viewBox="0 0 11 12"
+                fill="none"
+              >
+                <path
+                  d="M2.25649 11.0884C1.74652 11.5984 0.919684 11.5984 0.409708 11.0884C-0.100267 10.5784 -0.100267 9.75161 0.409708 9.24163L3.61608 6.03527L0.744068 3.16326C0.217105 2.63629 0.217106 1.78192 0.744069 1.25495C1.27103 0.727992 2.12541 0.727991 2.65237 1.25495L5.52438 4.12696L8.74054 0.910808C9.25051 0.400833 10.0773 0.400833 10.5873 0.910808C11.0973 1.42078 11.0973 2.24762 10.5873 2.75759L7.37117 5.97375L10.2432 8.84576C10.7701 9.37272 10.7701 10.2271 10.2432 10.7541C9.71621 11.281 8.86183 11.281 8.33487 10.7541L5.46286 7.88205L2.25649 11.0884Z"
+                  fill="#fff"
+                /></svg
+            ></span>
+            <span v-else v-html="navCategory"></span>
+
+            Katalog
           </button>
           <div class="search_input_container">
             <input type="text" placeholder="Search ..." />
@@ -65,15 +80,21 @@
                       'catalog-menu-list-active': activeCategory?.id == category?.id,
                     }"
                   >
-                    {{ category?.name?.ru }}
+                    {{ category?.name?.ru
+                    }}<span v-if="activeCategory?.id == category?.id"
+                      ><svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        width="8"
+                        height="12"
+                        viewBox="0 0 8 12"
+                        fill="none"
+                      >
+                        <path
+                          d="M0.800427 0.286251C0.617141 0.469593 0.514176 0.718224 0.514176 0.977469C0.514176 1.23671 0.617141 1.48535 0.800427 1.66869L4.9976 5.86586L0.800427 10.063C0.707049 10.1532 0.632567 10.2611 0.581328 10.3804C0.530089 10.4997 0.503118 10.628 0.50199 10.7578C0.500862 10.8876 0.5256 11.0163 0.574758 11.1365C0.623917 11.2566 0.696512 11.3658 0.788309 11.4576C0.880106 11.5494 0.989265 11.622 1.10942 11.6711C1.22957 11.7203 1.35831 11.745 1.48813 11.7439C1.61794 11.7428 1.74623 11.7158 1.86551 11.6646C1.98479 11.6133 2.09268 11.5388 2.18286 11.4455L7.07125 6.55708C7.25454 6.37373 7.3575 6.1251 7.3575 5.86586C7.3575 5.60661 7.25454 5.35798 7.07125 5.17464L2.18286 0.286251C1.99952 0.102965 1.75089 0 1.49165 0C1.2324 0 0.983769 0.102965 0.800427 0.286251Z"
+                          fill="#1F8A70"
+                        /></svg
+                    ></span>
                   </li>
-                  <!-- <li>Дом и сад</li>
-                  <li>Детские товары</li>
-                  <li>Бытовая техника</li>
-                  <li>Спорт и отдых</li>
-                  <li>Строительство и ремонт</li>
-                  <li>Автотовары</li>
-                  <li>Хобби и творчество</li> -->
                 </ul>
               </div>
               <div class="catalog-menu-body">
@@ -82,7 +103,20 @@
                   <span class="d-flex align-items-end">8 288 товаров</span>
                 </div>
                 <div class="catalog-menu-items">
-                  <ul>
+                  <ul
+                    v-for="categoryChild in activeCategory?.children"
+                    :key="categoryChild?.id"
+                  >
+                    <h4>{{ categoryChild?.name?.ru }}</h4>
+                    <nuxt-link
+                      :to="`/categories-inner/${lastChild?.slug}`"
+                      v-for="lastChild in categoryChild?.children"
+                      :key="lastChild?.id"
+                    >
+                      {{ lastChild?.name?.ru }}
+                    </nuxt-link>
+                  </ul>
+                  <!-- <ul v-for="categoryChild in activeCategory?.children" :key="categoryChild?.id">
                     <h4>Телефоны и смарт-часы</h4>
                     <li>Смартфоны</li>
                     <li>Мобильные телефоны</li>
@@ -126,7 +160,7 @@
                     <li>Смарт-часы</li>
                     <li>Фитнес-браслеты</li>
                     <li>Ремешки для смарт-часов и фитнес-браслетов</li>
-                  </ul>
+                  </ul> -->
                 </div>
               </div>
             </div>
@@ -385,7 +419,6 @@
             class="form-item register-input mb-0 pb-0"
             label="Telefon raqamingiz"
           >
-          
             <the-mask
               v-model="formName.phone_number"
               :mask="['+998 (##) ### ## ##', '+998 (##) ### ## ##']"
@@ -399,7 +432,6 @@
       </div>
       <template slot="footer"> <h3></h3></template>
     </a-modal>
-  
   </div>
 </template>
 <script>
@@ -452,6 +484,7 @@ export default {
       navOrder: require("../../assets/svg/Order_light.svg?raw"),
       navUser: require("../../assets/svg/User_alt_light.svg?raw"),
       navCategory: require("../../assets/svg/category_menu.svg?raw"),
+      arrow: require("../../assets/svg/dropdown-icon.svg?raw"),
       categories: [],
       activeCategory: null,
     };
@@ -465,6 +498,7 @@ export default {
 
     this.categories = categoriesData?.categories?.data;
     this.activeCategory = categoriesData?.categories?.data[0];
+    console.log(this.categories);
   },
   computed: {
     routerPath() {
@@ -709,7 +743,10 @@ export default {
   border-radius: 11.7321px;
   cursor: pointer;
   transition: 0.3s;
+  display: flex;
+  justify-content: space-between;
 }
+
 .catalog-menu-list-active {
   background: #f7f7f7;
   color: #1f8a70 !important;
@@ -794,7 +831,7 @@ export default {
   letter-spacing: 0.2px;
   color: #001a34;
 }
-.catalog-menu-items ul li {
+.catalog-menu-items ul a {
   font-family: var(--SB_400);
   font-style: normal;
   font-weight: 400;

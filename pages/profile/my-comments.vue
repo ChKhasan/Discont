@@ -25,7 +25,7 @@
             <nuxt-link
               to="/profile/my-orders"
               :class="{ 'profile-menu-active': $route.name == 'profile-my-orders' }"
-              ><span v-html="myOrders"></span>Mening buyurtmaalrim</nuxt-link
+              ><span v-html="myOrders"></span>Mening buyurtmalarim</nuxt-link
             >
             <nuxt-link
               to="/profile/my-comments"
