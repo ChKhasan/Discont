@@ -118,14 +118,10 @@
                 </div>
                 <h4 class="form-title">Manzil</h4>
                 <div class="form-grid-3">
-                  <a-form-model-item
-                    class="form-item mb-0"
-                    label="Viloyat yoki shahar"
-                    :class="{ 'select-placeholder': form.address == '' }"
-                  >
+                  <a-form-model-item class="form-item mb-0" label="Viloyat yoki shahar">
                     <a-select
                       class="checkout-select"
-                      v-model="form.address"
+                      v-model="form.region"
                       placeholder="Viloyatni tanlang"
                     >
                       <a-select-option
@@ -136,10 +132,10 @@
                       </a-select-option>
                     </a-select>
                   </a-form-model-item>
-                  <a-form-model-item class="form-item mb-0" label="Tuman"  :class="{ 'select-placeholder': form.address == '' }">
+                  <a-form-model-item class="form-item mb-0" label="Tuman"  :class="{ 'select-placeholder': form.region == '' }">
                     <a-select
                       class="checkout-select"
-                      v-model="form.address"
+                      v-model="form.region"
                       placeholder="Tuman"
                     >
                       <a-select-option
@@ -222,7 +218,9 @@ export default {
         phone_number: "",
         address: "",
         postcode: "",
+        region: ''
       },
+      regions: [],
       rules: {
         name: [
           { required: true, message: "Please input Activity name", trigger: "blur" },
@@ -254,7 +252,7 @@ export default {
       this.form = {
         ...this.form,
         name: this.profile.name ? this.profile.name : "",
-        address: this.profile.address ? this.profile.address : "",
+        // address: this.profile.address ? this.profile.address : "",
         postcode: this.profile.postcode ? this.profile.postcode : "",
         name: this.profile.name ? this.profile.name : "",
       };
