@@ -59,8 +59,7 @@
           so’m
         </h4>
         <!-- <span> +5 ta dicoin</span> -->
-        </span
-      >
+      </span>
     </div>
     <div class="product-discount">
       <p v-if="product?.discount_price">{{ product?.discount_price }}</p>
@@ -137,8 +136,22 @@
           </div>
           <div class="product-show-modal-info">
             <div class="product-modal-like-comp">
-              <span><span v-html="activeHeart"></span> Sevimlilarga</span>
-              <span><span v-html="comp"></span> Taqqoslash</span>
+              <span
+                :class="{
+                  'active-like-comp-btn': $store.state.like.includes(product?.id),
+                }"
+                @click="$store.commit('addToStore', { id: product?.id, name: 'like' })"
+                ><span v-html="activeHeart"></span> Sevimlilarga</span
+              >
+              <span
+                :class="{
+                  'active-like-comp-btn': $store.state.comparison.includes(product?.id),
+                }"
+                @click="
+                  $store.commit('addToStore', { id: product?.id, name: 'comparison' })
+                "
+                ><span v-html="comp"></span> Taqqoslash</span
+              >
             </div>
 
             <div class="product-modal-price-block">
@@ -167,7 +180,22 @@
                 </div>
 
                 <div class="buttons">
-                  <button class="cart" @click="byMode = true">Savatchaga solish</button>
+                  <button
+                    class="cart"
+                    :class="{
+                      'disabled-btn': $store.state.cart.find(
+                        (item) => item.id == product?.id
+                      ),
+                    }"
+                    @click="
+                      $store.commit('addToCart', {
+                        obj: { id: product?.id, count: 1 },
+                        name: 'cart',
+                      })
+                    "
+                  >
+                    Savatchaga solish
+                  </button>
                   <button class="click">Birgina click orqali sotib olish</button>
                 </div>
               </div>
@@ -591,6 +619,7 @@ export default {
   color: #c7c7c7;
   margin-right: 16px;
   height: 33px;
+  cursor: pointer;
 }
 .product-modal-like-comp > span > span {
   margin-right: 8px;

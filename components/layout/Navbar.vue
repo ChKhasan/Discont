@@ -56,7 +56,7 @@
               }}</span>
               <span class="nav-icons" v-html="navComp"></span>Solishtirish
             </li>
-            <li class="nav_profile flex-row" @click="toProfile">
+            <li class="nav_profile flex-row" @click="toProfile(true)">
               <span v-html="navUser"></span>
               <p>{{ $store.state.auth ? "user" : "profil" }}</p>
             </li>
@@ -222,6 +222,7 @@
                 >Raqam noto’g’ri kiritildi</span
               > -->
               <the-mask
+                @keyup.enter="submitCheckNumber()"
                 :mask="['+998 (##) ### ## ##', '+998 (##) ### ## ##']"
                 placeholder="+998 (__) ___ __ __"
                 v-model="formCheckNumber.phone_number"
@@ -347,8 +348,10 @@
           <a-form-model-item
             class="form-item register-input mb-3 pb-0"
             label="Telefon raqamingiz"
+            @keyup.enter="submitSms()"
           >
             <the-mask
+              @keyup.enter="submitSms()"
               v-model="formSms.phone_number"
               :mask="['+998 (##) ### ## ##', '+998 (##) ### ## ##']"
               placeholder="+998 (__) ___ __ __"
@@ -358,7 +361,12 @@
             class="form-item register-input mb-0 pb-0"
             label="Sms kodni kiriting"
           >
-            <a-input v-model="formSms.sms_code" type="text" placeholder="sms" />
+            <a-input
+              @keyup.enter="submitSms()"
+              v-model="formSms.sms_code"
+              type="text"
+              placeholder="sms"
+            />
           </a-form-model-item>
         </a-form-model>
       </div>
@@ -487,6 +495,7 @@ export default {
       arrow: require("../../assets/svg/dropdown-icon.svg?raw"),
       categories: [],
       activeCategory: null,
+      targetPage: false,
     };
   },
   async fetch() {
@@ -517,7 +526,8 @@ export default {
     console.log(cart);
   },
   methods: {
-    toProfile() {
+    toProfile(name) {
+      this.targetPage = name;
       if (this.$store.state.auth) {
         this.$router.push("/profile/personal-info");
       } else {
@@ -611,7 +621,12 @@ export default {
     async __PROFILE_NAME(formData) {
       try {
         const data = await this.$store.dispatch("fetchAuth/putProfileName", formData);
-        this.$router.push("/profile/personal-info");
+        console.log(this.$route);
+        if (this.$route.name != "basket" && this.targetPage) {
+          this.$router.push("/profile/personal-info");
+        } else {
+          this.$router.push("/checkout");
+        }
         this.visibleName = false;
       } catch (e) {
         console.log(e);
@@ -638,7 +653,11 @@ export default {
         localStorage.setItem("dis_auth_token", data.token);
         this.$store.commit("authHandler");
         this.$store.commit("authVisibleChange", false);
-        this.$router.push("/profile/personal-info");
+        if (this.$route.name != "basket" && this.targetPage) {
+          this.$router.push("/profile/personal-info");
+        } else {
+          this.$router.push("/checkout");
+        }
       } catch (e) {
         console.log(e);
       }
@@ -649,7 +668,23 @@ export default {
       this.visibleCheck = val;
     },
     routerPath() {
+      (this.formLogin = {
+        phone_number: "",
+        password: "",
+      }),
+        (this.formCheckNumber = {
+          phone_number: "",
+        }),
+        (this.formName = {
+          name: "",
+        }),
+        (this.formSms = {
+          phone_number: "",
+          sms_code: "",
+        }),
+        (this.targetPage = false);
       this.catalogMenu = false;
+
       document.body.style.height = "auto";
       document.body.style.overflow = "auto";
     },

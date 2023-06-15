@@ -325,11 +325,12 @@ export default {
     const [
       products,
       byCategory,
-      topProducts1,
+      topProductsData,
       categories1,
       brands1,
       posts1,
       showcasesData,
+      bannersData,
     ] = await Promise.all([
       store.dispatch("fetchProducts/getProducts", {
         type: "bestsellers",
@@ -354,14 +355,18 @@ export default {
       store.dispatch("fetchProducts/getShowcases", {
         limit: 4,
       }),
+      store.dispatch("fetchBanners/getBanners", {
+        type: "main",
+      }),
     ]);
     const bestsellersProducts = products?.products?.data;
     const byCategoryProducts = byCategory?.products?.data;
-    const topProducts = topProducts1?.products?.data;
+    const topProducts = topProductsData?.products?.data;
     const categories = categories1?.categories?.data;
     const brands = brands1?.brands?.data;
     const posts = posts1?.posts?.data;
     const showcases = showcasesData.showcases;
+    const banners = bannersData;
     return {
       bestsellersProducts,
       byCategoryProducts,
@@ -370,6 +375,7 @@ export default {
       brands,
       posts,
       showcases,
+      banners,
     };
   },
   async mounted() {

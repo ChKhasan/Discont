@@ -118,7 +118,7 @@
                 </div>
                 <h4 class="form-title">Manzil</h4>
                 <div class="form-grid-3">
-                  <a-form-model-item class="form-item mb-0" label="Viloyat yoki shahar">
+                  <a-form-model-item class="form-item mb-0" label="Viloyat yoki shahar" :class="{ 'select-placeholder': form.region == '' }">
                     <a-select
                       class="checkout-select"
                       v-model="form.region"
@@ -295,6 +295,7 @@ export default {
 </script>
 <style lang="css">
 @import "../../assets/css/pages/profile-page.css";
+@import "../../assets/css/pages/checkout.css";
 .ant-form-explain {
   display: none;
 }

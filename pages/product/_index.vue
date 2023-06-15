@@ -1,5 +1,5 @@
 <template>
-  <div class="wrap">
+  <div class="wrap product-page">
     <div class="container_xl">
       <div class="top">
         <h4 class="title">{{ product?.info?.name?.ru }}</h4>
@@ -7,10 +7,10 @@
           <div class="left">
             <div class="stars">
               <div v-if="product?.info?.stars != null">
-                <a-rate v-model="product.info.stars" />
+                <a-rate v-model="product.info.stars" disabled />
               </div>
             </div>
-            <p class="reviews">(12 ta feedbacks)</p>
+            <p class="reviews" v-if="product?.info?.stars != null">(12 ta feedbacks)</p>
           </div>
           <div class="right">
             <div class="bottom">
@@ -817,7 +817,10 @@ export default {
   display: flex;
   align-items: center;
   gap: 8px;
+  padding: 8px 14px;
   color: #c7c7c7;
+  border: 0.797059px solid #F1F1F1;
+border-radius: 7.97059px;
 }
 
 .specs {
@@ -855,7 +858,7 @@ export default {
   color: black;
 }
 .top {
-  max-width: 50%;
+  /* max-width: 50%; */
 }
 .widther {
   max-width: 70%;
@@ -1025,7 +1028,7 @@ export default {
 .specifications,
 .locations,
 .reviews {
-  display: none !important;
+  /* display: none !important; */
 }
 .about.active,
 .specifications.active,
@@ -1180,10 +1183,5 @@ tbody .img {
   margin-bottom: 120px;
 }
 
-.active-like-comp-btn svg path {
-  fill: #1f8a70 !important;
-}
-.active-like-comp-btn {
-  color: #1f8a70 !important;
-}
+
 </style>
