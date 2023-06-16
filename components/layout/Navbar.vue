@@ -58,7 +58,13 @@
             </li>
             <li class="nav_profile flex-row" @click="toProfile(true)">
               <span v-html="navUser"></span>
-              <p>{{ $store.state.auth ? "user" : "profil" }}</p>
+              <p>
+                {{
+                  $store.state.auth && $store.state.profile.name
+                    ? $store.state.profile.name
+                    : "profil"
+                }}
+              </p>
             </li>
           </ul>
         </div>
@@ -169,6 +175,7 @@
         </div>
       </div>
     </Transition>
+    <!-- chech number -->
     <a-modal
       v-model="visibleCheck"
       :body-style="{ padding: '32px', borderRadius: '14px' }"
@@ -218,7 +225,7 @@
             prop="phone_number"
           >
             <span class="position-relative d-flex align-items-center justify-content-end">
-              <!-- <span class="position-absolute number-error"
+              <!-- <span class="position-absolute number-error" v-if="checkNumberError"
                 >Raqam noto’g’ri kiritildi</span
               > -->
               <the-mask
@@ -238,6 +245,75 @@
       <!-- <div class="vmodal-btn-outline" @click="visibleLogin = true">Manzilni qo’shish</div> -->
       <template slot="footer"> <h3></h3></template>
     </a-modal>
+    <!-- chech number -->
+    <!-- check number forget password -->
+    <a-modal
+      v-model="visibleForgetPass"
+      :body-style="{ padding: '32px', borderRadius: '14px' }"
+      centered
+      :closable="false"
+      width="670px"
+      @ok="handleOkForgetPass"
+    >
+      <div class="vmodal-anim-header">
+        <img class="shadow-ell-1" src="../../assets/images/Ellipse 57.png" alt="" />
+        <img class="shadow-ell-2" src="../../assets/images/Ellipse 59.png" alt="" />
+        <h5>Akauntingizga kiring yoki ro’yxatdan o’ting</h5>
+        <span @click="handleOkForgetPass"
+          ><svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="20"
+            height="20"
+            viewBox="0 0 20 20"
+            fill="none"
+          >
+            <path
+              d="M17.9958 1.98438L2.00391 17.9762"
+              stroke="#1F8A70"
+              stroke-width="3.28586"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            />
+            <path
+              d="M18.0003 17.9861L1.99512 1.97754"
+              stroke="#1F8A70"
+              stroke-width="3.28586"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            /></svg
+        ></span>
+      </div>
+      <div class="vmodal-body">
+        <a-form-model
+          :model="formCheckNumber"
+          ref="ruleFormCheckNumber"
+          :rules="rulesCheckNumber"
+          layout="vertical"
+        >
+          <a-form-model-item
+            class="form-item register-input mb-0 pb-0"
+            label="Telefon raqamingiz"
+            prop="phone_number"
+          >
+            <span class="position-relative d-flex align-items-center justify-content-end">
+              <the-mask
+                @keyup.enter="submitForgetPass()"
+                :mask="['+998 (##) ### ## ##', '+998 (##) ### ## ##']"
+                placeholder="+998 (__) ___ __ __"
+                v-model="formCheckNumber.phone_number"
+              />
+            </span>
+          </a-form-model-item>
+        </a-form-model>
+      </div>
+      <div class="vmodal-btn vmodal-btn-height" @click="submitForgetPass()">
+        Akauntga Kirish
+      </div>
+      <!-- <div class="vmodal-btn-outline" @click="visibleLogin = true">Manzilni qo’shish</div> -->
+      <template slot="footer"> <h3></h3></template>
+    </a-modal>
+    <!-- check number forget password -->
+    <!-- login profile  -->
     <a-modal
       v-model="visibleLogin"
       :body-style="{ padding: '32px', borderRadius: '14px' }"
@@ -284,26 +360,39 @@
             label="Telefon raqamingiz"
           >
             <the-mask
+              class="disabled"
               v-model="formLogin.phone_number"
               :mask="['+998 (##) ### ## ##', '+998 (##) ### ## ##']"
               placeholder="+998 (__) ___ __ __"
             />
           </a-form-model-item>
-          <a-form-model-item class="form-item register-input mb-0 pb-0" label="Parol">
+          <a-form-model-item
+            class="form-item register-input mb-0 pb-0"
+            label="Parol"
+            :class="{ sms_code_error: loginPassError }"
+            prop="password"
+          >
             <a-input
               v-model="formLogin.password"
               type="password"
               placeholder="Password"
             />
+            <span class="sms_code_error_text" v-if="loginPassError"
+              >Parol noto’g’ri kiritildi</span
+            >
           </a-form-model-item>
         </a-form-model>
       </div>
       <div class="vmodal-btn vmodal-btn-height" @click="submitLogin()">
         Akauntga Kirish
       </div>
-      <div class="vmodal-forget-password">Parolni unutdingizmi?</div>
+      <div class="vmodal-forget-password" @click="forgetPassword()">
+        Parolni unutdingizmi?
+      </div>
       <template slot="footer"> <h3></h3></template>
     </a-modal>
+    <!-- login profile  -->
+    <!-- login width sm  -->
     <a-modal
       v-model="visibleSms"
       :body-style="{ padding: '32px', borderRadius: '14px' }"
@@ -346,20 +435,24 @@
           layout="vertical"
         >
           <a-form-model-item
-            class="form-item register-input mb-3 pb-0"
+            class="form-item register-input mb-3 pb-0 sms_code_number"
             label="Telefon raqamingiz"
             @keyup.enter="submitSms()"
           >
             <the-mask
+              class="disabled"
               @keyup.enter="submitSms()"
               v-model="formSms.phone_number"
               :mask="['+998 (##) ### ## ##', '+998 (##) ### ## ##']"
               placeholder="+998 (__) ___ __ __"
             />
+            <span class="change_number" @click="replaceNumber()">O’zgartirish</span>
           </a-form-model-item>
           <a-form-model-item
             class="form-item register-input mb-0 pb-0"
+            :class="{ sms_code_error: smsCodeError }"
             label="Sms kodni kiriting"
+            prop="sms_code"
           >
             <a-input
               @keyup.enter="submitSms()"
@@ -367,15 +460,20 @@
               type="text"
               placeholder="sms"
             />
+            <span class="sms_code_error_text" v-if="smsCodeError">Ko’d notogri</span>
           </a-form-model-item>
         </a-form-model>
       </div>
       <div class="vmodal-btn vmodal-btn-height" @click="submitSms()">
         Sms kodni yuborish
       </div>
-      <div class="vmodal-forget-password">Ko’dni qayta yuborish</div>
+      <div class="vmodal-forget-password" @click="again_sms_code()">
+        Ko’dni qayta yuborish
+      </div>
       <template slot="footer"> <h3></h3></template>
     </a-modal>
+    <!-- login width sm  -->
+    <!-- profile user name  -->
     <a-modal
       v-model="visibleName"
       :body-style="{ padding: '32px', borderRadius: '14px' }"
@@ -420,6 +518,7 @@
           <a-form-model-item
             class="form-item register-input mb-3 pb-0"
             label="Ismingizni kiriting"
+            prop="name"
           >
             <a-input v-model="formName.name" type="text" placeholder="Name" />
           </a-form-model-item>
@@ -428,6 +527,7 @@
             label="Telefon raqamingiz"
           >
             <the-mask
+              class="disabled"
               v-model="formName.phone_number"
               :mask="['+998 (##) ### ## ##', '+998 (##) ### ## ##']"
               placeholder="+998 (__) ___ __ __"
@@ -440,6 +540,50 @@
       </div>
       <template slot="footer"> <h3></h3></template>
     </a-modal>
+    <!-- profile user name  -->
+    <!-- access profile register  -->
+    <a-modal
+      v-model="visibleSuccess"
+      :body-style="{ padding: '32px', borderRadius: '14px' }"
+      centered
+      :closable="false"
+      width="671px"
+      @ok="handleOkSuccess"
+    >
+      <div class="vmodal-header">
+        <h5></h5>
+        <span @click="handleOkSuccess"
+          ><svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="20"
+            height="20"
+            viewBox="0 0 20 20"
+            fill="none"
+          >
+            <path
+              d="M17.9958 1.98438L2.00391 17.9762"
+              stroke="#1F8A70"
+              stroke-width="3.28586"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            />
+            <path
+              d="M18.0003 17.9861L1.99512 1.97754"
+              stroke="#1F8A70"
+              stroke-width="3.28586"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            /></svg
+        ></span>
+      </div>
+      <div class="vmodal-body success-vmodal">
+        <img src="../../assets/images/modal-success.png" alt="" />
+        <p>Siz muvaffaqiyatli ro’yxatdan o’tdingiz. Haridlarda davom eitng.</p>
+      </div>
+      <div class="vmodal-btn" @click="handleOkSuccess()">Haridni davom ettirish</div>
+      <template slot="footer"> <h3></h3></template>
+    </a-modal>
+    <!-- access profile register  -->
   </div>
 </template>
 <script>
@@ -449,6 +593,7 @@ import Vnotification from "../vnotification.vue";
 export default {
   data() {
     return {
+      visibleSuccess: false,
       catalogMenu: false,
       visibleCheck: false,
       visibleLogin: false,
@@ -469,20 +614,42 @@ export default {
         sms_code: "",
       },
       rulesLogin: {
-        name: [{}],
+        password: [
+          {
+            required: true,
+            message: "Password is required",
+            trigger: "change",
+          },
+        ],
       },
       rulesCheckNumber: {
         phone_number: [
           {
             required: true,
+            message: "Number is required",
+            trigger: "change",
+          },
+          { min: 9, message: "Raqam noto’g’ri kiritildi", trigger: "blur" },
+        ],
+      },
+      rulesSms: {
+        sms_code: [
+          {
+            required: true,
+            message: "sms code is required",
             trigger: "change",
           },
         ],
       },
-      rulesSms: {
-        name: [{}],
+      rulesName: {
+        name: [
+          {
+            required: true,
+            message: "Name is required",
+            trigger: "change",
+          },
+        ],
       },
-      rulesName: {},
       navLogo: require("../../assets/svg/green-logo.svg?raw"),
       navMic: require("../../assets/svg/mic.svg?raw"),
       navSearch: require("../../assets/svg/search.svg?raw"),
@@ -496,6 +663,10 @@ export default {
       categories: [],
       activeCategory: null,
       targetPage: false,
+      smsCodeError: false,
+      loginPassError: false,
+      checkNumberError: false,
+      visibleForgetPass: false,
     };
   },
   async fetch() {
@@ -526,17 +697,31 @@ export default {
     console.log(cart);
   },
   methods: {
+    handleOkForgetPass() {
+      this.visibleForgetPass = false;
+    },
+    replaceNumber() {
+      this.visibleSms = false;
+      this.visibleCheck = true;
+    },
     toProfile(name) {
       this.targetPage = name;
       if (this.$store.state.auth) {
         this.$router.push("/profile/personal-info");
       } else {
-        console.log("asdsadsa");
         this.$store.commit("authVisibleChange", true);
       }
     },
+    forgetPassword() {
+      this.formCheckNumber.phone_number = `998${this.formCheckNumber.phone_number}`;
+      this.visibleLogin = false;
+      this.visibleForgetPass = true;
+    },
     targetCategory(obj) {
       this.activeCategory = obj;
+    },
+    handleOkSuccess() {
+      this.visibleSuccess = false;
     },
     handleOk() {
       this.visibleCheck = false;
@@ -552,8 +737,12 @@ export default {
       this.visibleName = false;
     },
     submitCheckNumber() {
+      console.log(this.formCheckNumber);
       const data = {
-        phone_number: `998${this.formCheckNumber.phone_number}`,
+        phone_number:
+          this.formCheckNumber.phone_number.length == 9
+            ? `998${this.formCheckNumber.phone_number}`
+            : this.formCheckNumber.phone_number,
       };
       this.$refs["ruleFormCheckNumber"].validate((valid) => {
         if (valid) {
@@ -563,12 +752,36 @@ export default {
         }
       });
     },
+    submitForgetPass() {
+      const data = {
+        phone_number:
+          this.formCheckNumber.phone_number.length == 9
+            ? `998${this.formCheckNumber.phone_number}`
+            : this.formCheckNumber.phone_number,
+      };
+      console.log("out");
+      this.$refs["ruleFormCheckNumber"].validate((valid) => {
+        if (valid) {
+          console.log("in");
+
+          this.__FORGET_PASSWORD(data);
+        } else {
+          return false;
+        }
+      });
+    },
     submitSms() {
       const data = {
-        phone_number: `998${this.formSms.phone_number}`,
+        phone_number:
+          this.formSms.phone_number.length == 9
+            ? `998${this.formSms.phone_number}`
+            : this.formSms.phone_number,
         sms_code: this.formSms.sms_code,
       };
-      this.formName.phone_number = `998${this.formSms.phone_number}`;
+      this.formName.phone_number =
+        this.formSms.phone_number.length == 9
+          ? `998${this.formSms.phone_number}`
+          : this.formSms.phone_number;
       this.$refs["ruleFormSms"].validate((valid) => {
         if (valid) {
           this.__REGISTER_SMS(data);
@@ -611,10 +824,13 @@ export default {
         console.log(data);
         localStorage.setItem("dis_auth_token", data.token);
         this.$store.commit("authHandler");
+
         this.visibleSms = false;
         this.visibleName = true;
+        this.smsCodeError = false;
       } catch (e) {
         console.log(e);
+        if (e.response.status == 422) this.smsCodeError = true;
       }
     },
     // putProfileName
@@ -622,12 +838,44 @@ export default {
       try {
         const data = await this.$store.dispatch("fetchAuth/putProfileName", formData);
         console.log(this.$route);
-        if (this.$route.name != "basket" && this.targetPage) {
-          this.$router.push("/profile/personal-info");
-        } else {
-          this.$router.push("/checkout");
-        }
+        // if (this.$route.name != "basket" && this.targetPage) {
+        //   this.$router.push("/profile/personal-info");
+        // } else {
+        //   this.$router.push("/checkout");
+        // }
+        this.$store.dispatch("profileInfo");
         this.visibleName = false;
+        this.visibleSuccess = true;
+      } catch (e) {
+        console.log(e);
+      }
+    },
+    again_sms_code() {
+      const data = {
+        phone_number:
+          this.formCheckNumber.phone_number.length == 9
+            ? `998${this.formCheckNumber.phone_number}`
+            : this.formCheckNumber.phone_number,
+      };
+
+      this.__FORGET_PASSWORD(data);
+    },
+    async __FORGET_PASSWORD(formData) {
+      try {
+        const data = await this.$store.dispatch(
+          "fetchAuth/postCheckNumberForget",
+          formData
+        );
+        this.handleOkForgetPass();
+        this.visibleSms = true;
+        this.formLogin.phone_number =
+          this.formCheckNumber.phone_number.length == 9
+            ? `998${this.formCheckNumber.phone_number}`
+            : this.formCheckNumber.phone_number;
+        this.formSms.phone_number =
+          this.formCheckNumber.phone_number.length == 9
+            ? `998${this.formCheckNumber.phone_number}`
+            : this.formCheckNumber.phone_number;
       } catch (e) {
         console.log(e);
       }
@@ -635,14 +883,19 @@ export default {
     async __CHECK_NUMBER(formData) {
       try {
         const data = await this.$store.dispatch("fetchAuth/postCheckNumber", formData);
-        console.log(data);
         if (data?.authorized) {
           this.visibleLogin = true;
         } else {
           this.visibleSms = true;
         }
-        this.formLogin.phone_number = `998${this.formCheckNumber.phone_number}`;
-        this.formSms.phone_number = `998${this.formCheckNumber.phone_number}`;
+        this.formLogin.phone_number =
+          this.formCheckNumber.phone_number.length == 9
+            ? `998${this.formCheckNumber.phone_number}`
+            : this.formCheckNumber.phone_number;
+        this.formSms.phone_number =
+          this.formCheckNumber.phone_number.length == 9
+            ? `998${this.formCheckNumber.phone_number}`
+            : this.formCheckNumber.phone_number;
       } catch (e) {
         console.log(e);
       }
@@ -652,14 +905,19 @@ export default {
         const data = await this.$store.dispatch("fetchAuth/postLogin", formData);
         localStorage.setItem("dis_auth_token", data.token);
         this.$store.commit("authHandler");
+        this.$store.dispatch("profileInfo");
         this.$store.commit("authVisibleChange", false);
         if (this.$route.name != "basket" && this.targetPage) {
           this.$router.push("/profile/personal-info");
         } else {
           this.$router.push("/checkout");
         }
+        this.loginPassError = false;
+        this.visibleLogin = false;
       } catch (e) {
-        console.log(e);
+        if (e.response.status == 422) {
+          this.loginPassError = true;
+        }
       }
     },
   },
@@ -995,5 +1253,60 @@ export default {
 }
 .auth-modal {
   margin-bottom: 40px;
+}
+.register-input .has-error {
+  position: relative;
+  display: flex;
+  align-items: center;
+  width: 100%;
+}
+.register-input .has-error span {
+  width: 100%;
+}
+.register-input .ant-form-explain {
+  position: absolute;
+  right: 21px;
+  font-family: var(--SB_500);
+  font-style: normal;
+  font-weight: 500;
+  font-size: 16px;
+  line-height: 20px;
+  text-align: right;
+  letter-spacing: 0.05em;
+  color: #ff4f2d;
+}
+.register-input .has-error input,
+.sms_code_error input {
+  border: 1px solid #ffc0c0 !important;
+}
+.sms_code_number .ant-form-item-children,
+.sms_code_error .ant-form-item-children {
+  display: flex;
+  align-items: center;
+}
+.sms_code_number .change_number {
+  position: absolute;
+  right: 20px;
+  font-family: var(--SB_500);
+  font-style: normal;
+  font-weight: 500;
+  font-size: 16px;
+  line-height: 20px;
+  text-align: right;
+  letter-spacing: 0.05em;
+  color: #387eca;
+  cursor: pointer;
+}
+.sms_code_error .sms_code_error_text {
+  position: absolute;
+  right: 20px;
+  font-family: var(--SB_500);
+  font-style: normal;
+  font-weight: 500;
+  font-size: 16px;
+  line-height: 20px;
+  text-align: right;
+  letter-spacing: 0.05em;
+  color: #ff4f2d;
 }
 </style>

@@ -3,12 +3,25 @@ export const actions = {
     const res = await this.$axios.$post(`/auth/login`, data);
     return res;
   },
+
   async getProfileInfo({}) {
     const res = await this.$axios.$get(`/profile/me`, {
       headers: {
         Authorization: `Bearer ${localStorage.getItem("dis_auth_token")}`,
       },
     });
+    return res;
+  },
+  async postLogOut({}) {
+    const res = await this.$axios.$post(
+      `/auth/logout`,
+      {},
+      {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("dis_auth_token")}`,
+        },
+      }
+    );
     return res;
   },
   async putProfileInfo({}, data) {
@@ -21,6 +34,10 @@ export const actions = {
   },
   async postCheckNumber({}, data) {
     const res = await this.$axios.$post(`/auth/check`, data);
+    return res;
+  },
+  async postCheckNumberForget({}, data) {
+    const res = await this.$axios.$post(`/auth/check?forget=1`, data);
     return res;
   },
   async postRegisterWithSms({}, data) {

@@ -48,6 +48,7 @@ export default {
     await this.$store.commit("reloadStore");
     this.afterReload = true;
     this.$store.commit("authHandler");
+    this.$store.dispatch("profileInfo");
   },
   computed: {
     storeCartLength() {

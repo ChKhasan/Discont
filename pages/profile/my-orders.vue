@@ -11,31 +11,7 @@
       <div><MainTitle title="Каталог Apple" /></div>
       <div class="profile-page-grid">
         <div>
-          <div class="profile-menu">
-            <nuxt-link
-              to="/profile/personal-info"
-              :class="{ 'profile-menu-active': $route.name == 'profile-personal-info' }"
-              ><span v-html="profileInfo"></span> Shaxsiy ma`lumotlarim
-            </nuxt-link>
-            <nuxt-link
-              to="/profile/my-pay"
-              :class="{ 'profile-menu-active': $route.name == 'profile-my-pay' }"
-              ><span v-html="piecePay"></span> Bo’lib to’lash</nuxt-link
-            >
-            <nuxt-link
-              to="/profile/my-orders"
-              :class="{ 'profile-menu-active': $route.name == 'profile-my-orders' }"
-              ><span v-html="myOrders"></span>Mening buyurtmalarim</nuxt-link
-            >
-            <nuxt-link
-              to="/profile/my-comments"
-              :class="{ 'profile-menu-active': $route.name == 'profile-my-comments' }"
-              ><span v-html="myComments"></span>Mening izohlarim</nuxt-link
-            >
-            <div class="profile-exit" @click="$store.commit('logout')">
-              <span v-html="logout"></span>Chiqish
-            </div>
-          </div>
+          <ProfileMenu />
         </div>
         <div>
           <div class="my-orders-grid" v-if="empty">
@@ -87,6 +63,7 @@
 <script>
 import MyOrdersCard from "../../components/cards/MyOrdersCard.vue";
 import moment from "moment";
+import ProfileMenu from "../../components/profile-menu.vue";
 export default {
   middleware: "auth",
 
@@ -94,12 +71,8 @@ export default {
     return {
       empty: true,
       orders: [],
-      profileInfo: require("../../assets/svg/profile-info.svg?raw"),
-      myOrders: require("../../assets/svg/my-orders.svg?raw"),
-      myComments: require("../../assets/svg/my-comments.svg?raw"),
-      piecePay: require("../../assets/svg/piece-pay.svg?raw"),
+
       edit: require("../../assets/svg/Edit.svg?raw"),
-      logout: require("../../assets/svg/Logout.svg?raw"),
       arrow: require("../../assets/svg/dropdown-icon.svg?raw"),
     };
   },
@@ -125,7 +98,7 @@ export default {
       }
     },
   },
-  components: { MyOrdersCard },
+  components: { MyOrdersCard, ProfileMenu },
 };
 </script>
 <style lang="css">

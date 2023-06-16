@@ -11,31 +11,7 @@
       <div><MainTitle title="Каталог Apple" /></div>
       <div class="profile-page-grid">
         <div>
-          <div class="profile-menu">
-            <nuxt-link
-              to="/profile/personal-info"
-              :class="{ 'profile-menu-active': $route.name == 'profile-personal-info' }"
-              ><span v-html="profileInfo"></span> Shaxsiy ma`lumotlarim
-            </nuxt-link>
-            <nuxt-link
-              to="/profile/my-pay"
-              :class="{ 'profile-menu-active': $route.name == 'profile-my-pay' }"
-              ><span v-html="piecePay"></span> Bo’lib to’lash</nuxt-link
-            >
-            <nuxt-link
-              to="/profile/my-orders"
-              :class="{ 'profile-menu-active': $route.name == 'profile-my-orders' }"
-              ><span v-html="myOrders"></span>Mening buyurtmalarim</nuxt-link
-            >
-            <nuxt-link
-              to="/profile/my-comments"
-              :class="{ 'profile-menu-active': $route.name == 'profile-my-comments' }"
-              ><span v-html="myComments"></span>Mening izohlarim</nuxt-link
-            >
-            <div class="profile-exit" @click="$store.commit('logout')">
-              <span v-html="logout"></span>Chiqish
-            </div>
-          </div>
+          <ProfileMenu />
         </div>
         <div>
           <div class="personal-info-grid" v-if="!profileEdit">
@@ -110,18 +86,28 @@
                     <a-input v-model="form.name" placeholder="Name" />
                   </a-form-model-item>
                   <a-form-model-item class="form-item mb-0" label="Telefon raqam">
-                    <a-input v-model="form.phone_number" placeholder="Number" />
+                    <!-- <a-input v-model="form.phone_number" placeholder="Number" /> -->
+                    <the-mask
+                      class="w-100 ant-input"
+                      v-model="form.phone_number"
+                      :mask="['+998 (##) ### ## ##', '+998 (##) ### ## ##']"
+                      placeholder="+998 (__) ___ __ __"
+                    />
                   </a-form-model-item>
                   <a-form-model-item class="form-item mb-0" label="Email">
-                    <a-input v-model="form.name" placeholder="Email" />
+                    <a-input v-model="form.email" placeholder="Email" />
                   </a-form-model-item>
                 </div>
                 <h4 class="form-title">Manzil</h4>
                 <div class="form-grid-3">
-                  <a-form-model-item class="form-item mb-0" label="Viloyat yoki shahar" :class="{ 'select-placeholder': form.region == '' }">
+                  <a-form-model-item
+                    class="form-item mb-0"
+                    label="Viloyat yoki shahar"
+                    :class="{ 'select-placeholder': form.region_id == '' }"
+                  >
                     <a-select
                       class="checkout-select"
-                      v-model="form.region"
+                      v-model="form.region_id"
                       placeholder="Viloyatni tanlang"
                     >
                       <a-select-option
@@ -132,17 +118,19 @@
                       </a-select-option>
                     </a-select>
                   </a-form-model-item>
-                  <a-form-model-item class="form-item mb-0" label="Tuman"  :class="{ 'select-placeholder': form.region == '' }">
+                  <a-form-model-item
+                    class="form-item mb-0"
+                    label="Tuman"
+                    :class="{ 'select-placeholder': form.district_id == '' }"
+                  >
                     <a-select
                       class="checkout-select"
-                      v-model="form.region"
+                      v-model="form.district_id"
                       placeholder="Tuman"
+                      :disabled="cities.length == 0"
                     >
-                      <a-select-option
-                        v-for="(region, index) in regions"
-                        :key="region?.id"
-                      >
-                        {{ region?.name?.ru }}
+                      <a-select-option v-for="(city, index) in cities" :key="city?.id">
+                        {{ city?.name?.ru }}
                       </a-select-option>
                     </a-select>
                   </a-form-model-item>
@@ -156,7 +144,10 @@
                 <h4 class="form-title">Password</h4>
                 <div class="form-grid-3">
                   <a-form-model-item class="form-item mb-0" label="Hozirgi parolingiz">
-                    <a-input-password v-model="form.name" placeholder="Last password" />
+                    <a-input-password
+                      v-model="last_password"
+                      placeholder="Last password"
+                    />
                   </a-form-model-item>
                   <a-form-model-item
                     class="form-item mb-0"
@@ -171,6 +162,7 @@
                   <a-form-model-item
                     class="form-item mb-0"
                     label="Yangi parolni takrorlang"
+                    :class="{ password_repeat_error: passwordConfirmationError }"
                     prop="password_confirmation"
                   >
                     <a-input-password
@@ -198,17 +190,15 @@
   </div>
 </template>
 <script>
+import ProfileMenu from "../../components/profile-menu.vue";
+
 export default {
   middleware: "auth",
   data() {
     return {
       profileEdit: false,
-      profileInfo: require("../../assets/svg/profile-info.svg?raw"),
-      myOrders: require("../../assets/svg/my-orders.svg?raw"),
-      myComments: require("../../assets/svg/my-comments.svg?raw"),
-      piecePay: require("../../assets/svg/piece-pay.svg?raw"),
+      last_password: "",
       edit: require("../../assets/svg/Edit.svg?raw"),
-      logout: require("../../assets/svg/Logout.svg?raw"),
       arrow: require("../../assets/svg/dropdown-icon.svg?raw"),
       save: require("../../assets/svg/Stroke 3.svg?raw"),
       form: {
@@ -218,7 +208,9 @@ export default {
         phone_number: "",
         address: "",
         postcode: "",
-        region: ''
+        region_id: "",
+        district_id: "",
+        email: "",
       },
       regions: [],
       rules: {
@@ -233,6 +225,8 @@ export default {
         ],
       },
       profile: {},
+      cities: {},
+      passwordConfirmationError: false,
     };
   },
   computed: {
@@ -240,7 +234,6 @@ export default {
       return this.$store.state.auth;
     },
   },
-
   async mounted() {
     this.__GET_PROFILE_INFO();
     this.__GET_REGIONS();
@@ -250,11 +243,13 @@ export default {
       const profileData = await this.$store.dispatch("fetchAuth/getProfileInfo");
       this.profile = profileData?.user;
       this.form = {
-        ...this.form,
         name: this.profile.name ? this.profile.name : "",
-        // address: this.profile.address ? this.profile.address : "",
+        address: this.profile.address ? this.profile.address : "",
         postcode: this.profile.postcode ? this.profile.postcode : "",
-        name: this.profile.name ? this.profile.name : "",
+        email: this.profile.email ? this.profile.email : "",
+        phone_number: this.profile.login ? this.profile.login : "",
+        region_id: this.profile.region_id ? this.profile.region_id : "",
+        district_id: this.profile.district_id ? this.profile.district_id : "",
       };
     },
     async __GET_REGIONS() {
@@ -262,23 +257,33 @@ export default {
       this.regions = data?.regions;
       console.log(data);
     },
-    async __PROFILE_INFO(dataForm) {
+    async __EDIT_PROFILE_INFO(dataForm) {
       try {
         const data = await this.$store.dispatch("fetchAuth/putProfileInfo", dataForm);
         this.profileEdit = false;
+        this.__GET_PROFILE_INFO();
       } catch (e) {
         console.log(e);
       }
     },
     submitForm() {
-      console.log(this.form);
-      this.$refs["ruleForm"].validate((valid) => {
-        if (valid) {
-          this.__PROFILE_INFO(this.form);
-        } else {
-          return false;
-        }
-      });
+      if (this.form.password != this.form.password_confirmation) {
+        this.passwordConfirmationError = true;
+      } else {
+        const data = {
+          ...this.form,
+          phone_number: `998${this.form.phone_number}`,
+        };
+        this.$refs["ruleForm"].validate((valid) => {
+          if (valid) {
+            this.passwordConfirmationError = false;
+            console.log(this.form);
+            this.__EDIT_PROFILE_INFO(data);
+          } else {
+            return false;
+          }
+        });
+      }
     },
     onChange(checked) {
       console.log(`a-switch to ${checked}`);
@@ -290,7 +295,12 @@ export default {
         this.$router.push("/");
       }
     },
+    "form.region_id"(val) {
+      this.cities = this.regions.find((item) => item.id == val)?.districts;
+      console.log(this.cities);
+    },
   },
+  components: { ProfileMenu },
 };
 </script>
 <style lang="css">
@@ -298,5 +308,8 @@ export default {
 @import "../../assets/css/pages/checkout.css";
 .ant-form-explain {
   display: none;
+}
+.password_repeat_error input {
+  border: 1px solid #ffc0c0 !important;
 }
 </style>

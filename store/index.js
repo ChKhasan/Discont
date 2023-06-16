@@ -4,12 +4,16 @@ export const state = () => ({
   cart: [],
   like: [],
   comparison: [],
+  profile: {},
 });
 
 export const mutations = {
   logout(state) {
     localStorage.removeItem("dis_auth_token");
     state.auth = false;
+  },
+  getProfileInfo(state, payload) {
+    state.profile = payload;
   },
   authHandler(state) {
     const token = localStorage.getItem("dis_auth_token");
@@ -50,9 +54,6 @@ export const mutations = {
     findItem.count = findItem.count + 1;
     localStorage.setItem("cart", JSON.stringify(cart));
     state.cart = cart;
-
-
-
   },
   productCountDown(state, payload) {
     let cart = JSON.parse(localStorage.getItem("cart"));
@@ -84,5 +85,18 @@ export const mutations = {
     } else {
       localStorage.setItem("comparison", JSON.stringify([]));
     }
+  },
+};
+export const actions = {
+  profileInfo({ commit }, payload) {
+    this.$axios
+      .$get("/profile/me", {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("dis_auth_token")}`,
+        },
+      })
+      .then((res) => {
+        commit("getProfileInfo", res?.user);
+      });
   },
 };

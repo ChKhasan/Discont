@@ -589,21 +589,5 @@ export default {
 </script>
 <style lang="css">
 @import "../assets/css/pages/checkout.css";
-.success-vmodal {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  flex-direction: column;
-  padding: 43px;
-}
-.success-vmodal p {
-  margin-top: 16px;
-  font-family: var(--SB_500);
-  font-style: normal;
-  font-weight: 500;
-  font-size: 18px;
-  line-height: 150%;
-  text-align: center;
-  color: #000000;
-}
+
 </style>
