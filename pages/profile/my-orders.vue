@@ -14,37 +14,10 @@
           <ProfileMenu />
         </div>
         <div>
-          <div class="my-orders-grid" v-if="empty">
+          <div class="my-orders-grid" v-if="orders.length > 0">
             <div class="order-card-grid">
               <MyOrdersCard v-for="order in orders" :key="order.id" :order="order" />
             </div>
-            <!-- <div>
-              <div class="orders-price-card">
-                <div class="orders-price-card-top">
-                  <div class="orders-price-card-header">
-                    <h5>Jami qiymat:</h5>
-                    <h5>1 450 800 so’m</h5>
-                  </div>
-                  <div class="orders-price-card-body">
-                    <div>
-                      <span>#986250233</span>
-                      <p>-15% (75 000 so’m)</p>
-                    </div>
-                    <div>
-                      <span>#986250233</span>
-                      <p>-15% (75 000 so’m)</p>
-                    </div>
-                    <div>
-                      <span>#986250233</span>
-                      <p>-15% (75 000 so’m)</p>
-                    </div>
-                  </div>
-                </div>
-                <div class="orders-price-card-footer">
-                  <div class="orders-ticket-btn">Chekni yuklab olish</div>
-                </div>
-              </div>
-            </div> -->
           </div>
           <div class="orders-empty" v-else>
             <img src="../../assets/images/orders-empty.png" alt="" />
@@ -87,8 +60,12 @@ export default {
   methods: {
     moment,
     async __GET_PROFILE_INFO() {
-      const profileData = await this.$store.dispatch("fetchAuth/getProfileInfo");
-      this.orders = profileData?.user?.orders;
+      try {
+        const profileData = await this.$store.dispatch("fetchAuth/getProfileInfo");
+        this.orders = profileData?.user?.orders;
+      } catch (e) {
+        if (e.response.status == 401) this.$store.commit("logout");
+      }
     },
   },
   watch: {

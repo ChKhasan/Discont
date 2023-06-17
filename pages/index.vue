@@ -348,6 +348,7 @@ export default {
       }),
       store.dispatch("fetchBrands/getBrands", {
         limit: 10,
+        top: 1,
       }),
       store.dispatch("fetchPosts/getPosts", {
         limit: 10,
@@ -363,10 +364,11 @@ export default {
     const byCategoryProducts = byCategory?.products?.data;
     const topProducts = topProductsData?.products?.data;
     const categories = categories1?.categories?.data;
-    const brands = brands1?.brands?.data;
+    const brands = brands1?.brands;
     const posts = posts1?.posts?.data;
     const showcases = showcasesData.showcases;
     const banners = bannersData;
+    console.log(brands);
     return {
       bestsellersProducts,
       byCategoryProducts,
@@ -378,13 +380,10 @@ export default {
       banners,
     };
   },
-  async mounted() {
-    const [products] = await Promise.all([
-      this.$store.dispatch("fetchProducts/getProducts", {
-        type: "bestsellers",
-        limit: 6,
-      }),
-    ]);
+  mounted() {
+    this.$store.dispatch("fetchBrands/getBrands", {
+      limit: 10,
+    });
   },
   components: {
     BannerCarousel,

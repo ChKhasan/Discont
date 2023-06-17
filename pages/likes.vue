@@ -33,7 +33,9 @@
           o'zingizga yoqqan narsani shu yerga qo'shing.
         </p>
       </div>
-      <div class="categories-products-show-more" v-if="likeProducts.length > 44">Показать еще 44</div>
+      <div class="categories-products-show-more" v-if="likeProducts.length > 44">
+        Показать еще 44
+      </div>
       <div class="products-pagination" v-if="likeProducts.length > 44">
         <a-pagination size="small" :default-current="6" :total="500" />
       </div>
@@ -83,7 +85,7 @@ export default {
   },
   mounted() {
     let likesProducts = JSON.parse(localStorage.getItem("like"));
-    this.__GET_PRODUCTS_BY_ID({ products: likesProducts });
+    if (likesProducts.length > 0) this.__GET_PRODUCTS_BY_ID({ products: likesProducts });
   },
   methods: {
     async __GET_PRODUCTS_BY_ID(dataForm) {

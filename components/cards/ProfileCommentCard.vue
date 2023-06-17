@@ -8,9 +8,9 @@
       <div class="profile-comment-card-header">
         <div>
           <h4>Смартфон Samsung Galaxy A53 6/128Gb Тўқ сариқ ранг (Шафтоли)</h4>
-          <a-rate style="color: #00b2a9" v-model="value" />
+          <a-rate disabled style="color: #00b2a9" v-model="value" />
         </div>
-        <div class="profile-comment-card-edit"><span v-html="edit"></span></div>
+        <!-- <div class="profile-comment-card-edit"><span v-html="edit"></span></div> -->
       </div>
     </div>
     <div class="profile-comment-card-body">

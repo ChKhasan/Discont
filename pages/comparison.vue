@@ -28,11 +28,11 @@
           </a-select-option>
         </a-select>
       </div>
-      <div class="comparison-page-body" v-if="true">
+      <div class="comparison-page-body" v-if="compProducts.length > 0">
         <div class="swiper-comparison mySwiper" style="overflow: hidden">
           <div class="swiper-wrapper">
             <div class="swiper-slide" v-for="product in compProducts" :key="product?.id">
-              <ComparisonCard :product="product"/>
+              <ComparisonCard :product="product" />
             </div>
             <!-- <div class="swiper-slide">
               <ComparisonCard />
@@ -144,11 +144,14 @@ export default {
   },
   mounted() {
     let compProducts = JSON.parse(localStorage.getItem("comparison"));
-    this.__GET_PRODUCTS_BY_ID({ products: compProducts });
+    if (compProducts.length > 0) this.__GET_PRODUCTS_BY_ID({ products: compProducts });
   },
   methods: {
     async __GET_PRODUCTS_BY_ID(dataForm) {
-      const data = await this.$store.dispatch("fetchProducts/getProductsById", dataForm);
+      const data = await this.$store.dispatch(
+        "fetchProducts/getComparionsProductsById",
+        dataForm
+      );
       this.compProducts = data?.products;
       console.log(this.compProducts);
     },

@@ -114,8 +114,8 @@
   display: flex;
   justify-content: center;
 }
-.header-navbar_navbar ul li:hover {
-  color: #04babe;
+.header-navbar_navbar ul li:hover,.navbar_block_active {
+  color: #04babe !important;
 }
 .header-navbar_navbar ul {
   padding-left: 65px;

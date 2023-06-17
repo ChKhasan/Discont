@@ -11,6 +11,10 @@ export const actions = {
     const res = await this.$axios.$post(`/get_products`, data);
     return res;
   },
+  async getComparionsProductsById({}, data) {
+    const res = await this.$axios.$post(`/comparison`, data);
+    return res;
+  },
   async getProductsBySlug({}, id) {
     const res = await this.$axios.$get(`/products/${id}`);
     return res;

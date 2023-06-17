@@ -240,17 +240,21 @@ export default {
   },
   methods: {
     async __GET_PROFILE_INFO() {
-      const profileData = await this.$store.dispatch("fetchAuth/getProfileInfo");
-      this.profile = profileData?.user;
-      this.form = {
-        name: this.profile.name ? this.profile.name : "",
-        address: this.profile.address ? this.profile.address : "",
-        postcode: this.profile.postcode ? this.profile.postcode : "",
-        email: this.profile.email ? this.profile.email : "",
-        phone_number: this.profile.login ? this.profile.login : "",
-        region_id: this.profile.region_id ? this.profile.region_id : "",
-        district_id: this.profile.district_id ? this.profile.district_id : "",
-      };
+      try {
+        const profileData = await this.$store.dispatch("fetchAuth/getProfileInfo");
+        this.profile = profileData?.user;
+        this.form = {
+          name: this.profile.name ? this.profile.name : "",
+          address: this.profile.address ? this.profile.address : "",
+          postcode: this.profile.postcode ? this.profile.postcode : "",
+          email: this.profile.email ? this.profile.email : "",
+          phone_number: this.profile.login ? this.profile.login : "",
+          region_id: this.profile.region_id ? this.profile.region_id : "",
+          district_id: this.profile.district_id ? this.profile.district_id : "",
+        };
+      } catch (e) {
+        if (e.response.status == 401) this.$store.commit("logout");
+      }
     },
     async __GET_REGIONS() {
       const data = await this.$store.dispatch("fetchRegions/getRegions");

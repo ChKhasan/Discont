@@ -36,21 +36,30 @@
               <!-- <span class="count-index">12</span> -->
               <span class="nav-icons" v-html="navOrder"></span>Buyurtmalar
             </li>
-            <li @click="$router.push('/likes')">
+            <li
+              @click="$router.push('/likes')"
+              :class="{ navbar_block_active: $route.name == 'likes' }"
+            >
               <span class="count-index" v-if="$store.state.like.length > 0">{{
                 $store.state.like.length
               }}</span>
 
               <span class="nav-icons" v-html="navLike"></span> Sevimlilar
             </li>
-            <li @click="$router.push('/basket')">
+            <li
+              @click="$router.push('/basket')"
+              :class="{ navbar_block_active: $route.name == 'basket' }"
+            >
               <span class="count-index" v-if="$store.state.cart.length > 0">{{
                 $store.state.cart.length
               }}</span>
 
               <span class="nav-icons" v-html="navBasket"></span>Savatcha
             </li>
-            <li @click="$router.push('/comparison')">
+            <li
+              @click="$router.push('/comparison')"
+              :class="{ navbar_block_active: $route.name == 'comparison' }"
+            >
               <span class="count-index" v-if="$store.state.comparison.length > 0">{{
                 $store.state.comparison.length
               }}</span>
@@ -667,6 +676,7 @@ export default {
       loginPassError: false,
       checkNumberError: false,
       visibleForgetPass: false,
+      forgetPassStatus: false,
     };
   },
   async fetch() {
@@ -716,6 +726,7 @@ export default {
       this.formCheckNumber.phone_number = `998${this.formCheckNumber.phone_number}`;
       this.visibleLogin = false;
       this.visibleForgetPass = true;
+      this.forgetPassStatus = true;
     },
     targetCategory(obj) {
       this.activeCategory = obj;
@@ -737,7 +748,6 @@ export default {
       this.visibleName = false;
     },
     submitCheckNumber() {
-      console.log(this.formCheckNumber);
       const data = {
         phone_number:
           this.formCheckNumber.phone_number.length == 9
@@ -825,8 +835,15 @@ export default {
         localStorage.setItem("dis_auth_token", data.token);
         this.$store.commit("authHandler");
 
+        if (!this.forgetPassStatus) {
+          this.visibleName = true;
+        } else {
+          this.visibleName = false;
+          this.visibleSuccess = true;
+        }
+        this.forgetPassStatus = false;
         this.visibleSms = false;
-        this.visibleName = true;
+
         this.smsCodeError = false;
       } catch (e) {
         console.log(e);
@@ -837,12 +854,6 @@ export default {
     async __PROFILE_NAME(formData) {
       try {
         const data = await this.$store.dispatch("fetchAuth/putProfileName", formData);
-        console.log(this.$route);
-        // if (this.$route.name != "basket" && this.targetPage) {
-        //   this.$router.push("/profile/personal-info");
-        // } else {
-        //   this.$router.push("/checkout");
-        // }
         this.$store.dispatch("profileInfo");
         this.visibleName = false;
         this.visibleSuccess = true;
@@ -925,7 +936,25 @@ export default {
     authVisible(val) {
       this.visibleCheck = val;
     },
-    routerPath() {
+    visibleSuccess(val) {
+      if(val) {
+        (this.formLogin = {
+        phone_number: "",
+        password: "",
+      }),
+        (this.formCheckNumber = {
+          phone_number: "",
+        }),
+        (this.formName = {
+          name: "",
+        }),
+        (this.formSms = {
+          phone_number: "",
+          sms_code: "",
+        })
+      }
+    },
+        routerPath() {
       (this.formLogin = {
         phone_number: "",
         password: "",
