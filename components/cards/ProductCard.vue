@@ -36,7 +36,9 @@
       </div>
       <div class="product_badges" v-if="product?.badges.length > 0">
         <span>
-          <span class="product_badges_item" :style="{ background: 'red', color: '#fff' }"
+          <span
+            class="product_discount_item"
+            :style="{ background: 'red', color: '#fff' }"
             ><p>
               {{
                 product?.discount?.amount
@@ -879,11 +881,23 @@ export default {
   flex-direction: column;
 }
 .product_badges_item {
-  /* background: #1f8a70; */
   transform: rotate(-2.91deg);
   padding: 6px 6px;
-
   display: inline-flex;
+}
+.product_discount_item {
+  transform: rotate(-2.91deg);
+  padding: 2px 6px;
+  display: inline-flex;
+}
+.product_discount_item p {
+  font-family: var(--SB_700);
+  font-style: normal;
+  font-weight: 700;
+  font-size: 23.8228px;
+  line-height: 30px;
+  color: #ffffff;
+  transform: rotate(2.5deg);
 }
 .product_badges_item p {
   font-family: var(--SB_600);
