@@ -176,15 +176,23 @@
           <div class="cardo">
             <div class="cardo__header">
               <div class="discount">
-                <p class="tag">-12%</p>
-                <p class="dis__price">10 540 000 so’m</p>
+                <p class="tag">
+                  {{
+                    product?.discount?.amount
+                      ? `${product?.discount?.amount} so'm`
+                      : `-${product?.discount?.percent}%`
+                  }}
+                </p>
+                <p class="dis__price" v-if="product?.price">
+                  {{
+                    product?.price.replace(".", ",").replace(/\B(?=(\d{3})+(?!\d))/g, " ")
+                  }}
+                </p>
                 <p class="dis__txt">Chegirma narxida</p>
               </div>
 
               <p class="price" v-if="product?.price">
-                {{
-                  product?.price.replace(".", ",").replace(/\B(?=(\d{3})+(?!\d))/g, " ")
-                }}
+                {{ productPrice(product) }}
                 so’m
               </p>
 
@@ -653,6 +661,18 @@ export default {
     toastClose() {
       this.compToast = false;
     },
+    productPrice(product) {
+      console.log(product);
+      let price =
+        product?.discount?.amount || product?.discount?.percent
+          ? product?.discount?.amount
+            ? product?.price - product?.discount?.amount
+            : product?.price - (product?.price / 100) * product?.discount?.percent
+          : product?.price;
+      // .replace(".", ",")
+      // .replace(/\B(?=(\d{3})+(?!\d))/g, " ");
+      return `${price}`.replace(/\B(?=(\d{3})+(?!\d))/g, " ");
+    },
     submitName() {
       const data = {
         ...this.formName,
@@ -819,8 +839,8 @@ export default {
   gap: 8px;
   padding: 8px 14px;
   color: #c7c7c7;
-  border: 0.797059px solid #F1F1F1;
-border-radius: 7.97059px;
+  border: 0.797059px solid #f1f1f1;
+  border-radius: 7.97059px;
 }
 
 .specs {
@@ -1182,6 +1202,4 @@ tbody .img {
 .app {
   margin-bottom: 120px;
 }
-
-
 </style>
