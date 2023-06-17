@@ -1,37 +1,59 @@
 <template lang="html">
   <div class="product-card">
-    <div class="product-card-header">
-      <span class="hover-btns">
-        <span
-          class="like-active"
-          v-html="activeHeart"
-          v-if="$store.state.like.includes(product?.id)"
-          @click="$store.commit('addToStore', { id: product?.id, name: 'like' })"
-        >
+    <div class="position-relative">
+      <div class="product-card-header">
+        <span class="hover-btns">
+          <span
+            class="like-active"
+            v-html="activeHeart"
+            v-if="$store.state.like.includes(product?.id)"
+            @click="$store.commit('addToStore', { id: product?.id, name: 'like' })"
+          >
+          </span>
+          <span
+            class="like-inactive"
+            v-else
+            v-html="like"
+            @click="$store.commit('addToStore', { id: product?.id, name: 'like' })"
+          >
+          </span>
         </span>
         <span
-          class="like-inactive"
-          v-else
-          v-html="like"
-          @click="$store.commit('addToStore', { id: product?.id, name: 'like' })"
-        >
+          class="hover-btns"
+          v-html="comp"
+          :class="{ 'active-comparison': $store.state.comparison.includes(product?.id) }"
+          @click="$store.commit('addToStore', { id: product?.id, name: 'comparison' })"
+        ></span>
+        <div class="fast_show" @click="visible = true">Быстрый просмотр</div>
+        <span class="pc-img-container"
+          ><img
+            v-if="product?.images[0]?.sm_img"
+            :src="product?.images[0]?.sm_img"
+            alt=""
+          />
+          <img v-else src="../../assets/images/empty-img.png" alt="" />
         </span>
-      </span>
-      <span
-        class="hover-btns"
-        v-html="comp"
-        :class="{ 'active-comparison': $store.state.comparison.includes(product?.id) }"
-        @click="$store.commit('addToStore', { id: product?.id, name: 'comparison' })"
-      ></span>
-      <div class="fast_show" @click="visible = true">Быстрый просмотр</div>
-      <span class="pc-img-container"
-        ><img
-          v-if="product?.images[0]?.sm_img"
-          :src="product?.images[0]?.sm_img"
-          alt=""
-        />
-        <img v-else src="../../assets/images/empty-img.png" alt="" />
-      </span>
+      </div>
+      <div class="product_badges" v-if="product?.badges.length > 0">
+        <span>
+          <span class="product_badges_item" :style="{ background: 'red', color: '#fff' }"
+            ><p>
+              {{
+                product?.discount?.amount
+                  ? `${product?.discount?.amount} so'm`
+                  : `${product?.discount?.percent}%`
+              }}
+            </p></span
+          >
+        </span>
+        <span v-for="badge in product?.badges" :key="badge.id">
+          <span
+            class="product_badges_item"
+            :style="{ background: badge.background_color, color: badge.text_color }"
+            ><p>{{ badge?.name?.ru }}</p></span
+          >
+        </span>
+      </div>
     </div>
     <div class="product-card-body">
       <nuxt-link :to="`/product/${product?.slug}`">
@@ -847,5 +869,28 @@ export default {
 }
 .disabled-btn {
   pointer-events: none;
+}
+.product_badges {
+  position: absolute;
+  bottom: 5px;
+  left: 1px;
+  pointer-events: none;
+  display: flex;
+  flex-direction: column;
+}
+.product_badges_item {
+  /* background: #1f8a70; */
+  transform: rotate(-2.91deg);
+  padding: 6px 6px;
+
+  display: inline-flex;
+}
+.product_badges_item p {
+  font-family: var(--SB_600);
+  font-style: normal;
+  font-weight: 600;
+  font-size: 16px;
+  line-height: 20px;
+  transform: rotate(2.5deg);
 }
 </style>
