@@ -43,7 +43,7 @@
               {{
                 product?.discount?.amount
                   ? `${product?.discount?.amount} so'm`
-                  : `${product?.discount?.percent}%`
+                  : `-${product?.discount?.percent}%`
               }}
             </p></span
           >
@@ -72,22 +72,22 @@
       </p>
       <span class="product-card-price"
         ><h4>
-          {{
-            product?.price
-              ? product?.price
-                  .slice(0, product?.price.indexOf("."))
-                  .replace(".", ",")
-                  .replace(/\B(?=(\d{3})+(?!\d))/g, " ")
-              : "5 650 000"
-          }}
+          {{ productPrice(product) }}
           so’m
         </h4>
         <!-- <span> +5 ta dicoin</span> -->
       </span>
     </div>
     <div class="product-discount">
-      <p v-if="product?.discount_price">{{ product?.discount_price }}</p>
-      <!-- <p>6 120 000</p> -->
+      <p v-if="product?.price">
+        {{
+          product?.price
+            .slice(0, product?.price.indexOf("."))
+            .replace(".", ",")
+            .replace(/\B(?=(\d{3})+(?!\d))/g, " ")
+        }}
+        so'm
+      </p>
     </div>
 
     <div class="product-card-footer">
@@ -439,6 +439,17 @@ export default {
     },
     handleOk() {
       this.visible = false;
+    },
+    productPrice(product) {
+      let price =
+        product?.discount?.amount || product?.discount?.percent
+          ? product?.discount?.amount
+            ? product?.price - product?.discount?.amount
+            : product?.price - (product?.price / 100) * product?.discount?.percent
+          : product?.price;
+      // .replace(".", ",")
+      // .replace(/\B(?=(\d{3})+(?!\d))/g, " ");
+      return `${price}`.replace(/\B(?=(\d{3})+(?!\d))/g, " ");
     },
   },
 };
