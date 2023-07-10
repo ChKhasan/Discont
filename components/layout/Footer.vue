@@ -21,16 +21,13 @@
             <h4>Компания</h4>
             <ul>
               <li>
-                <nuxt-link to="/">B2B савдоси</nuxt-link>
+                <nuxt-link to="/info/about-b2b">B2B савдоси</nuxt-link>
               </li>
               <li>
-                <nuxt-link to="/">Биз ҳақимизда</nuxt-link>
+                <nuxt-link to="/info/about-us">Биз ҳақимизда</nuxt-link>
               </li>
               <li>
-                <nuxt-link to="/">Биз ҳақимизда</nuxt-link>
-              </li>
-              <li>
-                <nuxt-link to="/">IMEI ни текшириш</nuxt-link>
+                <nuxt-link to="/">Янгиликлар ва шарҳлар</nuxt-link>
               </li>
             </ul>
           </div>
@@ -38,16 +35,13 @@
             <h4>Маълумот</h4>
             <ul>
               <li>
-                <nuxt-link to="/">Бепул етказиб бериш</nuxt-link>
-              </li>
-              <li>
-                <nuxt-link to="/">Биз ҳақимизда</nuxt-link>
+                <nuxt-link to="/info/delivery">Етказиб бериш</nuxt-link>
               </li>
               <li>
                 <nuxt-link to="/">Бонус тизими</nuxt-link>
               </li>
               <li>
-                <nuxt-link to="/">Дисконтда ишлаш</nuxt-link>
+                <nuxt-link to="/info/working">Дисконтда ишлаш</nuxt-link>
               </li>
             </ul>
           </div>
@@ -55,13 +49,13 @@
             <h4>Ҳаридорга ёрдам</h4>
             <ul>
               <li>
-                <nuxt-link to="/">Муддатли толов</nuxt-link>
+                <nuxt-link to="/info/trade-nation">Муддатли толов</nuxt-link>
               </li>
               <li>
                 <nuxt-link to="/">Махсулотни кайтариш</nuxt-link>
               </li>
               <li>
-                <nuxt-link to="/">Махсулотлар учун кафолат</nuxt-link>
+                <nuxt-link to="/info/warranty">Махсулотлар учун кафолат</nuxt-link>
               </li>
               <li>
                 <nuxt-link to="/">Коп сораладиган саволлар</nuxt-link>

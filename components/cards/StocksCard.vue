@@ -1,11 +1,15 @@
 <template lang="html">
-  <div class="stocks-card">
+  <div class="stocks-card" @click="$router.push('/stock/1')">
     <div class="stocks-card-img">
       <img src="../../assets/images/stocks-card.png" alt="" />
     </div>
     <div class="stocks-card-body">
       <span>
-        <div class="stocks-card-type" :class="{ 'stocks-card-type-new': true }" v-if="typeStatus">
+        <div
+          class="stocks-card-type"
+          :class="{ 'stocks-card-type-new': true }"
+          v-if="typeStatus"
+        >
           Yangi aksiya
         </div></span
       >

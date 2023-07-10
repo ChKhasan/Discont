@@ -493,15 +493,7 @@ export default {
 </script>
 <style lang="css">
 @import "../../assets/css/pages/categories.css";
-.comments-empty {
-  width: 100%;
-  height: calc(100vh - 400px);
-  display: flex;
-  max-height: 720px;
-  align-items: center;
-  justify-content: center;
-  flex-direction: column;
-}
+
 .comments-empty h4 {
   font-family: var(--SF_500);
   font-style: normal;

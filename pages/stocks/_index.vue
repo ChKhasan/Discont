@@ -12,7 +12,7 @@
         <div class="stocks-banner">
           <img src="../../assets/images/stocks-banner.png" alt="" />
         </div>
-        <div class="stocks-menu">
+        <!-- <div class="stocks-menu">
           <div class="position-relative">
             <ul>
               <li>
@@ -100,7 +100,7 @@
               </div>
             </Transition>
           </div>
-        </div>
+        </div> -->
       </div>
       <div class="stocks-grid">
         <StocksCard :typeStatus="false" />
@@ -128,9 +128,9 @@
           долгие утомительные разъезды по множеству мебельных магазинов и рынков Ташкента,
           где можно купить хорошую недорогую мебель. Но! Поскольку их ассортимент сильно
           отличается, и вы вынуждены тратить время и силы на перемещения из одной точки
-          Ташкента в другую. А на DISKONT собраны лучшие предложения многих
-          производителей по выгодным ценам! Покупая мебель у нас вы гарантированно
-          получаете качественный товар, оперативную доставку и сборку мебели у вас дома.
+          Ташкента в другую. А на DISKONT собраны лучшие предложения многих производителей
+          по выгодным ценам! Покупая мебель у нас вы гарантированно получаете качественный
+          товар, оперативную доставку и сборку мебели у вас дома.
         </p>
         <p>
           Модельный ряд мебели пополняется практически ежедневно, следите за нашими
@@ -171,9 +171,7 @@ export default {
     };
   },
   methods: {
-    onChange() {
-
-    }
+    onChange() {},
   },
   components: { StocksCard, CategoriesAppCard },
 };
@@ -200,7 +198,7 @@ export default {
   position: relative;
   display: flex;
   justify-content: center;
-  margin-bottom: 84px;
+  margin-bottom: 32px;
 }
 .stocks-menu {
   position: absolute;
@@ -208,6 +206,7 @@ export default {
   bottom: -29px;
   display: flex;
   justify-content: center;
+  display: none;
 }
 .stocks-menu ul {
   display: flex;
@@ -322,5 +321,4 @@ export default {
     opacity: 1;
   }
 }
-
 </style>

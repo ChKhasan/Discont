@@ -34,6 +34,7 @@
           <img v-else src="../../assets/images/empty-img.png" alt="" />
         </span>
       </div>
+
       <div class="product_badges" v-if="product?.badges.length > 0">
         <span>
           <span
@@ -80,12 +81,10 @@
     </div>
     <div class="product-discount">
       <p v-if="product?.price">
-        {{
-          product?.price
-            .slice(0, product?.price.indexOf("."))
+        {{ product?.price }}
+        <!-- .slice(0, product?.price?.indexOf("."))
             .replace(".", ",")
-            .replace(/\B(?=(\d{3})+(?!\d))/g, " ")
-        }}
+            .replace(/\B(?=(\d{3})+(?!\d))/g, " ") -->
         so'm
       </p>
     </div>

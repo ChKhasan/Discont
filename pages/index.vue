@@ -368,7 +368,6 @@ export default {
     const posts = posts1?.posts?.data;
     const showcases = showcasesData.showcases;
     const banners = bannersData;
-    console.log(brands);
     return {
       bestsellersProducts,
       byCategoryProducts,
@@ -384,6 +383,8 @@ export default {
     this.$store.dispatch("fetchBrands/getBrands", {
       limit: 10,
     });
+
+    this.$axios.$get("https://pga.pythonanywhere.com/api/news/");
   },
   components: {
     BannerCarousel,

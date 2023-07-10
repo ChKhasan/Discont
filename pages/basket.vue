@@ -288,9 +288,9 @@ export default {
         this.$store.state.cart.find((item) => item.id == product.id)?.count;
       let strPrice = `${price}`;
       return `${price}`
-        .slice(0, product?.price.indexOf("."))
-        .replace(".", ",")
-        .replace(/\B(?=(\d{3})+(?!\d))/g, " ");
+        // .slice(0, product?.price?.indexOf("."))
+        // .replace(".", ",")
+        // .replace(/\B(?=(\d{3})+(?!\d))/g, " ");
     },
   },
   components: { MainTitle, CategoriesAppCard },
