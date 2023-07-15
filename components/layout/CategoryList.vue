@@ -77,7 +77,7 @@
             <span><img src="../../assets/images/coin.png" alt="" /></span>
             65 di coin
           </div>
-          <nuxt-link class="nav-info" to="/">?</nuxt-link>
+          <nuxt-link class="nav-info" to="/d-coin/about">?</nuxt-link>
         </div>
       </div>
     </div>
