@@ -65,46 +65,38 @@
           <div class="about-us__banner">
             <div></div>
           </div>
-          <h3>B2 savdo qanday amalga oshiriladi?</h3>
+          <h3>Qanday qilib muddatli to’lov bilan sotib olish mumkin ?</h3>
           <p>
-            simply dummy text of the printing and typesetting industry. Lorem Ipsum has
-            been the industry's standard dummy text ever since the 1500s, when an unknown
-            printer took a galley of type and scrambled it to make a type specimen book.
-            It has survived not only five centuries, but also the leap into electronic
-            typesetting, remaining essentially unchanged. It was popularised in the 1960s
-            with the release of Letraset sheets containing Lorem Ipsum passages, and more
-            recently with desktop publishing software like Aldus PageMaker including
-            versions of Lorem Ipsum.simply dummy text of the printing and typesetting
-            industry. Lorem Ipsum has been the industry's standard dummy text ever since
-            the 1500s, when an unknown printer took a galley of type and scrambled it to
-            make a type specimen book. It has survived not only five centuries, but also
-            the leap into electronic typesetting, remaining essentially unchanged. It was
-            popularised in the 1960s with the release of Letraset sheets containing Lorem
-            Ipsum passages, and more recently with desktop publishing software like Aldus
-            PageMaker including versions of Lorem Ipsum.simply dummy text of the printing
-            and typesetting industry. Lorem Ipsum has been the industry's standard dummy
-            text ever since the 1500s, when
+            Bizni do’konda qulay va arzon narhlarda mahsulotni muddatli to’lovga
+            olishingiz mumkin. Mijozlar uchun barcha qulayliklarni taqdim qilamiz.
+            Kelishingiz bilan o’zingizga yoqgan mahsulotni olib, kegin to’lov qilsangiz
+            bo’ladi. Maishiy tehnikani oldindan to’lovsiz 6, 12, 18, 24, 36 oyga muddatli
+            to’lovga olish imkoniyatiga egasiz . Muddatli tolo’v halol sertifikati bor.
           </p>
-          <h3>B2 savdo qanday amalga oshiriladi?</h3>
-          <p>
-            simply dummy text of the printing and typesetting industry. Lorem Ipsum has
-            been the industry's standard dummy text ever since the 1500s, when an unknown
-            printer took a galley of type and scrambled it to make a type specimen book.
-            It has survived not only five centuries, but also the leap into electronic
-            typesetting, remaining essentially unchanged. It was popularised in the 1960s
-            with the release of Letraset sheets containing Lorem Ipsum passages, and more
-            recently with desktop publishing software like Aldus PageMaker including
-            versions of Lorem Ipsum.simply dummy text of the printing and typesetting
-            industry. Lorem Ipsum has been the industry's standard dummy text ever since
-            the 1500s, when an unknown printer took a galley of type and scrambled it to
-            make a type specimen book. It has survived not only five centuries, but also
-            the leap into electronic typesetting, remaining essentially unchanged. It was
-            popularised in the 1960s with the release of Letraset sheets containing Lorem
-            Ipsum passages, and more recently with desktop publishing software like Aldus
-            PageMaker including versions of Lorem Ipsum.simply dummy text of the printing
-            and typesetting industry. Lorem Ipsum has been the industry's standard dummy
-            text ever since the 1500s, when
-          </p>
+          <h4>
+            Muddatli tolovga xarid qilinayotgan mahsulotlarni ro’yhatdan o’tkazish
+            shartlari:
+          </h4>
+          <ul>
+            <li>1) Pasport ma’lumotlari ;</li>
+            <li>
+              2) Uzcard yoki Humo plastic kartasi (ohirgi 6 oy ichida pul tushib turgan
+              bo’lishi kerak);
+            </li>
+            <li>
+              3) Muddatli to’lo’v to’grisidagi qarorni skoring natijalaridan so’ng darhol
+              olish mumkin;
+            </li>
+            <li>4) Mijoz 22 yoshdan 65 yoshgacha bo’lishi kerak;</li>
+          </ul>
+          <h4>Ozbekiston bo’ylab onsonlik bilan olish mumkin;</h4>
+          <h4>Qayerdan olsa bo’ladi ?</h4>
+          <ul>
+            <li>Bizning do’konlarimidan</li>
+            <li>Bir necha klik orqali saytni o’zidan</li>
+            <li>Aloqa markazi raqami: <a href="tel:+998711234567">+998711234567</a></li>
+            <li>Ish vaqti: <span>9:00-21:00 gacha.</span></li>
+          </ul>
         </div>
       </div>
     </div>
@@ -130,51 +122,5 @@ export default {
 </script>
 <style lang="css">
 @import "../../assets/css/pages/comparison.css";
-.about-us__container {
-  display: grid;
-  grid-template-columns: 360px 1fr;
-  grid-gap: 54px;
-}
-.about-us__list ul {
-  display: flex;
-  flex-direction: column;
-}
-.about-us__list__active {
-  color: var(--yashil, #1f8a70) !important;
-}
-.about-us__list ul li a {
-  padding: 12px;
-  padding-left: 55px;
-  color: #000;
-  font-family: var(--SB_500);
-  font-size: 18px;
-  font-style: normal;
-  line-height: 150%;
-  border-radius: 12px;
-  display: flex;
-}
-.about-us__list ul li:nth-child(2n) {
-  background: #f7f7f7;
-}
-.about-us__banner div {
-  height: 351px;
-  width: 100%;
-  background: #d9d9d9;
-}
-.about-us__body h3 {
-  color: #000;
-  font-family: var(--SB_600);
-  font-size: 24px;
-  font-style: normal;
-  line-height: 150%;
-  margin-top: 32px;
-}
-.about-us__body p {
-  color: #767676;
-  font-size: 16px;
-  font-style: normal;
-  font-family: var(--SB_500);
-  line-height: 150%;
-  margin-top: 16px;
-}
+@import "../../assets/css/pages/about-us.css";
 </style>

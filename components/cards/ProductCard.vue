@@ -35,9 +35,9 @@
         </span>
       </div>
 
-      <div class="product_badges" v-if="product?.badges.length > 0">
+      <div class="product_badges" v-if="product?.badges">
         <span>
-          <span
+          <span v-if="product?.discount"
             class="product_discount_item"
             :style="{ background: 'red', color: '#fff' }"
             ><p>

@@ -130,51 +130,5 @@ export default {
 </script>
 <style lang="css">
 @import "../../assets/css/pages/comparison.css";
-.about-us__container {
-  display: grid;
-  grid-template-columns: 360px 1fr;
-  grid-gap: 54px;
-}
-.about-us__list ul {
-  display: flex;
-  flex-direction: column;
-}
-.about-us__list__active {
-  color: var(--yashil, #1f8a70) !important;
-}
-.about-us__list ul li a {
-  padding: 12px;
-  padding-left: 55px;
-  color: #000;
-  font-family: var(--SB_500);
-  font-size: 18px;
-  font-style: normal;
-  line-height: 150%;
-  border-radius: 12px;
-  display: flex;
-}
-.about-us__list ul li:nth-child(2n) {
-  background: #f7f7f7;
-}
-.about-us__banner div {
-  height: 351px;
-  width: 100%;
-  background: #d9d9d9;
-}
-.about-us__body h3 {
-  color: #000;
-  font-family: var(--SB_600);
-  font-size: 24px;
-  font-style: normal;
-  line-height: 150%;
-  margin-top: 32px;
-}
-.about-us__body p {
-  color: #767676;
-  font-size: 16px;
-  font-style: normal;
-  font-family: var(--SB_500);
-  line-height: 150%;
-  margin-top: 16px;
-}
+@import "../../assets/css/pages/about-us.css";
 </style>

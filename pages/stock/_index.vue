@@ -78,16 +78,21 @@
 import ProductCard from "../../components/cards/ProductCard.vue";
 import ProductListTitle from "../../components/ProductList-title.vue";
 export default {
-  async asyncData({ $axios, params, store }) {
-    const [productsData] = await Promise.all([
-      store.dispatch("fetchProducts/getProducts"),
-    ]);
-    console.log(productsData);
-    const products = productsData?.products?.data;
-    return {
-      products,
-    };
-  },
+  // async asyncData({ $axios, params, store }) {
+  //   const [productsData] = await Promise.all([
+  //     store.dispatch("fetchProducts/getProducts"),
+  //   ]);
+  //   console.log(productsData);
+  //   const products = productsData?.products?.data;
+  //   return {
+  //     products,
+  //   };
+  // },
+  // async mounted() {
+  //   const [productsData] = await Promise.all([
+  //     this.$store.dispatch("fetchProducts/getProducts"),
+  //   ]);
+  // },
   components: { ProductListTitle, ProductCard },
 };
 </script>

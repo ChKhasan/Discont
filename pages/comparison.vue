@@ -143,8 +143,11 @@ export default {
     },
   },
   mounted() {
-    let compProducts = JSON.parse(localStorage.getItem("comparison"));
-    if (compProducts.length > 0) this.__GET_PRODUCTS_BY_ID({ products: compProducts });
+    let compProductsStore = JSON.parse(localStorage.getItem("comparison"));
+    if (compProductsStore.length > 0) {
+      console.log(compProductsStore.length);
+      this.__GET_PRODUCTS_BY_ID({ products: compProductsStore });
+    }
   },
   methods: {
     async __GET_PRODUCTS_BY_ID(dataForm) {
@@ -152,7 +155,8 @@ export default {
         "fetchProducts/getComparionsProductsById",
         dataForm
       );
-      this.compProducts = data?.products;
+      console.log(data);
+      // this.compProducts = data?.products;
       console.log(this.compProducts);
     },
   },

@@ -6,7 +6,7 @@
           <ul class="d-flex align-items-center">
             <li><span v-html="location" class="nav-location"></span> Toshkent</li>
             <li>Do’konlar manzili</li>
-            <li>Biz haqimizda</li>
+            <li @click="$router.push('/info/about-us')">Biz haqimizda</li>
           </ul>
           <div class="d-flex header-top__right">
             <a href="tel:+998712077788">+998 71 207 77 88</a>

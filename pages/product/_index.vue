@@ -1019,13 +1019,13 @@ export default {
   font-weight: 500;
   font-size: 14px;
   line-height: 18px;
-  color: var(--color_green);
+  color: var(--color_dark_green);
   padding: 12px 34px;
   border: 1px solid #f1f1f1;
   border-radius: 77px;
 }
 .butns button.active {
-  background: var(--color_green);
+  background: var(--color_dark_green);
   color: white;
 }
 .paragraph {
@@ -1179,7 +1179,7 @@ tbody .img {
   align-items: center;
   text-align: center;
   justify-content: center;
-  color: var(--color_green);
+  color: var(--color_dark_green);
   background: #e7faf5;
   border-radius: 10px;
   padding: 12px 0;

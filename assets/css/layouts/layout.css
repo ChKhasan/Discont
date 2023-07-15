@@ -16,6 +16,11 @@
   line-height: 18px;
   color: #747474;
   margin-right: 32px;
+  cursor: pointer;
+  transition: 0.2s;
+}
+.header-top ul li:hover {
+  color: var(--color_dark_green);
 }
 .header-top__right p:last-child {
   margin-left: 16px;
@@ -31,7 +36,7 @@
   font-weight: 600;
   font-size: 16px;
   line-height: 24px;
-  color: #1f8a70;
+  color: var(--color_dark_green);
 }
 .header-top__right a:hover {
   color: #04babe;
@@ -56,7 +61,7 @@
 .search_input_container {
   max-width: 728px;
   background: #f6f7f9;
-  border: 1px solid #1f8a70;
+  border: 1px solid var(--color_dark_green);
   border-radius: 143px;
   height: 43px;
   display: flex;
@@ -114,7 +119,8 @@
   display: flex;
   justify-content: center;
 }
-.header-navbar_navbar ul li:hover,.navbar_block_active {
+.header-navbar_navbar ul li:hover,
+.navbar_block_active {
   color: #04babe !important;
 }
 .header-navbar_navbar ul {
@@ -138,7 +144,7 @@
   flex-direction: row;
   padding: 6px 15px;
   align-items: center;
-  background: var(--color_green);
+  background: var(--color_dark_green);
 }
 .nav_profile svg {
   margin-bottom: 0 !important;
@@ -156,7 +162,7 @@
 }
 .catalog-btn {
   height: 42px;
-  background: var(--color_green);
+  background: var(--color_dark_green);
   border-radius: 9px;
   padding: 14px 28px;
   font-family: var(--SB_400);
@@ -202,6 +208,13 @@
   display: flex;
   white-space: nowrap;
   align-items: center;
+}
+.stock__active {
+  color: #ffffff !important;
+  background: linear-gradient(to right, #018ce1, #216bfd) !important;
+}
+.stock__active svg path {
+  fill: #ffffff;
 }
 .header-category_container ul li a span {
   margin-right: 13px;

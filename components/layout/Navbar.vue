@@ -237,11 +237,16 @@
               <!-- <span class="position-absolute number-error" v-if="checkNumberError"
                 >Raqam noto’g’ri kiritildi</span
               > -->
-              <the-mask
+              <!-- <the-mask
                 @keyup.enter="submitCheckNumber()"
                 :mask="['+998 (##) ### ## ##', '+998 (##) ### ## ##']"
                 placeholder="+998 (__) ___ __ __"
+              /> -->
+              <input
+                type="text"
+                v-mask="'+998 ## ### ## ##'"
                 v-model="formCheckNumber.phone_number"
+                placeholder="+998 (__) ___ __ __"
               />
             </span>
             <!-- <a-input v-model="form.name" placeholder="Telefon raqamingiz" /> -->
@@ -752,14 +757,10 @@ export default {
         phone_number:
           this.formCheckNumber.phone_number.length == 9
             ? `998${this.formCheckNumber.phone_number}`
-            : this.formCheckNumber.phone_number,
+            : this.formCheckNumber.phone_number.split(" ").join(""),
       };
       this.$refs["ruleFormCheckNumber"].validate((valid) => {
-        if (valid) {
-          this.__CHECK_NUMBER(data);
-        } else {
-          return false;
-        }
+        valid ? this.__CHECK_NUMBER(data) : false;
       });
     },
     submitForgetPass() {
@@ -769,15 +770,8 @@ export default {
             ? `998${this.formCheckNumber.phone_number}`
             : this.formCheckNumber.phone_number,
       };
-      console.log("out");
       this.$refs["ruleFormCheckNumber"].validate((valid) => {
-        if (valid) {
-          console.log("in");
-
-          this.__FORGET_PASSWORD(data);
-        } else {
-          return false;
-        }
+        valid ? this.__FORGET_PASSWORD(data) : false;
       });
     },
     submitSms() {
@@ -793,11 +787,7 @@ export default {
           ? `998${this.formSms.phone_number}`
           : this.formSms.phone_number;
       this.$refs["ruleFormSms"].validate((valid) => {
-        if (valid) {
-          this.__REGISTER_SMS(data);
-        } else {
-          return false;
-        }
+        valid ? this.__REGISTER_SMS(data) : false;
       });
     },
     submitLogin() {
@@ -937,24 +927,24 @@ export default {
       this.visibleCheck = val;
     },
     visibleSuccess(val) {
-      if(val) {
+      if (val) {
         (this.formLogin = {
-        phone_number: "",
-        password: "",
-      }),
-        (this.formCheckNumber = {
           phone_number: "",
+          password: "",
         }),
-        (this.formName = {
-          name: "",
-        }),
-        (this.formSms = {
-          phone_number: "",
-          sms_code: "",
-        })
+          (this.formCheckNumber = {
+            phone_number: "",
+          }),
+          (this.formName = {
+            name: "",
+          }),
+          (this.formSms = {
+            phone_number: "",
+            sms_code: "",
+          });
       }
     },
-        routerPath() {
+    routerPath() {
       (this.formLogin = {
         phone_number: "",
         password: "",
