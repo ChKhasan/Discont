@@ -1,11 +1,11 @@
 <template lang="html">
-  <div class="comparison-page">
+  <div class="page-container">
     <div class="container_xl">
       <div class="page-breadcrumb">
         <nuxt-link to="/">Diskont main page</nuxt-link>
         <nuxt-link to="/">Diskontda Nasiya savdo </nuxt-link>
       </div>
-      <div class="d-flex comparison-page-title">
+      <div class="d-flex page-container-title">
         <div class="d-flex align-items-end">
           <MainTitle title="Diskontda Nasiya savdo" />
         </div>
@@ -62,9 +62,9 @@
           </ul>
         </div>
         <div class="about-us__body">
-          <div class="about-us__banner">
+          <!-- <div class="about-us__banner">
             <div></div>
-          </div>
+          </div> -->
           <h3>Qanday qilib muddatli to’lov bilan sotib olish mumkin ?</h3>
           <p>
             Bizni do’konda qulay va arzon narhlarda mahsulotni muddatli to’lovga

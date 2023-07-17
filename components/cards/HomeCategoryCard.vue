@@ -1,7 +1,7 @@
 <template lang="html">
   <div class="h-category-card" @click="$router.push(`/categories/${category.slug}`)">
     <div class="h-category-card-title">
-      <h4>{{ category?.name?.ru }}</h4>
+      <h4>{{ category?.name }}</h4>
     </div>
     <div class="h-category-card-img">
       <img v-if="category?.sm_img" :src="category?.sm_img" alt="" />

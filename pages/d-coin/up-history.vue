@@ -1,11 +1,11 @@
 <template lang="html">
-  <div class="comparison-page d-coin-page">
+  <div class="page-container d-coin-page">
     <div class="container_xl">
       <div class="page-breadcrumb">
         <nuxt-link to="/">Diskont main page</nuxt-link>
         <nuxt-link to="/"> Di Coin </nuxt-link>
       </div>
-      <div class="d-flex comparison-page-title">
+      <div class="d-flex page-container-title">
         <div class="d-flex align-items-end">
           <MainTitle title="Di Coin" />
         </div>

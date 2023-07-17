@@ -2,7 +2,7 @@
   <div class="wrap product-page">
     <div class="container_xl">
       <div class="top">
-        <h4 class="title">{{ product?.info?.name?.ru }}</h4>
+        <h4 class="title">{{ product?.info?.name }}</h4>
         <div class="flexer">
           <div class="left">
             <div class="stars">
@@ -111,9 +111,9 @@
                 :key="characteristic.id"
               >
                 <p class="question">
-                  {{ characteristic?.characteristic?.name?.ru }}
+                  {{ characteristic?.characteristic?.name }}
                 </p>
-                <p class="answer">{{ characteristic?.name?.ru }}</p>
+                <p class="answer">{{ characteristic?.name }}</p>
               </div>
               <p
                 class="all"
@@ -137,7 +137,7 @@
               v-for="(atribut, atributIndex) in productAttributes"
               :key="atributIndex"
             >
-              <p class="lil">{{ atribut?.title?.ru }}</p>
+              <p class="lil">{{ atribut?.title }}</p>
               <div class="grid">
                 <div
                   class="variation"
@@ -149,7 +149,7 @@
                   }"
                   :key="optionIndex"
                 >
-                  {{ option?.title?.ru }}
+                  {{ option?.title }}
                 </div>
               </div>
             </div>
@@ -175,7 +175,7 @@
         <div class="col-md-3 col-xs-12 order">
           <div class="cardo">
             <div class="cardo__header">
-              <div class="discount">
+              <div class="discount" v-if="product?.discount">
                 <p class="tag">
                   {{
                     product?.discount?.amount
@@ -184,9 +184,7 @@
                   }}
                 </p>
                 <p class="dis__price" v-if="product?.price">
-                  {{
-                    product?.price.replace(".", ",").replace(/\B(?=(\d{3})+(?!\d))/g, " ")
-                  }}
+                  {{ product?.price }}
                 </p>
                 <p class="dis__txt">Chegirma narxida</p>
               </div>
@@ -294,7 +292,7 @@
           <div :class="{ active: aboutHandle }" class="about">
             <div class="about__wrap">
               <h4 class="paragraph">Описание</h4>
-              <p v-html="product?.info?.desc?.ru"></p>
+              <p v-html="product?.info?.desc"></p>
             </div>
           </div>
           <div :class="{ active: specsHandle }" class="specifications">
@@ -632,6 +630,7 @@ export default {
       }),
     ]);
     this.product = productData.product;
+    console.log(this.product);
     this.productsOthers = productsData?.products?.data;
     this.productCharacteristic = productData?.product?.characteristic_options.splice(
       0,
@@ -671,7 +670,7 @@ export default {
           : product?.price;
       // .replace(".", ",")
       // .replace(/\B(?=(\d{3})+(?!\d))/g, " ");
-      return `${price}`.replace(/\B(?=(\d{3})+(?!\d))/g, " ");
+      return `${price}`.replace(/\B(?=(\d{3})+(?!\d))/g, " ");;
     },
     submitName() {
       const data = {

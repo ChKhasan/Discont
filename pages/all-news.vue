@@ -1,5 +1,5 @@
 <template lang="html">
-  <div class="comparison-page">
+  <div class="page-container">
     <div class="container_xl">
       <div class="page-breadcrumb">
         <nuxt-link to="/">Diskont main page</nuxt-link>
@@ -8,7 +8,7 @@
           <span v-html="arrow"></span>
         </nuxt-link>
       </div>
-      <div class="d-flex comparison-page-title">
+      <div class="d-flex page-container-title">
         <div class="d-flex align-items-end">
           <MainTitle title="Barcha yangiliklar" />
           <span class="d-flex align-items-end">8 288 товаров</span>

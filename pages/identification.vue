@@ -6,7 +6,7 @@
         <nuxt-link to="/"> Savatcham </nuxt-link>
         <nuxt-link to="/"> Identifikatsiya </nuxt-link>
       </div>
-      <div class="d-flex comparison-page-title">
+      <div class="d-flex page-container-title">
         <div class="d-flex align-items-end">
           <MainTitle title="Identifikatsiya" />
         </div>

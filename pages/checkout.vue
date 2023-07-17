@@ -546,11 +546,7 @@ export default {
       };
 
       this.$refs["ruleForm"].validate((valid) => {
-        if (valid) {
-          this.__POST_ORDER(data);
-        } else {
-          return false;
-        }
+        valid ? this.__POST_ORDER(data) : false;
       });
     },
     async __GET_PROFILE_INFO() {
@@ -589,5 +585,4 @@ export default {
 </script>
 <style lang="css">
 @import "../assets/css/pages/checkout.css";
-
 </style>

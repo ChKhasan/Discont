@@ -10,7 +10,7 @@
               :key="category.id"
               @click="$router.push(`/categories/${category?.slug}`)"
             >
-              <span>{{ category?.name?.ru }}</span>
+              <span>{{ category?.name }}</span>
               <div
                 class="child-categories-list"
                 v-if="
@@ -18,7 +18,7 @@
                 "
               >
                 <nuxt-link to="/" v-for="childs in category?.children" :key="childs.id">{{
-                  childs?.name?.ru
+                  childs?.name
                 }}</nuxt-link>
               </div>
             </li>
@@ -35,7 +35,7 @@
               </nuxt-link>
             </div>
             <div class="d-flex categories-page-title">
-              <MainTitle :title="categoryChilds?.name?.ru" />
+              <MainTitle :title="categoryChilds?.name" />
               <span>8 288 товаров</span>
             </div>
           </div>

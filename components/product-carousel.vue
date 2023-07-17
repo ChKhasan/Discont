@@ -43,8 +43,7 @@ export default {
         prevEl: ".swiper-button-prev-product1",
       },
     });
-    swiper.on("activeIndexChange", (swiper) => {
-    });
+    swiper.on("activeIndexChange", (swiper) => {});
   },
 };
 </script>

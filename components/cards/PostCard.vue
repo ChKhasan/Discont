@@ -9,8 +9,8 @@
         {{ moment(post?.created_at).format("DD.MM.YYYY") }}
       </p>
       <p v-else>27.03.2023</p>
-      <h6 v-if="post?.title?.ru" @click="$router.push(`/news/${post?.slug}`)">
-        {{ post?.title?.ru }}
+      <h6 v-if="post?.title" @click="$router.push(`/news/${post?.slug}`)">
+        {{ post?.title }}
       </h6>
       <h6 v-else>Apple запатентовала складной экран смартфона.</h6>
     </div>

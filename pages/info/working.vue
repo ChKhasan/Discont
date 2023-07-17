@@ -1,11 +1,11 @@
 <template lang="html">
-  <div class="comparison-page">
+  <div class="page-container">
     <div class="container_xl">
       <div class="page-breadcrumb">
         <nuxt-link to="/">Diskont main page</nuxt-link>
         <nuxt-link to="/"> Diskontda ishlash </nuxt-link>
       </div>
-      <div class="d-flex comparison-page-title">
+      <div class="d-flex page-container-title">
         <div class="d-flex align-items-end">
           <MainTitle title="Diskontda ishlash" />
         </div>
@@ -62,9 +62,9 @@
           </ul>
         </div>
         <div class="about-us__body">
-          <div class="about-us__banner">
+          <!-- <div class="about-us__banner">
             <div></div>
-          </div>
+          </div> -->
           <h3>B2 savdo qanday amalga oshiriladi?</h3>
           <p>
             simply dummy text of the printing and typesetting industry. Lorem Ipsum has

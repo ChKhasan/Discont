@@ -1,14 +1,11 @@
 <template lang="html">
-  <div class="comparison-page">
+  <div class="page-container">
     <div class="container_xl">
       <div class="page-breadcrumb">
         <nuxt-link to="/">Diskont main page</nuxt-link>
-        <nuxt-link to="/">
-          Solishtirish
-          <span v-html="arrow"></span>
-        </nuxt-link>
+        <nuxt-link class="disabled" to="/"> Solishtirish </nuxt-link>
       </div>
-      <div class="d-flex comparison-page-title">
+      <div class="d-flex page-container-title">
         <div class="d-flex align-items-end">
           <MainTitle title="Solishtirish" />
           <span class="d-flex align-items-end">8 288 товаров</span>
@@ -28,30 +25,12 @@
           </a-select-option>
         </a-select>
       </div>
-      <div class="comparison-page-body" v-if="compProducts.length > 0">
+      <div class="page-container-body" v-if="compProducts.length > 0">
         <div class="swiper-comparison mySwiper" style="overflow: hidden">
           <div class="swiper-wrapper">
             <div class="swiper-slide" v-for="product in compProducts" :key="product?.id">
               <ComparisonCard :product="product" />
             </div>
-            <!-- <div class="swiper-slide">
-              <ComparisonCard />
-            </div>
-            <div class="swiper-slide">
-              <ComparisonCard />
-            </div>
-            <div class="swiper-slide">
-              <ComparisonCard />
-            </div>
-            <div class="swiper-slide">
-              <ComparisonCard />
-            </div>
-            <div class="swiper-slide">
-              <ComparisonCard />
-            </div>
-            <div class="swiper-slide">
-              <ComparisonCard />
-            </div> -->
           </div>
         </div>
         <div class="swiper-button-prev-comparison">

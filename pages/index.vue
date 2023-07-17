@@ -54,13 +54,13 @@
         </div>
       </div>
     </div>
-    <div class="container_xl product_container">
+    <div class="container_xl product_container" v-if="showcases[0]">
       <div class="">
         <div class="d-flex justify-content-between align-items-end">
-          <MainTitle :title="showcases[0]?.name?.ru" />
+          <MainTitle :title="showcases[0]?.name" />
           <nuxt-link class="to-page-underline" to="/">Все товары</nuxt-link>
         </div>
-        <div class="product-grid">
+        <div class="product-grid" v-if="showcases[0]?.products.length > 0">
           <ProductCard
             v-for="product in showcases[0]?.products"
             :key="product.id"
@@ -69,13 +69,13 @@
         </div>
       </div>
     </div>
-    <div class="container_xl product_container">
+    <div class="container_xl product_container" v-if="showcases[1]">
       <div class="">
         <div class="d-flex justify-content-between align-items-end">
-          <MainTitle :title="showcases[1]?.name?.ru" />
+          <MainTitle :title="showcases[1]?.name" />
           <nuxt-link class="to-page-underline" to="/">Все товары</nuxt-link>
         </div>
-        <div class="product-grid">
+        <div class="product-grid" v-if="showcases[1]?.products.length > 0">
           <ProductCard
             v-for="product in showcases[1]?.products"
             :key="product.id"
@@ -87,10 +87,10 @@
     <div class="container_xl">
       <HomeBanner />
     </div>
-    <div class="container_xl">
-      <MainTitle :title="showcases[2]?.name?.ru" />
+    <div class="container_xl" v-if="showcases[2]">
+      <MainTitle :title="showcases[2]?.name" />
       <div class="mb-120">
-        <div class="products-grid-6">
+        <div class="products-grid-6" v-if="showcases[2]?.products.length > 0">
           <ProductCard
             v-for="product in showcases[2]?.products"
             :key="product.id"
@@ -105,15 +105,16 @@
         </div>
       </div>
     </div>
-    <div class="container_xl product_container">
+    <div class="container_xl product_container" v-if="showcases[3]">
       <div class="">
         <div class="d-flex justify-content-between align-items-end">
-          <MainTitle :title="showcases[3]?.name?.ru" />
+          <MainTitle :title="showcases[3]?.name" />
           <nuxt-link class="to-page-underline" to="/">Все товары</nuxt-link>
         </div>
         <div class="">
           <ProductCarousel>
             <div
+              v-if="showcases[3]?.products.length > 0"
               class="swiper-slide"
               v-for="product in showcases[3]?.products"
               :key="product.id"
@@ -124,13 +125,13 @@
         </div>
       </div>
     </div>
-    <div class="container_xl product_container">
+    <div class="container_xl product_container" v-if="showcases[4]">
       <div class="">
         <div class="d-flex justify-content-between align-items-end">
-          <MainTitle :title="showcases[4]?.name?.ru" />
+          <MainTitle :title="showcases[4]?.name" />
           <nuxt-link class="to-page-underline" to="/">Все товары</nuxt-link>
         </div>
-        <div class="">
+        <div class="" v-if="showcases[4]?.products.length > 0">
           <ProductCarousel2>
             <div
               class="swiper-slide"
@@ -206,7 +207,7 @@
       <DiscountCarousel />
     </div> -->
     <!-- <div class="container_xl">
-      <MainTitle :title="showcases[5]?.name?.ru" />
+      <MainTitle :title="showcases[5]?.name" />
       <div class="v-card-products-grid mb-120">
         <div class="v-card-grid">
           <VProductCard />
@@ -221,11 +222,12 @@
         </div>
       </div>
     </div> -->
-    <div class="container_xl">
-      <MainTitle :title="showcases[5]?.name?.ru" />
+    <div class="container_xl" v-if="showcases[5]">
+      <MainTitle :title="showcases[5]?.name" />
       <div class="mb-120">
         <div class="products-grid-6">
           <ProductCard
+            v-if="howcases[5]?.products.length > 0"
             v-for="product in showcases[5]?.products"
             :key="product.id"
             :product="product"
@@ -246,7 +248,7 @@
         <nuxt-link class="to-page-underline" to="/all-news">Все блоги</nuxt-link>
       </div>
       <PostsCarousel>
-        <div class="swiper-slide" v-for="post in posts" :key="post.id">
+        <div class="swiper-slide" v-for="post in [1, 2]" :key="post.id">
           <PostCard :post="post" />
         </div>
       </PostsCarousel>
@@ -313,12 +315,12 @@ export default {
   name: "IndexPage",
   data() {
     return {
-      bestsellersProducts: [],
-      topProducts: [],
-      categories: [],
-      byCategoryProducts: [],
-      brands: [],
-      posts: [],
+      // bestsellersProducts: [],
+      // topProducts: [],
+      // categories: [],
+      // byCategoryProducts: [],
+      // brands: [],
+      // posts: [],
     };
   },
   async asyncData({ $axios, store }) {
@@ -368,6 +370,7 @@ export default {
     const posts = posts1?.posts?.data;
     const showcases = showcasesData.showcases;
     const banners = bannersData;
+    console.log(categories);
     return {
       bestsellersProducts,
       byCategoryProducts,

@@ -14,6 +14,7 @@
             </li>
             <li>
               <nuxt-link
+                class="winter_discount"
                 :class="{ stock__active: $route.params.index == 'seasonal-discounts' }"
                 to="/stocks/seasonal-discounts"
                 ><span
@@ -72,7 +73,7 @@
             </li>
           </ul>
         </div>
-        <div class="d-flex align-items-center">
+        <div class="d-flex align-items-center" v-if="$store.state.auth">
           <div class="coin_btn">
             <span><img src="../../assets/images/coin.png" alt="" /></span>
             65 di coin

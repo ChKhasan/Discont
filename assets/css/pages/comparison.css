@@ -17,7 +17,7 @@
 .swiper-button-prev-comparison {
   left: -24px;
 }
-.comparison-page-body .swiper-button-disabled {
+.page-container-body .swiper-button-disabled {
   opacity: 0.5;
   pointer-events: none;
 }
@@ -25,19 +25,19 @@
   right: -24px;
   transform: rotate(0deg);
 }
-.comparison-page-body {
+.page-container-body {
   position: relative;
 }
-.comparison-page {
+.page-container {
   padding-top: 33px;
 }
-.comparison-page-title {
+.page-container-title {
   margin-top: 16px;
   margin-bottom: 33px;
   display: flex;
   justify-content: space-between;
 }
-.comparison-page-title span {
+.page-container-title span {
   display: flex;
   align-items: flex-end;
   margin-bottom: 8px;
@@ -53,6 +53,6 @@
 
   color: #8c959c;
 }
-.comparison-page-title .main-title {
+.page-container-title .main-title {
   margin-bottom: 0;
 }

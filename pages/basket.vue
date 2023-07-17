@@ -1,14 +1,11 @@
 <template lang="html">
-  <div class="comparison-page">
+  <div class="page-container">
     <div class="container_xl">
       <div class="page-breadcrumb">
         <nuxt-link to="/">Diskont main page</nuxt-link>
-        <nuxt-link to="/">
-          Savatcha
-          <span v-html="arrow"></span>
-        </nuxt-link>
+        <nuxt-link class="disabled" to="/"> Savatcha </nuxt-link>
       </div>
-      <div class="d-flex comparison-page-title">
+      <div class="d-flex page-container-title">
         <div class="d-flex align-items-end">
           <MainTitle title="Savatcha" />
           <span class="d-flex align-items-end"
@@ -287,10 +284,10 @@ export default {
         product?.price *
         this.$store.state.cart.find((item) => item.id == product.id)?.count;
       let strPrice = `${price}`;
-      return `${price}`
-        // .slice(0, product?.price?.indexOf("."))
-        // .replace(".", ",")
-        // .replace(/\B(?=(\d{3})+(?!\d))/g, " ");
+      return `${price}`;
+      // .slice(0, product?.price?.indexOf("."))
+      // .replace(".", ",")
+      // .replace(/\B(?=(\d{3})+(?!\d))/g, " ");
     },
   },
   components: { MainTitle, CategoriesAppCard },

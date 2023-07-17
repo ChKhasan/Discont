@@ -10,7 +10,7 @@
           </nuxt-link>
         </div>
         <div class="d-flex categories-page-title">
-          <MainTitle :title="categoryChilds?.name?.ru" />
+          <MainTitle :title="categoryChilds?.name" />
           <span>8 288 товаров</span>
         </div>
         <div>
@@ -98,14 +98,14 @@
             <h5>Категория</h5>
             <nuxt-link
               :to="`/categories/${
-                categoryChilds?.parent?.parent?.name?.ru
+                categoryChilds?.parent?.parent?.name
                   ? categoryChilds?.parent?.parent?.slug
                   : categoryChilds?.parent?.slug
               }`"
               >{{
-                categoryChilds?.parent?.parent?.name?.ru
-                  ? categoryChilds?.parent?.parent?.name?.ru
-                  : categoryChilds?.parent?.name?.ru
+                categoryChilds?.parent?.parent?.name
+                  ? categoryChilds?.parent?.parent?.name
+                  : categoryChilds?.parent?.name
               }}</nuxt-link
             >
             <ul class="categories-list-inner">
@@ -126,9 +126,9 @@
                     )
                   "
                   >{{
-                    categoryChilds?.parent?.parent?.name?.ru
-                      ? categoryChilds?.parent?.name?.ru
-                      : categoryChilds?.name?.ru
+                    categoryChilds?.parent?.parent?.name
+                      ? categoryChilds?.parent?.name
+                      : categoryChilds?.name
                   }}</span
                 >
                 <div class="child-categories-list">
@@ -138,7 +138,7 @@
                     :class="{
                       'active-category': $route.params.index == categoryChilds?.slug,
                     }"
-                    >{{ categoryChilds?.name?.ru }}</nuxt-link
+                    >{{ categoryChilds?.name }}</nuxt-link
                   >
                   <nuxt-link
                     v-else
@@ -146,7 +146,7 @@
                     :to="`/categories-inner/${childs?.slug}`"
                     :class="{ 'active-category': $route.params.index == childs?.slug }"
                     :key="childs.id"
-                    >{{ childs?.name?.ru }}</nuxt-link
+                    >{{ childs?.name }}</nuxt-link
                   >
                 </div>
               </li>
@@ -177,7 +177,7 @@
             </div>
           </div>
           <div v-for="attribit in attributes" :key="attribit.id">
-            <h5>{{ attribit?.name?.ru }}</h5>
+            <h5>{{ attribit?.name }}</h5>
             <div class="categories-checkbox-list">
               <a-checkbox
                 class="filter-checkbox"
@@ -185,7 +185,7 @@
                 :key="option.id"
                 :checked="$route.query?.attributes?.includes(option.id)"
                 @change="onChange(option.id)"
-                >{{ option?.name?.ru }}
+                >{{ option?.name }}
               </a-checkbox>
 
               <span class="categories-list_show-more">Показать еще</span>
@@ -199,7 +199,7 @@
                 v-for="filterItem in filterOptions"
                 :key="filterItem.id"
                 @click="deleteFilterItem(filterItem.id)"
-                >{{ filterItem?.name?.ru }}<span v-html="filterX"></span
+                >{{ filterItem?.name }}<span v-html="filterX"></span
               ></span>
               <div
                 class="clear-filter"

@@ -37,7 +37,8 @@
 
       <div class="product_badges" v-if="product?.badges">
         <span>
-          <span v-if="product?.discount"
+          <span
+            v-if="product?.discount"
             class="product_discount_item"
             :style="{ background: 'red', color: '#fff' }"
             ><p>
@@ -53,7 +54,7 @@
           <span
             class="product_badges_item"
             :style="{ background: badge.background_color, color: badge.text_color }"
-            ><p>{{ badge?.name?.ru }}</p></span
+            ><p>{{ badge?.name }}</p></span
           >
         </span>
       </div>
@@ -62,8 +63,8 @@
       <nuxt-link :to="`/product/${product?.slug}`">
         <h3 class="product-card-title">
           {{
-            product?.info?.name?.ru
-              ? product?.info?.name?.ru
+            product?.info?.name
+              ? product?.info?.name
               : "Кир ювиш машинаси Samsung WW80K42E07SDLD"
           }}
         </h3>

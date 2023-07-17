@@ -28,10 +28,10 @@ export default {
     const swiper = new Swiper(`.posts-swiper`, {
       slidesPerView: 4,
       spaceBetween: 24,
-      effect: "flip",
-      flipEffect: {
-        slideShadows: false,
-      },
+      // effect: "flip",
+      // flipEffect: {
+      //   slideShadows: false,
+      // },
       modules: [Navigation, Pagination, EffectCards, Autoplay],
       pagination: false,
       autoplay: {
@@ -42,6 +42,7 @@ export default {
         prevEl: ".swiper-button-prev-posts",
       },
     });
+    swiper.on("activeIndexChange", (swiper) => {});
   },
 };
 </script>
@@ -49,6 +50,9 @@ export default {
 .posts-carousel {
   position: relative;
 }
+/* .swiper-slide {
+  width: auto !important;
+} */
 .posts-carousel .swiper-button-prev-posts,
 .posts-carousel .swiper-button-next-posts {
   position: absolute;
@@ -98,5 +102,6 @@ export default {
 
 .posts-swiper {
   overflow: hidden;
+  width: 100%;
 }
 </style>
