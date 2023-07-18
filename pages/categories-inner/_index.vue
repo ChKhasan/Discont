@@ -161,24 +161,30 @@
               :step="10000"
               :max="20000000"
               :min="10000"
+              v-model="sliderValue"
               :default-value="[10000, 20000000]"
               @change="onChangeSlider"
               @afterChange="onAfterChange"
             />
             <div class="filter-slider-inputs">
               <span>
-                <input type="text" placeholder="от" />
+                <input type="text" v-model="sliderValue[0]" placeholder="от" />
                 <span>₽</span>
               </span>
               <span>
-                <input type="text" placeholder="до" />
+                <input type="text" placeholder="до" v-model="sliderValue[1]" />
                 <span>₽</span>
               </span>
             </div>
           </div>
           <div v-for="attribit in attributes" :key="attribit.id">
-            <h5>{{ attribit?.name }}</h5>
-            <div class="categories-checkbox-list">
+            <h5 @click="atributDrop = attribit.id">
+              {{ attribit?.name }} <span v-html="arrow"></span>
+            </h5>
+            <div
+              class="categories-checkbox-list"
+              :class="{ 'height-0': atributDrop == attribit.id }"
+            >
               <a-checkbox
                 class="filter-checkbox"
                 v-for="option in attribit.options"
@@ -311,6 +317,7 @@ import CategoriesTabCarousel from "../../components/categories/categoriesInner-t
 export default {
   data() {
     return {
+      sliderValue: [10000, 10000000],
       arrow: require("../../assets/svg/dropdown-icon.svg?raw"),
       filterX: require("../../assets/svg/selected-filter-x.svg?raw"),
       value: "all",
@@ -318,6 +325,7 @@ export default {
       filterOptions: [],
       products: [],
       atr: [],
+      atributDrop: null,
       status: [
         {
           value: "all",

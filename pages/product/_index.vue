@@ -504,9 +504,9 @@
               label="Telefon raqamingiz"
               prop="phone_number"
             >
-              <the-mask
+              <a-input
                 v-model="formName.phone_number"
-                :mask="['+998 (##) ### ## ##', '+998 (##) ### ## ##']"
+                v-mask="'+998 ## ### ## ##'"
                 placeholder="+998 (__) ___ __ __"
               />
             </a-form-model-item>
@@ -569,11 +569,59 @@
           layout="vertical"
         >
           <a-form-item prop="comment">
-            <a-input v-model="formComment.comment" type="textarea" rows="5" />
+            <a-input v-model="formComment.comment" type="textarea" rows="10" />
           </a-form-item>
         </a-form-model>
       </div>
-      <div class="vmodal-btn comment-btn">Fikr qoldiring</div>
+      <div class="comment-modal-btns">
+        <div class="comment-rate">
+          <p>Sizning Bahoyingiz:</p>
+          <a-rate v-model="value" />
+        </div>
+        <div class="comment-btn comment-btn-close">Bekor qilish</div>
+        <div class="comment-btn">Fikr qoldiring</div>
+      </div>
+      <template slot="footer"> <h3></h3></template>
+    </a-modal>
+    <a-modal
+      v-model="visibleSuccess"
+      :body-style="{ padding: '32px', borderRadius: '14px' }"
+      centered
+      :closable="false"
+      width="671px"
+      @ok="handleOkSuccess"
+    >
+      <div class="vmodal-header">
+        <h5>Yangi sharh</h5>
+        <span @click="handleOkSuccess"
+          ><svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="20"
+            height="20"
+            viewBox="0 0 20 20"
+            fill="none"
+          >
+            <path
+              d="M17.9958 1.98438L2.00391 17.9762"
+              stroke="#1F8A70"
+              stroke-width="3.28586"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            />
+            <path
+              d="M18.0003 17.9861L1.99512 1.97754"
+              stroke="#1F8A70"
+              stroke-width="3.28586"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            /></svg
+        ></span>
+      </div>
+      <div class="vmodal-body comment-modal-success">
+        <img src="../../assets/images/modal-success.png" alt="" />
+        <p>Заказ оформлен. Мы свяжемся с вами в ближайшее время</p>
+      </div>
+      <div class="vmodal-btn" @click="handleOkSuccess">Yaxshi raxmat</div>
       <template slot="footer"> <h3></h3></template>
     </a-modal>
   </div>
@@ -597,7 +645,9 @@ export default {
 
   data() {
     return {
+      visibleSuccess: false,
       visibleComment: false,
+      value: 2,
       iconComp: require("../../assets/svg/toast-comparison.svg?raw"),
       compToast: false,
       value: 2,
@@ -705,6 +755,9 @@ export default {
   },
 
   methods: {
+    handleOkSuccess() {
+      this.visibleSuccess = false;
+    },
     handleOkComment() {
       this.visibleComment = false;
     },
@@ -740,7 +793,6 @@ export default {
     handleOkName() {
       this.visibleName = false;
     },
-    // postClickOrder
     async __POST_ORDER(formData) {
       try {
         const data = await this.$store.dispatch("fetchAuth/postClickOrder", formData);
@@ -1262,8 +1314,68 @@ tbody .img {
 .comment-btn {
   max-height: 52px;
   border-radius: 8px;
+  display: flex;
+  align-items: center;
+  color: #fff;
+  font-family: var(--SB_500);
+  font-size: 18px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 20px; /* 111.111% */
+  letter-spacing: -0.36px;
+  border-radius: 8px;
+  background: var(--color_green);
+  cursor: pointer;
+  justify-content: center;
+  min-height: 52px;
+}
+.comment-btn-close {
+  color: var(--color_dark_green);
+  background: #eaeaea;
 }
 .comment-modal-header {
   margin-bottom: 32px;
+}
+.comment-modal-btns {
+  display: grid;
+  grid-template-columns: 2fr 1fr 1fr;
+  grid-gap: 19px;
+  margin-top: 16px;
+}
+.comment-rate {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.comment-modal-btns div p {
+  color: var(--qora, #020105);
+  font-family: var(--SB_400);
+  font-size: 20px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 24px; /* 120% */
+  letter-spacing: -0.4px;
+}
+.comment-modal-success {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding-top: 20px;
+  padding-bottom: 16px;
+}
+.comment-modal-success img {
+  width: 143px;
+  height: 143px;
+}
+.comment-modal-success p {
+  color: var(--color_dark_green);
+  text-align: center;
+  font-family: var(--SB_500);
+  font-size: 18px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 150%; /* 27px */
+  margin-top: 24px;
+  width: 50%;
 }
 </style>

@@ -248,7 +248,7 @@
         <nuxt-link class="to-page-underline" to="/all-news">Все блоги</nuxt-link>
       </div>
       <PostsCarousel>
-        <div class="swiper-slide" v-for="post in [1, 2]" :key="post.id">
+        <div class="swiper-slide" v-for="post in posts" :key="post.id">
           <PostCard :post="post" />
         </div>
       </PostsCarousel>

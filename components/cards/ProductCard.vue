@@ -351,7 +351,8 @@
                   $store.commit('addToCart', {
                     obj: { id: product?.id, count: 1 },
                     name: 'cart',
-                  })
+                  }),
+                    (visibleBuy = false)
                 "
                 ><svg
                   xmlns="http://www.w3.org/2000/svg"
