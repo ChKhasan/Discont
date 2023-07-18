@@ -124,13 +124,13 @@
                     $router.push(
                       categoryChilds?.parent?.parent.id
                         ? `/categories-inner/${categoryChilds?.parent?.slug}`
-                        : `/categories-inner/${categoryChilds?.parent?.slug}`
+                        : `/categories-inner/${categoryChilds?.slug}`
                     )
                   "
                   >{{
                     categoryChilds?.parent?.parent?.name
-                      ? categoryChilds?.parent?.parent?.name
-                      : categoryChilds?.parent?.name
+                      ? categoryChilds?.parent?.name
+                      : categoryChilds?.name
                   }}</span
                 >
                 <div class="child-categories-list">

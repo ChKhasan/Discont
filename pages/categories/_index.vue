@@ -17,9 +17,12 @@
                   category?.slug == $route.params.index && category?.children.length > 0
                 "
               >
-                <nuxt-link to="/" v-for="childs in category?.children" :key="childs.id">{{
-                  childs?.name
-                }}</nuxt-link>
+                <nuxt-link
+                  :to="`/categories-inner/${childs?.slug}`"
+                  v-for="childs in category?.children"
+                  :key="childs.id"
+                  >{{ childs?.name }}</nuxt-link
+                >
               </div>
             </li>
           </ul>
@@ -36,7 +39,7 @@
             </div>
             <div class="d-flex categories-page-title">
               <MainTitle :title="categoryChilds?.name" />
-              <span>8 288 товаров</span>
+              <span>{{ categoryChilds?.children?.length }} категорий</span>
             </div>
           </div>
           <div class="categories-card-grid">
