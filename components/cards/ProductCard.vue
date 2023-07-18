@@ -81,8 +81,8 @@
       </span>
     </div>
     <div class="product-discount">
-      <p v-if="product?.price">
-        {{ product?.price }}
+      <p v-if="product?.discount">
+        {{ product?.price.replace(/\B(?=(\d{3})+(?!\d))/g, " ") }}
         <!-- .slice(0, product?.price?.indexOf("."))
             .replace(".", ",")
             .replace(/\B(?=(\d{3})+(?!\d))/g, " ") -->
@@ -99,16 +99,7 @@
         >{{ $store.state.cart.find((item) => item.id == product?.id)?.count }}
         <span @click="$store.commit('productCountUp', { id: product?.id })">+</span>
       </div>
-      <div
-        class="to-basket-btn"
-        v-else
-        @click="
-          $store.commit('addToCart', {
-            obj: { id: product?.id, count: 1 },
-            name: 'cart',
-          })
-        "
-      >
+      <div class="to-basket-btn" v-else @click="visibleBuy = true">
         <span>В корзину</span>В корзину
       </div>
     </div>
@@ -261,7 +252,7 @@
         </div>
       </div>
     </a-modal>
-    <!-- <a-modal
+    <a-modal
       v-model="visibleBuy"
       :body-style="{ padding: '24px', borderRadius: '14px', minHeight: '613px' }"
       centered
@@ -358,7 +349,7 @@
                 }"
                 @click="
                   $store.commit('addToCart', {
-                    obj: { id: product.id, count: 1 },
+                    obj: { id: product?.id, count: 1 },
                     name: 'cart',
                   })
                 "
@@ -406,7 +397,7 @@
           </div>
         </div>
       </div>
-    </a-modal> -->
+    </a-modal>
   </div>
 </template>
 <script>

@@ -98,14 +98,14 @@
             <h5>Категория</h5>
             <nuxt-link
               :to="`/categories/${
-                categoryChilds?.parent?.parent?.name
+                categoryChilds?.parent?.parent?.name?.ru
                   ? categoryChilds?.parent?.parent?.slug
                   : categoryChilds?.parent?.slug
               }`"
               >{{
-                categoryChilds?.parent?.parent?.name
-                  ? categoryChilds?.parent?.parent?.name
-                  : categoryChilds?.parent?.name
+                categoryChilds?.parent?.parent?.name?.ru
+                  ? categoryChilds?.parent?.parent?.name?.ru
+                  : categoryChilds?.parent?.name?.ru
               }}</nuxt-link
             >
             <ul class="categories-list-inner">
@@ -257,9 +257,8 @@
               DISKONT (ТАШКЕНТ, УЗБЕКИСТАН) ПО ВЫГОДНЫМ ЦЕНАМ ОТ ПРОИЗВОДИТЕЛЯ.
             </h5>
             <p>
-              DISKONT предлагает: мебель для гостиной, шкафы и комоды, кровати и
-              матрасы, мягкую мебель, стулья, кресла и столы, садовую мебель и мебель для
-              офиса.
+              DISKONT предлагает: мебель для гостиной, шкафы и комоды, кровати и матрасы,
+              мягкую мебель, стулья, кресла и столы, садовую мебель и мебель для офиса.
             </p>
             <p>
               В нашем интернет-магазине представлен широкий ассортимент предметов мебели

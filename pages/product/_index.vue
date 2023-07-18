@@ -126,10 +126,12 @@
               </p>
             </div>
             <div class="colors">
-              <p class="lil">Цвета</p>
+              <p class="lil">Цвет</p>
               <div class="grid">
-                <div class="color"></div>
-                <div class="color"></div>
+                <div class="color">
+                  <span></span>
+                </div>
+                <div class="color"><span></span></div>
               </div>
             </div>
             <div
@@ -243,59 +245,40 @@
       </div>
       <div class="tabs">
         <div class="butns">
-          <button
-            :class="{ active: aboutHandle }"
-            @click="
-              (aboutHandle = true),
-                (specsHandle = false),
-                (locationsHandle = false),
-                (reviewsHandle = false)
-            "
-          >
+          <button :class="{ active: tabHandle == 'desc' }" @click="tabHandle = 'desc'">
             Mahsulot haqida
           </button>
           <button
-            :class="{ active: specsHandle }"
-            @click="
-              (specsHandle = true),
-                (aboutHandle = false),
-                (locationsHandle = false),
-                (reviewsHandle = false)
-            "
+            :class="{ active: tabHandle == 'characteristic' }"
+            @click="tabHandle = 'characteristic'"
           >
             Xarakteristikalari
           </button>
           <button
-            :class="{ active: locationsHandle }"
-            @click="
-              (locationsHandle = true),
-                (specsHandle = false),
-                (aboutHandle = false),
-                (reviewsHandle = false)
-            "
+            :class="{ active: tabHandle == 'location' }"
+            @click="tabHandle = 'location'"
           >
             Дўконларда мавжудлиги
           </button>
           <button
-            :class="{ active: reviewsHandle }"
-            @click="
-              (reviewsHandle = true),
-                (specsHandle = false),
-                (locationsHandle = false),
-                (aboutHandle = false)
-            "
+            :class="{ active: tabHandle == 'comment' }"
+            @click="tabHandle = 'comment'"
           >
             Мижозларнинг шарҳлари
           </button>
         </div>
         <div class="contents">
-          <div :class="{ active: aboutHandle }" class="about">
+          <div v-if="tabHandle == 'desc'" class="about">
             <div class="about__wrap">
               <h4 class="paragraph">Описание</h4>
               <p v-html="product?.info?.desc"></p>
             </div>
           </div>
-          <div :class="{ active: specsHandle }" class="specifications">
+          <div
+            :class="{ active: specsHandle }"
+            class="specifications"
+            v-if="tabHandle == 'characteristic'"
+          >
             <div class="spec__wrap">
               <div class="items">
                 <h4 class="paragraph">Основные характеристики</h4>
@@ -329,7 +312,11 @@
               </div>
             </div>
           </div>
-          <div :class="{ active: locationsHandle }" class="locations">
+          <div
+            :class="{ active: locationsHandle }"
+            class="locations"
+            v-if="tabHandle == 'location'"
+          >
             <table>
               <thead>
                 <tr>
@@ -406,7 +393,7 @@
               </tbody>
             </table>
           </div>
-          <div :class="{ active: reviewsHandle }" class="reviews">
+          <div class="reviews" v-if="tabHandle == 'comment'">
             <div class="reviews__left">
               <div class="review">
                 <p class="name">Abdulloh Aliyev</p>
@@ -438,7 +425,9 @@
                   <img src="@/assets/images/like.svg" alt="" />
                   O’z fikr va izohlaringizni qoldiring
                 </p>
-                <button class="leave__btn">Baho qoldirish</button>
+                <button class="leave__btn" @click="visibleComment = true">
+                  Baho qoldirish
+                </button>
               </div>
               <div class="rating">
                 <img src="@/assets/images/cheat.png" alt="" />
@@ -538,6 +527,55 @@
         <span v-html="iconComp"></span>
       </Vnotification>
     </Transition>
+    <a-modal
+      v-model="visibleComment"
+      :body-style="{ padding: '24px', borderRadius: '14px' }"
+      centered
+      :closable="false"
+      width="804px"
+      @ok="handleOkComment"
+    >
+      <div class="vmodal-header comment-modal-header">
+        <h5>Yangi sharh</h5>
+        <span @click="handleOkComment"
+          ><svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="20"
+            height="20"
+            viewBox="0 0 20 20"
+            fill="none"
+          >
+            <path
+              d="M17.9958 1.98438L2.00391 17.9762"
+              stroke="#1F8A70"
+              stroke-width="3.28586"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            />
+            <path
+              d="M18.0003 17.9861L1.99512 1.97754"
+              stroke="#1F8A70"
+              stroke-width="3.28586"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            /></svg
+        ></span>
+      </div>
+      <div class="vmodal-body">
+        <a-form-model
+          :model="formComment"
+          ref="ruleFormComment"
+          :rules="rulesComment"
+          layout="vertical"
+        >
+          <a-form-item prop="comment">
+            <a-input v-model="formComment.comment" type="textarea" rows="5" />
+          </a-form-item>
+        </a-form-model>
+      </div>
+      <div class="vmodal-btn comment-btn">Fikr qoldiring</div>
+      <template slot="footer"> <h3></h3></template>
+    </a-modal>
   </div>
 </template>
 
@@ -559,6 +597,7 @@ export default {
 
   data() {
     return {
+      visibleComment: false,
       iconComp: require("../../assets/svg/toast-comparison.svg?raw"),
       compToast: false,
       value: 2,
@@ -566,15 +605,24 @@ export default {
       product: {},
       productCharacteristic: [],
       productAttributes: [],
-      aboutHandle: true,
-      specsHandle: false,
-      locationsHandle: false,
-      reviewsHandle: false,
+      tabHandle: "desc",
       productsOthers: [],
+      formComment: {
+        comment: "",
+      },
       formName: {
         name: "",
         phone_number: "",
         product_id: null,
+      },
+      rulesComment: {
+        comment: [
+          {
+            required: true,
+            message: "This field is required",
+            trigger: "change",
+          },
+        ],
       },
       rulesName: {
         name: [
@@ -657,6 +705,9 @@ export default {
   },
 
   methods: {
+    handleOkComment() {
+      this.visibleComment = false;
+    },
     toastClose() {
       this.compToast = false;
     },
@@ -670,7 +721,7 @@ export default {
           : product?.price;
       // .replace(".", ",")
       // .replace(/\B(?=(\d{3})+(?!\d))/g, " ");
-      return `${price}`.replace(/\B(?=(\d{3})+(?!\d))/g, " ");;
+      return `${price}`.replace(/\B(?=(\d{3})+(?!\d))/g, " ");
     },
     submitName() {
       const data = {
@@ -900,10 +951,17 @@ export default {
   padding: 4px;
   border: 1px solid rgba(0, 0, 0, 0.1);
   border-radius: 6px;
-  background: black;
   cursor: pointer;
+  padding: 4px;
 }
-.color:nth-child(2) {
+.color span {
+  background: black;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  border-radius: 4.854px;
+}
+.color:nth-child(2) span {
   background: lightpink;
 }
 .variation {
@@ -1200,5 +1258,12 @@ tbody .img {
 }
 .app {
   margin-bottom: 120px;
+}
+.comment-btn {
+  max-height: 52px;
+  border-radius: 8px;
+}
+.comment-modal-header {
+  margin-bottom: 32px;
 }
 </style>
