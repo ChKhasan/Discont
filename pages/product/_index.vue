@@ -111,7 +111,7 @@
                 :key="characteristic.id"
               >
                 <p class="question">
-                  {{ characteristic?.characteristic?.name }}
+                  {{ characteristic?.characteristic?.name?.ru }}
                 </p>
                 <p class="answer">{{ characteristic?.name }}</p>
               </div>
