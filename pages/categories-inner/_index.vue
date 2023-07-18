@@ -96,7 +96,11 @@
         <div class="categories-filter-list">
           <div class="categories-list-inner">
             <h5>Категория</h5>
-            <nuxt-link
+
+            <nuxt-link :to="`/categories/${findCategoryParent(categoryChilds)?.slug}`">{{
+              findCategoryParent(categoryChilds)?.name
+            }}</nuxt-link>
+            <!-- <nuxt-link
               :to="`/categories/${
                 categoryChilds?.parent?.parent?.name?.ru
                   ? categoryChilds?.parent?.parent?.slug
@@ -107,7 +111,7 @@
                   ? categoryChilds?.parent?.parent?.name?.ru
                   : categoryChilds?.parent?.name?.ru
               }}</nuxt-link
-            >
+            > -->
             <ul class="categories-list-inner">
               <li>
                 <span
@@ -118,22 +122,20 @@
                   }"
                   @click="
                     $router.push(
-                      `/categories-inner/${
-                        categoryChilds?.parent?.slug
-                          ? categoryChilds?.parent?.slug
-                          : categoryChilds?.slug
-                      }`
+                      categoryChilds?.parent?.parent.id
+                        ? `/categories-inner/${categoryChilds?.parent?.slug}`
+                        : `/categories-inner/${categoryChilds?.parent?.slug}`
                     )
                   "
                   >{{
                     categoryChilds?.parent?.parent?.name
-                      ? categoryChilds?.parent?.name
-                      : categoryChilds?.name
+                      ? categoryChilds?.parent?.parent?.name
+                      : categoryChilds?.parent?.name
                   }}</span
                 >
                 <div class="child-categories-list">
                   <nuxt-link
-                    v-if="categoryChilds?.children.length === 0"
+                    v-if="categoryChilds?.parent?.parent?.name"
                     :to="`/categories-inner/${categoryChilds?.slug}`"
                     :class="{
                       'active-category': $route.params.index == categoryChilds?.slug,
@@ -151,6 +153,7 @@
                 </div>
               </li>
             </ul>
+
             <span class="categories-list_show-more">Показать еще</span>
           </div>
           <div class="filter-range">
@@ -405,6 +408,26 @@ export default {
         query: {},
       });
       this.filterOptions = [];
+    },
+    findCategoryParent(targetCategory) {
+      let currentCat = targetCategory;
+      if (currentCat.parent == null) {
+        return currentCat;
+      } else {
+        return this.findCategoryParent(currentCat.parent);
+      }
+    },
+    findCategoryParent1(targetCategory) {
+      let currentCat = targetCategory;
+      if (currentCat?.parent?.parent == null) {
+        return currentCat;
+      }
+    },
+    findCategoryParent2(targetCategory) {
+      let currentCat = targetCategory;
+      if (currentCat?.parent?.parent) {
+        return currentCat;
+      }
     },
     async __GET_PRODUCTS() {
       const data = await this.$axios.$get(`/categories/${this.$route.params.index}`, {
