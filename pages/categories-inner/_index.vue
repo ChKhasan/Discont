@@ -135,7 +135,10 @@
                 >
                 <div class="child-categories-list">
                   <nuxt-link
-                    v-if="categoryChilds?.parent?.parent?.name"
+                    v-if="
+                      categoryChilds?.parent?.parent?.name &&
+                      categoryChilds?.children.length == 0
+                    "
                     :to="`/categories-inner/${categoryChilds?.slug}`"
                     :class="{
                       'active-category': $route.params.index == categoryChilds?.slug,
@@ -143,7 +146,7 @@
                     >{{ categoryChilds?.name }}</nuxt-link
                   >
                   <nuxt-link
-                    v-else
+                    v-if="categoryChilds?.children.length > 0"
                     v-for="childs in categoryChilds?.children"
                     :to="`/categories-inner/${childs?.slug}`"
                     :class="{ 'active-category': $route.params.index == childs?.slug }"
