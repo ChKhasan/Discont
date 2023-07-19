@@ -17,12 +17,25 @@
                   category?.slug == $route.params.index && category?.children.length > 0
                 "
               >
-                <nuxt-link
-                  :to="`/categories-inner/${childs?.slug}`"
+                <span
                   v-for="childs in category?.children"
                   :key="childs.id"
-                  >{{ childs?.name }}</nuxt-link
+                  @click="
+                    $router.push({
+                      path: `/categories-inner/${childs.slug}`,
+                      params: { index: childs.slug },
+                    })
+                  "
+                  :custom="true"
                 >
+                  {{ childs?.name }}</span
+                >
+                <!-- <a
+                  v-for="childs in category?.children"
+                  :key="childs.id"
+                  :href="`/categories-inner/${childs?.slug}`"
+                  >{{ childs?.name }}</a
+                > -->
               </div>
             </li>
           </ul>
@@ -139,7 +152,11 @@ export default {
       products,
     };
   },
-
+  methods: {
+    test() {
+      console.log("auuuuggghhh");
+    },
+  },
   components: {
     MainTitle,
     CategoriesCard,

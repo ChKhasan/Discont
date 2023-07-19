@@ -281,7 +281,14 @@
 .categories-checkbox-list {
   position: relative;
   margin-bottom: 31px;
-  transition: height 0.3s;
+  max-height: 0;
+  transition: max-height 0.25s ease-out;
+  overflow: hidden;
+}
+.height-0 {
+  position: relative;
+  max-height: 100px;
+  transition: max-height 0.25s ease-in;
 }
 .filter-slider-inputs {
   display: grid;

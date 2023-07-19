@@ -67,10 +67,9 @@ ul {
 }
 .height-0 {
   position: relative;
-  max-height: 1000px;
-  height: 1000px;
-  /* overflow: hidden; */
-  transition: height 0.4s ease-out;
+  overflow: hidden;
+  max-height: 0;
+  transition: max-height 0.15s ease-out;
 }
 .bg-grey {
   background: #fbfbfb;

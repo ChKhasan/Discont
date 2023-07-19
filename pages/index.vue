@@ -193,7 +193,7 @@
         </ProductCarousel>
       </div>
     </div> -->
-    <div class="container_xl">
+    <div class="container_xl" v-if="brands?.length > 0">
       <MainTitle title="Top brendlar" />
       <div class="mb-120">
         <BrandCarousel>
@@ -242,7 +242,7 @@
         </div>
       </div>
     </div>
-    <div class="container_xl mb-120">
+    <div class="container_xl mb-120" v-if="posts?.length > 0">
       <div class="d-flex justify-content-between align-items-end">
         <MainTitle title="Yangiliklar va bloglar" />
         <nuxt-link class="to-page-underline" to="/all-news">Все блоги</nuxt-link>

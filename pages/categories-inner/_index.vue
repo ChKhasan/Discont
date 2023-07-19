@@ -142,6 +142,7 @@
                       <nuxt-link
                         v-if="middCategory?.children.length > 0"
                         v-for="childs in middCategory?.children"
+                        
                         :to="`/categories-inner/${childs?.slug}`"
                         :class="{
                           'active-category': $route.params.index == childs?.slug,
@@ -229,7 +230,7 @@
             </h5>
             <div
               class="categories-checkbox-list"
-              :class="{ 'height-0': atributDrop == attribit.id }"
+              :class="{ 'height-0': atributDrop != attribit.id }"
             >
               <a-checkbox
                 class="filter-checkbox"
@@ -588,5 +589,4 @@ export default {
 .text-test {
   color: red;
 }
-
 </style>
