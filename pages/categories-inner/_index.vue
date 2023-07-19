@@ -13,7 +13,7 @@
           <MainTitle :title="categoryChilds?.name" />
           <span>8 288 товаров</span>
         </div>
-        <div>
+        <!-- <div>
           <CategoriesTabCarousel>
             <div class="swiper-slide d-inline">
               <span class="categories-tab-link">Ayollar uchun smartfonlar</span>
@@ -71,7 +71,7 @@
               <span class="categories-tab-link">с большой памятью</span>
             </div>
           </CategoriesTabCarousel>
-        </div>
+        </div> -->
         <div class="mt-4">
           <CategoriesInnerBannerCarousel>
             <div class="swiper-slide">
@@ -96,66 +96,88 @@
         <div class="categories-filter-list">
           <div class="categories-list-inner">
             <h5>Категория</h5>
-
-            <nuxt-link :to="`/categories/${findCategoryParent(categoryChilds)?.slug}`">{{
-              findCategoryParent(categoryChilds)?.name
-            }}</nuxt-link>
-            <!-- <nuxt-link
-              :to="`/categories/${
-                categoryChilds?.parent?.parent?.name?.ru
-                  ? categoryChilds?.parent?.parent?.slug
-                  : categoryChilds?.parent?.slug
-              }`"
-              >{{
-                categoryChilds?.parent?.parent?.name?.ru
-                  ? categoryChilds?.parent?.parent?.name?.ru
-                  : categoryChilds?.parent?.name?.ru
-              }}</nuxt-link
-            > -->
-            <ul class="categories-list-inner">
-              <li>
-                <span
-                  :class="{
-                    'active-category':
-                      $route.params.index ==
-                      (!categoryChilds?.parent?.parent?.slug && categoryChilds.slug),
-                  }"
-                  @click="
-                    $router.push(
-                      categoryChilds?.parent?.parent.id
-                        ? `/categories-inner/${categoryChilds?.parent?.slug}`
-                        : `/categories-inner/${categoryChilds?.slug}`
-                    )
-                  "
-                  >{{
-                    categoryChilds?.parent?.parent?.name
-                      ? categoryChilds?.parent?.name
-                      : categoryChilds?.name
-                  }}</span
+            <div v-for="firstCategory in allCategories" :key="firstCategory?.id">
+              <nuxt-link :to="`/categories-inner/${firstCategory?.slug}`">{{
+                firstCategory?.name
+              }}</nuxt-link>
+              <ul class="categories-list-inner" v-if="firstCategory?.children.length > 0">
+                <li
+                  v-for="middCategory in firstCategory?.children"
+                  :key="middCategory?.id"
                 >
-                <div class="child-categories-list">
-                  <nuxt-link
-                    v-if="
-                      categoryChilds?.parent?.parent?.name &&
-                      categoryChilds?.children.length == 0
-                    "
-                    :to="`/categories-inner/${categoryChilds?.slug}`"
+                  <span
                     :class="{
-                      'active-category': $route.params.index == categoryChilds?.slug,
+                      'active-category': $route.params.index == middCategory?.slug,
                     }"
-                    >{{ categoryChilds?.name }}</nuxt-link
+                    @click="$router.push(`/categories-inner/${middCategory?.slug}`)"
+                    >{{ middCategory?.name }}</span
                   >
-                  <nuxt-link
-                    v-if="categoryChilds?.children.length > 0"
-                    v-for="childs in categoryChilds?.children"
-                    :to="`/categories-inner/${childs?.slug}`"
-                    :class="{ 'active-category': $route.params.index == childs?.slug }"
-                    :key="childs.id"
-                    >{{ childs?.name }}</nuxt-link
+                  <!-- <div class="child-categories-list">
+                    <nuxt-link
+                      v-if="
+                        categoryChilds?.parent?.parent?.name &&
+                        categoryChilds?.children.length == 0
+                      "
+                      :to="`/categories-inner/${categoryChilds?.slug}`"
+                      :class="{
+                        'active-category': $route.params.index == categoryChilds?.slug,
+                      }"
+                      >{{ categoryChilds?.name }}</nuxt-link
+                    >
+                    <nuxt-link
+                      v-if="categoryChilds?.children.length > 0"
+                      v-for="childs in categoryChilds?.children"
+                      :to="`/categories-inner/${childs?.slug}`"
+                      :class="{ 'active-category': $route.params.index == childs?.slug }"
+                      :key="childs.id"
+                      >{{ childs?.name }}</nuxt-link
+                    >
+                  </div> -->
+                </li>
+                <!-- <li>
+                  <span
+                    :class="{
+                      'active-category':
+                        $route.params.index ==
+                        (!categoryChilds?.parent?.parent?.slug && categoryChilds.slug),
+                    }"
+                    @click="
+                      $router.push(
+                        categoryChilds?.parent?.parent.id
+                          ? `/categories-inner/${categoryChilds?.parent?.slug}`
+                          : `/categories-inner/${categoryChilds?.slug}`
+                      )
+                    "
+                    >{{
+                      categoryChilds?.parent?.parent?.name
+                        ? categoryChilds?.parent?.name
+                        : categoryChilds?.name
+                    }}</span
                   >
-                </div>
-              </li>
-            </ul>
+                  <div class="child-categories-list">
+                    <nuxt-link
+                      v-if="
+                        categoryChilds?.parent?.parent?.name &&
+                        categoryChilds?.children.length == 0
+                      "
+                      :to="`/categories-inner/${categoryChilds?.slug}`"
+                      :class="{
+                        'active-category': $route.params.index == categoryChilds?.slug,
+                      }"
+                      >{{ categoryChilds?.name }}</nuxt-link
+                    >
+                    <nuxt-link
+                      v-if="categoryChilds?.children.length > 0"
+                      v-for="childs in categoryChilds?.children"
+                      :to="`/categories-inner/${childs?.slug}`"
+                      :class="{ 'active-category': $route.params.index == childs?.slug }"
+                      :key="childs.id"
+                      >{{ childs?.name }}</nuxt-link
+                    >
+                  </div>
+                </li> -->
+              </ul>
+            </div>
 
             <span class="categories-list_show-more">Показать еще</span>
           </div>
@@ -353,7 +375,12 @@ export default {
     };
   },
   async asyncData({ $axios, params, query, store }) {
-    const [categoriesData, categoryChildsData, productsData] = await Promise.all([
+    const [
+      categoriesData,
+      categoryChildsData,
+      productsData,
+      allCategoriesData,
+    ] = await Promise.all([
       $axios.$get(`/categories`, {
         params: {
           limit: 10,
@@ -361,7 +388,12 @@ export default {
       }),
       $axios.$get(`/categories/${params.index}`),
       store.dispatch("fetchProducts/getProducts", {
-        limit: 12,
+        page: 1,
+      }),
+      $axios.$get(`/categories`, {
+        params: {
+          all: 1,
+        },
       }),
     ]);
     const categories = categoriesData?.categories?.data;
@@ -382,6 +414,8 @@ export default {
     }
     const allInfo = categoryChildsData;
     const productsOthers = productsData?.products?.data;
+    const allCategories = allCategoriesData?.categories;
+    console.log("all", allCategories);
     return {
       categoryChilds,
       products,
@@ -391,6 +425,7 @@ export default {
       filterOptions,
       categories,
       productsOthers,
+      allCategories,
     };
   },
 

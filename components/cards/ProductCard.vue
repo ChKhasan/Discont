@@ -82,7 +82,7 @@
     </div>
     <div class="product-discount">
       <p v-if="product?.discount">
-        {{ product?.price.replace(/\B(?=(\d{3})+(?!\d))/g, " ") }}
+        {{ product?.real_price.replace(/\B(?=(\d{3})+(?!\d))/g, " ") }}
         <!-- .slice(0, product?.price?.indexOf("."))
             .replace(".", ",")
             .replace(/\B(?=(\d{3})+(?!\d))/g, " ") -->
@@ -436,9 +436,10 @@ export default {
       let price =
         product?.discount?.amount || product?.discount?.percent
           ? product?.discount?.amount
-            ? product?.price - product?.discount?.amount
-            : product?.price - (product?.price / 100) * product?.discount?.percent
-          : product?.price;
+            ? product?.real_price - product?.discount?.amount
+            : product?.real_price -
+              (product?.real_price / 100) * product?.discount?.percent
+          : product?.real_price;
       // .replace(".", ",")
       // .replace(/\B(?=(\d{3})+(?!\d))/g, " ");
       return `${price}`.replace(/\B(?=(\d{3})+(?!\d))/g, " ");
