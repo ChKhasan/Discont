@@ -447,26 +447,6 @@ export default {
       });
       this.filterOptions = [];
     },
-    findCategoryParent(targetCategory) {
-      let currentCat = targetCategory;
-      if (currentCat.parent == null) {
-        return currentCat;
-      } else {
-        return this.findCategoryParent(currentCat.parent);
-      }
-    },
-    findCategoryParent1(targetCategory) {
-      let currentCat = targetCategory;
-      if (currentCat?.parent?.parent == null) {
-        return currentCat;
-      }
-    },
-    findCategoryParent2(targetCategory) {
-      let currentCat = targetCategory;
-      if (currentCat?.parent?.parent) {
-        return currentCat;
-      }
-    },
     async __GET_PRODUCTS() {
       const data = await this.$axios.$get(`/categories/${this.$route.params.index}`, {
         params: { ...this.$route.query },
@@ -501,14 +481,20 @@ export default {
       }
     },
     onChangeSlider(val) {},
+
     async deleteFilterItem(id) {
       let atr = await this.$route.query.attributes.split(",");
       atr.splice(atr.indexOf(`${id}`), 1);
       let query = { ...this.$route.query, attributes: atr.join(",") };
+
       await this.$router.replace({
         path: `/categories-inner/${this.$route.params.index}`,
         query: query,
       });
+      if (!Object.keys(query).includes("attributes")) {
+        this.filterOptions = [];
+        console.log(this.filterOptions);
+      }
     },
     async onAfterChange(value) {
       if (
@@ -527,6 +513,7 @@ export default {
   },
   watch: {
     filterAtributs(val) {
+      if (val == 0) this.filterOptions = [];
       this.__GET_PRODUCTS();
       if (val == 0 && this.$route.query.attributes == "") {
         let query = { ...this.$route.query };

@@ -386,8 +386,6 @@ export default {
     this.$store.dispatch("fetchBrands/getBrands", {
       limit: 10,
     });
-
-    this.$axios.$get("https://pga.pythonanywhere.com/api/news/");
   },
   components: {
     BannerCarousel,
