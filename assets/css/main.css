@@ -321,3 +321,6 @@ ul {
   justify-content: center;
   flex-direction: column;
 }
+.first-category {
+  color: #000;
+}

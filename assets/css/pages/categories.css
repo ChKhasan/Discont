@@ -135,8 +135,14 @@
   align-items: center;
   text-align: right;
   letter-spacing: -0.28px;
-  color: #9a9a9a;
   margin-bottom: 12px;
+}
+.categories-list-inner a {
+  color: #000;
+}
+.child-categories-list a,
+.categories-list a {
+  color: #9a9a9a;
 }
 .categories-tab-link {
   background: #f6f7f9;

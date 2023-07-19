@@ -97,10 +97,27 @@
           <div class="categories-list-inner">
             <h5>Категория</h5>
             <div v-for="firstCategory in allCategories" :key="firstCategory?.id">
-              <nuxt-link :to="`/categories-inner/${firstCategory?.slug}`">{{
-                firstCategory?.name
-              }}</nuxt-link>
-              <ul class="categories-list-inner" v-if="firstCategory?.children.length > 0">
+              <nuxt-link
+                :to="`/categories-inner/${firstCategory?.slug}`"
+                :class="{
+                  'active-category': $route.params.index == firstCategory?.slug,
+                }"
+                class="first-category"
+                >{{ firstCategory?.name }}</nuxt-link
+              >
+              <ul
+                class="categories-list-inner"
+                v-if="
+                  (firstCategory?.children.length > 0 &&
+                    firstCategory?.slug == $route.params.index) ||
+                  firstCategory.children.find(
+                    (item) => item.slug == $route.params.index
+                  ) ||
+                  firstCategory.children.find((item) =>
+                    item.children.find((elem) => elem.slug == $route.params.index)
+                  )
+                "
+              >
                 <li
                   v-for="middCategory in firstCategory?.children"
                   :key="middCategory?.id"
@@ -112,27 +129,24 @@
                     @click="$router.push(`/categories-inner/${middCategory?.slug}`)"
                     >{{ middCategory?.name }}</span
                   >
-                  <!-- <div class="child-categories-list">
+                  <div
+                    class="child-categories-list"
+                    v-if="
+                      middCategory?.slug == $route.params.index ||
+                      middCategory?.children.find(
+                        (item) => item.slug == $route.params.index
+                      )
+                    "
+                  >
                     <nuxt-link
-                      v-if="
-                        categoryChilds?.parent?.parent?.name &&
-                        categoryChilds?.children.length == 0
-                      "
-                      :to="`/categories-inner/${categoryChilds?.slug}`"
-                      :class="{
-                        'active-category': $route.params.index == categoryChilds?.slug,
-                      }"
-                      >{{ categoryChilds?.name }}</nuxt-link
-                    >
-                    <nuxt-link
-                      v-if="categoryChilds?.children.length > 0"
-                      v-for="childs in categoryChilds?.children"
+                      v-if="middCategory?.children.length > 0"
+                      v-for="childs in middCategory?.children"
                       :to="`/categories-inner/${childs?.slug}`"
                       :class="{ 'active-category': $route.params.index == childs?.slug }"
                       :key="childs.id"
                       >{{ childs?.name }}</nuxt-link
                     >
-                  </div> -->
+                  </div>
                 </li>
                 <!-- <li>
                   <span
@@ -562,7 +576,7 @@ export default {
 }
 
 .active-category {
-  color: #000 !important;
+  color: var(--color_green) !important;
 }
 .text-test {
   color: red;
