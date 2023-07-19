@@ -279,6 +279,7 @@
   margin-bottom: 27px;
 }
 .categories-checkbox-list {
+  position: relative;
   margin-bottom: 31px;
   transition: height 0.3s;
 }
