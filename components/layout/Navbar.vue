@@ -95,7 +95,7 @@
                       'catalog-menu-list-active': activeCategory?.id == category?.id,
                     }"
                   >
-                    {{ category?.name?.ru
+                    {{ category?.name
                     }}<span v-if="activeCategory?.id == category?.id"
                       ><svg
                         xmlns="http://www.w3.org/2000/svg"
@@ -114,7 +114,7 @@
               </div>
               <div class="catalog-menu-body">
                 <div class="d-flex categories-page-title mt-0 mb-5 align-items-end">
-                  <MainTitle :title="activeCategory?.name?.ru" />
+                  <MainTitle :title="activeCategory?.name" />
                   <span class="d-flex align-items-end">8 288 товаров</span>
                 </div>
                 <div class="catalog-menu-items">
@@ -122,13 +122,15 @@
                     v-for="categoryChild in activeCategory?.children"
                     :key="categoryChild?.id"
                   >
-                    <h4>{{ categoryChild?.name?.ru }}</h4>
+                    <h4 @click="$router.push(`/categories-inner/${categoryChild?.slug}`)">
+                      {{ categoryChild?.name }}
+                    </h4>
                     <nuxt-link
                       :to="`/categories-inner/${lastChild?.slug}`"
                       v-for="lastChild in categoryChild?.children"
                       :key="lastChild?.id"
                     >
-                      {{ lastChild?.name?.ru }}
+                      {{ lastChild?.name }}
                     </nuxt-link>
                   </ul>
                   <!-- <ul v-for="categoryChild in activeCategory?.children" :key="categoryChild?.id">
@@ -1033,7 +1035,7 @@ export default {
   height: 100%;
 }
 .catalog-menu-list {
-  max-width: 253px;
+  min-width: 253px;
   margin-right: 28px;
 }
 .catalog-menu-list ul {
@@ -1052,16 +1054,23 @@ export default {
   letter-spacing: 0.195536px;
   color: #5f5f5f;
   padding: 12px;
+  /* padding-right: 20px; */
   border-radius: 11.7321px;
   cursor: pointer;
   transition: 0.3s;
   display: flex;
   justify-content: space-between;
+  position: relative;
+  white-space: nowrap;
 }
 
 .catalog-menu-list-active {
   background: #f7f7f7;
   color: #1f8a70 !important;
+}
+.catalog-menu-list-active span {
+  /* position: absolute; */
+  /* right: 12px; */
 }
 .catalog-menu-list ul li:hover {
   background: #f7f7f7;
@@ -1127,6 +1136,12 @@ export default {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   grid-gap: 60px;
+  overflow-y: scroll;
+  height: calc(75vh - 100px);
+  padding-bottom: 100px;
+}
+.catalog-menu-items::-webkit-scrollbar {
+  display: none;
 }
 .catalog-menu-items ul {
   display: flex;
@@ -1142,6 +1157,11 @@ export default {
   align-items: center;
   letter-spacing: 0.2px;
   color: #001a34;
+  cursor: pointer;
+  transition: 0.3s;
+}
+.catalog-menu-items ul h4:hover {
+  color: var(--color_dark_green);
 }
 .catalog-menu-items ul a {
   font-family: var(--SB_400);
@@ -1154,6 +1174,9 @@ export default {
   letter-spacing: 0.2px;
   color: #5f5f5f;
   margin-top: 8px;
+}
+.catalog-menu-items ul a:hover {
+  color: var(--color_green);
 }
 .vmodal-anim-header {
   height: 285px;
