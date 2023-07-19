@@ -172,7 +172,7 @@
             <div class="product-modal-price-block">
               <div class="cardo">
                 <div class="cardo__header">
-                  <div class="discount">
+                  <div class="discount" v-if="product?.discount">
                     <p class="tag">-12%</p>
                     <p class="dis__price">10 540 000 so’m</p>
                     <p class="dis__txt">Chegirma narxida</p>
@@ -180,7 +180,7 @@
 
                   <p class="price">
                     {{
-                      `${product?.price}`
+                      `${product?.real_price}`
                         .replace(".", ",")
                         .replace(/\B(?=(\d{3})+(?!\d))/g, " ")
                     }}
@@ -403,8 +403,6 @@
 </template>
 <script>
 import "swiper/swiper-bundle.min.css";
-const baseUrl =
-  "https://raw.githubusercontent.com/vueComponent/ant-design-vue/master/components/vc-slick/assets/img/react-slick/";
 export default {
   props: ["product"],
   data() {
@@ -412,7 +410,6 @@ export default {
       visible: false,
       byMode: false,
       visibleBuy: false,
-      baseUrl,
       star: require("../../assets/svg/product-star.svg?raw"),
       coin: require("../../assets/svg/product-coin.svg?raw"),
       comp: require("../../assets/svg/product-comp.svg?raw"),
