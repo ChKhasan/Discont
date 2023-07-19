@@ -118,21 +118,63 @@
                   <span class="d-flex align-items-end">8 288 товаров</span>
                 </div>
                 <div class="catalog-menu-items">
-                  <ul
-                    v-for="categoryChild in activeCategory?.children"
-                    :key="categoryChild?.id"
-                  >
-                    <h4 @click="$router.push(`/categories-inner/${categoryChild?.slug}`)">
-                      {{ categoryChild?.name }}
-                    </h4>
-                    <nuxt-link
-                      :to="`/categories-inner/${lastChild?.slug}`"
-                      v-for="lastChild in categoryChild?.children"
-                      :key="lastChild?.id"
+                  <div>
+                    <ul
+                      v-for="categoryChild in chunkIntoN(activeCategory?.children, 3)[0]"
+                      :key="categoryChild?.id"
                     >
-                      {{ lastChild?.name }}
-                    </nuxt-link>
-                  </ul>
+                      <h4
+                        @click="$router.push(`/categories-inner/${categoryChild?.slug}`)"
+                      >
+                        {{ categoryChild?.name }}
+                      </h4>
+                      <nuxt-link
+                        :to="`/categories-inner/${lastChild?.slug}`"
+                        v-for="lastChild in categoryChild?.children"
+                        :key="lastChild?.id"
+                      >
+                        {{ lastChild?.name }}
+                      </nuxt-link>
+                    </ul>
+                  </div>
+                  <div>
+                    <ul
+                      v-for="categoryChild in chunkIntoN(activeCategory?.children, 3)[1]"
+                      :key="categoryChild?.id"
+                    >
+                      <h4
+                        @click="$router.push(`/categories-inner/${categoryChild?.slug}`)"
+                      >
+                        {{ categoryChild?.name }}
+                      </h4>
+                      <nuxt-link
+                        :to="`/categories-inner/${lastChild?.slug}`"
+                        v-for="lastChild in categoryChild?.children"
+                        :key="lastChild?.id"
+                      >
+                        {{ lastChild?.name }}
+                      </nuxt-link>
+                    </ul>
+                  </div>
+                  <div>
+                    <ul
+                      v-for="categoryChild in chunkIntoN(activeCategory?.children, 3)[2]"
+                      :key="categoryChild?.id"
+                    >
+                      <h4
+                        @click="$router.push(`/categories-inner/${categoryChild?.slug}`)"
+                      >
+                        {{ categoryChild?.name }}
+                      </h4>
+                      <nuxt-link
+                        :to="`/categories-inner/${lastChild?.slug}`"
+                        v-for="lastChild in categoryChild?.children"
+                        :key="lastChild?.id"
+                      >
+                        {{ lastChild?.name }}
+                      </nuxt-link>
+                    </ul>
+                  </div>
                   <!-- <ul v-for="categoryChild in activeCategory?.children" :key="categoryChild?.id">
                     <h4>Телефоны и смарт-часы</h4>
                     <li>Смартфоны</li>
@@ -714,6 +756,10 @@ export default {
     console.log(cart);
   },
   methods: {
+    chunkIntoN(arr, n) {
+      const size = Math.ceil(arr.length / n);
+      return Array.from({ length: n }, (v, i) => arr.slice(i * size, i * size + size));
+    },
     handleOkForgetPass() {
       this.visibleForgetPass = false;
     },
@@ -1146,6 +1192,7 @@ export default {
 .catalog-menu-items ul {
   display: flex;
   flex-direction: column;
+  margin-bottom: 42px;
 }
 .catalog-menu-items ul h4 {
   font-family: var(--SB_400);

@@ -29,7 +29,7 @@
 }
 .categories-list-inner ul li span,
 .categories-list ul li span {
-  font-family: var(--SB_500);
+  font-family: var(--SB_400);
   font-style: normal;
   font-weight: 400;
   font-size: 14px;
@@ -280,6 +280,7 @@
 }
 .categories-checkbox-list {
   margin-bottom: 31px;
+  transition: height 0.3s;
 }
 .filter-slider-inputs {
   display: grid;

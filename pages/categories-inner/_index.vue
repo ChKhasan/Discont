@@ -105,50 +105,53 @@
                 class="first-category"
                 >{{ firstCategory?.name }}</nuxt-link
               >
-              <ul
-                class="categories-list-inner"
-                v-if="
-                  (firstCategory?.children.length > 0 &&
-                    firstCategory?.slug == $route.params.index) ||
-                  firstCategory.children.find(
-                    (item) => item.slug == $route.params.index
-                  ) ||
-                  firstCategory.children.find((item) =>
-                    item.children.find((elem) => elem.slug == $route.params.index)
-                  )
-                "
-              >
-                <li
-                  v-for="middCategory in firstCategory?.children"
-                  :key="middCategory?.id"
+              <Transition name="bounce">
+                <ul
+                  class="categories-list-inner"
+                  v-if="
+                    (firstCategory?.children.length > 0 &&
+                      firstCategory?.slug == $route.params.index) ||
+                    firstCategory.children.find(
+                      (item) => item.slug == $route.params.index
+                    ) ||
+                    firstCategory.children.find((item) =>
+                      item.children.find((elem) => elem.slug == $route.params.index)
+                    )
+                  "
                 >
-                  <span
-                    :class="{
-                      'active-category': $route.params.index == middCategory?.slug,
-                    }"
-                    @click="$router.push(`/categories-inner/${middCategory?.slug}`)"
-                    >{{ middCategory?.name }}</span
+                  <li
+                    v-for="middCategory in firstCategory?.children"
+                    :key="middCategory?.id"
                   >
-                  <div
-                    class="child-categories-list"
-                    v-if="
-                      middCategory?.slug == $route.params.index ||
-                      middCategory?.children.find(
-                        (item) => item.slug == $route.params.index
-                      )
-                    "
-                  >
-                    <nuxt-link
-                      v-if="middCategory?.children.length > 0"
-                      v-for="childs in middCategory?.children"
-                      :to="`/categories-inner/${childs?.slug}`"
-                      :class="{ 'active-category': $route.params.index == childs?.slug }"
-                      :key="childs.id"
-                      >{{ childs?.name }}</nuxt-link
+                    <span
+                      :class="{
+                        'active-category': $route.params.index == middCategory?.slug,
+                      }"
+                      @click="$router.push(`/categories-inner/${middCategory?.slug}`)"
+                      >{{ middCategory?.name }}</span
                     >
-                  </div>
-                </li>
-                <!-- <li>
+                    <div
+                      class="child-categories-list"
+                      v-if="
+                        middCategory?.slug == $route.params.index ||
+                        middCategory?.children.find(
+                          (item) => item.slug == $route.params.index
+                        )
+                      "
+                    >
+                      <nuxt-link
+                        v-if="middCategory?.children.length > 0"
+                        v-for="childs in middCategory?.children"
+                        :to="`/categories-inner/${childs?.slug}`"
+                        :class="{
+                          'active-category': $route.params.index == childs?.slug,
+                        }"
+                        :key="childs.id"
+                        >{{ childs?.name }}</nuxt-link
+                      >
+                    </div>
+                  </li>
+                  <!-- <li>
                   <span
                     :class="{
                       'active-category':
@@ -190,7 +193,8 @@
                     >
                   </div>
                 </li> -->
-              </ul>
+                </ul>
+              </Transition>
             </div>
 
             <span class="categories-list_show-more">Показать еще</span>
@@ -220,7 +224,7 @@
             </div>
           </div>
           <div v-for="attribit in attributes" :key="attribit.id">
-            <h5 @click="atributDrop = attribit.id">
+            <h5 @click="atributDropAction(attribit.id)">
               {{ attribit?.name }} <span v-html="arrow"></span>
             </h5>
             <div
@@ -454,6 +458,9 @@ export default {
     },
   },
   methods: {
+    atributDropAction(id) {
+      this.atributDrop != id ? (this.atributDrop = id) : (this.atributDrop = null);
+    },
     clearFilter() {
       this.$router.replace({
         path: `/categories-inner/${this.$route.params.index}`,
@@ -580,5 +587,22 @@ export default {
 }
 .text-test {
   color: red;
+}
+.bounce-enter-active {
+  animation: bounce-in 0.5s;
+}
+.bounce-leave-active {
+  animation: bounce-in 0.5s reverse;
+}
+@keyframes bounce-in {
+  0% {
+    transform: scale(0);
+  }
+  50% {
+    transform: scale(1.25);
+  }
+  100% {
+    transform: scale(1);
+  }
 }
 </style>

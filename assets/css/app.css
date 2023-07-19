@@ -16,3 +16,7 @@ body {
   font-style: normal;
   font-weight: 400;
 }
+ul {
+  margin-bottom: 0;
+  list-style: none;
+}
