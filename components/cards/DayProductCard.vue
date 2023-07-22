@@ -3,7 +3,7 @@
     <img class="day-product-card-bg" src="../../assets/images/day-card-bg.png" alt="" />
     <div class="day-product-card-head">
       <h3>Kunlik chegirmalar</h3>
-      <nuxt-link to="/"
+      <nuxt-link :to="localePath('/')"
         >Barchasi
         <svg
           xmlns="http://www.w3.org/2000/svg"

@@ -6,14 +6,18 @@
           <ul class="d-flex align-items-center">
             <li><span v-html="location" class="nav-location"></span> Toshkent</li>
             <li>Do’konlar manzili</li>
-            <li @click="$router.push('/info/about-us')">Biz haqimizda</li>
+            <li @click="$router.push(localePath('/info/about-us'))">Biz haqimizda</li>
           </ul>
           <div class="d-flex header-top__right">
             <a href="tel:+998712077788">+998 71 207 77 88</a>
-            <p class="d-flex align-items-center">
-              <span class="header-lang-active" style="margin-right: 3px">O’Z</span> |
-              <span style="margin-right: 3px; margin-left: 3px">ENG</span> |
-              <span style="margin-right: 3px">РУ</span>
+            <p class="d-flex align-items-center lang_locales">
+              <span
+                v-for="locale in locales"
+                :class="{ 'header-lang-active': $i18n.locale == locale.code }"
+                :key="locale.id"
+                @click="$router.push(switchLocalePath(locale.code))"
+                >{{ locale.name }}</span
+              >
             </p>
           </div>
         </div>
@@ -32,6 +36,19 @@ import Navbar from "./Navbar.vue";
 export default {
   data() {
     return {
+      locales: [
+        { id: 1, code: "uz", name: "O'Z" },
+        {
+          id: 2,
+          code: "en",
+          name: "ENG",
+        },
+        {
+          id: 3,
+          code: "ru",
+          name: "Ру",
+        },
+      ],
       location: require("../../assets/svg/header-location.svg?raw"),
     };
   },
@@ -85,5 +102,23 @@ export default {
 }
 .nav-location {
   margin-right: 10px;
+}
+.lang_locales span {
+  padding-right: 7px;
+  margin-right: 5px;
+  position: relative;
+}
+
+.lang_locales span::after {
+  content: "|";
+  position: absolute;
+  right: -1px;
+}
+.lang_locales span:last-child::after {
+  display: none;
+}
+.lang_locales span:last-child {
+  padding-right: 0;
+  margin-right: 0;
 }
 </style>

@@ -2,8 +2,8 @@
   <div class="stocks-page">
     <div class="container_xl">
       <div class="page-breadcrumb">
-        <nuxt-link to="/">Diskont main page</nuxt-link>
-        <nuxt-link to="/"> Aksiyalar </nuxt-link>
+        <nuxt-link :to="localePath('/')">Diskont main page</nuxt-link>
+        <nuxt-link :to="localePath('/')"> Aksiyalar </nuxt-link>
       </div>
       <div class="stocks-body">
         <div class="stocks-banner">
@@ -21,27 +21,27 @@
               <li>
                 <nuxt-link
                   :class="{ 'active-stock': $route.params.index == 'stocks' }"
-                  to="/stocks/stocks"
+                  :to="/stocks/stocks"
                   >Yangi aksiyalar</nuxt-link
                 >
               </li>
               <li>
                 <nuxt-link
-                  to="/stocks/top-products"
+                  :to="/stocks/top-products"
                   :class="{ 'active-stock': $route.params.index == 'top-products' }"
                   >Top tovarlar</nuxt-link
                 >
               </li>
               <li>
                 <nuxt-link
-                  to="/stocks/best-seller"
+                  :to="/stocks/best-seller"
                   :class="{ 'active-stock': $route.params.index == 'best-seller' }"
                   >Best seller</nuxt-link
                 >
               </li>
               <li>
                 <nuxt-link
-                  to="/stocks/seasonal-discounts"
+                  :to="/stocks/seasonal-discounts"
                   :class="{ 'active-stock': $route.params.index == 'seasonal-discounts' }"
                   >Сезонные Скидки</nuxt-link
                 >

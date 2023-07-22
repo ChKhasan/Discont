@@ -3,8 +3,8 @@
     <div class="container_xl">
       <div>
         <div class="page-breadcrumb">
-          <nuxt-link to="/">Diskont main page</nuxt-link>
-          <nuxt-link to="/"> Search result </nuxt-link>
+          <nuxt-link :to="localePath('/')">Diskont main page</nuxt-link>
+          <nuxt-link :to="localePath('/')"> Search result </nuxt-link>
         </div>
         <div class="d-flex justify-content-between align-items-end showcases_top">
           <div class="d-flex categories-page-title">
@@ -89,10 +89,11 @@ export default {
       ],
     };
   },
-  async asyncData({ params, query, store }) {
+  async asyncData({ params, query, store, i18n }) {
     const [searchProductsData] = await Promise.all([
       store.dispatch("fetchSearch/getSearch", {
-        search: params.index,
+        params: { search: params.index },
+        headers: { Language: i18n.locale },
       }),
     ]);
     const searchProducts = searchProductsData?.products;

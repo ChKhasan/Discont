@@ -1,22 +1,22 @@
 <template lang="html">
   <div class="profile-menu">
     <nuxt-link
-      to="/profile/personal-info"
+      :to="localePath(`/profile/personal-info`)"
       :class="{ 'profile-menu-active': $route.name == 'profile-personal-info' }"
       ><span v-html="profileInfo"></span> Shaxsiy ma`lumotlarim
     </nuxt-link>
     <nuxt-link
-      to="/profile/my-pay"
+      :to="localePath('/profile/my-pay')"
       :class="{ 'profile-menu-active': $route.name == 'profile-my-pay' }"
       ><span v-html="piecePay"></span> Bo’lib to’lash</nuxt-link
     >
     <nuxt-link
-      to="/profile/my-orders"
+      :to="localePath('/profile/my-orders')"
       :class="{ 'profile-menu-active': $route.name == 'profile-my-orders' }"
       ><span v-html="myOrders"></span>Mening buyurtmalarim</nuxt-link
     >
     <nuxt-link
-      to="/profile/my-comments"
+      :to="localePath('/profile/my-comments')"
       :class="{ 'profile-menu-active': $route.name == 'profile-my-comments' }"
       ><span v-html="myComments"></span>Mening izohlarim</nuxt-link
     >

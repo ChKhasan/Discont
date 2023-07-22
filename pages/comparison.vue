@@ -2,8 +2,8 @@
   <div class="page-container">
     <div class="container_xl">
       <div class="page-breadcrumb">
-        <nuxt-link to="/">Diskont main page</nuxt-link>
-        <nuxt-link class="disabled" to="/"> Solishtirish </nuxt-link>
+        <nuxt-link :to="localePath('/')">Diskont main page</nuxt-link>
+        <nuxt-link class="disabled" :to="localePath('/')"> Solishtirish </nuxt-link>
       </div>
       <div class="d-flex page-container-title">
         <div class="d-flex align-items-end">
@@ -130,10 +130,12 @@ export default {
   },
   methods: {
     async __GET_PRODUCTS_BY_ID(dataForm) {
-      const data = await this.$store.dispatch(
-        "fetchProducts/getComparionsProductsById",
-        dataForm
-      );
+      const data = await this.$store.dispatch("fetchProducts/getComparionsProductsById", {
+        data: dataForm,
+        params: {
+          headers: { Language: this.$i18n.locale },
+        },
+      });
       console.log(data);
       // this.compProducts = data?.products;
       console.log(this.compProducts);

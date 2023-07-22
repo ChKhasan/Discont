@@ -3,8 +3,8 @@
     <div class="container_xl">
       <div>
         <div class="page-breadcrumb">
-          <nuxt-link to="/">Diskont main page</nuxt-link>
-          <nuxt-link to="/">
+          <nuxt-link :to="localePath('/')">Diskont main page</nuxt-link>
+          <nuxt-link :to="localePath('/')">
             Smartfonlar
             <span v-html="arrow"></span>
           </nuxt-link>
@@ -203,7 +203,14 @@ export default {
   async fetch() {
     const [brandsData, brandData] = await Promise.all([
       this.$store.dispatch("fetchBrands/getBrands"),
-      this.$store.dispatch("fetchBrands/getBrandsBySlug", this.$route.params.index),
+      this.$store.dispatch("fetchBrands/getBrandsBySlug", {
+        id: this.$route.params.index,
+        params: {
+          headers: {
+            Language: this.$i18n.locale,
+          },
+        },
+      }),
     ]);
     this.brandsAll = brandsData.brands?.data;
     this.brands = [...brandsData.brands?.data];

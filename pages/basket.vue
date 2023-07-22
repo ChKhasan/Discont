@@ -2,8 +2,8 @@
   <div class="page-container">
     <div class="container_xl">
       <div class="page-breadcrumb">
-        <nuxt-link to="/">Diskont main page</nuxt-link>
-        <nuxt-link class="disabled" to="/"> Savatcha </nuxt-link>
+        <nuxt-link :to="localePath('/')">Diskont main page</nuxt-link>
+        <nuxt-link class="disabled" :to="localePath('/')"> Savatcha </nuxt-link>
       </div>
       <div class="d-flex page-container-title">
         <div class="d-flex align-items-end">
@@ -250,10 +250,14 @@ export default {
   methods: {
     async __GET_PRODUCTS_BY_ID(dataForm) {
       try {
-        const data = await this.$store.dispatch(
-          "fetchProducts/getProductsById",
-          dataForm
-        );
+        const data = await this.$store.dispatch("fetchProducts/getProductsById", {
+          data: dataForm,
+          params: {
+            headers: {
+              Language: this.$i18n.locale,
+            },
+          },
+        });
         this.products = data?.products;
         this.skeletonLoad = false;
       } catch (e) {

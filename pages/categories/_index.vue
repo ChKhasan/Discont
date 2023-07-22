@@ -32,7 +32,7 @@
                 <nuxt-link
                   v-for="childs in category?.children"
                   :key="childs.id"
-                  :to="`/categories-inner/${childs?.slug}`"
+                  :to="localePath(`/categories-inner/${childs?.slug}`)"
                   >{{ childs?.name }}</nuxt-link
                 >
               </div>
@@ -43,9 +43,9 @@
         <div>
           <div>
             <div class="page-breadcrumb">
-              <nuxt-link to="/">Diskont main page</nuxt-link>
-              <nuxt-link to="/">
-                Smartfonlar
+              <nuxt-link :to="localePath('/')">Diskont main page</nuxt-link>
+              <nuxt-link :to="localePath('/')">
+                {{ categoryChilds?.name }}
                 <span v-html="arrow"></span>
               </nuxt-link>
             </div>
@@ -130,7 +130,7 @@ export default {
       //   categoryChilds: [],
     };
   },
-  async asyncData({ $axios, params, store }) {
+  async asyncData({ $axios, params, store, i18n }) {
     const [categoriesData, categoryChildsData, productsData] = await Promise.all([
       $axios.$get(`/categories`, {
         params: {
@@ -139,7 +139,10 @@ export default {
       }),
       $axios.$get(`/categories/${params.index}`),
       store.dispatch("fetchProducts/getProducts", {
-        limit: 12,
+        params: { limit: 12 },
+        headers: {
+          Language: i18n.locale,
+        },
       }),
     ]);
     const categories = categoriesData?.categories?.data;

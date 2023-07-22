@@ -2,8 +2,8 @@
   <div class="page-container">
     <div class="container_xl">
       <div class="page-breadcrumb">
-        <nuxt-link to="/">Diskont main page</nuxt-link>
-        <nuxt-link to="/"> Каталог Xiaomi </nuxt-link>
+        <nuxt-link :to="localePath('/')">Diskont main page</nuxt-link>
+        <nuxt-link :to="localePath('/')"> Каталог Xiaomi </nuxt-link>
       </div>
       <div class="d-flex page-container-title">
         <MainTitle title="Каталог Apple" />

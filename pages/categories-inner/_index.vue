@@ -3,8 +3,8 @@
     <div class="container_xl">
       <div>
         <div class="page-breadcrumb">
-          <nuxt-link to="/">Diskont main page</nuxt-link>
-          <nuxt-link to="/">
+          <nuxt-link :to="localePath('/')">Diskont main page</nuxt-link>
+          <nuxt-link :to="localePath('/')">
             {{ categoryChilds?.name }}
             <span v-html="arrow"></span>
           </nuxt-link>
@@ -102,7 +102,7 @@
               class="categories-list-box"
             >
               <nuxt-link
-                :to="`/categories-inner/${firstCategory?.slug}`"
+                :to="localePath(`/categories-inner/${firstCategory?.slug}`)"
                 :class="{
                   'active-category': $route.params.index == firstCategory?.slug,
                 }"
@@ -146,7 +146,7 @@
                       <nuxt-link
                         v-if="middCategory?.children.length > 0"
                         v-for="childs in middCategory?.children"
-                        :to="`/categories-inner/${childs?.slug}`"
+                        :to="localePath(`/categories-inner/${childs?.slug}`)"
                         class="mb-0"
                         :class="{
                           'active-category': $route.params.index == childs?.slug,
@@ -415,7 +415,7 @@ export default {
       ],
     };
   },
-  async asyncData({ $axios, params, query, store }) {
+  async asyncData({ $axios, params, query, store, i18n }) {
     const [
       categoriesData,
       categoryChildsData,
@@ -426,14 +426,23 @@ export default {
         params: {
           limit: 10,
         },
+        headers: {
+          Language: i18n.locale,
+        },
       }),
       $axios.$get(`/categories/${params.index}`),
       store.dispatch("fetchProducts/getProducts", {
-        page: 1,
+        params: { page: 1 },
+        headers: {
+          Language: i18n.locale,
+        },
       }),
       $axios.$get(`/categories`, {
         params: {
           all: 1,
+        },
+        headers: {
+          Language: i18n.locale,
         },
       }),
     ]);

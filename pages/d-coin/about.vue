@@ -2,8 +2,8 @@
   <div class="page-container d-coin-page">
     <div class="container_xl">
       <div class="page-breadcrumb">
-        <nuxt-link to="/">Diskont main page</nuxt-link>
-        <nuxt-link to="/"> Di Coin </nuxt-link>
+        <nuxt-link :to="localePath('/')">Diskont main page</nuxt-link>
+        <nuxt-link :to="localePath('/')"> Di Coin </nuxt-link>
       </div>
       <div class="d-flex page-container-title">
         <div class="d-flex align-items-end">
@@ -11,7 +11,7 @@
         </div>
       </div>
       <div class="d-coin__tab">
-        <nuxt-link to="/d-coin/about">
+        <nuxt-link :to="localePath('/d-coin/about')">
           <div
             class="d-coin__tab-item"
             :class="{ 'coin-tab__active': $route.name == 'd-coin-about' }"
@@ -23,7 +23,7 @@
             </div>
           </div>
         </nuxt-link>
-        <nuxt-link to="/d-coin/down-history">
+        <nuxt-link :to="localePath('/d-coin/down-history')">
           <div
             class="d-coin__tab-item coin-tab_down"
             :class="{ 'coin-tab__active': $route.name == 'd-coin-down-history' }"
@@ -32,7 +32,7 @@
             <h5>Tushgan Di Coinlar tarixi</h5>
           </div>
         </nuxt-link>
-        <nuxt-link to="/d-coin/up-history">
+        <nuxt-link :to="localePath('/d-coin/up-history')">
           <div
             class="d-coin__tab-item coin-tab_down"
             :class="{ 'coin-tab__active': $route.name == 'd-coin-up-history' }"

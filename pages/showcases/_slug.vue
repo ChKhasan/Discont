@@ -3,8 +3,8 @@
     <div class="container_xl">
       <div>
         <div class="page-breadcrumb">
-          <nuxt-link to="/">Diskont main page</nuxt-link>
-          <nuxt-link to="/">
+          <nuxt-link :to="localePath('/')">Diskont main page</nuxt-link>
+          <nuxt-link :to="localePath('/')">
             {{ showcases?.name }}
           </nuxt-link>
         </div>
@@ -232,12 +232,15 @@ export default {
       ],
     };
   },
-  async asyncData({ params, query, store }) {
+  async asyncData({ params, query, store, i18n }) {
     const [showcasesData] = await Promise.all([
       store.dispatch("fetchShowcases/getShowcasesBySlug", {
         slug: params.slug,
         params: {
-          ...query,
+          params: { ...query },
+          headers: {
+            Language: i18n.locale,
+          },
         },
       }),
     ]);

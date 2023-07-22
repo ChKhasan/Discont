@@ -45,33 +45,6 @@ export default {
     };
   },
   async mounted() {
-    await this.$store.dispatch("fetchProducts/getProducts", {
-      type: "bestsellers",
-      limit: 6,
-    }),
-      await this.$store.dispatch("fetchProducts/getProducts", {
-        limit: 10,
-      }),
-      await this.$store.dispatch("fetchProducts/getProducts", {
-        type: "popular",
-        limit: 6,
-      }),
-      await this.$store.dispatch("fetchCategories/getCategories", {
-        limit: 6,
-      }),
-      await this.$store.dispatch("fetchBrands/getBrands", {
-        limit: 10,
-        top: 1,
-      }),
-      await this.$store.dispatch("fetchPosts/getPosts", {
-        limit: 10,
-      }),
-      await this.$store.dispatch("fetchProducts/getShowcases", {
-        limit: 4,
-      }),
-      await this.$store.dispatch("fetchBanners/getBanners", {
-        type: "main",
-      });
     await this.$store.commit("reloadStore");
     this.afterReload = true;
     this.$store.commit("authHandler");

@@ -2,8 +2,8 @@
   <div class="personal-info">
     <div class="container_xl">
       <div class="page-breadcrumb">
-        <nuxt-link to="/">Diskont main page</nuxt-link>
-        <nuxt-link to="/">
+        <nuxt-link :to="localePath('/')">Diskont main page</nuxt-link>
+        <nuxt-link :to="localePath('/')">
           Profile
           <span v-html="arrow"></span>
         </nuxt-link>
@@ -182,7 +182,7 @@
               scrambleddustry. Lorem Ipsum has been the industry's standard dummy text
               ever since the 1500s,
             </p>
-            <nuxt-link to="/">Moree about Dicoins</nuxt-link>
+            <nuxt-link :to="localePath('/')">Moree about Dicoins</nuxt-link>
           </div>
         </div>
       </div>
@@ -257,7 +257,9 @@ export default {
       }
     },
     async __GET_REGIONS() {
-      const data = await this.$store.dispatch("fetchRegions/getRegions");
+      const data = await this.$store.dispatch("fetchRegions/getRegions", {
+        headers: { Language: this.$i18n.locale },
+      });
       this.regions = data?.regions;
       console.log(data);
     },

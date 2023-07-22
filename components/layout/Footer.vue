@@ -9,10 +9,10 @@
               ><p>Телефон поддержки</p>
               <a href="tel:+998712077788"> +998 (71) 207 77 88</a></span
             >
-            <nuxt-link class="footer-links" to="/"
+            <nuxt-link class="footer-links" :to="localePath('/')"
               ><span v-html="footerLocation"></span> Бизнинг доконлар</nuxt-link
             >
-            <nuxt-link class="footer-links" to="/"
+            <nuxt-link class="footer-links" :to="localePath('/')"
               ><span v-html="footerEmail" style="margin-right: 7px"></span
               >Info@diskont.com</nuxt-link
             >
@@ -21,13 +21,13 @@
             <h4>Компания</h4>
             <ul>
               <li>
-                <nuxt-link to="/info/about-b2b">B2B савдоси</nuxt-link>
+                <nuxt-link :to="localePath('/info/about-b2b')">B2B савдоси</nuxt-link>
               </li>
               <li>
-                <nuxt-link to="/info/about-us">Биз ҳақимизда</nuxt-link>
+                <nuxt-link :to="localePath('/info/about-us')">Биз ҳақимизда</nuxt-link>
               </li>
               <li>
-                <nuxt-link to="/">Янгиликлар ва шарҳлар</nuxt-link>
+                <nuxt-link :to="localePath('/')">Янгиликлар ва шарҳлар</nuxt-link>
               </li>
             </ul>
           </div>
@@ -35,13 +35,13 @@
             <h4>Маълумот</h4>
             <ul>
               <li>
-                <nuxt-link to="/info/delivery">Етказиб бериш</nuxt-link>
+                <nuxt-link :to="localePath('/info/delivery')">Етказиб бериш</nuxt-link>
               </li>
               <li>
-                <nuxt-link to="/">Бонус тизими</nuxt-link>
+                <nuxt-link :to="localePath('/')">Бонус тизими</nuxt-link>
               </li>
               <li>
-                <nuxt-link to="/info/working">Дисконтда ишлаш</nuxt-link>
+                <nuxt-link :to="localePath('/info/working')">Дисконтда ишлаш</nuxt-link>
               </li>
             </ul>
           </div>
@@ -49,16 +49,16 @@
             <h4>Ҳаридорга ёрдам</h4>
             <ul>
               <li>
-                <nuxt-link to="/info/trade-nation">Муддатли толов</nuxt-link>
+                <nuxt-link :to="localePath('/info/trade-nation')">Муддатли толов</nuxt-link>
               </li>
               <li>
-                <nuxt-link to="/">Махсулотни кайтариш</nuxt-link>
+                <nuxt-link :to="localePath('/')">Махсулотни кайтариш</nuxt-link>
               </li>
               <li>
-                <nuxt-link to="/info/warranty">Махсулотлар учун кафолат</nuxt-link>
+                <nuxt-link :to="localePath('/info/warranty')">Махсулотлар учун кафолат</nuxt-link>
               </li>
               <li>
-                <nuxt-link to="/">Коп сораладиган саволлар</nuxt-link>
+                <nuxt-link :to="localePath('/')">Коп сораладиган саволлар</nuxt-link>
               </li>
             </ul>
           </div>

@@ -2,8 +2,8 @@
   <div class="page-container">
     <div class="container_xl">
       <div class="page-breadcrumb">
-        <nuxt-link to="/">Diskont main page</nuxt-link>
-        <nuxt-link to="/"> Barcha yangiliklar </nuxt-link>
+        <nuxt-link :to="localePath('/')">Diskont main page</nuxt-link>
+        <nuxt-link :to="localePath('/')"> Barcha yangiliklar </nuxt-link>
       </div>
       <div class="d-flex page-container-title">
         <div class="d-flex align-items-end">
@@ -70,12 +70,13 @@ export default {
       value: "all",
     };
   },
-  async asyncData({ store, route }) {
+  async asyncData({ store, route, i18n }) {
     const [posts1] = await Promise.all([
       store.dispatch("fetchPosts/getPosts", {
-        limit: 4,
-        page: route.query.page,
-        pageSize: route.query.pageSize,
+        params: { limit: 4, page: route.query.page, pageSize: route.query.pageSize },
+        headers: {
+          Language: i18n.locale,
+        },
       }),
     ]);
     const posts = posts1?.posts?.data;

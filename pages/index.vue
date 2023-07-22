@@ -36,7 +36,7 @@
         <MainTitle title="Kategoriyalar" />
         <div class="category-grid">
           <HomeCategoryCard
-            v-for="category in categories"
+            v-for="(category, index) in categories"
             :key="category.id"
             :category="category"
           />
@@ -47,15 +47,19 @@
       <div class="">
         <div class="d-flex justify-content-between align-items-end">
           <MainTitle :title="showcases[0]?.name" />
-          <nuxt-link class="to-page-underline" :to="`/showcases/${showcases[0]?.slug}`"
+          <nuxt-link
+            class="to-page-underline"
+            :to="localePath(`/showcases/${showcases[0]?.slug}`)"
             >Все товары</nuxt-link
           >
         </div>
         <div class="product-grid" v-if="showcases[0]?.products.length > 0">
           <ProductCard
-            v-for="product in showcases[0]?.products"
+            data-aos="fade-up"
+            v-for="(product, index) in showcases[0]?.products"
             :key="product.id"
             :product="product"
+            :data-aos-duration="`${index * 250}`"
           />
         </div>
       </div>
@@ -64,15 +68,19 @@
       <div class="">
         <div class="d-flex justify-content-between align-items-end">
           <MainTitle :title="showcases[1]?.name" />
-          <nuxt-link class="to-page-underline" :to="`/showcases/${showcases[1]?.slug}`"
+          <nuxt-link
+            class="to-page-underline"
+            :to="localePath(`/showcases/${showcases[1]?.slug}`)"
             >Все товары</nuxt-link
           >
         </div>
         <div class="product-grid" v-if="showcases[1]?.products.length > 0">
           <ProductCard
-            v-for="product in showcases[1]?.products"
+            v-for="(product, index) in showcases[1]?.products"
             :key="product.id"
             :product="product"
+            data-aos="fade-up"
+            :data-aos-duration="`${index * 250}`"
           />
         </div>
       </div>
@@ -102,7 +110,9 @@
       <div class="">
         <div class="d-flex justify-content-between align-items-end">
           <MainTitle :title="showcases[3]?.name" />
-          <nuxt-link class="to-page-underline" :to="`/showcases/${showcases[3]?.slug}`"
+          <nuxt-link
+            class="to-page-underline"
+            :to="localePath(`/showcases/${showcases[3]?.slug}`)"
             >Все товары</nuxt-link
           >
         </div>
@@ -124,7 +134,9 @@
       <div class="">
         <div class="d-flex justify-content-between align-items-end">
           <MainTitle :title="showcases[4]?.name" />
-          <nuxt-link class="to-page-underline" :to="`/showcases/${showcases[4]?.slug}`"
+          <nuxt-link
+            class="to-page-underline"
+            :to="localePath(`/showcases/${showcases[4]?.slug}`)"
             >Все товары</nuxt-link
           >
         </div>
@@ -242,7 +254,9 @@
     <div class="container_xl mb-120" v-if="posts?.length > 0">
       <div class="d-flex justify-content-between align-items-end">
         <MainTitle title="Yangiliklar va bloglar" />
-        <nuxt-link class="to-page-underline" to="/all-news">Все блоги</nuxt-link>
+        <nuxt-link class="to-page-underline" :to="localePath('/all-news')"
+          >Все блоги</nuxt-link
+        >
       </div>
       <PostsCarousel>
         <div class="swiper-slide" v-for="post in posts" :key="post.id">
@@ -320,7 +334,7 @@ export default {
       // posts: [],
     };
   },
-  async asyncData({ $axios, store }) {
+  async asyncData({ $axios, store, i18n }) {
     const [
       products,
       byCategory,
@@ -334,37 +348,67 @@ export default {
       bannersSmallData,
     ] = await Promise.all([
       store.dispatch("fetchProducts/getProducts", {
-        type: "bestsellers",
-        limit: 6,
+        params: {
+          type: "bestsellers",
+          limit: 6,
+        },
+        headers: {
+          Language: i18n.locale,
+        },
       }),
       store.dispatch("fetchProducts/getProducts", {
-        limit: 10,
+        params: { limit: 10 },
+        headers: {
+          Language: i18n.locale,
+        },
       }),
       store.dispatch("fetchProducts/getProducts", {
-        type: "popular",
-        limit: 6,
+        params: { type: "popular", limit: 6 },
+        headers: {
+          Language: i18n.locale,
+        },
       }),
       store.dispatch("fetchCategories/getCategories", {
-        limit: 6,
+        params: { limit: 6 },
+        headers: {
+          Language: i18n.locale,
+        },
       }),
       store.dispatch("fetchBrands/getBrands", {
-        limit: 10,
-        top: 1,
+        params: { limit: 10, top: 1 },
+        headers: {
+          Language: i18n.locale,
+        },
       }),
       store.dispatch("fetchPosts/getPosts", {
-        limit: 10,
+        params: { limit: 10 },
+        headers: {
+          Language: i18n.locale,
+        },
       }),
       store.dispatch("fetchProducts/getShowcases", {
-        limit: 4,
+        params: { limit: 4 },
+        headers: {
+          Language: i18n.locale,
+        },
       }),
       store.dispatch("fetchBanners/getBanners", {
-        type: "main",
+        params: { type: "main" },
+        headers: {
+          Language: i18n.locale,
+        },
       }),
       store.dispatch("fetchBanners/getBanners", {
-        type: "promo",
+        params: { type: "promo" },
+        headers: {
+          Language: i18n.locale,
+        },
       }),
       store.dispatch("fetchBanners/getBanners", {
-        type: "small",
+        params: { type: "small" },
+        headers: {
+          Language: i18n.locale,
+        },
       }),
     ]);
     const bestsellersProducts = products?.products?.data;
@@ -377,6 +421,7 @@ export default {
     const bannersMain = bannersMainData?.banners?.data;
     const bannersPromo = bannersPromoData?.banners?.data;
     const bannersSmall = bannersSmallData?.banners?.data;
+    console.log(showcases[0]);
     return {
       bestsellersProducts,
       byCategoryProducts,
@@ -390,11 +435,7 @@ export default {
       bannersSmall,
     };
   },
-  mounted() {
-    this.$store.dispatch("fetchBrands/getBrands", {
-      limit: 10,
-    });
-  },
+  mounted() {},
   components: {
     BannerCarousel,
     ProductCard,

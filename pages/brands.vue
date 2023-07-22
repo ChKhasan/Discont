@@ -2,8 +2,8 @@
   <div class="categories-page-inner">
     <div class="container_xl">
       <div class="page-breadcrumb">
-        <nuxt-link to="/">Diskont main page</nuxt-link>
-        <nuxt-link class="disabled" to="/"> Smartfonlar </nuxt-link>
+        <nuxt-link :to="localePath('/')">Diskont main page</nuxt-link>
+        <nuxt-link class="disabled" :to="localePath('/')"> Smartfonlar </nuxt-link>
       </div>
       <div class="d-flex categories-page-title">
         <MainTitle title="Barcha brendlar" />

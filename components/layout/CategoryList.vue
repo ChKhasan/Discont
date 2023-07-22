@@ -8,7 +8,7 @@
             <li>
               <nuxt-link
                 :class="{ stock__active: $route.params.index == 'discounts' }"
-                to="/stocks/discounts"
+                :to="localePath('/stocks/discounts')"
                 ><span v-html="navCatIcon"></span> Aksiyalar</nuxt-link
               >
             </li>
@@ -16,7 +16,7 @@
               <nuxt-link
                 class="winter_discount"
                 :class="{ stock__active: $route.params.index == 'seasonal-discounts' }"
-                to="/stocks/seasonal-discounts"
+                :to="localePath('/stocks/seasonal-discounts')"
                 ><span
                   ><svg
                     xmlns="http://www.w3.org/2000/svg"
@@ -35,14 +35,14 @@
             <li>
               <nuxt-link
                 :class="{ stock__active: $route.params.index == 'top-products' }"
-                to="/stocks/top-products"
+                :to="localePath('/stocks/top-products')"
                 ><span v-html="navCatIcon2"></span>Top tovarlar</nuxt-link
               >
             </li>
             <li>
               <nuxt-link
                 :class="{ stock__active: $route.params.index == 'best-seller' }"
-                to="/stocks/best-seller"
+                :to="localePath('/stocks/best-seller')"
                 ><span
                   ><svg
                     xmlns="http://www.w3.org/2000/svg"
@@ -77,7 +77,7 @@
             <span><img src="../../assets/images/coin.png" alt="" /></span>
             65 di coin
           </div>
-          <nuxt-link class="nav-info" to="/d-coin/about">?</nuxt-link>
+          <nuxt-link class="nav-info" :to="localePath('/d-coin/about')">?</nuxt-link>
         </div>
       </div>
     </div>

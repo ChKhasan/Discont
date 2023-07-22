@@ -229,7 +229,9 @@
                   roziman
                 </p></span
               >
-              <nuxt-link to="/">Sotib olishda muammoga duch keldizmi?</nuxt-link>
+              <nuxt-link :to="localePath('/')"
+                >Sotib olishda muammoga duch keldizmi?</nuxt-link
+              >
             </div>
             <div class="checkout-btn" @click="submit()">Xaridni rasmiylashtirish</div>
           </div>
@@ -559,7 +561,14 @@ export default {
       };
     },
     async __GET_PRODUCTS_BY_ID(dataForm) {
-      const data = await this.$store.dispatch("fetchProducts/getProductsById", dataForm);
+      const data = await this.$store.dispatch("fetchProducts/getProductsById", {
+        data: dataForm,
+        params: {
+          headers: {
+            Language: this.$i18n.locale,
+          },
+        },
+      });
       this.products = data?.products;
     },
     async __POST_ORDER(formData) {

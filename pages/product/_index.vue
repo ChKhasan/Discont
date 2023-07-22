@@ -819,9 +819,19 @@ export default {
   // },
   async mounted() {
     const [productData, productsData] = await Promise.all([
-      this.$store.dispatch("fetchProducts/getProductsBySlug", this.$route.params.index),
+      this.$store.dispatch("fetchProducts/getProductsBySlug", {
+        id: this.$route.params.index,
+        params: {
+          headers: {
+            Language: this.$i18n.locale,
+          },
+        },
+      }),
       this.$store.dispatch("fetchProducts/getProducts", {
-        limit: 12,
+        params: { limit: 12 },
+        headers: {
+          Language: this.$i18n.locale,
+        },
       }),
     ]);
     this.product = productData.product;

@@ -17,18 +17,20 @@ export default {
     "@/assets/css/app.css",
     "ant-design-vue/dist/antd.css",
     "@/assets/css/main.css",
+    "aos/dist/aos.css",
   ],
 
   plugins: [
     { src: "~plugins/antdv.js" },
     { src: "~plugins/v-mask.js", ssr: false },
+    { src: "~plugins/aos.js", ssr: false },
   ],
 
   components: true,
 
   buildModules: ["@nuxtjs/svg"],
 
-  modules: ["bootstrap-vue/nuxt", "@nuxtjs/axios"],
+  modules: ["bootstrap-vue/nuxt", "@nuxtjs/axios", "@nuxtjs/i18n"],
   // server: {
   //   port: 8000,
   //   host: "localhost",
@@ -39,6 +41,13 @@ export default {
       axios.defaults.withCredentials = true;
     },
     baseURL: "https://api.e-shop.ndc.uz/api",
+  },
+  i18n: {
+    locales: ["uz", "en", "ru"],
+    defaultLocale: "uz",
+    vueI18n: {
+      fallbackLocale: "uz",
+    },
   },
   build: {
     babel: {

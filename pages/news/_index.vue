@@ -2,8 +2,8 @@
   <div class="page-container">
     <div class="container_xl">
       <div class="page-breadcrumb">
-        <nuxt-link to="/">Diskont main page</nuxt-link>
-        <nuxt-link to="/">
+        <nuxt-link :to="localePath('/')">Diskont main page</nuxt-link>
+        <nuxt-link :to="localePath('/')">
           Yangilik
           <span v-html="arrow"></span>
         </nuxt-link>
@@ -11,7 +11,9 @@
       <div class="d-flex page-container-title">
         <div class="d-flex align-items-end">
           <MainTitle title="Yangilik" />
-          <span class="d-flex align-items-end">{{moment(post?.created_at).format('DD.MM.YYYY')}}</span>
+          <span class="d-flex align-items-end">{{
+            moment(post?.created_at).format("DD.MM.YYYY")
+          }}</span>
         </div>
       </div>
       <div class="post-page-body">
@@ -46,7 +48,7 @@
 import MainTitle from "../../components/Main-title.vue";
 import CategoriesAppCard from "../../components/categories/categories-app-banner.vue";
 import ProductCard from "../../components/cards/ProductCard.vue";
-import moment from "moment"
+import moment from "moment";
 import PostsCarousel from "../../components/posts-carousel.vue";
 import PostCard from "../../components/cards/PostCard.vue";
 export default {
@@ -77,18 +79,25 @@ export default {
   },
   async asyncData({ store, params }) {
     const [postData] = await Promise.all([
-      store.dispatch("fetchPosts/getPostsBySlug", params.index),
+      store.dispatch("fetchPosts/getPostsBySlug", {
+        id: params.index,
+        params: {
+          headers: {
+            Language: this.$i18n.locale,
+          },
+        },
+      }),
     ]);
     console.log(postData);
     const post = postData?.post;
     const posts = postData?.other_posts;
     return {
       post,
-      posts
+      posts,
     };
   },
   methods: {
-    moment 
+    moment,
   },
   components: { MainTitle, CategoriesAppCard, ProductCard, PostsCarousel, PostCard },
 };

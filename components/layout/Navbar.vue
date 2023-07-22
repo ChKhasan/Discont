@@ -3,7 +3,9 @@
     <div class="container_xl">
       <div class="d-flex header-navbar_container">
         <div class="d-flex align-items-center">
-          <nuxt-link to="/"><span v-html="navLogo" class="nav_logo"></span></nuxt-link>
+          <nuxt-link :to="localePath('/')"
+            ><span v-html="navLogo" class="nav_logo"></span
+          ></nuxt-link>
           <button class="catalog-btn" @click="catalogMenu = !catalogMenu">
             <span v-if="catalogMenu"
               ><svg
@@ -49,7 +51,7 @@
                     </div>
                     <div class="search-resoults-list">
                       <div class="search-resoults">
-                        <nuxt-link to="">
+                        <nuxt-link :to="localePath('/')">
                           <span v-html="searchClock"></span>
                           Мягкая мебель
                         </nuxt-link>
@@ -77,7 +79,7 @@
                         </button>
                       </div>
                       <div class="search-resoults">
-                        <nuxt-link to="">
+                        <nuxt-link :to="localePath('/')">
                           <span v-html="searchClock"></span>
                           Мягкая мебель
                         </nuxt-link>
@@ -105,7 +107,7 @@
                         </button>
                       </div>
                       <div class="search-resoults">
-                        <nuxt-link to="">
+                        <nuxt-link :to="localePath('/')">
                           <span v-html="searchClock"></span>
                           Мягкая мебель
                         </nuxt-link>
@@ -133,7 +135,7 @@
                         </button>
                       </div>
                       <div class="search-resoults">
-                        <nuxt-link to="">
+                        <nuxt-link :to="localePath('/')">
                           <span v-html="searchClock"></span>
                           Мягкая мебель
                         </nuxt-link>
@@ -172,7 +174,9 @@
                         v-for="product in searchProducts"
                         :key="product?.id"
                       >
-                        <nuxt-link :to="`/product/${product?.products[0]?.slug}`">
+                        <nuxt-link
+                          :to="localePath(`/product/${product?.products[0]?.slug}`)"
+                        >
                           <span
                             ><svg
                               xmlns="http://www.w3.org/2000/svg"
@@ -302,12 +306,16 @@
                       :key="categoryChild?.id"
                     >
                       <h4
-                        @click="$router.push(`/categories-inner/${categoryChild?.slug}`)"
+                        @click="
+                          $router.push(
+                            localePath(`/categories-inner/${categoryChild?.slug}`)
+                          )
+                        "
                       >
                         {{ categoryChild?.name }}
                       </h4>
                       <nuxt-link
-                        :to="`/categories-inner/${lastChild?.slug}`"
+                        :to="localePath(`/categories-inner/${lastChild?.slug}`)"
                         v-for="lastChild in categoryChild?.children"
                         :key="lastChild?.id"
                       >
@@ -321,12 +329,16 @@
                       :key="categoryChild?.id"
                     >
                       <h4
-                        @click="$router.push(`/categories-inner/${categoryChild?.slug}`)"
+                        @click="
+                          $router.push(
+                            localePath(`/categories-inner/${categoryChild?.slug}`)
+                          )
+                        "
                       >
                         {{ categoryChild?.name }}
                       </h4>
                       <nuxt-link
-                        :to="`/categories-inner/${lastChild?.slug}`"
+                        :to="localePath(`/categories-inner/${lastChild?.slug}`)"
                         v-for="lastChild in categoryChild?.children"
                         :key="lastChild?.id"
                       >
@@ -340,12 +352,16 @@
                       :key="categoryChild?.id"
                     >
                       <h4
-                        @click="$router.push(`/categories-inner/${categoryChild?.slug}`)"
+                        @click="
+                          $router.push(
+                            localePath(`/categories-inner/${categoryChild?.slug}`)
+                          )
+                        "
                       >
                         {{ categoryChild?.name }}
                       </h4>
                       <nuxt-link
-                        :to="`/categories-inner/${lastChild?.slug}`"
+                        :to="localePath(`/categories-inner/${lastChild?.slug}`)"
                         v-for="lastChild in categoryChild?.children"
                         :key="lastChild?.id"
                       >
@@ -873,7 +889,10 @@ export default {
   async fetch() {
     const [categoriesData] = await Promise.all([
       this.$store.dispatch("fetchCategories/getCategories", {
-        limit: 6,
+        params: { limit: 6 },
+        headers: {
+          Language: this.$i18n.locale,
+        },
       }),
     ]);
 
@@ -1116,7 +1135,8 @@ export default {
     async __GET_SEARCH() {
       try {
         const data = await this.$store.dispatch("fetchSearch/getSearch", {
-          search: this.search,
+          params: { search: this.search },
+          headers: { Language: this.$i18n.locale },
         });
         this.searchProducts = data?.products;
       } catch (e) {}

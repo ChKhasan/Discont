@@ -2,8 +2,8 @@
   <div class="page-container">
     <div class="container_xl">
       <div class="page-breadcrumb">
-        <nuxt-link to="/">Diskont main page</nuxt-link>
-        <nuxt-link to="/"> Biz haqimizda </nuxt-link>
+        <nuxt-link :to="localePath('/')">Diskont main page</nuxt-link>
+        <nuxt-link :to="localePath('/')"> Biz haqimizda </nuxt-link>
       </div>
       <div class="d-flex page-container-title">
         <div class="d-flex align-items-end">
@@ -11,56 +11,7 @@
         </div>
       </div>
       <div class="about-us__container">
-        <div class="about-us__list">
-          <ul>
-            <li>
-              <nuxt-link
-                :class="{ 'about-us__list__active': $route.name == 'info-about-us' }"
-                to="/info/about-us"
-                >Biz haqimizda</nuxt-link
-              >
-            </li>
-            <li>
-              <nuxt-link
-                :class="{ 'about-us__list__active': $route.name == 'info-delivery' }"
-                to="/info/delivery"
-                >Yetkazib berish</nuxt-link
-              >
-            </li>
-            <li>
-              <nuxt-link
-                :class="{ 'about-us__list__active': $route.name == 'info-about-b2b' }"
-                to="/info/about-b2b"
-                >B2B savdo haqida</nuxt-link
-              >
-            </li>
-            <li>
-              <nuxt-link
-                :class="{ 'about-us__list__active': $route.name == 'info-working' }"
-                to="/info/working"
-                >Diskontda ishlash</nuxt-link
-              >
-            </li>
-            <li>
-              <nuxt-link
-                :class="{
-                  'about-us__list__active': $route.name == 'info-trade-nation',
-                }"
-                to="/info/trade-nation"
-                >Diskontda Nasiya savdo</nuxt-link
-              >
-            </li>
-            <li>
-              <nuxt-link
-                :class="{
-                  'about-us__list__active': $route.name == 'info-warranty',
-                }"
-                to="/info/warranty"
-                >Maxsulotlarga kafolat</nuxt-link
-              >
-            </li>
-          </ul>
-        </div>
+        <AboutMenuList />
         <div class="about-us__body">
           <!-- <div class="about-us__banner">
             <div></div>
@@ -91,6 +42,7 @@
   </div>
 </template>
 <script>
+import AboutMenuList from "../../components/aboutMenuList.vue";
 import MainTitle from "../../components/Main-title.vue";
 import CategoriesAppCard from "../../components/categories/categories-app-banner.vue";
 export default {
@@ -100,7 +52,7 @@ export default {
   mounted() {},
 
   methods: {},
-  components: { MainTitle, CategoriesAppCard },
+  components: { MainTitle, CategoriesAppCard, AboutMenuList },
 };
 </script>
 <style lang="css">

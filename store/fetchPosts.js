@@ -1,6 +1,6 @@
 export const actions = {
   async getPosts({}, payload) {
-    const res = await this.$axios.$get(`/posts`, { params: payload });
+    const res = await this.$axios.$get(`/posts`, { ...payload });
     return res;
   },
   async getPostsBySlug({}, id) {

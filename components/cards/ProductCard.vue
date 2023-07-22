@@ -60,7 +60,7 @@
       </div>
     </div>
     <div class="product-card-body">
-      <nuxt-link :to="`/product/${product?.slug}`">
+      <nuxt-link :to="localePath(`/product/${product?.slug}`)">
         <h3 class="product-card-title">
           {{
             product?.info?.name
@@ -236,7 +236,9 @@
                 <p>60 Гц</p>
               </div>
             </div>
-            <nuxt-link class="product-modal-show-more" :to="`/product/${product?.slug}`"
+            <nuxt-link
+              class="product-modal-show-more"
+              :to="localePath(`/product/${product?.slug}`)"
               >Maxsulotni ko’proq ko’rish
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -324,7 +326,9 @@
                 <div><span>-</span>1 <span>+</span></div>
                 <p>Осталось всего 4</p>
               </div>
-              <nuxt-link class="product-modal-show-more" :to="`/product/${product?.slug}`"
+              <nuxt-link
+                class="product-modal-show-more"
+                :to="localePath(`/product/${product?.slug}`)"
                 >Maxsulotni ko’proq ko’rish
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
