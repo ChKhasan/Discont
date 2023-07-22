@@ -5,13 +5,13 @@
         <div class="page-breadcrumb">
           <nuxt-link to="/">Diskont main page</nuxt-link>
           <nuxt-link to="/">
-            Smartfonlar
+            {{ categoryChilds?.name }}
             <span v-html="arrow"></span>
           </nuxt-link>
         </div>
         <div class="d-flex categories-page-title">
           <MainTitle :title="categoryChilds?.name" />
-          <span>8 288 товаров</span>
+          <span>{{ products?.length }} товаров</span>
         </div>
         <!-- <div>
           <CategoriesTabCarousel>
@@ -94,9 +94,13 @@
       </div>
       <div class="categories-page-inner-grid">
         <div class="categories-filter-list">
-          <div class="categories-list-inner">
+          <div>
             <h5>Категория</h5>
-            <div v-for="firstCategory in allCategories" :key="firstCategory?.id">
+            <div
+              v-for="firstCategory in allCategories"
+              :key="firstCategory?.id"
+              class="categories-list-box"
+            >
               <nuxt-link
                 :to="`/categories-inner/${firstCategory?.slug}`"
                 :class="{
@@ -142,8 +146,8 @@
                       <nuxt-link
                         v-if="middCategory?.children.length > 0"
                         v-for="childs in middCategory?.children"
-                        
                         :to="`/categories-inner/${childs?.slug}`"
+                        class="mb-0"
                         :class="{
                           'active-category': $route.params.index == childs?.slug,
                         }"
@@ -198,50 +202,67 @@
               </Transition>
             </div>
 
-            <span class="categories-list_show-more">Показать еще</span>
+            <!-- <span class="categories-list_show-more">Показать еще</span> -->
           </div>
-          <div class="filter-range">
-            <h5>Категория</h5>
+          <div class="categories-atribute-box">
+            <div class="filter-range">
+              <h5>Narxi</h5>
 
-            <a-slider
-              range
-              :step="10000"
-              :max="20000000"
-              :min="10000"
-              v-model="sliderValue"
-              :default-value="[10000, 20000000]"
-              @change="onChangeSlider"
-              @afterChange="onAfterChange"
-            />
-            <div class="filter-slider-inputs">
-              <span>
-                <input type="text" v-model="sliderValue[0]" placeholder="от" />
-                <span>₽</span>
-              </span>
-              <span>
-                <input type="text" placeholder="до" v-model="sliderValue[1]" />
-                <span>₽</span>
-              </span>
+              <a-slider
+                range
+                :step="10000"
+                :max="20000000"
+                :min="10000"
+                v-model="sliderValue"
+                :default-value="[10000, 20000000]"
+                @change="onChangeSlider"
+                @afterChange="onAfterChange"
+              />
+              <div class="filter-slider-inputs">
+                <span>
+                  <input type="text" v-model="sliderValue[0]" placeholder="от" />
+                  <span>₽</span>
+                </span>
+                <span>
+                  <input type="text" placeholder="до" v-model="sliderValue[1]" />
+                  <span>₽</span>
+                </span>
+              </div>
             </div>
-          </div>
-          <div v-for="attribit in attributes" :key="attribit.id">
-            <h5 @click="atributDropAction(attribit.id)">
-              {{ attribit?.name }} <span v-html="arrow"></span>
-            </h5>
-            <div
-              class="categories-checkbox-list"
-              :class="{ 'height-0': atributDrop != attribit.id }"
-            >
-              <a-checkbox
-                class="filter-checkbox"
-                v-for="option in attribit.options"
-                :key="option.id"
-                :checked="$route.query?.attributes?.includes(option.id)"
-                @change="onChange(option.id)"
-                >{{ option?.name }}
-              </a-checkbox>
+            <div v-for="attribit in attributes" :key="attribit.id">
+              <h5 @click="atributDropAction(attribit.id)">
+                {{ attribit?.name }} <span v-html="arrow"></span>
+              </h5>
+              <div
+                class="categories-checkbox-list"
+                :class="{ 'height-0': !atributDrop.includes(attribit.id) }"
+              >
+                <a-checkbox
+                  v-if="showAllAtr.includes(attribit.id)"
+                  class="filter-checkbox"
+                  v-for="option in attribit.options"
+                  :key="option.id"
+                  :checked="$route.query?.attributes?.includes(option.id)"
+                  @change="onChange(option.id)"
+                  >{{ option?.name }}
+                </a-checkbox>
+                <a-checkbox
+                  v-if="!showAllAtr.includes(attribit.id)"
+                  class="filter-checkbox"
+                  v-for="option in attribit.options.slice(0, 5)"
+                  :key="option.id"
+                  :checked="$route.query?.attributes?.includes(option.id)"
+                  @change="onChange(option.id)"
+                  >{{ option?.name }}
+                </a-checkbox>
 
-              <span class="categories-list_show-more">Показать еще</span>
+                <span
+                  v-if="!showAllAtr.includes(attribit.id) && attribit.options.length > 5"
+                  class="categories-list_show-more"
+                  @click="showAllAtributs(attribit.id)"
+                  >Показать еще</span
+                >
+              </div>
             </div>
           </div>
         </div>
@@ -364,6 +385,7 @@ import CategoriesTabCarousel from "../../components/categories/categoriesInner-t
 export default {
   data() {
     return {
+      showAllAtr: [],
       sliderValue: [10000, 10000000],
       arrow: require("../../assets/svg/dropdown-icon.svg?raw"),
       filterX: require("../../assets/svg/selected-filter-x.svg?raw"),
@@ -372,7 +394,7 @@ export default {
       filterOptions: [],
       products: [],
       atr: [],
-      atributDrop: null,
+      atributDrop: [],
       status: [
         {
           value: "all",
@@ -423,6 +445,7 @@ export default {
     categoryChildsData?.attributes.forEach((item) => {
       options.push(...item.options);
     });
+    console.log(categoryChildsData);
     const filterOptions = [];
     if (query.attributes) {
       let atr = query.attributes.split(",");
@@ -459,8 +482,19 @@ export default {
     },
   },
   methods: {
+    showAllAtributs(id) {
+      if (!this.showAllAtr.includes(id)) {
+        this.showAllAtr.push(id);
+      }
+    },
+
     atributDropAction(id) {
-      this.atributDrop != id ? (this.atributDrop = id) : (this.atributDrop = null);
+      if (!this.atributDrop.includes(id)) {
+        this.atributDrop.push(id);
+      } else {
+        console.log(this.atributDrop);
+        this.atributDrop = this.atributDrop.filter((item) => item != id);
+      }
     },
     clearFilter() {
       this.$router.replace({
@@ -588,5 +622,10 @@ export default {
 }
 .text-test {
   color: red;
+}
+.categories-atribute-box {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
 }
 </style>

@@ -3,23 +3,12 @@
     <div class="container_xl">
       <div class="home-banner-container">
         <BannerCarousel>
-          <div class="swiper-slide">
-            <img src="../assets/images/iPhone (2) 1.png" alt="" />
-          </div>
-          <div class="swiper-slide">
-            <img src="../assets/images/iPhone (2) 1.png" alt="" />
-          </div>
-          <div class="swiper-slide">
-            <img src="../assets/images/iPhone (2) 1.png" alt="" />
-          </div>
-          <div class="swiper-slide">
-            <img src="../assets/images/iPhone (2) 1.png" alt="" />
-          </div>
-          <div class="swiper-slide">
-            <img src="../assets/images/iPhone (2) 1.png" alt="" />
-          </div>
-          <div class="swiper-slide">
-            <img src="../assets/images/iPhone (2) 1.png" alt="" />
+          <div
+            class="swiper-slide banner-slider"
+            v-for="banner in bannersMain"
+            :key="banner?.id"
+          >
+            <img :src="banner?.lg_img?.ru" alt="" />
           </div>
         </BannerCarousel>
         <BannerCarouselRight>
@@ -58,7 +47,9 @@
       <div class="">
         <div class="d-flex justify-content-between align-items-end">
           <MainTitle :title="showcases[0]?.name" />
-          <nuxt-link class="to-page-underline" to="/">Все товары</nuxt-link>
+          <nuxt-link class="to-page-underline" :to="`/showcases/${showcases[0]?.slug}`"
+            >Все товары</nuxt-link
+          >
         </div>
         <div class="product-grid" v-if="showcases[0]?.products.length > 0">
           <ProductCard
@@ -73,7 +64,9 @@
       <div class="">
         <div class="d-flex justify-content-between align-items-end">
           <MainTitle :title="showcases[1]?.name" />
-          <nuxt-link class="to-page-underline" to="/">Все товары</nuxt-link>
+          <nuxt-link class="to-page-underline" :to="`/showcases/${showcases[1]?.slug}`"
+            >Все товары</nuxt-link
+          >
         </div>
         <div class="product-grid" v-if="showcases[1]?.products.length > 0">
           <ProductCard
@@ -85,7 +78,7 @@
       </div>
     </div>
     <div class="container_xl">
-      <HomeBanner />
+      <HomeBanner :banner="bannersPromo" />
     </div>
     <div class="container_xl" v-if="showcases[2]">
       <MainTitle :title="showcases[2]?.name" />
@@ -109,7 +102,9 @@
       <div class="">
         <div class="d-flex justify-content-between align-items-end">
           <MainTitle :title="showcases[3]?.name" />
-          <nuxt-link class="to-page-underline" to="/">Все товары</nuxt-link>
+          <nuxt-link class="to-page-underline" :to="`/showcases/${showcases[3]?.slug}`"
+            >Все товары</nuxt-link
+          >
         </div>
         <div class="">
           <ProductCarousel>
@@ -129,7 +124,9 @@
       <div class="">
         <div class="d-flex justify-content-between align-items-end">
           <MainTitle :title="showcases[4]?.name" />
-          <nuxt-link class="to-page-underline" to="/">Все товары</nuxt-link>
+          <nuxt-link class="to-page-underline" :to="`/showcases/${showcases[4]?.slug}`"
+            >Все товары</nuxt-link
+          >
         </div>
         <div class="" v-if="showcases[4]?.products.length > 0">
           <ProductCarousel2>
@@ -332,7 +329,9 @@ export default {
       brands1,
       posts1,
       showcasesData,
-      bannersData,
+      bannersMainData,
+      bannersPromoData,
+      bannersSmallData,
     ] = await Promise.all([
       store.dispatch("fetchProducts/getProducts", {
         type: "bestsellers",
@@ -361,6 +360,12 @@ export default {
       store.dispatch("fetchBanners/getBanners", {
         type: "main",
       }),
+      store.dispatch("fetchBanners/getBanners", {
+        type: "promo",
+      }),
+      store.dispatch("fetchBanners/getBanners", {
+        type: "small",
+      }),
     ]);
     const bestsellersProducts = products?.products?.data;
     const byCategoryProducts = byCategory?.products?.data;
@@ -369,8 +374,9 @@ export default {
     const brands = brands1?.brands;
     const posts = posts1?.posts?.data;
     const showcases = showcasesData.showcases;
-    const banners = bannersData;
-    console.log(categories);
+    const bannersMain = bannersMainData?.banners?.data;
+    const bannersPromo = bannersPromoData?.banners?.data;
+    const bannersSmall = bannersSmallData?.banners?.data;
     return {
       bestsellersProducts,
       byCategoryProducts,
@@ -379,7 +385,9 @@ export default {
       brands,
       posts,
       showcases,
-      banners,
+      bannersMain,
+      bannersPromo,
+      bannersSmall,
     };
   },
   mounted() {

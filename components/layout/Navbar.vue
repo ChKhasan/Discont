@@ -23,11 +23,189 @@
             Katalog
           </button>
           <div class="search_input_container">
-            <input type="text" placeholder="Search ..." />
-            <span class="search-btn">
+            <input
+              type="text"
+              ref="search"
+              placeholder="Search ..."
+              v-model="search"
+              @blur="searchBlockHide = false"
+              @focus="searchBlockHide = true"
+            />
+            <span
+              class="search-btn"
+              :class="{ disabled: search.length < 3 }"
+              @click="$router.push(`/search/${search}`)"
+            >
               <span v-html="navMic"></span>
               Qidiruv
             </span>
+            <Transition name="bounce">
+              <div class="seach-resoult-container" v-if="searchBlockHide">
+                <div class="search-resoult-scroll">
+                  <div>
+                    <div class="search-tt">
+                      <h6>Вы недавно искали</h6>
+                      <button>Очистить</button>
+                    </div>
+                    <div class="search-resoults-list">
+                      <div class="search-resoults">
+                        <nuxt-link to="">
+                          <span v-html="searchClock"></span>
+                          Мягкая мебель
+                        </nuxt-link>
+                        <button>
+                          <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            width="24"
+                            height="24"
+                            viewBox="0 0 24 24"
+                            fill="none"
+                          >
+                            <path
+                              d="M15.8925 8.0918L8.10547 15.8788"
+                              stroke="#727474"
+                              stroke-linecap="round"
+                              stroke-linejoin="round"
+                            />
+                            <path
+                              d="M15.8951 15.883L8.10156 8.08789"
+                              stroke="#727474"
+                              stroke-linecap="round"
+                              stroke-linejoin="round"
+                            />
+                          </svg>
+                        </button>
+                      </div>
+                      <div class="search-resoults">
+                        <nuxt-link to="">
+                          <span v-html="searchClock"></span>
+                          Мягкая мебель
+                        </nuxt-link>
+                        <button>
+                          <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            width="24"
+                            height="24"
+                            viewBox="0 0 24 24"
+                            fill="none"
+                          >
+                            <path
+                              d="M15.8925 8.0918L8.10547 15.8788"
+                              stroke="#727474"
+                              stroke-linecap="round"
+                              stroke-linejoin="round"
+                            />
+                            <path
+                              d="M15.8951 15.883L8.10156 8.08789"
+                              stroke="#727474"
+                              stroke-linecap="round"
+                              stroke-linejoin="round"
+                            />
+                          </svg>
+                        </button>
+                      </div>
+                      <div class="search-resoults">
+                        <nuxt-link to="">
+                          <span v-html="searchClock"></span>
+                          Мягкая мебель
+                        </nuxt-link>
+                        <button>
+                          <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            width="24"
+                            height="24"
+                            viewBox="0 0 24 24"
+                            fill="none"
+                          >
+                            <path
+                              d="M15.8925 8.0918L8.10547 15.8788"
+                              stroke="#727474"
+                              stroke-linecap="round"
+                              stroke-linejoin="round"
+                            />
+                            <path
+                              d="M15.8951 15.883L8.10156 8.08789"
+                              stroke="#727474"
+                              stroke-linecap="round"
+                              stroke-linejoin="round"
+                            />
+                          </svg>
+                        </button>
+                      </div>
+                      <div class="search-resoults">
+                        <nuxt-link to="">
+                          <span v-html="searchClock"></span>
+                          Мягкая мебель
+                        </nuxt-link>
+                        <button>
+                          <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            width="24"
+                            height="24"
+                            viewBox="0 0 24 24"
+                            fill="none"
+                          >
+                            <path
+                              d="M15.8925 8.0918L8.10547 15.8788"
+                              stroke="#727474"
+                              stroke-linecap="round"
+                              stroke-linejoin="round"
+                            />
+                            <path
+                              d="M15.8951 15.883L8.10156 8.08789"
+                              stroke="#727474"
+                              stroke-linecap="round"
+                              stroke-linejoin="round"
+                            />
+                          </svg>
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                  <div>
+                    <div class="search-popular" v-if="searchProducts.length > 0">
+                      <h6>Популярные</h6>
+                    </div>
+                    <div class="search-resoults-list">
+                      <div
+                        class="search-resoults"
+                        v-for="product in searchProducts"
+                        :key="product?.id"
+                      >
+                        <nuxt-link :to="`/product/${product?.products[0]?.slug}`">
+                          <span
+                            ><svg
+                              xmlns="http://www.w3.org/2000/svg"
+                              width="20"
+                              height="20"
+                              viewBox="0 0 20 20"
+                              fill="none"
+                            >
+                              <circle
+                                cx="9.80492"
+                                cy="9.80492"
+                                r="7.49047"
+                                stroke="#727474"
+                                stroke-width="1.2"
+                                stroke-linecap="round"
+                                stroke-linejoin="round"
+                              />
+                              <path
+                                d="M15.0156 15.4043L17.9523 18.3334"
+                                stroke="#727474"
+                                stroke-width="1.2"
+                                stroke-linecap="round"
+                                stroke-linejoin="round"
+                              /></svg
+                          ></span>
+                          {{ product?.name?.ru }}
+                        </nuxt-link>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </Transition>
           </div>
         </div>
         <div class="header-navbar_navbar d-flex">
@@ -175,51 +353,6 @@
                       </nuxt-link>
                     </ul>
                   </div>
-                  <!-- <ul v-for="categoryChild in activeCategory?.children" :key="categoryChild?.id">
-                    <h4>Телефоны и смарт-часы</h4>
-                    <li>Смартфоны</li>
-                    <li>Мобильные телефоны</li>
-                    <li>SIM-карты</li>
-                    <li>Смарт-часы</li>
-                    <li>Фитнес-браслеты</li>
-                    <li>Ремешки для смарт-часов и фитнес-браслетов</li>
-                  </ul>
-                  <ul>
-                    <h4>Телефоны и смарт-часы</h4>
-                    <li>Смартфоны</li>
-                    <li>Мобильные телефоны</li>
-                    <li>SIM-карты</li>
-                    <li>Смарт-часы</li>
-                    <li>Фитнес-браслеты</li>
-                    <li>Ремешки для смарт-часов и фитнес-браслетов</li>
-                  </ul>
-                  <ul>
-                    <h4>Телефоны и смарт-часы</h4>
-                    <li>Смартфоны</li>
-                    <li>Мобильные телефоны</li>
-                    <li>SIM-карты</li>
-                    <li>Смарт-часы</li>
-                    <li>Фитнес-браслеты</li>
-                    <li>Ремешки для смарт-часов и фитнес-браслетов</li>
-                  </ul>
-                  <ul>
-                    <h4>Телефоны и смарт-часы</h4>
-                    <li>Смартфоны</li>
-                    <li>Мобильные телефоны</li>
-                    <li>SIM-карты</li>
-                    <li>Смарт-часы</li>
-                    <li>Фитнес-браслеты</li>
-                    <li>Ремешки для смарт-часов и фитнес-браслетов</li>
-                  </ul>
-                  <ul>
-                    <h4>Телефоны и смарт-часы</h4>
-                    <li>Смартфоны</li>
-                    <li>Мобильные телефоны</li>
-                    <li>SIM-карты</li>
-                    <li>Смарт-часы</li>
-                    <li>Фитнес-браслеты</li>
-                    <li>Ремешки для смарт-часов и фитнес-браслетов</li>
-                  </ul> -->
                 </div>
               </div>
             </div>
@@ -642,6 +775,11 @@
       <template slot="footer"> <h3></h3></template>
     </a-modal>
     <!-- access profile register  -->
+    <div
+      class="seach-resoult-mask"
+      v-if="searchBlockHide"
+      @click="searchBlockHide = false"
+    ></div>
   </div>
 </template>
 <script>
@@ -651,12 +789,14 @@ import Vnotification from "../vnotification.vue";
 export default {
   data() {
     return {
+      searchBlockHide: false,
       visibleSuccess: false,
       catalogMenu: false,
       visibleCheck: false,
       visibleLogin: false,
       visibleSms: false,
       visibleName: false,
+      search: "",
       formLogin: {
         phone_number: "",
         password: "",
@@ -709,6 +849,7 @@ export default {
         ],
       },
       navLogo: require("../../assets/svg/green-logo.svg?raw"),
+      searchClock: require("../../assets/svg/searchClock.svg?raw"),
       navMic: require("../../assets/svg/mic.svg?raw"),
       navSearch: require("../../assets/svg/search.svg?raw"),
       navLike: require("../../assets/svg/Heart.svg?raw"),
@@ -719,6 +860,7 @@ export default {
       navCategory: require("../../assets/svg/category_menu.svg?raw"),
       arrow: require("../../assets/svg/dropdown-icon.svg?raw"),
       categories: [],
+      searchProducts: [],
       activeCategory: null,
       targetPage: false,
       smsCodeError: false,
@@ -750,10 +892,12 @@ export default {
       // let cart = JSON.parse(localStorage.getItem("cart"));
       // return cart.length;
     },
+    searchFocus() {
+      // return this.$refs.search.focus();
+    },
   },
   mounted() {
     let cart = JSON.parse(localStorage.getItem("cart"));
-    console.log(cart);
   },
   methods: {
     chunkIntoN(arr, n) {
@@ -969,8 +1113,19 @@ export default {
         }
       }
     },
+    async __GET_SEARCH() {
+      try {
+        const data = await this.$store.dispatch("fetchSearch/getSearch", {
+          search: this.search,
+        });
+        this.searchProducts = data?.products;
+      } catch (e) {}
+    },
   },
   watch: {
+    searchFocus() {
+      console.log("seach ......");
+    },
     authVisible(val) {
       this.visibleCheck = val;
     },
@@ -992,7 +1147,13 @@ export default {
           });
       }
     },
+    search(val) {
+      if (val.length > 3) {
+        this.__GET_SEARCH();
+      }
+    },
     routerPath() {
+      this.searchBlockHide = false;
       (this.formLogin = {
         phone_number: "",
         password: "",
@@ -1046,6 +1207,9 @@ export default {
 }
 .header-navbar {
   position: relative;
+  display: flex;
+  align-items: center;
+  max-height: 62px;
 }
 .catalog-menu-body .main-title {
   margin-bottom: 0 !important;
@@ -1114,10 +1278,6 @@ export default {
   background: #f7f7f7;
   color: #1f8a70 !important;
 }
-.catalog-menu-list-active span {
-  /* position: absolute; */
-  /* right: 12px; */
-}
 .catalog-menu-list ul li:hover {
   background: #f7f7f7;
   color: #1f8a70;
@@ -1126,11 +1286,9 @@ export default {
 .nested-leave-active {
   transition: all 0.3s ease-in-out;
 }
-/* delay leave of parent element */
 .nested-leave-active {
   transition-delay: 0.25s;
 }
-
 .nested-enter-from,
 .nested-leave-to {
   opacity: 0;
@@ -1138,41 +1296,26 @@ export default {
 .nested-enter-active {
   transition: all 0.3s ease-in-out;
 }
-/* we can also transition nested elements using nested selectors */
-/* .nested-enter-active .inner,
 .nested-leave-active .inner {
-  transition: all 0.3s ease-in-out;
-} */
-.nested-leave-active .inner {
-  animation: bounce-in 0.5s reverse;
+  animation: menu-in 0.25s reverse;
 }
-/* delay enter of nested element */
 .nested-enter-active .inner {
-  animation: bounce-in 0.5s;
+  animation: menu-in 0.5s;
   transition-delay: 0.25s;
 }
 
 .nested-enter-from .inner,
 .nested-leave-to .inner {
   transform: translateX(30px);
-  transition: all 0.3s ease-in-out;
-
-  /*
-  	Hack around a Chrome 96 bug in handling nested opacity transitions.
-    This is not needed in other browsers or Chrome 99+ where the bug
-    has been fixed.
-  */
+  transition: all 0.25s ease-out;
   opacity: 0.001;
 }
-@keyframes bounce-in {
+@keyframes menu-in {
   0% {
     transform: translateX(-100%);
     opacity: 0;
   }
-  50% {
-    transform: translateX(40px);
-    opacity: 1;
-  }
+
   100% {
     transform: translateX(0px);
     opacity: 1;
@@ -1397,5 +1540,14 @@ export default {
   text-align: right;
   letter-spacing: 0.05em;
   color: #ff4f2d;
+}
+.seach-resoult-mask {
+  position: absolute;
+  height: 100vh;
+  width: 100%;
+  background: rgba(0, 0, 0, 0.25);
+  backdrop-filter: blur(2.5px);
+  z-index: 1000;
+  top: 100%;
 }
 </style>

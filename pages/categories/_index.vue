@@ -17,7 +17,7 @@
                   category?.slug == $route.params.index && category?.children.length > 0
                 "
               >
-                <span
+                <!-- <span
                   v-for="childs in category?.children"
                   :key="childs.id"
                   @click="
@@ -26,16 +26,15 @@
                       params: { index: childs.slug },
                     })
                   "
-                  :custom="true"
                 >
-                  {{ childs?.name }}</span
-                >
-                <!-- <a
+                  {{ childs?.name }}{{ `/categories-inner/${childs.slug}` }}</span
+                > -->
+                <nuxt-link
                   v-for="childs in category?.children"
                   :key="childs.id"
-                  :href="`/categories-inner/${childs?.slug}`"
-                  >{{ childs?.name }}</a
-                > -->
+                  :to="`/categories-inner/${childs?.slug}`"
+                  >{{ childs?.name }}</nuxt-link
+                >
               </div>
             </li>
           </ul>

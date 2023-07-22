@@ -12,7 +12,7 @@
 }
 .categories-list,
 .categories-list-inner {
-  margin-bottom: 24px;
+  margin-bottom: 12px;
 }
 .categories-list h5,
 .categories-list-inner h5 {
@@ -27,7 +27,7 @@
   color: #1c1f22;
   margin-bottom: 12px;
 }
-.categories-list-inner ul li span,
+.categories-list-inner li span,
 .categories-list ul li span {
   font-family: var(--SB_400);
   font-style: normal;
@@ -44,7 +44,7 @@
   padding-left: 16px;
 }
 
-.categories-list-inner ul li span {
+.categories-list-inner li span {
   color: #9a9a9a;
 }
 .categories-list ul li span {
@@ -276,18 +276,18 @@
   margin-left: 0;
 }
 .filter-range {
-  margin-bottom: 27px;
+  margin-top: 24px;
 }
 .categories-checkbox-list {
   position: relative;
-  margin-bottom: 31px;
+  /* margin-bottom: 31px; */
   max-height: 0;
   transition: max-height 0.25s ease-out;
   overflow: hidden;
 }
 .height-0 {
   position: relative;
-  max-height: 100px;
+  max-height: 500px;
   transition: max-height 0.25s ease-in;
 }
 .filter-slider-inputs {

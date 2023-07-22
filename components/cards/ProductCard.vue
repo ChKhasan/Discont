@@ -211,7 +211,9 @@
                   >
                     Savatchaga solish
                   </button>
-                  <button class="click">Birgina click orqali sotib olish</button>
+                  <button class="click" @click="visibleOc = true">
+                    Birgina click orqali sotib olish
+                  </button>
                 </div>
               </div>
             </div>
@@ -342,7 +344,7 @@
               </div>
             </div>
             <div class="product-modal-buy-mode-btns">
-              <div>Birgina click orqali sotib olish</div>
+              <div @click="visibleOc = true">Birgina click orqali sotib olish</div>
               <span
                 :class="{
                   'disabled-btn': $store.state.cart.find((item) => item.id == product.id),
@@ -399,6 +401,167 @@
         </div>
       </div>
     </a-modal>
+    <a-modal
+      v-model="visibleOc"
+      :body-style="{ padding: '32px', borderRadius: '14px' }"
+      centered
+      :closable="false"
+      width="670px"
+      @ok="handleOkName"
+    >
+      <div class="vmodal-header auth-modal oc-modal-header">
+        <h5>Birgina click orqali sotib olish</h5>
+        <span @click="handleOkName"
+          ><svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="20"
+            height="20"
+            viewBox="0 0 20 20"
+            fill="none"
+          >
+            <path
+              d="M17.9958 1.98438L2.00391 17.9762"
+              stroke="#1F8A70"
+              stroke-width="3.28586"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            />
+            <path
+              d="M18.0003 17.9861L1.99512 1.97754"
+              stroke="#1F8A70"
+              stroke-width="3.28586"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            /></svg
+        ></span>
+      </div>
+      <div class="vmodal-body">
+        <div class="oc-product">
+          <div class="oc-product-img" v-if="product?.images?.length > 0">
+            <img :src="product?.images[0]?.md_img" alt="" />
+          </div>
+
+          <div class="oc-product-body">
+            <div>
+              <h5>{{ product?.info?.name }}</h5>
+              <Transition name="oc-bounce">
+                <p class="oc-code" v-if="callBox">
+                  Tovar kodi: <span>{{ product?.id }}</span>
+                </p>
+              </Transition>
+            </div>
+            <div
+              class="d-flex flex-column align-items-center justify-content-center oc-counter-box"
+            >
+              <div class="oc-product-counter">
+                <button @click="count > 1 && count--">
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="12"
+                    height="2"
+                    viewBox="0 0 12 2"
+                    fill="none"
+                  >
+                    <path
+                      d="M1 2C0.734784 2 0.48043 1.89464 0.292893 1.70711C0.105357 1.51957 0 1.26522 0 1C0 0.734784 0.105357 0.48043 0.292893 0.292893C0.48043 0.105357 0.734784 0 1 0L11 0C11.2652 0 11.5196 0.105357 11.7071 0.292893C11.8946 0.48043 12 0.734784 12 1C12 1.26522 11.8946 1.51957 11.7071 1.70711C11.5196 1.89464 11.2652 2 11 2H1Z"
+                      fill="#1F8A70"
+                    />
+                  </svg>
+                </button>
+                {{ count }}
+                <button @click="count++">
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="12"
+                    height="12"
+                    viewBox="0 0 12 12"
+                    fill="none"
+                  >
+                    <path
+                      d="M5.5 0C5.68234 0 5.8572 0.0724328 5.98614 0.201364C6.11507 0.330295 6.1875 0.505164 6.1875 0.6875V4.8125H10.3125C10.4948 4.8125 10.6697 4.88493 10.7986 5.01386C10.9276 5.1428 11 5.31766 11 5.5C11 5.68234 10.9276 5.8572 10.7986 5.98614C10.6697 6.11507 10.4948 6.1875 10.3125 6.1875H6.1875V10.3125C6.1875 10.4948 6.11507 10.6697 5.98614 10.7986C5.8572 10.9276 5.68234 11 5.5 11C5.31766 11 5.1428 10.9276 5.01386 10.7986C4.88493 10.6697 4.8125 10.4948 4.8125 10.3125V6.1875H0.6875C0.505164 6.1875 0.330295 6.11507 0.201364 5.98614C0.0724328 5.8572 0 5.68234 0 5.5C0 5.31766 0.0724328 5.1428 0.201364 5.01386C0.330295 4.88493 0.505164 4.8125 0.6875 4.8125H4.8125V0.6875C4.8125 0.505164 4.88493 0.330295 5.01386 0.201364C5.1428 0.0724328 5.31766 0 5.5 0Z"
+                      fill="#1F8A70"
+                    />
+                  </svg>
+                </button>
+              </div>
+              <p>{{ product?.real_price }} so’mdan/donasi</p>
+            </div>
+          </div>
+        </div>
+        <a-form-model
+          v-if="!callBox"
+          :model="formName"
+          ref="ruleFormNameClick"
+          :rules="rulesName"
+          layout="vertical"
+        >
+          <div class="oc-modal-form">
+            <a-form-model-item
+              class="form-item register-input mb-0 pb-0"
+              label="Ismingizni kiriting"
+              prop="name"
+            >
+              <a-input v-model="formName.name" type="text" placeholder="Name" />
+            </a-form-model-item>
+            <a-form-model-item
+              class="form-item register-input mb-0 pb-0"
+              label="Telefon raqamingiz"
+              prop="phone_number"
+            >
+              <a-input
+                v-model="formName.phone_number"
+                v-mask="'+998 ## ### ## ##'"
+                placeholder="+998 (__) ___ __ __"
+              />
+            </a-form-model-item>
+          </div>
+        </a-form-model>
+      </div>
+      <div
+        class="vmodal-btn vmodal-btn-height oc-product-btn"
+        v-if="!callBox"
+        @click="submitName()"
+      >
+        Ma`lumotlarni yuborish
+      </div>
+      <div class="vmodal-forget-password" v-if="!callBox" @click="callBox = true">
+        O’zim bog’lanaman
+      </div>
+      <a href="#">
+        <Transition name="oc-bounce">
+          <div class="oc-product-call" v-if="callBox">
+            <span
+              ><svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="50"
+                height="50"
+                viewBox="0 0 50 50"
+                fill="none"
+              >
+                <path
+                  d="M30.0367 11.4363C29.045 11.2531 28.1342 11.886 27.9454 12.8541C27.7565 13.8222 28.3914 14.7674 29.3562 14.9568C32.2609 15.5231 34.5038 17.7716 35.0723 20.6862V20.6883C35.2341 21.5273 35.9727 22.1373 36.8234 22.1373C36.9375 22.1373 37.0516 22.1269 37.1678 22.1061C38.1326 21.9125 38.7675 20.9694 38.5787 19.9992C37.7301 15.646 34.3793 12.2837 30.0367 11.4363Z"
+                  fill="#1F8A70"
+                />
+                <path
+                  d="M29.9064 4.18254C29.4416 4.11592 28.9748 4.25332 28.6034 4.54895C28.2217 4.84875 27.9831 5.28178 27.9312 5.76686C27.8212 6.74744 28.5287 7.63433 29.508 7.74467C36.2615 8.49832 41.5107 13.7593 42.2701 20.5338C42.3718 21.4415 43.1332 22.1265 44.042 22.1265C44.1104 22.1265 44.1768 22.1223 44.2453 22.114C44.7204 22.0619 45.1437 21.8267 45.4425 21.4519C45.7392 21.0772 45.874 20.6108 45.8201 20.1341C44.874 11.6816 38.3321 5.12147 29.9064 4.18254Z"
+                  fill="#1F8A70"
+                />
+                <path
+                  fill-rule="evenodd"
+                  clip-rule="evenodd"
+                  d="M22.9841 27.0258C31.2947 35.3341 33.18 25.7223 38.4714 31.01C43.5727 36.1099 46.5047 37.1317 40.0414 43.5932C39.2318 44.2438 34.088 52.0714 16.0109 33.9993C-2.06844 15.925 5.7546 10.7759 6.40541 9.96656C12.8844 3.48718 13.8885 6.43621 18.9898 11.5361C24.2812 16.826 14.6735 18.7175 22.9841 27.0258Z"
+                  fill="#1F8A70"
+                /></svg
+            ></span>
+            <div class="call-number">
+              <p>Call centre Diskont:</p>
+              <h4>71 207 77 88</h4>
+            </div>
+          </div>
+        </Transition>
+      </a>
+      <template slot="footer"> <h3></h3></template>
+    </a-modal>
   </div>
 </template>
 <script>
@@ -407,6 +570,9 @@ export default {
   props: ["product"],
   data() {
     return {
+      count: 1,
+      visibleOc: false,
+      callBox: false,
       visible: false,
       byMode: false,
       visibleBuy: false,
@@ -417,9 +583,34 @@ export default {
       like: require("../../assets/svg/card-like.svg?raw"),
       view: require("../../assets/svg/view.svg?raw"),
       activeHeart: require("../../assets/svg/active-heart.svg?raw"),
+      formName: {
+        name: "",
+        phone_number: "",
+        product_id: null,
+      },
+      rulesName: {
+        name: [
+          {
+            required: true,
+            message: "This field is required",
+            trigger: "change",
+          },
+        ],
+        phone_number: [
+          {
+            required: true,
+            message: "This field is required",
+            trigger: "change",
+          },
+          { min: 9, message: "Length should be 9", trigger: "blur" },
+        ],
+      },
     };
   },
   methods: {
+    handleOkName() {
+      this.visibleOc = false;
+    },
     getImgUrl(props, i) {
       return props[i].sm_img;
     },
@@ -428,6 +619,30 @@ export default {
     },
     handleOk() {
       this.visible = false;
+    },
+
+    submitName() {
+      const data = {
+        ...this.formName,
+        phone_number: `998${this.formName.phone_number}`,
+        product_id: this.product.id,
+      };
+      this.$refs["ruleFormNameClick"].validate((valid) => {
+        if (valid) {
+          this.__POST_ORDER(data);
+        } else {
+          return false;
+        }
+      });
+    },
+    async __POST_ORDER(formData) {
+      try {
+        const data = await this.$store.dispatch("fetchAuth/postClickOrder", formData);
+        this.visibleName = false;
+        this.compToast = true;
+      } catch (e) {
+        console.log(e);
+      }
     },
     productPrice(product) {
       let price =
@@ -440,6 +655,16 @@ export default {
       // .replace(".", ",")
       // .replace(/\B(?=(\d{3})+(?!\d))/g, " ");
       return `${price}`.replace(/\B(?=(\d{3})+(?!\d))/g, " ");
+    },
+  },
+  watch: {
+    visibleOc(val) {
+      if (val) {
+        this.visible = false;
+        this.visibleBuy = false;
+      } else {
+        this.count = 1;
+      }
     },
   },
 };

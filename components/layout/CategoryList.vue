@@ -39,7 +39,6 @@
                 ><span v-html="navCatIcon2"></span>Top tovarlar</nuxt-link
               >
             </li>
-
             <li>
               <nuxt-link
                 :class="{ stock__active: $route.params.index == 'best-seller' }"

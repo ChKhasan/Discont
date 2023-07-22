@@ -1,10 +1,12 @@
 <template lang="html">
   <div class="home-banner">
-    <img src="../assets/images/Скидки 1.png" alt="" />
+    <img :src="banner[0]?.lg_img?.ru" alt="" />
   </div>
 </template>
 <script>
-export default {};
+export default {
+  props: ["banner"],
+};
 </script>
 <style lang="css">
 .home-banner {
