@@ -86,7 +86,7 @@
       </div>
     </div>
     <div class="container_xl">
-      <HomeBanner :banner="bannersPromo" />
+      <HomeBanner :banner="bannersTop" />
     </div>
     <div class="container_xl" v-if="showcases[2]">
       <MainTitle :title="showcases[2]?.name" />
@@ -344,7 +344,7 @@ export default {
       posts1,
       showcasesData,
       bannersMainData,
-      bannersPromoData,
+      bannersTopData,
       bannersSmallData,
     ] = await Promise.all([
       store.dispatch("fetchProducts/getProducts", {
@@ -419,7 +419,7 @@ export default {
     const posts = posts1?.posts?.data;
     const showcases = showcasesData.showcases;
     const bannersMain = bannersMainData?.banners?.data;
-    const bannersPromo = bannersPromoData?.banners?.data;
+    const bannersTop = bannersTopData?.banners?.data;
     const bannersSmall = bannersSmallData?.banners?.data;
     console.log(showcases[0]);
     return {
@@ -431,7 +431,7 @@ export default {
       posts,
       showcases,
       bannersMain,
-      bannersPromo,
+      bannersTop,
       bannersSmall,
     };
   },

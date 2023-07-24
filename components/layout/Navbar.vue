@@ -44,7 +44,7 @@
             <Transition name="bounce">
               <div class="seach-resoult-container" v-if="searchBlockHide">
                 <div class="search-resoult-scroll">
-                  <div>
+                  <div v-if="searchLastResoults">
                     <div class="search-tt">
                       <h6>Вы недавно искали</h6>
                       <button>Очистить</button>
@@ -438,6 +438,7 @@
               <input
                 type="text"
                 v-mask="'+998 ## ### ## ##'"
+                @keyup.enter="submitCheckNumber()"
                 v-model="formCheckNumber.phone_number"
                 placeholder="+998 (__) ___ __ __"
               />
@@ -446,7 +447,11 @@
           </a-form-model-item>
         </a-form-model>
       </div>
-      <div class="vmodal-btn vmodal-btn-height" @click="submitCheckNumber()">
+      <div
+        class="vmodal-btn vmodal-btn-height"
+        v-ripple="'rgba(255, 255, 255, 0.35)'"
+        @click="submitCheckNumber()"
+      >
         Akauntga Kirish
       </div>
       <!-- <div class="vmodal-btn-outline" @click="visibleLogin = true">Manzilni qo’shish</div> -->
@@ -805,9 +810,10 @@ import Vnotification from "../vnotification.vue";
 export default {
   data() {
     return {
+      searchLastResoults: true,
       searchBlockHide: false,
-      visibleSuccess: false,
       catalogMenu: false,
+      visibleSuccess: false,
       visibleCheck: false,
       visibleLogin: false,
       visibleSms: false,
@@ -911,9 +917,6 @@ export default {
       // let cart = JSON.parse(localStorage.getItem("cart"));
       // return cart.length;
     },
-    searchFocus() {
-      // return this.$refs.search.focus();
-    },
   },
   mounted() {
     let cart = JSON.parse(localStorage.getItem("cart"));
@@ -964,11 +967,12 @@ export default {
       this.visibleName = false;
     },
     submitCheckNumber() {
+      console.log(this.formCheckNumber.phone_number);
       const data = {
-        phone_number:
-          this.formCheckNumber.phone_number.length == 9
-            ? `998${this.formCheckNumber.phone_number}`
-            : this.formCheckNumber.phone_number.split(" ").join(""),
+        phone_number: this.formCheckNumber.phone_number
+          .split(" ")
+          .join("")
+          .replace("+", ""),
       };
       this.$refs["ruleFormCheckNumber"].validate((valid) => {
         valid ? this.__CHECK_NUMBER(data) : false;
@@ -1143,8 +1147,14 @@ export default {
     },
   },
   watch: {
-    searchFocus() {
-      console.log("seach ......");
+    searchBlockHide(val) {
+      if (val) {
+        document.body.style.height = "100vh";
+        document.body.style.overflow = "hidden";
+      } else {
+        document.body.style.height = "auto";
+        document.body.style.overflow = "auto";
+      }
     },
     authVisible(val) {
       this.visibleCheck = val;
@@ -1170,6 +1180,7 @@ export default {
     search(val) {
       if (val.length > 3) {
         this.__GET_SEARCH();
+        this.searchLastResoults = false;
       }
     },
     routerPath() {

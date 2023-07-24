@@ -33,7 +33,11 @@ export const actions = {
     return res;
   },
   async postCheckNumber({}, data) {
-    const res = await this.$axios.$post(`/auth/check`, data);
+    const res = await this.$axios.$post(`/auth/check`, data, {
+      headers: {
+        Accept: "application/json",
+      },
+    });
     return res;
   },
   async postCheckNumberForget({}, data) {

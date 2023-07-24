@@ -4,8 +4,9 @@
       <div class="checkout-container">
         <div class="check-form-block">
           <div class="checkout-step-title">
-            <span v-if="true">1</span>
-            <span v-else class="step-active"
+            <span
+              v-if="form.phone_number && form.name && form.last_name"
+              class="step-active"
               ><svg
                 xmlns="http://www.w3.org/2000/svg"
                 width="13"
@@ -18,6 +19,7 @@
                   fill="white"
                 /></svg
             ></span>
+            <span v-else>1</span>
             <h4>Ma`lumotlaringizni kiriting</h4>
           </div>
           <a-form-model :model="form" ref="ruleForm" :rules="rules" layout="vertical">
@@ -187,38 +189,40 @@
             </div>
           </div>
           <div class="adress-space">
-            <h6>Sizning manzillaringiz ro’yxati</h6>
-            <div class="radio-card radio-card-horizontal mb-3">
-              <span> </span>
-              <div class="radio-card-body">
-                <h6>
-                  Tashkent, Mirzo Ulug’bek tumani Tamarakhonum ko’chasi 2chi qavat 8A uy
-                </h6>
+            <div v-if="form.delivery_method == 'courier'">
+              <h6>Sizning manzillaringiz ro’yxati</h6>
+              <div class="radio-card radio-card-horizontal mb-3">
+                <span> </span>
+                <div class="radio-card-body">
+                  <h5>
+                    Tashkent, Mirzo Ulug’bek tumani Tamarakhonum ko’chasi 2chi qavat 8A uy
+                  </h5>
+                </div>
               </div>
-            </div>
-            <div class="radio-card radio-card-horizontal mb-3">
-              <span> </span>
-              <div class="radio-card-body">
-                <h6>
-                  Tashkent, Mirzo Ulug’bek tumani Tamarakhonum ko’chasi 2chi qavat 8A uy
-                </h6>
+              <div class="radio-card radio-card-horizontal mb-3">
+                <span> </span>
+                <div class="radio-card-body">
+                  <h5>
+                    Tashkent, Mirzo Ulug’bek tumani Tamarakhonum ko’chasi 2chi qavat 8A uy
+                  </h5>
+                </div>
               </div>
-            </div>
-            <div class="add-adress-btn" @click="visible = true">
-              <span
-                ><svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  width="15"
-                  height="15"
-                  viewBox="0 0 15 15"
-                  fill="none"
-                >
-                  <path
-                    d="M5.82927 14.1069V0.892578H9.17017V14.1069H5.82927ZM0.892578 9.17017V5.82927H14.1069V9.17017H0.892578Z"
-                    fill="white"
-                  /></svg
-              ></span>
-              Yangi Manzil qo’shish
+              <div class="add-adress-btn" @click="visible = true">
+                <span
+                  ><svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="15"
+                    height="15"
+                    viewBox="0 0 15 15"
+                    fill="none"
+                  >
+                    <path
+                      d="M5.82927 14.1069V0.892578H9.17017V14.1069H5.82927ZM0.892578 9.17017V5.82927H14.1069V9.17017H0.892578Z"
+                      fill="white"
+                    /></svg
+                ></span>
+                Yangi Manzil qo’shish
+              </div>
             </div>
             <div class="bottom-text">
               <span>
@@ -337,18 +341,15 @@
         <a-form-model :model="form" ref="ruleFormFaq" :rules="rules" layout="vertical">
           <a-form-model-item
             class="form-item mb-0 pb-0"
-            :class="{ 'select-placeholder': form.name == '' }"
+            :class="{ 'select-placeholder': form.region_id == null }"
           >
             <a-select
               class="checkout-select"
-              v-model="form.name"
+              v-model="form.region_id"
               placeholder="Viloyatni tanlang"
             >
-              <a-select-option
-                v-for="(category, index) in categories"
-                :key="category.value"
-              >
-                {{ category.label }}
+              <a-select-option v-for="(region, index) in regions" :key="region.id">
+                {{ region.name }}
               </a-select-option>
             </a-select>
           </a-form-model-item>
@@ -362,11 +363,8 @@
                 v-model="form.name"
                 placeholder="Shaharni tanlang"
               >
-                <a-select-option
-                  v-for="(category, index) in categories"
-                  :key="category.value"
-                >
-                  {{ category.label }}
+                <a-select-option v-for="(city, index) in cities" :key="city.id">
+                  {{ city.name }}
                 </a-select-option>
               </a-select>
             </a-form-model-item>
@@ -467,32 +465,12 @@ export default {
         last_name: "",
       },
       visibleSuccess: false,
-      typePayment: true,
+      typePayment: null,
       paymentElement: "payme",
       deliveryService: true,
       visible: false,
-      categories: [
-        {
-          label: "Toshkent shahar",
-          value: "asfdsadf",
-        },
-        {
-          label: "Toshkent viloyati",
-          value: "asfdasdsadf",
-        },
-        {
-          label: "Qashqadaryo",
-          value: "asfd24sadf",
-        },
-        {
-          label: "Surxandaryo",
-          value: "asf2344dsadf",
-        },
-        {
-          label: "Jizzax",
-          value: "asfdsase3adf",
-        },
-      ],
+      regions: [],
+      cities: [],
       products: [],
       rules: {
         name: [
@@ -523,6 +501,7 @@ export default {
     this.$store.commit("reloadStore");
     let storeProducts = JSON.parse(localStorage.getItem("cart"));
     this.__GET_PROFILE_INFO();
+    this.__GET_REGIONS();
     if (storeProducts.length > 0) {
       this.skeletonLoad = true;
       this.__GET_PRODUCTS_BY_ID({ products: storeProducts.map((item) => item.id) });
@@ -571,6 +550,14 @@ export default {
       });
       this.products = data?.products;
     },
+    async __GET_REGIONS() {
+      const data = await this.$store.dispatch("fetchRegions/getRegions", {
+        headers: {
+          Language: this.$i18n.locale,
+        },
+      });
+      this.regions = data?.regions;
+    },
     async __POST_ORDER(formData) {
       try {
         const data = await this.$store.dispatch("fetchAuth/postOrder", formData);
@@ -588,6 +575,11 @@ export default {
     },
     onChange(e) {
       console.log(`checked = ${e.target.checked}`);
+    },
+  },
+  watch: {
+    "form.region_id"(val) {
+      this.cities = this.regions.find((item) => item.id == val).districts;
     },
   },
 };

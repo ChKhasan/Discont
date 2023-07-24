@@ -1,14 +1,11 @@
 <template lang="html">
   <div class="banner-carousel-right">
     <div class="flex items-center justify-center">
-        <div
-          class="swiper-banner-right mySwiper2"
-          style="overflow: hidden; height: 354px"
-        >
-          <div class="swiper-wrapper">
-            <slot></slot>
-          </div>
+      <div class="swiper-banner-right mySwiper2" style="overflow: hidden; height: 354px">
+        <div class="swiper-wrapper">
+          <slot></slot>
         </div>
+      </div>
       <div class="swiper-pagination-banner-right"></div>
     </div>
     <div></div>
@@ -24,6 +21,7 @@ export default {
       flipEffect: {
         slideShadows: false,
       },
+      spaceBetween: 16,
 
       modules: [Navigation, Pagination, Autoplay],
       pagination: false,

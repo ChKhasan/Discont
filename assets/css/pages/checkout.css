@@ -25,12 +25,12 @@
   border-radius: 50%;
   width: 28px;
   height: 28px;
-  border: 1.27273px solid #1f8a70;
+  border: 1.27273px solid var(--color_dark_green);
   font-family: var(--SB_400);
   font-style: normal;
   font-size: 16px;
   line-height: 20px;
-  color: #1f8a70;
+  color: var(--color_dark_green);
   margin-right: 20px;
 }
 .checkout-form {
@@ -80,7 +80,7 @@
   height: 28px;
   min-width: 28px;
   max-height: 28px;
-  border: 1px solid #1f8a70;
+  border: 1px solid var(--color_dark_green);
   border-radius: 50%;
   position: relative;
   align-items: center;
@@ -96,7 +96,7 @@
   position: absolute;
   width: 20px;
   height: 20px;
-  background: #1f8a70;
+  background: var(--color_dark_green);
   border-radius: 50%;
 }
 /* .radio-card > span::after {
@@ -104,24 +104,9 @@
   position: absolute;
   width: 20px;
   height: 20px;
-  background: #1f8a70;
+  background: var(--color_dark_green);
   border-radius: 50%;
 } */
-.radio-card-body h6 {
-  font-family: var(--SB_500);
-  font-style: normal;
-  font-size: 14px;
-  line-height: 18px;
-  color: #000000;
-}
-.radio-card-body p {
-  font-family: var(--SB_400);
-  font-style: normal;
-  font-size: 14px;
-  line-height: 21px;
-  color: rgba(0, 0, 0, 0.7);
-  margin-top: 14px;
-}
 
 .pay-cards-grid {
   display: grid;
@@ -164,6 +149,26 @@
   color: #000000;
   margin-bottom: 32px;
 }
+.ant-checkbox-checked .ant-checkbox-inner {
+  background-color: var(--color_dark_green);
+  border-color: var(--color_dark_green);
+  border-radius: 4px;
+}
+.radio-card-body h5 {
+  font-family: var(--SB_500);
+  font-style: normal;
+  font-size: 14px;
+  line-height: 18px;
+  color: #000000;
+}
+.radio-card-body p {
+  font-family: var(--SB_400);
+  font-style: normal;
+  font-size: 14px;
+  line-height: 21px;
+  color: rgba(0, 0, 0, 0.7);
+  margin-top: 14px;
+}
 .add-adress-btn span {
   display: flex;
   width: 37px;
@@ -171,7 +176,7 @@
   border-radius: 50%;
   align-items: center;
   justify-content: center;
-  background: #1f8a70;
+  background: var(--color_dark_green);
   margin-right: 24px;
 }
 .add-adress-btn {
@@ -189,7 +194,7 @@
   font-size: 18px;
   line-height: 21px;
   text-align: center;
-  color: #1f8a70;
+  color: var(--color_dark_green);
 }
 .bottom-text {
   display: flex;
@@ -208,7 +213,7 @@
   font-weight: 400;
   font-size: 16px;
   line-height: 20px;
-  color: #1f8a70;
+  color: var(--color_dark_green);
   text-decoration: underline;
   margin-top: 18px;
 }
@@ -221,12 +226,12 @@
   color: #000000;
 }
 .bottom-text p span {
-  color: #1f8a70;
+  color: var(--color_dark_green);
   text-decoration: underline;
   cursor: pointer;
 }
 .checkout-btn {
-  background: #1f8a70;
+  background: var(--color_dark_green);
   border-radius: 12px;
   padding-top: 15px;
   padding-bottom: 15px;
@@ -268,7 +273,7 @@
   font-size: 18px;
   line-height: 20px;
   text-align: right;
-  color: #1f8a70;
+  color: var(--color_dark_green);
 }
 .checkout-info-body span {
   display: flex;
@@ -396,7 +401,7 @@
   margin-bottom: 18px;
 }
 .checkout-select .ant-select-arrow-icon {
-  color: #1f8a70 !important;
+  color: var(--color_dark_green) !important;
 }
 .ant-select-dropdown--single {
   background: #ffffff !important;
@@ -424,7 +429,7 @@
   font-weight: 400;
   font-size: 14px;
   line-height: 18px;
-  color: #1f8a70 !important;
+  color: var(--color_dark_green) !important;
 }
 .ant-select-dropdown-menu::-webkit-scrollbar {
   width: 5px;
@@ -433,14 +438,14 @@
   border-radius: 10px;
 }
 .ant-select-dropdown-menu::-webkit-scrollbar-thumb {
-  background: #1f8a70;
+  background: var(--color_dark_green);
   border-radius: 10px;
 }
 .ant-select-dropdown-menu::-webkit-scrollbar-thumb:hover {
-  background: #1f8a70;
+  background: var(--color_dark_green);
 }
 .vmodal-btn {
-  background: #1f8a70;
+  background: var(--color_dark_green);
   border-radius: 12px;
   font-family: var(--SB_600);
   font-style: normal;
@@ -455,5 +460,5 @@
   cursor: pointer;
 }
 .step-active {
-  background: #1f8a70 !important;
+  background: var(--color_dark_green) !important;
 }

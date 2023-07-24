@@ -264,6 +264,9 @@ body::-webkit-scrollbar-thumb {
   color: #000000;
   width: 70%;
 }
+.vmodal-header span {
+  cursor: pointer;
+}
 .ant-modal-footer {
   display: none !important;
 }

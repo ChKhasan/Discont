@@ -74,7 +74,7 @@ export default {
       flipEffect: {
         slideShadows: false,
       },
-
+      spaceBetween: 16,
       modules: [Navigation, Pagination, EffectCards, Autoplay],
       pagination: false,
       autoplay: {
@@ -97,6 +97,9 @@ export default {
 .banner-carousel {
   position: relative;
   overflow: hidden;
+}
+.swiper-banner {
+  border-radius: 16px;
 }
 .banner-carousel .swiper-button-next-banner,
 .banner-carousel .swiper-button-prev-banner {

@@ -24,6 +24,7 @@ export default {
     { src: "~plugins/antdv.js" },
     { src: "~plugins/v-mask.js", ssr: false },
     { src: "~plugins/aos.js", ssr: false },
+    { src: "~plugins/vue-ripple.js", ssr: false },
   ],
 
   components: true,

@@ -113,7 +113,7 @@
     >
       <div class="product-show-modal">
         <div class="product-show-modal-header">
-          <h3>ОФИСНОЕ КРЕСЛО 6206A-2</h3>
+          <h3>{{ product?.info?.name }}</h3>
           <span @click="handleOk"
             ><svg
               xmlns="http://www.w3.org/2000/svg"
@@ -278,7 +278,7 @@
           </div>
           <div class="product-show-modal-info">
             <div class="product-show-modal-header2">
-              <h3>ОФИСНОЕ КРЕСЛО 6206A-2</h3>
+              <h3>{{ product?.info?.name }}</h3>
               <span @click="handleOkBuy"
                 ><svg
                   xmlns="http://www.w3.org/2000/svg"
@@ -304,8 +304,22 @@
               ></span>
             </div>
             <div class="product-modal-like-comp">
-              <span><span v-html="activeHeart"></span> Sevimlilarga</span>
-              <span><span v-html="comp"></span> Taqqoslash</span>
+              <span
+                :class="{
+                  'active-like-comp-btn': $store.state.like.includes(product?.id),
+                }"
+                @click="$store.commit('addToStore', { id: product?.id, name: 'like' })"
+                ><span v-html="activeHeart"></span> Sevimlilarga</span
+              >
+              <span
+                :class="{
+                  'active-like-comp-btn': $store.state.comparison.includes(product?.id),
+                }"
+                @click="
+                  $store.commit('addToStore', { id: product?.id, name: 'comparison' })
+                "
+                ><span v-html="comp"></span> Taqqoslash</span
+              >
             </div>
             <div class="product-modal-attribut-block">
               <h6>Цвета</h6>
@@ -315,13 +329,37 @@
                 <span class="product-modal-color"></span>
                 <span class="product-modal-color"></span>
               </div>
-              <h6>Емкость</h6>
-              <div class="product-modal-attributs">
-                <div class="product-modal-attribut">64 GB</div>
-                <div class="product-modal-attribut">128 GB</div>
+              <div v-if="skeleton">
+                <h6><b-skeleton width="30%"></b-skeleton></h6>
+                <div class="product-modal-attributs">
+                  <div
+                    class="product-modal-attribut"
+                    v-for="option in [1, 2, 3]"
+                    :key="option"
+                  >
+                    <b-skeleton width="20px" height="10px"></b-skeleton>
+                  </div>
+                  <!-- <div class="product-modal-attribut">128 GB</div>
                 <div class="product-modal-attribut">256 GB</div>
-                <div class="product-modal-attribut">1 TBGB</div>
+                <div class="product-modal-attribut">1 TBGB</div> -->
+                </div>
               </div>
+              <div v-if="productAttributes.length > 0 && !skeleton">
+                <h6>{{ productAttributes[0]?.title }}</h6>
+                <div class="product-modal-attributs">
+                  <div
+                    class="product-modal-attribut"
+                    v-for="option in productAttributes[0]?.options"
+                    :key="option?.id"
+                  >
+                    {{ option?.title }}
+                  </div>
+                  <!-- <div class="product-modal-attribut">128 GB</div>
+                <div class="product-modal-attribut">256 GB</div>
+                <div class="product-modal-attribut">1 TBGB</div> -->
+                </div>
+              </div>
+
               <div class="product-modal-count">
                 <div><span>-</span>1 <span>+</span></div>
                 <p>Осталось всего 4</p>
@@ -580,6 +618,9 @@ export default {
       visible: false,
       byMode: false,
       visibleBuy: false,
+      productAttributes: [],
+      productInner: [],
+      skeleton: true,
       star: require("../../assets/svg/product-star.svg?raw"),
       coin: require("../../assets/svg/product-coin.svg?raw"),
       comp: require("../../assets/svg/product-comp.svg?raw"),
@@ -611,6 +652,7 @@ export default {
       },
     };
   },
+
   methods: {
     handleOkName() {
       this.visibleOc = false;
@@ -660,8 +702,27 @@ export default {
       // .replace(/\B(?=(\d{3})+(?!\d))/g, " ");
       return `${price}`.replace(/\B(?=(\d{3})+(?!\d))/g, " ");
     },
+    async __GET_PRODUCTS_BY_SLUG() {
+      this.skeleton = true;
+      const productData = await this.$store.dispatch("fetchProducts/getProductsBySlug", {
+        id: this.product.slug,
+        params: {
+          headers: {
+            Language: this.$i18n.locale,
+          },
+        },
+      });
+      this.productInner = productData.product;
+      this.productAttributes = productData?.attributes;
+      this.skeleton = false;
+    },
   },
   watch: {
+    visibleBuy(val) {
+      if (val) {
+        this.__GET_PRODUCTS_BY_SLUG();
+      }
+    },
     visibleOc(val) {
       if (val) {
         this.visible = false;
