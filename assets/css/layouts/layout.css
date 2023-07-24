@@ -167,6 +167,12 @@
 }
 .user_profile p {
   color: var(--color_dark_green);
+  overflow: hidden;
+  -webkit-line-clamp: 1;
+  -webkit-box-orient: vertical;
+  display: -webkit-box;
+  text-overflow: ellipsis;
+  width: 90px;
 }
 .user_profile svg path,
 .user_profile svg circle {

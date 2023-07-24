@@ -25,7 +25,11 @@
           <a-form-model :model="form" ref="ruleForm" :rules="rules" layout="vertical">
             <div class="checkout-form">
               <a-form-model-item class="mb-3" prop="phone_number">
-                <a-input placeholder="Telefon raqamingiz*" v-model="form.phone_number" />
+                <a-input
+                  v-mask="'+998 ## ### ## ##'"
+                  placeholder="Telefon raqamingiz*"
+                  v-model="form.phone_number"
+                />
               </a-form-model-item>
               <div class="checkout-input-grid">
                 <a-form-model-item class="mb-0" prop="name">
@@ -377,11 +381,8 @@
                 v-model="form.name"
                 placeholder="Tumanni tanlang"
               >
-                <a-select-option
-                  v-for="(category, index) in categories"
-                  :key="category.value"
-                >
-                  {{ category.label }}
+                <a-select-option v-for="(category, index) in regions" :key="category.id">
+                  {{ category.name }}
                 </a-select-option>
               </a-select>
             </a-form-model-item>
@@ -536,7 +537,7 @@ export default {
       this.form = {
         ...this.form,
         name: this.profile.name ? this.profile.name : "",
-        phone_number: this.profile.login ? this.profile.login : "",
+        phone_number: this.profile.login ? `+${this.profile.login}` : "",
       };
     },
     async __GET_PRODUCTS_BY_ID(dataForm) {

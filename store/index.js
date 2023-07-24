@@ -89,6 +89,7 @@ export const mutations = {
 };
 export const actions = {
   profileInfo({ commit }, payload) {
+    console.log(":asdasdaskldsgadasfdghasfgdfas");
     this.$axios
       .$get("/profile/me", {
         headers: {
@@ -96,6 +97,7 @@ export const actions = {
         },
       })
       .then((res) => {
+        console.log(res);
         commit("getProfileInfo", res?.user);
       });
   },

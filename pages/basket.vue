@@ -170,15 +170,15 @@
                 ><p>Стоимость:</p>
                 <p>
                   {{
-                    products
+                    `${products
                       .reduce((summ, item) => {
                         return (
                           summ +
-                          item.price *
+                          item.real_price *
                             $store.state.cart.find((elem) => elem.id == item.id)?.count
                         );
                       }, 0)
-                      .toFixed(2)
+                      .toFixed(2)}`.replace(/\B(?=(\d{3})+(?!\d))/g, " ")
                   }}
                 </p></span
               >

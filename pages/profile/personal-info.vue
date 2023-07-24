@@ -87,10 +87,17 @@
                   </a-form-model-item>
                   <a-form-model-item class="form-item mb-0" label="Telefon raqam">
                     <!-- <a-input v-model="form.phone_number" placeholder="Number" /> -->
-                    <the-mask
+                    <!-- <the-mask
                       class="w-100 ant-input"
                       v-model="form.phone_number"
                       :mask="['+998 (##) ### ## ##', '+998 (##) ### ## ##']"
+                      placeholder="+998 (__) ___ __ __"
+                    /> -->
+                    <input
+                      type="text"
+                      class="w-100 ant-input"
+                      v-model="form.phone_number"
+                      v-mask="'+998 (##) ### ## ##'"
                       placeholder="+998 (__) ___ __ __"
                     />
                   </a-form-model-item>
@@ -114,7 +121,7 @@
                         v-for="(region, index) in regions"
                         :key="region?.id"
                       >
-                        {{ region?.name?.ru }}
+                        {{ region?.name }}
                       </a-select-option>
                     </a-select>
                   </a-form-model-item>
@@ -130,7 +137,7 @@
                       :disabled="cities.length == 0"
                     >
                       <a-select-option v-for="(city, index) in cities" :key="city?.id">
-                        {{ city?.name?.ru }}
+                        {{ city?.name }}
                       </a-select-option>
                     </a-select>
                   </a-form-model-item>
@@ -248,7 +255,7 @@ export default {
           address: this.profile.address ? this.profile.address : "",
           postcode: this.profile.postcode ? this.profile.postcode : "",
           email: this.profile.email ? this.profile.email : "",
-          phone_number: this.profile.login ? this.profile.login : "",
+          phone_number: this.profile.login ? `+${this.profile.login}` : "",
           region_id: this.profile.region_id ? this.profile.region_id : "",
           district_id: this.profile.district_id ? this.profile.district_id : "",
         };
