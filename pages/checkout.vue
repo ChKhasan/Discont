@@ -281,7 +281,7 @@
                   <img :src="product.images[0].sm_img" alt="" />
                 </div>
                 <div class="checkout-info-product-card-body">
-                  <p>{{ product?.info?.name?.ru }}</p>
+                  <p>{{ product?.info?.name }}</p>
                   <span
                     >Soni:
                     {{ $store.state.cart.find((item) => item.id == product.id)?.count }}
@@ -290,7 +290,7 @@
                   <h5>
                     {{
                       `${
-                        product.price *
+                        product.real_price *
                         $store.state.cart.find((item) => item.id == product.id)?.count
                       }`.replace(/\B(?=(\d{3})+(?!\d))/g, " ")
                     }}

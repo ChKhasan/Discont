@@ -147,6 +147,7 @@
   align-items: center;
   background: var(--color_dark_green);
 }
+
 .nav_profile svg {
   margin-bottom: 0 !important;
   margin-right: 18px;
@@ -160,6 +161,16 @@
   text-transform: capitalize;
   color: #ffffff;
   margin-bottom: 0;
+}
+.user_profile {
+  background-color: #e3fcf5;
+}
+.user_profile p {
+  color: var(--color_dark_green);
+}
+.user_profile svg path,
+.user_profile svg circle {
+  stroke: var(--color_dark_green);
 }
 .catalog-btn {
   height: 42px;

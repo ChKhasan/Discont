@@ -52,10 +52,20 @@
               <div class="basket-card-body">
                 <div class="basket-card-text-block">
                   <h4 @click="$router.push(`/product/${product.slug}`)">
-                    {{ product?.info?.name?.ru }}
+                    {{ product?.info?.name }}
                   </h4>
-                  <p>Category: {{ product?.info?.category?.name?.ru }}</p>
-                  <p>Brend: {{ product?.info?.brand?.name }}</p>
+                  <p>
+                    Category:
+                    {{
+                      product?.info?.category?.name
+                        ? product?.info?.category?.name
+                        : "---"
+                    }}
+                  </p>
+                  <p>
+                    Brend:
+                    {{ product?.info?.brand?.name ? product?.info?.brand?.name : "---" }}
+                  </p>
                 </div>
                 <div class="basket-card-count">
                   <div class="basket-count-btn">
@@ -94,7 +104,7 @@
                     </span>
                   </div>
                   <p>
-                    {{ product?.price.replace(/\B(?=(\d{3})+(?!\d))/g, " ") }}
+                    {{ `${product?.real_price}`.replace(/\B(?=(\d{3})+(?!\d))/g, " ") }}
                     so’mdan/donasi
                   </p>
                 </div>
@@ -138,15 +148,15 @@
               <b-skeleton v-if="skeletonLoad" width="40%"></b-skeleton>
               <h3 v-else>
                 {{
-                  products
+                  `${products
                     .reduce((summ, item) => {
                       return (
                         summ +
-                        item.price *
+                        item.real_price *
                           $store.state.cart.find((elem) => elem.id == item.id)?.count
                       );
                     }, 0)
-                    .toFixed(2)
+                    .toFixed(2)}`.replace(/\B(?=(\d{3})+(?!\d))/g, " ")
                 }}
                 сум
               </h3>
@@ -285,10 +295,10 @@ export default {
     },
     productTotalPrice(product) {
       let price =
-        product?.price *
+        product?.real_price *
         this.$store.state.cart.find((item) => item.id == product.id)?.count;
       let strPrice = `${price}`;
-      return `${price}`;
+      return `${price}`.replace(/\B(?=(\d{3})+(?!\d))/g, " ");
       // .slice(0, product?.price?.indexOf("."))
       // .replace(".", ",")
       // .replace(/\B(?=(\d{3})+(?!\d))/g, " ");

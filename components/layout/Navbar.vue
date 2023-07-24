@@ -247,7 +247,11 @@
               }}</span>
               <span class="nav-icons" v-html="navComp"></span>Solishtirish
             </li>
-            <li class="nav_profile flex-row" @click="toProfile(true)">
+            <li
+              class="nav_profile user_profile flex-row"
+              @click="toProfile(true)"
+              v-if="$store.state.auth"
+            >
               <span v-html="navUser"></span>
               <p>
                 {{
@@ -256,6 +260,10 @@
                     : "profil"
                 }}
               </p>
+            </li>
+            <li class="nav_profile flex-row" @click="toProfile(true)" v-else>
+              <span v-html="navUser"></span>
+              <p>profil</p>
             </li>
           </ul>
         </div>
@@ -508,9 +516,15 @@
             prop="phone_number"
           >
             <span class="position-relative d-flex align-items-center justify-content-end">
-              <the-mask
+              <!-- <the-mask
                 @keyup.enter="submitForgetPass()"
                 :mask="['+998 (##) ### ## ##', '+998 (##) ### ## ##']"
+                placeholder="+998 (__) ___ __ __"
+                v-model="formCheckNumber.phone_number"
+              /> -->
+              <input
+                @keyup.enter="submitForgetPass()"
+                v-mask="'+998 ## ### ## ##'"
                 placeholder="+998 (__) ___ __ __"
                 v-model="formCheckNumber.phone_number"
               />
@@ -571,10 +585,16 @@
             class="form-item register-input mb-3 pb-0"
             label="Telefon raqamingiz"
           >
-            <the-mask
+            <!-- <the-mask
               class="disabled"
               v-model="formLogin.phone_number"
               :mask="['+998 (##) ### ## ##', '+998 (##) ### ## ##']"
+              placeholder="+998 (__) ___ __ __"
+            /> -->
+            <input
+              class="disabled"
+              v-mask="'+998 ## ### ## ##'"
+              v-model="formLogin.phone_number"
               placeholder="+998 (__) ___ __ __"
             />
           </a-form-model-item>
@@ -651,11 +671,18 @@
             label="Telefon raqamingiz"
             @keyup.enter="submitSms()"
           >
-            <the-mask
+            <!-- <the-mask
               class="disabled"
               @keyup.enter="submitSms()"
               v-model="formSms.phone_number"
               :mask="['+998 (##) ### ## ##', '+998 (##) ### ## ##']"
+              placeholder="+998 (__) ___ __ __"
+            /> -->
+            <input
+              class="disabled"
+              v-mask="'+998 ## ### ## ##'"
+              @keyup.enter="submitSms()"
+              v-model="formSms.phone_number"
               placeholder="+998 (__) ___ __ __"
             />
             <span class="change_number" @click="replaceNumber()">O’zgartirish</span>
@@ -742,6 +769,12 @@
               class="disabled"
               v-model="formName.phone_number"
               :mask="['+998 (##) ### ## ##', '+998 (##) ### ## ##']"
+              placeholder="+998 (__) ___ __ __"
+            />
+            <input
+              class="disabled"
+              v-mask="'+998 ## ### ## ##'"
+              v-model="formName.phone_number"
               placeholder="+998 (__) ___ __ __"
             />
           </a-form-model-item>
@@ -980,10 +1013,10 @@ export default {
     },
     submitForgetPass() {
       const data = {
-        phone_number:
-          this.formCheckNumber.phone_number.length == 9
-            ? `998${this.formCheckNumber.phone_number}`
-            : this.formCheckNumber.phone_number,
+        phone_number: this.formCheckNumber.phone_number
+          .split(" ")
+          .join("")
+          .replace("+", ""),
       };
       this.$refs["ruleFormCheckNumber"].validate((valid) => {
         valid ? this.__FORGET_PASSWORD(data) : false;
@@ -991,11 +1024,8 @@ export default {
     },
     submitSms() {
       const data = {
-        phone_number:
-          this.formSms.phone_number.length == 9
-            ? `998${this.formSms.phone_number}`
-            : this.formSms.phone_number,
-        sms_code: this.formSms.sms_code,
+        ...this.formSms,
+        phone_number: this.formSms.phone_number.split(" ").join("").replace("+", ""),
       };
       this.formName.phone_number =
         this.formSms.phone_number.length == 9
@@ -1007,7 +1037,7 @@ export default {
     },
     submitLogin() {
       const data = {
-        phone_number: `998${this.formLogin.phone_number}`,
+        phone_number: this.formLogin.phone_number.split(" ").join("").replace("+", ""),
         password: this.formLogin.password,
       };
       this.$refs["ruleFormLogin"].validate((valid) => {
@@ -1068,10 +1098,10 @@ export default {
     },
     again_sms_code() {
       const data = {
-        phone_number:
-          this.formCheckNumber.phone_number.length == 9
-            ? `998${this.formCheckNumber.phone_number}`
-            : this.formCheckNumber.phone_number,
+        phone_number: this.formCheckNumber.phone_number
+          .split(" ")
+          .join("")
+          .replace("+", ""),
       };
 
       this.__FORGET_PASSWORD(data);
