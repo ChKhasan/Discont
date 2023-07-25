@@ -1,12 +1,12 @@
 <template lang="html">
-  <div class="v2-product-card" :class="variant ? 'yellow-variant' : 'green-variant'">
+  <div class="v2-product-card" :style="`background-image: url(${img?.md_img?.ru})`">
     <div
       class="v2-product-card-title d-flex align-items-center justify-content-start w-100"
     >
-      <h4>Samsung QLED TV 48” Full</h4>
+      <!-- <h4>Samsung QLED TV 48” Full</h4> -->
     </div>
     <div class="v2-product-card-img">
-      <img src="../../assets/images/i 1.png" alt="" />
+      <!-- <img src="../../assets/images/i 1.png" alt="" /> -->
     </div>
     <div class="v2-product-card-btns">
       <div>Купить сейчас</div>
@@ -15,7 +15,7 @@
 </template>
 <script>
 export default {
-  props: ["variant"],
+  props: ["variant", "img"],
 };
 </script>
 <style lang="css">
@@ -32,6 +32,9 @@ export default {
   flex-direction: column;
   justify-content: space-between;
   min-height: 485px;
+  background-repeat: no-repeat;
+  background-size: cover;
+  width: 100%;
 }
 .v2-product-card-img {
   height: 60%;

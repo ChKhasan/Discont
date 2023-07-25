@@ -32,7 +32,7 @@
                     <p>
                       E-mail:<span>{{ profile?.email ? profile?.email : "-----" }}</span>
                     </p>
-                    <p>Пароль:<span>12****AA</span></p>
+                    <!-- <p>Пароль:<span>12****AA</span></p> -->
                   </div>
                 </div>
                 <div>
@@ -83,16 +83,17 @@
                 <h4 class="form-title">Shaxsiy</h4>
                 <div class="form-grid-3">
                   <a-form-model-item class="form-item mb-0" label="Ism" prop="name">
-                    <a-input v-model="form.name" placeholder="Name" />
+                    <a-input v-model="form.name" placeholder="Ism..." />
                   </a-form-model-item>
+                  <a-form-model-item
+                    class="form-item mb-0"
+                    label="Familiya"
+                    prop="last_name"
+                  >
+                    <a-input v-model="form.last_name" placeholder="Familiya..." />
+                  </a-form-model-item>
+                  <span></span>
                   <a-form-model-item class="form-item mb-0" label="Telefon raqam">
-                    <!-- <a-input v-model="form.phone_number" placeholder="Number" /> -->
-                    <!-- <the-mask
-                      class="w-100 ant-input"
-                      v-model="form.phone_number"
-                      :mask="['+998 (##) ### ## ##', '+998 (##) ### ## ##']"
-                      placeholder="+998 (__) ___ __ __"
-                    /> -->
                     <input
                       type="text"
                       class="w-100 ant-input"
@@ -210,6 +211,7 @@ export default {
       save: require("../../assets/svg/Stroke 3.svg?raw"),
       form: {
         name: "",
+        last_name: "",
         password: "",
         password_confirmation: "",
         phone_number: "",
@@ -222,12 +224,6 @@ export default {
       regions: [],
       rules: {
         name: [
-          { required: true, message: "Please input Activity name", trigger: "blur" },
-        ],
-        password: [
-          { required: true, message: "Please input Activity name", trigger: "blur" },
-        ],
-        password_confirmation: [
           { required: true, message: "Please input Activity name", trigger: "blur" },
         ],
       },

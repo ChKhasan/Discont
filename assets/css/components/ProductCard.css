@@ -5,6 +5,7 @@
   padding: 10px;
   display: grid;
   grid-template-columns: 1fr;
+  width: 100%;
 }
 .product-card-header {
   height: 220px;

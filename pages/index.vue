@@ -5,10 +5,10 @@
         <BannerCarousel>
           <div
             class="swiper-slide banner-slider"
-            v-for="banner in bannersMain"
+            v-for="banner in banners.filter((item) => item.type == 'main')"
             :key="banner?.id"
           >
-            <img :src="banner?.lg_img?.ru" alt="" />
+            <img :src="banner?.lg_img" alt="" />
           </div>
         </BannerCarousel>
         <BannerCarouselRight>
@@ -85,8 +85,11 @@
         </div>
       </div>
     </div>
-    <div class="container_xl">
-      <HomeBanner :banner="bannersTop" />
+    <div
+      class="container_xl"
+      v-if="banners.filter((item) => item.type == 'top').length > 0"
+    >
+      <HomeBanner :banner="banners.filter((item) => item.type == 'top')" />
     </div>
     <div class="container_xl" v-if="showcases[2]">
       <MainTitle :title="showcases[2]?.name" />
@@ -97,12 +100,20 @@
             :key="product.id"
             :product="product"
           />
-          <span class="grid-banner-card-1 d-flex">
-            <V2ProductCard :variant="true" />
+          <span
+            v-if="banners.filter((item) => item.type == 'promo').length > 0"
+            class="d-flex"
+            v-for="(img, index) in banners
+              .filter((item) => item.type == 'promo')
+              .slice(0, 2)"
+            :class="`grid-banner-card-${index + 1}`"
+            :key="img?.id"
+          >
+            <V2ProductCard :img="img" />
           </span>
-          <span class="grid-banner-card-2 d-flex">
-            <V2ProductCard :variant="false" />
-          </span>
+          <!-- <span class="grid-banner-card-2 d-flex">
+            <V2ProductCard />
+          </span> -->
         </div>
       </div>
     </div>
@@ -212,6 +223,24 @@
         </BrandCarousel>
       </div>
     </div>
+    <div
+      class="container_xl"
+      v-if="banners.filter((item) => item.type == 'medium').length > 0"
+    >
+      <HomeBanner :banner="banners.filter((item) => item.type == 'medium')" />
+    </div>
+    <div
+      class="container_xl"
+      v-if="banners.filter((item) => item.type == 'small').length > 2"
+    >
+      <div class="small_banners_grid">
+        <SmallBannerCard
+          v-for="img in banners.filter((item) => item.type == 'small').slice(0, 3)"
+          :key="img?.id"
+          :img="img"
+        />
+      </div>
+    </div>
     <!-- <div class="container_xl mb-120">
       <DiscountCarousel />
     </div> -->
@@ -250,6 +279,12 @@
           </span>
         </div>
       </div>
+    </div>
+    <div
+      class="container_xl"
+      v-if="banners.filter((item) => item.type == 'bottom').length > 0"
+    >
+      <HomeBanner :banner="banners.filter((item) => item.type == 'bottom')" />
     </div>
     <div class="container_xl mb-120" v-if="posts?.length > 0">
       <div class="d-flex justify-content-between align-items-end">
@@ -322,6 +357,7 @@ import DiscontBanner from "../components/discont-banner.vue";
 import ApplicationBanner from "../components/application-banner.vue";
 import DayProductCard from "../components/cards/DayProductCard.vue";
 import PostsCarousel from "../components/posts-carousel.vue";
+import SmallBannerCard from "../components/cards/SmallBannerCard.vue";
 export default {
   name: "IndexPage",
   data() {
@@ -345,7 +381,8 @@ export default {
       showcasesData,
       bannersMainData,
       bannersTopData,
-      bannersSmallData,
+      bannersMediumData,
+      bannersData,
     ] = await Promise.all([
       store.dispatch("fetchProducts/getProducts", {
         params: {
@@ -399,13 +436,18 @@ export default {
         },
       }),
       store.dispatch("fetchBanners/getBanners", {
-        params: { type: "promo" },
+        params: { type: "top" },
         headers: {
           Language: i18n.locale,
         },
       }),
       store.dispatch("fetchBanners/getBanners", {
-        params: { type: "small" },
+        params: { type: "medium" },
+        headers: {
+          Language: i18n.locale,
+        },
+      }),
+      store.dispatch("fetchBanners/getBanners", {
         headers: {
           Language: i18n.locale,
         },
@@ -420,8 +462,8 @@ export default {
     const showcases = showcasesData.showcases;
     const bannersMain = bannersMainData?.banners?.data;
     const bannersTop = bannersTopData?.banners?.data;
-    const bannersSmall = bannersSmallData?.banners?.data;
-    console.log(showcases[0]);
+    const bannersMedium = bannersMediumData?.banners?.data;
+    const banners = bannersData?.banners?.data;
     return {
       bestsellersProducts,
       byCategoryProducts,
@@ -432,10 +474,17 @@ export default {
       showcases,
       bannersMain,
       bannersTop,
-      bannersSmall,
+      bannersMedium,
+      banners,
     };
   },
-  mounted() {},
+  mounted() {
+    this.$store.dispatch("fetchBanners/getBanners", {
+      headers: {
+        Language: this.$i18n.locale,
+      },
+    });
+  },
   components: {
     BannerCarousel,
     ProductCard,
@@ -455,6 +504,7 @@ export default {
     ApplicationBanner,
     DayProductCard,
     PostsCarousel,
+    SmallBannerCard,
   },
 };
 </script>

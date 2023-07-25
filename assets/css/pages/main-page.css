@@ -118,3 +118,9 @@
   letter-spacing: -0.03em;
   color: #000000;
 }
+.small_banners_grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-gap: 24px;
+  margin-bottom: 121px;
+}

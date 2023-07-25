@@ -505,7 +505,7 @@
                 class="d-flex flex-column align-items-center justify-content-center oc-counter-box"
               >
                 <div class="oc-product-counter">
-                  <button @click="count > 1 && count--">
+                  <button @click="formOc.count > 1 && formOc.count--">
                     <svg
                       xmlns="http://www.w3.org/2000/svg"
                       width="12"
@@ -519,8 +519,8 @@
                       />
                     </svg>
                   </button>
-                  {{ count }}
-                  <button @click="count++">
+                  {{ formOc.count }}
+                  <button @click="formOc.count++">
                     <svg
                       xmlns="http://www.w3.org/2000/svg"
                       width="12"
@@ -541,8 +541,8 @@
           </div>
           <a-form-model
             v-if="!callBox"
-            :model="formName"
-            ref="ruleFormNameClick"
+            :model="formOc"
+            ref="ruleFormOcClick"
             :rules="rulesName"
             layout="vertical"
           >
@@ -552,7 +552,7 @@
                 label="Ismingizni kiriting"
                 prop="name"
               >
-                <a-input v-model="formName.name" type="text" placeholder="Name" />
+                <a-input v-model="formOc.name" type="text" placeholder="Name" />
               </a-form-model-item>
               <a-form-model-item
                 class="form-item register-input mb-0 pb-0"
@@ -560,7 +560,7 @@
                 prop="phone_number"
               >
                 <a-input
-                  v-model="formName.phone_number"
+                  v-model="formOc.phone_number"
                   v-mask="'+998 ## ### ## ##'"
                   placeholder="+998 (__) ___ __ __"
                 />
@@ -757,10 +757,11 @@ export default {
       formComment: {
         comment: "",
       },
-      formName: {
+      formOc: {
         name: "",
         phone_number: "",
         product_id: null,
+        count: 1,
       },
       rulesComment: {
         comment: [
@@ -886,11 +887,11 @@ export default {
     },
     submitName() {
       const data = {
-        ...this.formName,
-        phone_number: `998${this.formName.phone_number}`,
+        ...this.formOc,
+        phone_number: this.formOc.phone_number.split(" ").join("").replace("+", ""),
         product_id: this.product.id,
       };
-      this.$refs["ruleFormNameClick"].validate((valid) => {
+      this.$refs["ruleFormOcClick"].validate((valid) => {
         if (valid) {
           this.__POST_ORDER(data);
         } else {
@@ -905,7 +906,8 @@ export default {
       try {
         const data = await this.$store.dispatch("fetchAuth/postClickOrder", formData);
         this.visibleOc = false;
-        this.compToast = true;
+        // this.compToast = true;
+        this.visibleSuccess = true
       } catch (e) {
         console.log(e);
       }

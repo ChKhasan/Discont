@@ -1,7 +1,7 @@
 <template lang="html">
-  <div class="stocks-card" @click="$router.push('/stock/1')">
+  <div class="stocks-card" @click="$router.push(`/stock/${promotion?.slug}`)">
     <div class="stocks-card-img">
-      <img src="../../assets/images/stocks-card.png" alt="" />
+      <img :src="promotion?.md_banner" alt="" />
     </div>
 
     <div class="stocks-card-body">
@@ -9,21 +9,24 @@
         <div
           class="stocks-card-type"
           :class="{ 'stocks-card-type-new': true }"
-          v-if="typeStatus"
+          v-if="promotion?.short_name"
+          :style="`background: linear-gradient(250deg, ${promotion.short_name_last_color} 0%, ${promotion.short_name_first_color} 100%);color: ${promotion.color_text}`"
         >
-          Yangi aksiya
+          <span v-html="promotion?.short_name_icon_svg"></span>
+          {{ promotion?.short_name }}
         </div></span
       >
 
-      <h2>Maishiy texnika va uy jihozlari uchun aksiyalar</h2>
+      <h2>{{ promotion?.product_card_text }}</h2>
 
-      <p>02 maydan 02 iyungacha</p>
+      <!-- <p>02 maydan 02 iyungacha</p> -->
+      <p>{{ promotion?.start_date }} {{ promotion?.end_date }}</p>
     </div>
   </div>
 </template>
 <script>
 export default {
-  props: ["typeStatus"],
+  props: ["typeStatus", "promotion"],
 };
 </script>
 <style lang="css">
@@ -102,12 +105,15 @@ export default {
   line-height: 17px;
   display: inline-flex;
   align-items: center;
-  padding: 0 17px;
+  padding: 1px 15px;
+  margin-bottom: 9px;
 }
-
+.stocks-card-type span svg {
+  margin-right: 6px;
+}
 .stocks-card-type-new {
-  background: #1f8a70;
-  color: #fff;
+  /* background: #1f8a70;
+  color: #fff; */
 }
 
 .stocks-card-type-seasonal {

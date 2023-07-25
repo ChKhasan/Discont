@@ -10,14 +10,14 @@
 .profile-menu {
   display: grid;
   grid-template-columns: 1fr;
-  grid-gap: 17px;
+  grid-gap: 14px;
   position: sticky;
   top: 170px;
 }
 .profile-menu a,
 .profile-exit {
-  padding: 13px 15px;
-  font-family: "Inter";
+  padding: 14px;
+  font-family: var(--SB_400);
   font-style: normal;
   font-weight: 400;
   font-size: 16px;
@@ -27,27 +27,30 @@
   color: #4d4d4d;
   cursor: pointer;
 }
+.profile-exit {
+  color: #f5363e;
+}
 .profile-menu a:hover,
 .profile-exit:hover {
   background: #f9f9fd;
-  color: #00b2a9;
+  color: #1f8a70;
 }
 .profile-menu-active {
   background: #f9f9fd;
-  color: #00b2a9 !important;
+  color: #1f8a70 !important;
 }
-.profile-menu a:hover svg path,
+/* .profile-menu a:hover svg path,
 .profile-menu-active svg path {
   fill: #00b2a9 !important;
-}
+} */
 .profile-menu a span,
 .profile-exit span {
   margin-right: 11px;
 }
-.profile-menu a span svg path {
+/* .profile-menu a span svg path {
   fill: #000;
   transition: 0.3s;
-}
+} */
 
 .personal-info-grid {
   display: grid;

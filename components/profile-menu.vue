@@ -2,22 +2,22 @@
   <div class="profile-menu">
     <nuxt-link
       :to="localePath(`/profile/personal-info`)"
-      :class="{ 'profile-menu-active': $route.name == 'profile-personal-info' }"
+      :class="{ 'profile-menu-active': $route.name.includes('profile-personal-info') }"
       ><span v-html="profileInfo"></span> Shaxsiy ma`lumotlarim
     </nuxt-link>
     <nuxt-link
       :to="localePath('/profile/my-pay')"
-      :class="{ 'profile-menu-active': $route.name == 'profile-my-pay' }"
+      :class="{ 'profile-menu-active': $route.name.includes('profile-my-pay') }"
       ><span v-html="piecePay"></span> Bo’lib to’lash</nuxt-link
     >
     <nuxt-link
       :to="localePath('/profile/my-orders')"
-      :class="{ 'profile-menu-active': $route.name == 'profile-my-orders' }"
+      :class="{ 'profile-menu-active': $route.name.includes('profile-my-orders') }"
       ><span v-html="myOrders"></span>Mening buyurtmalarim</nuxt-link
     >
     <nuxt-link
       :to="localePath('/profile/my-comments')"
-      :class="{ 'profile-menu-active': $route.name == 'profile-my-comments' }"
+      :class="{ 'profile-menu-active': $route.name.includes('profile-my-comments') }"
       ><span v-html="myComments"></span>Mening izohlarim</nuxt-link
     >
     <div class="profile-exit" @click="visibleLogOut = true">

@@ -3,67 +3,26 @@
     <div class="container_xl">
       <div class="page-breadcrumb">
         <nuxt-link :to="localePath('/')">Diskont main page</nuxt-link>
-        <nuxt-link :to="localePath('/')"> Каталог Xiaomi </nuxt-link>
+        <nuxt-link :to="localePath('/')"> {{ promotion?.name }} </nuxt-link>
       </div>
       <div class="d-flex page-container-title">
-        <MainTitle title="Каталог Apple" />
+        <MainTitle :title="promotion?.name" />
       </div>
       <div class="stock-page__container">
         <div class="stock-page__image">
-          <img src="../../assets/images/image 318.png" alt="" />
+          <img :src="promotion?.md_banner" alt="" />
         </div>
         <div class="stock-page__static">
-          <p>Akisya davomiyligi: <span>21.05 dan 21.09 gacha</span></p>
+          <p>
+            Akisya davomiyligi:
+            <span
+              >{{ moment(promotion?.start_date).format("DD.MM") }} dan
+              {{ moment(promotion?.end_date).format("DD.MM") }} gacha</span
+            >
+          </p>
           <p>Akisya bo’ladigan filiallar: <span>Barcha filiallar</span></p>
         </div>
-        <div class="stock-page__info">
-          <p>
-            simply dummy text of the printing and typesetting industry. Lorem Ipsum has
-            been the industry's standard dummy text ever since the 1500s, when an unknown
-            printer took a galley of type and scrambled it to make a type specimen book.
-            It has survived not only five centuries, but also the leap into electronic
-            typesetting, remaining essentially unchanged. It was popularised in the 1960s
-            with the release of Letraset sheets containing Lorem Ipsum passages, and more
-            recently with desktop publishing software like Aldus PageMaker including
-            versions of Lorem Ipsum.simply dummy text of the printing and typesetting
-            industry. Lorem Ipsum has been the industry's standard dummy text ever since
-            the 1500s, when an unknown printer took a galley of type and scrambled it to
-            make a type specimen book. It has survived not only five centuries, but also
-            the leap into electronic typesetting, remaining essentially unchanged. It was
-            popularised in the 1960s with the release of Letraset sheets containing Lorem
-            Ipsum passages, and more recently with desktop publishing software like Aldus
-            PageMaker including versions of Lorem Ipsum.simply dummy text of the printing
-            and typesetting industry. Lorem Ipsum has been the industry's standard dummy
-            text ever since the 1500s, when an unknown printer took a galley of type and
-            scrambled it to make a type specimen book. It has survived not only five
-            centuries, but also the leap into electronic typesetting, remaining
-            essentially unchanged. It was popularised in the 1960s with the release of
-            Letraset sheets containing Lorem Ipsum passages, and more recently with
-            desktop publishing software like Aldus PageMaker including versions of Lorem
-            Ipsum.simply dummy text of the printing and typesetting industry. Lorem Ipsum
-            has been the industry's standard dummy text ever since the 1500s, when an
-            unknown printer took a galley of type and scrambled it to make a type specimen
-            book. It has survived not only five centuries, but also the leap into
-            electronic typesetting, remaining essentially unchanged. It was popularised in
-            the 1960s with the release of Letraset sheets containing Lorem Ipsum passages,
-            and more recently with desktop publishing software like Aldus PageMaker
-            including versions of Lorem Ipsum.simply dummy text of the printing and
-            typesetting industry. Lorem Ipsum has been the industry's standard dummy text
-            ever since the 1500s, when an unknown printer took a galley of type and
-            scrambled it to make a type specimen book. It has survived not only five
-            centuries, but also the leap into electronic typesetting, remaining
-            essentially unchanged. It was popularised in the 1960s with the release of
-            Letraset sheets containing Lorem Ipsum passages, and more recently with
-            desktop publishing software like Aldus PageMaker includzing versions of Lorem
-            Ipsum.simply dummy text of the printing and typesetting industry. Lorem Ipsum
-            has been the industry's standard dummy text ever since the 1500s, when an
-            unknown printer took a galley of type and scrambled it to make a type specimen
-            book. It has survived not only five centuries, but also the leap into
-            electronic typesetting, remaining essentially unchanged. It was popularised in
-            the 1960s with the release of Letraset sheets containing Lorem Ipsum passages,
-            and
-          </p>
-        </div>
+        <div class="stock-page__info" v-html="promotion?.desc"></div>
       </div>
       <div class="d-flex justify-content-between align-items-end">
         <ProductListTitle title="Kategoriyadagi top tavarlar" />
@@ -77,22 +36,27 @@
 <script>
 import ProductCard from "../../components/cards/ProductCard.vue";
 import ProductListTitle from "../../components/ProductList-title.vue";
+import moment from "moment";
 export default {
-  // async asyncData({ $axios, params, store }) {
-  //   const [productsData] = await Promise.all([
-  //     store.dispatch("fetchProducts/getProducts"),
-  //   ]);
-  //   console.log(productsData);
-  //   const products = productsData?.products?.data;
-  //   return {
-  //     products,
-  //   };
-  // },
-  // async mounted() {
-  //   const [productsData] = await Promise.all([
-  //     this.$store.dispatch("fetchProducts/getProducts"),
-  //   ]);
-  // },
+  async asyncData({ store, params, i18n }) {
+    const [promotionsData] = await Promise.all([
+      store.dispatch("fetchPromotions/getPromotionsBySlug", {
+        slug: params.index,
+        params: {
+          headers: {
+            Language: i18n.locale,
+          },
+        },
+      }),
+    ]);
+    const promotion = promotionsData?.promotion;
+    return {
+      promotion,
+    };
+  },
+  methods: {
+    moment,
+  },
   components: { ProductListTitle, ProductCard },
 };
 </script>

@@ -100,15 +100,20 @@
         </div> -->
       </div>
       <div class="stocks-grid">
+        <StocksCard
+          :typeStatus="false"
+          v-for="promotion in promotions"
+          :promotion="promotion"
+          :key="promotion?.id"
+        />
+        <!-- <StocksCard :typeStatus="true" />
+        <StocksCard :typeStatus="false" />
+        <StocksCard :typeStatus="true" />
+        <StocksCard :typeStatus="true" />
         <StocksCard :typeStatus="false" />
         <StocksCard :typeStatus="true" />
         <StocksCard :typeStatus="false" />
-        <StocksCard :typeStatus="true" />
-        <StocksCard :typeStatus="true" />
-        <StocksCard :typeStatus="false" />
-        <StocksCard :typeStatus="true" />
-        <StocksCard :typeStatus="false" />
-        <StocksCard :typeStatus="true" />
+        <StocksCard :typeStatus="true" /> -->
       </div>
       <div class="categories-page-info">
         <h5>
@@ -165,6 +170,19 @@ export default {
     return {
       arrow: require("../../assets/svg/dropdown-icon.svg?raw"),
       stockCategory: false,
+    };
+  },
+  async asyncData({ store, route, i18n }) {
+    const [promotionsData] = await Promise.all([
+      store.dispatch("fetchPromotions/getPromotions", {
+        headers: {
+          Language: i18n.locale,
+        },
+      }),
+    ]);
+    const promotions = promotionsData?.promotions?.data;
+    return {
+      promotions,
     };
   },
   methods: {

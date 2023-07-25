@@ -32,10 +32,10 @@ export default {
   buildModules: ["@nuxtjs/svg"],
 
   modules: ["bootstrap-vue/nuxt", "@nuxtjs/axios", "@nuxtjs/i18n"],
-  server: {
-    port: 8000,
-    host: "localhost",
-  },
+  // server: {
+  //   port: 8000,
+  //   host: "localhost",
+  // },
   axios: {
     credentials: false,
     init(axios) {

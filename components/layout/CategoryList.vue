@@ -75,7 +75,7 @@
         <div class="d-flex align-items-center" v-if="$store.state.auth">
           <div class="coin_btn">
             <span><img src="../../assets/images/coin.png" alt="" /></span>
-            65 di coin
+            65 Di Coin
           </div>
           <nuxt-link class="nav-info" :to="localePath('/d-coin/about')">?</nuxt-link>
         </div>
