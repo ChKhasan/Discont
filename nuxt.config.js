@@ -18,6 +18,7 @@ export default {
     "ant-design-vue/dist/antd.css",
     "@/assets/css/main.css",
     "aos/dist/aos.css",
+    "swiper/swiper-bundle.min.css",
   ],
 
   plugins: [

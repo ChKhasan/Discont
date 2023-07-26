@@ -6,14 +6,14 @@
 
     <div class="stocks-card-body">
       <span>
+        {{ promotion.color_text }}
         <div
           class="stocks-card-type"
-          :class="{ 'stocks-card-type-new': true }"
           v-if="promotion?.short_name"
           :style="`background: linear-gradient(250deg, ${promotion.short_name_last_color} 0%, ${promotion.short_name_first_color} 100%);color: ${promotion.color_text}`"
         >
           <span v-html="promotion?.short_name_icon_svg"></span>
-          {{ promotion?.short_name }}
+          <p>{{ promotion?.short_name }}</p>
         </div></span
       >
 
@@ -98,15 +98,24 @@ export default {
 .stocks-card-type {
   border-radius: 5px;
   transform: matrix(1, 0, -0.24, 0.97, 0, 0);
+  display: inline-flex;
+  align-items: center;
+  padding: 1px 15px;
+  margin-bottom: 9px;
+  max-width: 50%;
+  max-height: 19px;
+}
+.stocks-card-type p {
   font-family: var(--SB_400);
   font-style: normal;
   font-weight: 400;
   font-size: 12px;
   line-height: 17px;
-  display: inline-flex;
-  align-items: center;
-  padding: 1px 15px;
-  margin-bottom: 9px;
+  transform: matrix(1, 0, 0.24, 0.97, 0, 0);
+  margin-top: 0;
+}
+.stocks-card-type span {
+  transform: matrix(1, 0, 0.24, 0.97, 0, 0);
 }
 .stocks-card-type span svg {
   margin-right: 6px;

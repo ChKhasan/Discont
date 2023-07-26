@@ -1,6 +1,8 @@
 <template lang="html">
   <div class="home-banner">
-    <img :src="banner[0]?.lg_img" alt="" />
+    <a :href="banner[0]?.link">
+      <img :src="banner[0]?.lg_img" alt="" />
+    </a>
   </div>
 </template>
 <script>

@@ -1,5 +1,5 @@
 <template lang="html">
-  <div class="v2-product-card" :style="`background-image: url(${img?.md_img?.ru})`">
+  <div class="v2-product-card" :style="`background-image: url(${img?.md_img})`">
     <div
       class="v2-product-card-title d-flex align-items-center justify-content-start w-100"
     >
@@ -8,9 +8,11 @@
     <div class="v2-product-card-img">
       <!-- <img src="../../assets/images/i 1.png" alt="" /> -->
     </div>
-    <div class="v2-product-card-btns">
-      <div>Купить сейчас</div>
-    </div>
+    <a :href="img?.link">
+      <div class="v2-product-card-btns">
+        <div>Купить сейчас</div>
+      </div>
+    </a>
   </div>
 </template>
 <script>

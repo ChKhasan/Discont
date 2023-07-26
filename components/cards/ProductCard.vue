@@ -496,7 +496,7 @@
               class="d-flex flex-column align-items-center justify-content-center oc-counter-box"
             >
               <div class="oc-product-counter">
-                <button @click="count > 1 && count--">
+                <button @click="formName.count > 1 && formName.count--">
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
                     width="12"
@@ -510,8 +510,8 @@
                     />
                   </svg>
                 </button>
-                {{ count }}
-                <button @click="count++">
+                {{ formName.count }}
+                <button @click="formName.count++">
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
                     width="12"
@@ -562,7 +562,7 @@
       <div
         class="vmodal-btn vmodal-btn-height oc-product-btn"
         v-if="!callBox"
-        @click="submitName()"
+        @click="submitOc()"
       >
         Ma`lumotlarni yuborish
       </div>
@@ -604,6 +604,47 @@
       </a>
       <template slot="footer"> <h3></h3></template>
     </a-modal>
+    <a-modal
+      v-model="visibleSuccess"
+      :body-style="{ padding: '32px', borderRadius: '14px' }"
+      centered
+      :closable="false"
+      width="671px"
+      @ok="handleOkSuccess"
+    >
+      <div class="vmodal-header">
+        <h5>Yangi sharh</h5>
+        <span @click="handleOkSuccess"
+          ><svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="20"
+            height="20"
+            viewBox="0 0 20 20"
+            fill="none"
+          >
+            <path
+              d="M17.9958 1.98438L2.00391 17.9762"
+              stroke="#1F8A70"
+              stroke-width="3.28586"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            />
+            <path
+              d="M18.0003 17.9861L1.99512 1.97754"
+              stroke="#1F8A70"
+              stroke-width="3.28586"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            /></svg
+        ></span>
+      </div>
+      <div class="vmodal-body comment-modal-success">
+        <img src="../../assets/images/modal-success.png" alt="" />
+        <p>Заказ оформлен. Мы свяжемся с вами в ближайшее время</p>
+      </div>
+      <div class="vmodal-btn" @click="handleOkSuccess">Yaxshi raxmat</div>
+      <template slot="footer"> <h3></h3></template>
+    </a-modal>
   </div>
 </template>
 <script>
@@ -613,6 +654,7 @@ export default {
   data() {
     return {
       count: 1,
+      visibleSuccess: false,
       visibleOc: false,
       callBox: false,
       visible: false,
@@ -632,6 +674,7 @@ export default {
         name: "",
         phone_number: "",
         product_id: null,
+        count: 1,
       },
       rulesName: {
         name: [
@@ -654,6 +697,9 @@ export default {
   },
 
   methods: {
+    handleOkSuccess() {
+      this.visibleSuccess = false;
+    },
     handleOkName() {
       this.visibleOc = false;
     },
@@ -667,10 +713,10 @@ export default {
       this.visible = false;
     },
 
-    submitName() {
+    submitOc() {
       const data = {
         ...this.formName,
-        phone_number: `998${this.formName.phone_number}`,
+        phone_number: this.formName.phone_number.split(" ").join("").replace("+", ""),
         product_id: this.product.id,
       };
       this.$refs["ruleFormNameClick"].validate((valid) => {
@@ -684,8 +730,9 @@ export default {
     async __POST_ORDER(formData) {
       try {
         const data = await this.$store.dispatch("fetchAuth/postClickOrder", formData);
-        this.visibleName = false;
-        this.compToast = true;
+        this.visibleOc = false;
+        // this.compToast = true;
+        this.visibleSuccess = true;
       } catch (e) {
         console.log(e);
       }

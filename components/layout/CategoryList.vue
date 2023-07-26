@@ -12,7 +12,22 @@
                 ><span v-html="navCatIcon"></span> Aksiyalar</nuxt-link
               >
             </li>
-            <li>
+            <li v-for="topBar in topBars" :key="topBar?.id">
+              <nuxt-link
+                :style="`background: linear-gradient(90deg, ${topBar?.color1} 0%, ${topBar?.color2} 100%);color: ${topBar?.text_color}`"
+                class="winter_discount"
+                :class="{ stock__active: $route.params.index == 'seasonal-discounts' }"
+                :to="
+                  localePath(
+                    topBar?.category_id
+                      ? `/categories-inner/${topBar?.category?.slug}`
+                      : `/stock/${topBar?.promotion?.slug}`
+                  )
+                "
+                ><span v-html="topBar?.icon_svg"></span>{{ topBar?.name }}</nuxt-link
+              >
+            </li>
+            <!-- <li>
               <nuxt-link
                 class="winter_discount"
                 :class="{ stock__active: $route.params.index == 'seasonal-discounts' }"
@@ -69,15 +84,15 @@
                     /></svg></span
                 >Best seller</nuxt-link
               >
-            </li>
+            </li> -->
           </ul>
         </div>
         <div class="d-flex align-items-center" v-if="$store.state.auth">
-          <div class="coin_btn">
+          <div class="coin_btn" @click="$router.push(localePath('/d-coin/about'))">
             <span><img src="../../assets/images/coin.png" alt="" /></span>
             65 Di Coin
           </div>
-          <nuxt-link class="nav-info" :to="localePath('/d-coin/about')">?</nuxt-link>
+          <!-- <nuxt-link class="nav-info" :to="localePath('/d-coin/about')">?</nuxt-link> -->
         </div>
       </div>
     </div>
@@ -91,21 +106,18 @@ export default {
       navCoin: require("../../assets/svg/coin.svg?raw"),
       navCatIcon: require("../../assets/svg/Category-item.svg?raw"),
       navCatIcon2: require("../../assets/svg/Cat-icon2.svg?raw"),
-      categories: [],
+      topBars: [],
     };
   },
   async fetch() {
-    const [categories] = await Promise.all([
-      this.$axios.$get(`/categories`, {
-        params: {
-          type: "bestsellers",
-          limit: 6,
+    const [topBarsData] = await Promise.all([
+      this.$store.dispatch(`fetchTopBars/getTopBars`, {
+        headers: {
+          Language: this.$i18n.locale,
         },
       }),
     ]);
-
-    this.categories = categories?.categories?.data;
-    console.log(this.categories);
+    this.topBars = topBarsData?.bars?.data;
   },
 };
 </script>

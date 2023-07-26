@@ -30,116 +30,39 @@
               ref="search"
               placeholder="Search ..."
               v-model="search"
-              @blur="searchBlockHide = false"
               @focus="searchBlockHide = true"
             />
-            <span
-              class="search-btn"
-              :class="{ disabled: search.length < 3 }"
-              @click="$router.push(`/search/${search}`)"
-            >
+            <span class="search-btn" @click="searchAction">
               <span v-html="navMic"></span>
               Qidiruv
             </span>
             <Transition name="bounce">
-              <div class="seach-resoult-container" v-if="searchBlockHide">
+              <div
+                class="seach-resoult-container"
+                v-if="
+                  searchBlockHide && (searchResoults.length > 0 || searchProducts.length)
+                "
+              >
                 <div class="search-resoult-scroll">
-                  <div v-if="searchLastResoults">
+                  <div v-if="searchResoults.length > 0 && searchProducts.length == 0">
                     <div class="search-tt">
                       <h6>Вы недавно искали</h6>
-                      <button>Очистить</button>
+                      <button @click="clearSearchResoults">Очистить</button>
                     </div>
                     <div class="search-resoults-list">
-                      <div class="search-resoults">
-                        <nuxt-link :to="localePath('/')">
+                      <div
+                        class="search-resoults"
+                        v-for="resoult in searchResoults"
+                        :key="resoult.id"
+                      >
+                        <div
+                          class="last_search_resoults"
+                          @click="lastSearchResoultAction(resoult.resoult)"
+                        >
                           <span v-html="searchClock"></span>
-                          Мягкая мебель
-                        </nuxt-link>
-                        <button>
-                          <svg
-                            xmlns="http://www.w3.org/2000/svg"
-                            width="24"
-                            height="24"
-                            viewBox="0 0 24 24"
-                            fill="none"
-                          >
-                            <path
-                              d="M15.8925 8.0918L8.10547 15.8788"
-                              stroke="#727474"
-                              stroke-linecap="round"
-                              stroke-linejoin="round"
-                            />
-                            <path
-                              d="M15.8951 15.883L8.10156 8.08789"
-                              stroke="#727474"
-                              stroke-linecap="round"
-                              stroke-linejoin="round"
-                            />
-                          </svg>
-                        </button>
-                      </div>
-                      <div class="search-resoults">
-                        <nuxt-link :to="localePath('/')">
-                          <span v-html="searchClock"></span>
-                          Мягкая мебель
-                        </nuxt-link>
-                        <button>
-                          <svg
-                            xmlns="http://www.w3.org/2000/svg"
-                            width="24"
-                            height="24"
-                            viewBox="0 0 24 24"
-                            fill="none"
-                          >
-                            <path
-                              d="M15.8925 8.0918L8.10547 15.8788"
-                              stroke="#727474"
-                              stroke-linecap="round"
-                              stroke-linejoin="round"
-                            />
-                            <path
-                              d="M15.8951 15.883L8.10156 8.08789"
-                              stroke="#727474"
-                              stroke-linecap="round"
-                              stroke-linejoin="round"
-                            />
-                          </svg>
-                        </button>
-                      </div>
-                      <div class="search-resoults">
-                        <nuxt-link :to="localePath('/')">
-                          <span v-html="searchClock"></span>
-                          Мягкая мебель
-                        </nuxt-link>
-                        <button>
-                          <svg
-                            xmlns="http://www.w3.org/2000/svg"
-                            width="24"
-                            height="24"
-                            viewBox="0 0 24 24"
-                            fill="none"
-                          >
-                            <path
-                              d="M15.8925 8.0918L8.10547 15.8788"
-                              stroke="#727474"
-                              stroke-linecap="round"
-                              stroke-linejoin="round"
-                            />
-                            <path
-                              d="M15.8951 15.883L8.10156 8.08789"
-                              stroke="#727474"
-                              stroke-linecap="round"
-                              stroke-linejoin="round"
-                            />
-                          </svg>
-                        </button>
-                      </div>
-                      <div class="search-resoults">
-                        <nuxt-link :to="localePath('/')">
-                          <span v-html="searchClock"></span>
-                          Мягкая мебель
-                        </nuxt-link>
-                        <button>
+                          {{ resoult.resoult }}
+                        </div>
+                        <button @click="searchResoultDelete(resoult.id)">
                           <svg
                             xmlns="http://www.w3.org/2000/svg"
                             width="24"
@@ -164,8 +87,8 @@
                       </div>
                     </div>
                   </div>
-                  <div>
-                    <div class="search-popular" v-if="searchProducts.length > 0">
+                  <div v-if="searchProducts.length > 0 && search.length > 3">
+                    <div class="search-popular">
                       <h6>Популярные</h6>
                     </div>
                     <div class="search-resoults-list">
@@ -694,6 +617,7 @@
             prop="sms_code"
           >
             <a-input
+              focus
               @keyup.enter="submitSms()"
               v-model="formSms.sms_code"
               type="text"
@@ -909,7 +833,7 @@ export default {
       navSearch: require("../../assets/svg/search.svg?raw"),
       navLike: require("../../assets/svg/Heart.svg?raw"),
       navBasket: require("../../assets/svg/Buy.svg?raw"),
-      navComp: require("../../assets/Buy.svg?raw"),
+      navComp: require("../../assets/svg/nav-comp.svg?raw"),
       navOrder: require("../../assets/svg/Order_light.svg?raw"),
       navUser: require("../../assets/svg/User_alt_light.svg?raw"),
       navCategory: require("../../assets/svg/category_menu.svg?raw"),
@@ -923,6 +847,7 @@ export default {
       checkNumberError: false,
       visibleForgetPass: false,
       forgetPassStatus: false,
+      searchResoults: [],
     };
   },
   async fetch() {
@@ -952,9 +877,38 @@ export default {
     },
   },
   mounted() {
-    let cart = JSON.parse(localStorage.getItem("cart"));
+    if (!localStorage.getItem("search_resoults")) {
+      localStorage.setItem("search_resoults", JSON.stringify([]));
+    } else {
+      this.searchResoults = JSON.parse(localStorage.getItem("search_resoults"));
+    }
   },
   methods: {
+    clearSearchResoults() {
+      localStorage.setItem("search_resoults", JSON.stringify([]));
+      this.searchResoults = JSON.parse(localStorage.getItem("search_resoults"));
+    },
+    lastSearchResoultAction(res) {
+      this.search = res;
+      this.$router.push(`/search/${this.search}`);
+    },
+    searchResoultDelete(id) {
+      this.searchResoults = this.searchResoults.filter((item) => item.id != id);
+      localStorage.setItem("search_resoults", JSON.stringify(this.searchResoults));
+      this.searchResoults = JSON.parse(localStorage.getItem("search_resoults"));
+    },
+    searchAction() {
+      this.searchResoults.push({
+        id:
+          this.searchResoults.length > 0
+            ? Math.max(...this.searchResoults.map((o) => o.id)) + 1
+            : 1,
+        resoult: this.search,
+      });
+      localStorage.setItem("search_resoults", JSON.stringify(this.searchResoults));
+
+      this.$router.push(`/search/${this.search}`);
+    },
     chunkIntoN(arr, n) {
       const size = Math.ceil(arr.length / n);
       return Array.from({ length: n }, (v, i) => arr.slice(i * size, i * size + size));
@@ -1177,15 +1131,15 @@ export default {
     },
   },
   watch: {
-    searchBlockHide(val) {
-      if (val) {
-        document.body.style.height = "100vh";
-        document.body.style.overflow = "hidden";
-      } else {
-        document.body.style.height = "auto";
-        document.body.style.overflow = "auto";
-      }
-    },
+    // searchBlockHide(val) {
+    //   if (val) {
+    //     document.body.style.height = "100vh";
+    //     document.body.style.overflow = "hidden";
+    //   } else {
+    //     document.body.style.height = "auto";
+    //     document.body.style.overflow = "auto";
+    //   }
+    // },
     authVisible(val) {
       this.visibleCheck = val;
     },
@@ -1211,6 +1165,8 @@ export default {
       if (val.length > 3) {
         this.__GET_SEARCH();
         this.searchLastResoults = false;
+      } else {
+        this.searchProducts = [];
       }
     },
     routerPath() {
@@ -1607,7 +1563,7 @@ export default {
   height: 100vh;
   width: 100%;
   background: rgba(0, 0, 0, 0.25);
-  backdrop-filter: blur(2.5px);
+  /* backdrop-filter: blur(2.5px); */
   z-index: 1000;
   top: 100%;
 }

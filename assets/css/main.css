@@ -511,3 +511,25 @@ body::-webkit-scrollbar-thumb {
     transform: scale(1);
   }
 }
+.comment-modal-success {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding-top: 20px;
+  padding-bottom: 16px;
+}
+.comment-modal-success img {
+  width: 143px;
+  height: 143px;
+}
+.comment-modal-success p {
+  color: var(--color_dark_green);
+  text-align: center;
+  font-family: var(--SB_500);
+  font-size: 18px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 150%; /* 27px */
+  margin-top: 24px;
+  width: 50%;
+}

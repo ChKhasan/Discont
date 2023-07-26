@@ -27,9 +27,9 @@
       <div class="d-flex justify-content-between align-items-end">
         <ProductListTitle title="Kategoriyadagi top tavarlar" />
       </div>
-      <div class="product-grid stock-page__products">
+      <!-- <div class="product-grid stock-page__products">
         <ProductCard v-for="product in products" :key="product.id" :product="product" />
-      </div>
+      </div> -->
     </div>
   </div>
 </template>
@@ -72,9 +72,12 @@ export default {
   width: 100%;
   border-radius: 24px;
   overflow: hidden;
+  max-height: 592px;
 }
 .stock-page__image img {
   width: 100%;
+  height: 100%;
+  object-fit: cover;
 }
 .stock-page__static {
   display: grid;

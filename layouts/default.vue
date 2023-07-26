@@ -39,7 +39,7 @@ export default {
       likeToast: false,
       compToast: false,
       afterReload: false,
-      iconBuy: require("../assets/svg/toast-buy.svg?raw"),
+      iconBuy: require("../assets/Buy.svg?raw"),
       iconLike: require("../assets/svg/toast-like.svg?raw"),
       iconComp: require("../assets/svg/toast-comparison.svg?raw"),
     };

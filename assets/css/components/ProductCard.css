@@ -36,6 +36,7 @@
   -webkit-box-orient: vertical;
   display: -webkit-box;
   text-overflow: ellipsis;
+  text-align: start;
 }
 .product-card-body p {
   margin-top: 28px;
@@ -45,6 +46,7 @@
   font-size: 14px;
   line-height: 17px;
   color: #9f9f9f;
+  text-align: start;
 }
 .product-card-body p span {
   margin-right: 3px;

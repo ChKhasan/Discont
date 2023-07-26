@@ -426,9 +426,7 @@
                   <img src="@/assets/images/like.svg" alt="" />
                   O’z fikr va izohlaringizni qoldiring
                 </p>
-                <button class="leave__btn" @click="visibleComment = true">
-                  Baho qoldirish
-                </button>
+                <button class="leave__btn" @click="commentOpen()">Baho qoldirish</button>
               </div>
               <div class="rating">
                 <img src="@/assets/images/cheat.png" alt="" />
@@ -672,10 +670,12 @@
       <div class="comment-modal-btns">
         <div class="comment-rate">
           <p>Sizning Bahoyingiz:</p>
-          <a-rate v-model="commentStarts" />
+          <a-rate v-model="formComment.stars" />
         </div>
-        <div class="comment-btn comment-btn-close">Bekor qilish</div>
-        <div class="comment-btn">Fikr qoldiring</div>
+        <div class="comment-btn comment-btn-close" @click="visibleComment = false">
+          Bekor qilish
+        </div>
+        <div class="comment-btn" @click="submitComment()">Fikr qoldiring</div>
       </div>
       <template slot="footer"> <h3></h3></template>
     </a-modal>
@@ -755,7 +755,10 @@ export default {
       tabHandle: "desc",
       productsOthers: [],
       formComment: {
+        user_id: null,
+        product_id: null,
         comment: "",
+        stars: 0,
       },
       formOc: {
         name: "",
@@ -872,6 +875,13 @@ export default {
     toastClose() {
       this.compToast = false;
     },
+    commentOpen() {
+      if (this.$store.state.auth) {
+        this.visibleComment = true;
+      } else {
+        this.$store.commit("authVisibleChange", true);
+      }
+    },
     productPrice(product) {
       console.log(product);
       let price =
@@ -884,6 +894,20 @@ export default {
       // .replace(".", ",")
       // .replace(/\B(?=(\d{3})+(?!\d))/g, " ");
       return `${price}`.replace(/\B(?=(\d{3})+(?!\d))/g, " ");
+    },
+    submitComment() {
+      this.formComment.product_id = this.product.id;
+      this.formComment.user_id = this.$store.state.profile.id;
+      if (this.formComment.product_id && this.formComment.user_id) {
+        this.$refs["ruleFormComment"].validate((valid) => {
+          if (valid) {
+            console.log(this.formComment);
+            this.__POST_COMMENT(this.formComment);
+          } else {
+            return false;
+          }
+        });
+      }
     },
     submitName() {
       const data = {
@@ -902,12 +926,22 @@ export default {
     handleOkName() {
       this.visibleOc = false;
     },
+    async __POST_COMMENT(formData) {
+      try {
+        const data = await this.$store.dispatch("fetchProducts/postProductComment", {
+          data: formData,
+        });
+        this.visibleComment = false;
+      } catch (e) {
+        console.log(e);
+      }
+    },
     async __POST_ORDER(formData) {
       try {
         const data = await this.$store.dispatch("fetchAuth/postClickOrder", formData);
         this.visibleOc = false;
         // this.compToast = true;
-        this.visibleSuccess = true
+        this.visibleSuccess = true;
       } catch (e) {
         console.log(e);
       }
@@ -1468,27 +1502,5 @@ tbody .img {
   font-weight: 400;
   line-height: 24px; /* 120% */
   letter-spacing: -0.4px;
-}
-.comment-modal-success {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  padding-top: 20px;
-  padding-bottom: 16px;
-}
-.comment-modal-success img {
-  width: 143px;
-  height: 143px;
-}
-.comment-modal-success p {
-  color: var(--color_dark_green);
-  text-align: center;
-  font-family: var(--SB_500);
-  font-size: 18px;
-  font-style: normal;
-  font-weight: 500;
-  line-height: 150%; /* 27px */
-  margin-top: 24px;
-  width: 50%;
 }
 </style>

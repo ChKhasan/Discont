@@ -14,6 +14,11 @@ export const actions = {
 
     return res;
   },
+  async postProductComment({}, payload) {
+    const res = await this.$axios.$post(`/comments`, payload.data);
+
+    return res;
+  },
   async getComparionsProductsById({}, payload) {
     const res = await this.$axios.$post(`/comparison`, payload.data, {
       ...payload.params,

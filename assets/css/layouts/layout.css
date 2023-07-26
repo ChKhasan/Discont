@@ -228,16 +228,16 @@
   align-items: center;
 }
 .winter_discount {
-  color: #ffffff !important;
-  background: linear-gradient(to right, #018ce1, #216bfd) !important;
+  /* color: #ffffff !important; */
+  /* background: linear-gradient(to right, #018ce1, #216bfd) !important; */
 }
 .stock__active {
   opacity: 0.6;
   pointer-events: none;
 }
-.winter_discount svg path {
+/* .winter_discount svg path {
   fill: #ffffff;
-}
+} */
 .header-category_container ul li a span {
   margin-right: 13px;
   display: flex;
@@ -251,6 +251,7 @@
   display: flex;
   align-items: center;
   overflow: hidden;
+  cursor: pointer;
 }
 .coin_btn span {
   position: absolute;
@@ -489,7 +490,8 @@
   align-items: center;
   justify-content: space-between;
 }
-.search-resoults a {
+.search-resoults a,
+.last_search_resoults {
   color: #727474;
   font-family: var(--SB_400);
   font-size: 14px;
@@ -500,17 +502,22 @@
   transition: 0.25s;
   display: flex;
   align-items: center;
+  cursor: pointer;
 }
-.search-resoults a svg {
+.search-resoults a svg,
+.last_search_resoults svg {
   margin-right: 8px;
 }
-.search-resoults a:hover {
+.search-resoults a:hover,
+.last_search_resoults:hover {
   color: var(--color_dark_green);
 }
-.search-resoults a svg path {
+.search-resoults a svg path,
+.last_search_resoults svg path {
   transition: 0.25s;
 }
-.search-resoults a:hover svg path {
+.search-resoults a:hover svg path,
+.last_search_resoults:hover svg path {
   stroke: var(--color_dark_green);
 }
 .search-resoults button {

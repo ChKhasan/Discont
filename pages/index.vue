@@ -8,7 +8,9 @@
             v-for="banner in banners.filter((item) => item.type == 'main')"
             :key="banner?.id"
           >
-            <img :src="banner?.lg_img" alt="" />
+            <a :href="banner?.link">
+              <img :src="banner?.lg_img" alt="" />
+            </a>
           </div>
         </BannerCarousel>
         <BannerCarouselRight>
@@ -34,13 +36,23 @@
       </div>
       <div class="home-categories mb-120">
         <MainTitle title="Kategoriyalar" />
-        <div class="category-grid">
+        <div>
+          <HomeCategoryCarousel>
+            <div
+              class="swiper-slide"
+              v-for="(category, index) in categories"
+              :key="category.id"
+            >
+              <HomeCategoryCard :category="category" /></div
+          ></HomeCategoryCarousel>
+        </div>
+        <!-- <div class="category-grid">
           <HomeCategoryCard
             v-for="(category, index) in categories"
             :key="category.id"
             :category="category"
           />
-        </div>
+        </div> -->
       </div>
     </div>
     <div class="container_xl product_container" v-if="showcases[0]">
@@ -358,6 +370,7 @@ import ApplicationBanner from "../components/application-banner.vue";
 import DayProductCard from "../components/cards/DayProductCard.vue";
 import PostsCarousel from "../components/posts-carousel.vue";
 import SmallBannerCard from "../components/cards/SmallBannerCard.vue";
+import homeCategoryCarousel from "../components/home-category-carousel.vue";
 export default {
   name: "IndexPage",
   data() {
@@ -406,7 +419,7 @@ export default {
         },
       }),
       store.dispatch("fetchCategories/getCategories", {
-        params: { limit: 6 },
+        // params: { limit: 6 },
         headers: {
           Language: i18n.locale,
         },
@@ -505,6 +518,7 @@ export default {
     DayProductCard,
     PostsCarousel,
     SmallBannerCard,
+    homeCategoryCarousel,
   },
 };
 </script>

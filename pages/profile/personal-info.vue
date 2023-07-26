@@ -98,8 +98,8 @@
                       type="text"
                       class="w-100 ant-input"
                       v-model="form.phone_number"
-                      v-mask="'+998 (##) ### ## ##'"
-                      placeholder="+998 (__) ___ __ __"
+                      v-mask="'+998 ## ### ## ##'"
+                      placeholder="+998 __ ___ __ __"
                     />
                   </a-form-model-item>
                   <a-form-model-item class="form-item mb-0" label="Email">
@@ -135,7 +135,7 @@
                       class="checkout-select"
                       v-model="form.district_id"
                       placeholder="Tuman"
-                      :disabled="cities.length == 0"
+                      :disabled="cities?.length == 0"
                     >
                       <a-select-option v-for="(city, index) in cities" :key="city?.id">
                         {{ city?.name }}
@@ -182,7 +182,7 @@
               </div>
             </div>
           </a-form-model>
-          <div class="personal-info-banner" v-if="!profileEdit">
+          <!-- <div class="personal-info-banner" v-if="!profileEdit">
             <h4>Sizning Diskoinlaringiz soni</h4>
             <p>
               dustry. Lorem Ipsum has been the industry's standard dummy text ever since
@@ -191,7 +191,7 @@
               ever since the 1500s,
             </p>
             <nuxt-link :to="localePath('/')">Moree about Dicoins</nuxt-link>
-          </div>
+          </div> -->
         </div>
       </div>
     </div>
@@ -281,7 +281,7 @@ export default {
       } else {
         const data = {
           ...this.form,
-          phone_number: `998${this.form.phone_number}`,
+          phone_number: this.form.phone_number.split(" ").join("").replace("+", ""),
         };
         this.$refs["ruleForm"].validate((valid) => {
           if (valid) {
