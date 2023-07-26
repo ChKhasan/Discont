@@ -8,7 +8,7 @@
       <div class="d-flex page-container-title">
         <div class="d-flex align-items-end">
           <MainTitle title="Solishtirish" />
-          <span class="d-flex align-items-end">8 288 товаров</span>
+          <span class="d-flex align-items-end">{{ compProducts.length }} товаров</span>
         </div>
         <a-select
           v-model="value"

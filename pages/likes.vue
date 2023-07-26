@@ -10,7 +10,7 @@
       <div class="d-flex page-container-title">
         <div class="d-flex align-items-end">
           <MainTitle title="Menga yoqqan tovarlar" />
-          <span class="d-flex align-items-end">8 288 товаров</span>
+          <span class="d-flex align-items-end">{{ likeProducts.length }} товаров</span>
         </div>
         <div class="likes-delete">
           <span v-html="deleteIcon"></span>
