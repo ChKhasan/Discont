@@ -1,7 +1,10 @@
 <template lang="html">
   <div class="banner-carousel-right">
     <div class="flex items-center justify-center">
-      <div class="swiper-banner-right mySwiper2" style="overflow: hidden; height: 354px">
+      <div
+        class="swiper-banner-right mySwiper2"
+        style="overflow: hidden; height: 354px"
+      >
         <div class="swiper-wrapper">
           <slot></slot>
         </div>
@@ -26,8 +29,9 @@ export default {
       modules: [Navigation, Pagination, Autoplay],
       pagination: false,
       autoplay: {
-        delay: 1000,
+        delay: 5000,
       },
+      speed: 1000,
       pagination: {
         el: ".swiper-pagination-banner-right",
         type: "bullets",
@@ -56,6 +60,9 @@ export default {
   justify-content: center;
   background: rgba(255, 255, 255, 0.48);
   cursor: pointer;
+}
+.swiper-banner-right {
+  border-radius: 16px;
 }
 .banner-carousel-right .swiper-button-disabled {
   opacity: 0.4;

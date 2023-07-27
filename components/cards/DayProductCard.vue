@@ -1,6 +1,10 @@
 <template lang="html">
   <div class="day-product-card">
-    <img class="day-product-card-bg" src="../../assets/images/day-card-bg.png" alt="" />
+    <img
+      class="day-product-card-bg"
+      src="../../assets/images/day-card-bg.png"
+      alt=""
+    />
     <div class="day-product-card-head">
       <h3>Kunlik chegirmalar</h3>
       <nuxt-link :to="localePath('/')"
@@ -25,10 +29,12 @@
           <p>Chegirmalar</p>
           <div><span>-50%</span></div>
         </div>
-        <span>Talaba va o’quvchilar uchun mega skidka ulgurib qoling go!!!</span>
+        <span
+          >Talaba va o’quvchilar uchun mega skidka ulgurib qoling go!!!</span
+        >
       </div>
       <div class="day-product-card-right">
-        <img src="../../assets/images/BASKET.png" alt="" />
+        <img src="../../assets/images/delete/laptop.jpg" alt="" />
       </div>
     </div>
   </div>
@@ -38,7 +44,11 @@ export default {};
 </script>
 <style lang="css">
 .day-product-card {
-  background: radial-gradient(98.96% 220.15% at 98.96% 100%, #ffdd6a 0%, #fbc100 100%);
+  background: radial-gradient(
+    98.96% 220.15% at 98.96% 100%,
+    #ffdd6a 0%,
+    #fbc100 100%
+  );
   border-radius: 16px;
   overflow: hidden;
   position: relative;
@@ -54,7 +64,11 @@ export default {};
   justify-content: space-between;
   align-items: center;
   height: 52px;
-  background: radial-gradient(99.34% 7718.39% at 0.66% 3.85%, #ff3a3a 0%, #e90a0a 100%);
+  background: radial-gradient(
+    99.34% 7718.39% at 0.66% 3.85%,
+    #ff3a3a 0%,
+    #e90a0a 100%
+  );
   position: relative;
   z-index: 10;
 }
@@ -97,7 +111,6 @@ export default {};
   font-weight: 700;
   font-size: 32px;
   line-height: 40px;
-  height: 70px;
   color: #000000;
   margin-bottom: 24px;
 }

@@ -1,7 +1,10 @@
 <template lang="html">
   <div class="banner-carousel">
     <div class="flex items-center justify-center">
-      <div class="swiper-banner mySwiper" style="overflow: hidden; height: 354px">
+      <div
+        class="swiper-banner mySwiper"
+        style="overflow: hidden; height: 354px"
+      >
         <div class="swiper-wrapper">
           <slot></slot>
         </div>
@@ -78,8 +81,9 @@ export default {
       modules: [Navigation, Pagination, EffectCards, Autoplay],
       pagination: false,
       autoplay: {
-        delay: 40000,
+        delay: 10000,
       },
+      speed: 1000,
       pagination: {
         el: ".swiper-pagination-banner",
         type: "bullets",
