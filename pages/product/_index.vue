@@ -2,7 +2,10 @@
   <div class="wrap product-page">
     <div class="container_xl">
       <div class="top">
-        <h4 class="title">{{ product?.info?.name }}</h4>
+        <h4 class="title" v-if="skeleton">
+          <b-skeleton width="40%" height="100%"></b-skeleton>
+        </h4>
+        <h4 class="title" v-else>{{ product?.info?.name }}</h4>
         <div class="flexer">
           <div class="left">
             <div class="stars">
@@ -80,7 +83,26 @@
       </div>
       <div class="row">
         <div class="col-md-5 col-xs-12 images">
-          <div class="world">
+          <div class="world" v-if="skeleton">
+            <div thumbsSlider="" class="swiper mySwiper">
+              <div class="swiper-wrapper flex-column">
+                <div class="swiper-slide" v-for="img in [1, 2, 3, 4]" :key="img">
+                  <b-skeleton height="100%" width="100%"></b-skeleton>
+                </div>
+              </div>
+            </div>
+            <div
+              style="--swiper-navigation-color: #fff; --swiper-pagination-color: #fff"
+              class="swiper mySwiper2"
+            >
+              <div class="swiper-wrapper">
+                <div class="swiper-slide" v-for="img in [1, 2, 3, 4]" :key="img">
+                  <b-skeleton height="100%" width="100%"></b-skeleton>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="world" v-else>
             <div thumbsSlider="" class="swiper mySwiper">
               <div class="swiper-wrapper flex-column">
                 <div class="swiper-slide" v-for="img in product?.images" :key="img.id">
@@ -125,18 +147,65 @@
                 Barcha xarakteristikalar
               </p>
             </div>
-            <div class="colors">
-              <p class="lil">Цвет</p>
+
+            <div v-if="skeleton" class="colors">
+              <p class="lil"><b-skeleton height="100%" width="20%"></b-skeleton></p>
               <div class="grid">
-                <div class="color">
-                  <span></span>
+                <div
+                  v-for="colorOption in [1, 2, 3, 4]"
+                  :key="colorOption"
+                  class="disabled-attribute color"
+                >
+                  <span><b-skeleton height="100%" width="100%"></b-skeleton></span>
                 </div>
-                <div class="color"><span></span></div>
+              </div>
+            </div>
+            <div
+              v-else
+              class="colors"
+              v-for="(atributColor, atributColorIndex) in productAttributes.filter(
+                (item) => item.title == 'Цвет'
+              )"
+              :key="atributColorIndex"
+            >
+              <p class="lil">{{ atributColor?.title }}</p>
+              <div class="grid">
+                <div
+                  class="color"
+                  v-for="colorOption in atributColor?.options"
+                  :key="colorOption?.id"
+                  @click="$router.push(`/product/${colorOption?.slug}`)"
+                  :class="{
+                    'active-attribute': colorOption?.active,
+                    'disabled-attribute': !colorOption?.available,
+                  }"
+                >
+                  <span :style="{ 'background-color': colorOption?.title }"></span>
+                </div>
+              </div>
+            </div>
+            <div
+              v-if="skeleton"
+              class="variations"
+              v-for="(atribut, atributIndex) in [1, 2]"
+              :key="atribut"
+            >
+              <p class="lil"><b-skeleton width="50%" height="100%"></b-skeleton></p>
+              <div class="grid">
+                <div
+                  class="variation disabled-attribute"
+                  v-for="(option, optionIndex) in [9, 8, 7, 6]"
+                  :key="option"
+                >
+                  <b-skeleton width="40px"></b-skeleton>
+                </div>
               </div>
             </div>
             <div
               class="variations"
-              v-for="(atribut, atributIndex) in productAttributes"
+              v-for="(atribut, atributIndex) in productAttributes.filter(
+                (item) => item.title != 'Цвет'
+              )"
               :key="atributIndex"
             >
               <p class="lil">{{ atribut?.title }}</p>
@@ -190,8 +259,10 @@
                 </p>
                 <p class="dis__txt">Chegirma narxida</p>
               </div>
-
-              <p class="price" v-if="product?.price">
+              <p class="price" v-if="skeleton">
+                <b-skeleton width="50%" height="100%"> </b-skeleton>
+              </p>
+              <p class="price" v-if="product?.price && !skeleton">
                 {{ productPrice(product) }}
                 so’m
               </p>
@@ -741,6 +812,7 @@ export default {
 
   data() {
     return {
+      skeleton: false,
       count: 1,
       callBox: false,
       visibleSuccess: false,
@@ -822,6 +894,7 @@ export default {
   //   this.productAttributes = productData?.attributes;
   // },
   async mounted() {
+    this.skeleton = true;
     const [productData, productsData] = await Promise.all([
       this.$store.dispatch("fetchProducts/getProductsBySlug", {
         id: this.$route.params.index,
@@ -831,6 +904,7 @@ export default {
           },
         },
       }),
+
       this.$store.dispatch("fetchProducts/getProducts", {
         params: { limit: 12 },
         headers: {
@@ -838,6 +912,7 @@ export default {
         },
       }),
     ]);
+    this.skeleton = false;
     this.product = productData.product;
     console.log(this.product);
     this.productsOthers = productsData?.products?.data;
@@ -1023,11 +1098,12 @@ export default {
 }
 
 .mySwiper2 {
-  height: 580px;
+  height: 515px;
   width: 80%;
 }
 .mySwiper2 .swiper-slide {
   border-radius: 20px;
+  overflow: hidden;
 }
 .mySwiper {
   width: 20%;
@@ -1154,7 +1230,7 @@ export default {
   padding: 4px;
 }
 .color span {
-  background: black;
+  /* background: black; */
   width: 100%;
   height: 100%;
   display: flex;
