@@ -46,7 +46,6 @@
               <nuxt-link :to="localePath('/')">Diskont main page</nuxt-link>
               <nuxt-link :to="localePath('/')">
                 {{ categoryChilds?.name }}
-                <span v-html="arrow"></span>
               </nuxt-link>
             </div>
             <div class="d-flex categories-page-title">

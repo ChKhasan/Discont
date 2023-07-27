@@ -4,9 +4,20 @@
       <div>
         <div class="page-breadcrumb">
           <nuxt-link :to="localePath('/')">Diskont main page</nuxt-link>
+          <nuxt-link
+            v-if="categoryChilds?.parent?.parent?.slug"
+            :to="localePath(`/categories-inner/${categoryChilds?.parent?.parent?.slug}`)"
+          >
+            {{ categoryChilds?.parent?.parent?.name }}
+          </nuxt-link>
+          <nuxt-link
+            v-if="categoryChilds?.parent?.slug"
+            :to="localePath(`/categories-inner/${categoryChilds?.parent?.slug}`)"
+          >
+            {{ categoryChilds?.parent?.name }}
+          </nuxt-link>
           <nuxt-link :to="localePath('/')">
             {{ categoryChilds?.name }}
-            <span v-html="arrow"></span>
           </nuxt-link>
         </div>
         <div class="d-flex categories-page-title">
@@ -221,11 +232,11 @@
               <div class="filter-slider-inputs">
                 <span>
                   <input type="text" v-model="sliderValue[0]" placeholder="от" />
-                  <span>₽</span>
+                  <span></span>
                 </span>
                 <span>
                   <input type="text" placeholder="до" v-model="sliderValue[1]" />
-                  <span>₽</span>
+                  <span></span>
                 </span>
               </div>
             </div>

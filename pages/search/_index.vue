@@ -42,9 +42,10 @@
               :product="product"
             />
           </div>
-          <div class="comments-empty" v-else>
-            <img src="../../assets/images/comments-empty.png" alt="" />
-            <h4>Mahsulot topilmadi</h4>
+          <div class="comments-empty search-empty" v-else>
+            <img src="../../assets/images/search-empty.png" alt="" />
+            <h4>Hech nima topilmadi</h4>
+            <p>Mahsulotni aniq nomini yozing yoki kategoriyalar orqali qidiring</p>
           </div>
           <!-- <div class="categories-products-show-more" v-if="searchProducts?.length > 30">
             Показать еще 44
@@ -115,5 +116,26 @@ export default {
   grid-template-columns: repeat(6, 1fr);
   grid-gap: 24px;
   margin-top: 32px;
+}
+.search-empty h4 {
+  margin-bottom: 16px !important;
+  color: #000;
+  text-align: center;
+  font-family: var(--SB_500);
+  font-size: 24px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 24px;
+}
+.search-empty p {
+  width: 350px;
+  text-align: center;
+  color: #838383;
+  text-align: center;
+  font-family: var(--SB_400);
+  font-size: 18px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 24px;
 }
 </style>

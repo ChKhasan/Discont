@@ -322,22 +322,32 @@
               >
             </div>
             <div class="product-modal-attribut-block">
-              <h6>Цвета</h6>
+              <h6>
+                {{ productAttributes.find((item) => item?.title == "Цвет")?.title }}
+              </h6>
               <div class="product-modal-colors">
-                <span class="product-modal-color"></span>
-                <span class="product-modal-color"></span>
-                <span class="product-modal-color"></span>
-                <span class="product-modal-color"></span>
+                <span
+                  class="product-modal-color"
+                  v-for="colorOption in productAttributes.find(
+                    (item) => item?.title == 'Цвет'
+                  )?.options"
+                  :class="{
+                    'product-modal-attribut-active':
+                      productInner.slug == colorOption?.slug,
+                  }"
+                  @click="getProductBySlug(colorOption?.slug)"
+                  ><span :style="{ 'background-color': colorOption?.title }"></span
+                ></span>
               </div>
               <div v-if="skeleton">
-                <h6><b-skeleton width="30%"></b-skeleton></h6>
+                <h6><b-skeleton width="30%" height="100%"></b-skeleton></h6>
                 <div class="product-modal-attributs">
                   <div
                     class="product-modal-attribut"
                     v-for="option in [1, 2, 3]"
                     :key="option"
                   >
-                    <b-skeleton width="20px" height="10px"></b-skeleton>
+                    <b-skeleton width="40px" height="100%"></b-skeleton>
                   </div>
                   <!-- <div class="product-modal-attribut">128 GB</div>
                 <div class="product-modal-attribut">256 GB</div>
@@ -349,8 +359,12 @@
                 <div class="product-modal-attributs">
                   <div
                     class="product-modal-attribut"
+                    :class="{
+                      'product-modal-attribut-active': productInner.slug == option?.slug,
+                    }"
                     v-for="option in productAttributes[0]?.options"
                     :key="option?.id"
+                    @click="getProductBySlug(option?.slug)"
                   >
                     {{ option?.title }}
                   </div>
@@ -361,8 +375,17 @@
               </div>
 
               <div class="product-modal-count">
-                <div><span>-</span>1 <span>+</span></div>
-                <p>Осталось всего 4</p>
+                <div>
+                  <button @click="productCount > 0 && productCount--">-</button
+                  >{{ productCount }}
+                  <button
+                    :class="{ disabled: productInner?.stock == productCount }"
+                    @click="productCount < productInner?.stock && productCount++"
+                  >
+                    +
+                  </button>
+                </div>
+                <p>Осталось всего {{ productInner?.stock }}</p>
               </div>
               <nuxt-link
                 class="product-modal-show-more"
@@ -381,7 +404,10 @@
                   /></svg
               ></nuxt-link>
               <div class="product-modal-price">
-                <h4>25 880 000 СУМ</h4>
+                <h4 v-if="skeleton">
+                  <b-skeleton width="200px" height="100%"></b-skeleton>
+                </h4>
+                <h4 v-else>{{ productInner?.real_price }} СУМ</h4>
                 <p>28 880 000 СУМ</p>
               </div>
             </div>
@@ -393,7 +419,7 @@
                 }"
                 @click="
                   $store.commit('addToCart', {
-                    obj: { id: product?.id, count: 1 },
+                    obj: { id: product?.id, count: productCount },
                     name: 'cart',
                   }),
                     (visibleBuy = false)
@@ -654,6 +680,7 @@ export default {
   data() {
     return {
       count: 1,
+      productCount: 1,
       visibleSuccess: false,
       visibleOc: false,
       callBox: false,
@@ -727,6 +754,9 @@ export default {
         }
       });
     },
+    getProductBySlug(slug) {
+      this.__GET_PRODUCTS_BY_SLUG(slug);
+    },
     async __POST_ORDER(formData) {
       try {
         const data = await this.$store.dispatch("fetchAuth/postClickOrder", formData);
@@ -749,10 +779,10 @@ export default {
       // .replace(/\B(?=(\d{3})+(?!\d))/g, " ");
       return `${price}`.replace(/\B(?=(\d{3})+(?!\d))/g, " ");
     },
-    async __GET_PRODUCTS_BY_SLUG() {
+    async __GET_PRODUCTS_BY_SLUG(slug) {
       this.skeleton = true;
       const productData = await this.$store.dispatch("fetchProducts/getProductsBySlug", {
-        id: this.product.slug,
+        id: slug,
         params: {
           headers: {
             Language: this.$i18n.locale,
@@ -767,7 +797,7 @@ export default {
   watch: {
     visibleBuy(val) {
       if (val) {
-        this.__GET_PRODUCTS_BY_SLUG();
+        this.__GET_PRODUCTS_BY_SLUG(this.product.slug);
       }
     },
     visibleOc(val) {
@@ -1090,7 +1120,7 @@ export default {
   margin-right: 7px;
   cursor: pointer;
 }
-.product-modal-color::after {
+.product-modal-color span {
   content: "";
   position: absolute;
   width: 44px;
@@ -1101,6 +1131,7 @@ export default {
 .product-modal-attributs {
   display: flex;
   margin-bottom: 24px;
+  flex-wrap: wrap;
 }
 .product-modal-attribut {
   padding: 8.8px 23px;
@@ -1115,7 +1146,7 @@ export default {
   margin-right: 8px;
   cursor: pointer;
 }
-.product-modal-attribut:first-child {
+.product-modal-attribut-active {
   border: 0.628429px solid #04babe;
 }
 .product-modal-count {
@@ -1140,8 +1171,11 @@ export default {
   color: #020105;
   padding: 12px 16px;
 }
-.product-modal-count div span {
+.product-modal-count div button {
   font-size: 30px;
+  cursor: pointer;
+  background-color: transparent;
+  border: none;
 }
 .product-modal-count p {
   font-family: var(--SB_400);

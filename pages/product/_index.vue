@@ -133,13 +133,13 @@
                 :key="characteristic.id"
               >
                 <p class="question">
-                  {{ characteristic?.characteristic?.name?.ru }}
+                  {{ characteristic?.characteristic?.name }}
                 </p>
                 <p class="answer">{{ characteristic?.name }}</p>
               </div>
               <p
                 class="all"
-                @click="allCharacteristic"
+                @click="scrollElement('characteristic')"
                 v-if="
                   productCharacteristic?.length < product?.characteristic_options?.length
                 "
@@ -316,7 +316,7 @@
         </div>
       </div>
       <div class="tabs">
-        <div class="butns">
+        <div class="butns" id="characteristic">
           <button :class="{ active: tabHandle == 'desc' }" @click="tabHandle = 'desc'">
             Mahsulot haqida
           </button>
@@ -941,6 +941,11 @@ export default {
   },
 
   methods: {
+    scrollElement(id) {
+      const element = document.getElementById(id);
+      this.tabHandle = id;
+      element.scrollIntoView({ block: "center", behavior: "smooth" });
+    },
     handleOkSuccess() {
       this.visibleSuccess = false;
     },

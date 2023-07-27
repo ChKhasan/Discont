@@ -34,7 +34,7 @@
           <div class="categories-list">
             <h5>Категория</h5>
             <ul>
-              <li v-for="brand in brands" :key="brand?.id">
+              <li v-for="brand in brandsAll" :key="brand?.id">
                 <span
                   :class="{ 'active-brand': $route.params.index == brand?.slug }"
                   @click="$router.push(`/brand-categories/${brand?.slug}`)"
@@ -42,15 +42,15 @@
                 >
               </li>
             </ul>
-            <span
+            <!-- <span
               class="categories-list_show-more"
               @click="showAll"
               v-if="brands?.length < brandsAll?.length"
               >Показать еще</span
-            >
+            > -->
           </div>
           <div class="filter-range">
-            <h5>Категория</h5>
+            <h5>Narxi</h5>
             <a-slider
               range
               :step="10"
@@ -61,11 +61,11 @@
             <div class="filter-slider-inputs">
               <span>
                 <input type="text" placeholder="от" />
-                <span>₽</span>
+                <span></span>
               </span>
               <span>
                 <input type="text" placeholder="до" />
-                <span>₽</span>
+                <span></span>
               </span>
             </div>
           </div>
@@ -73,7 +73,7 @@
         <div class="categories-products">
           <div class="d-flex justify-content-end w-100"></div>
           <div class="categories-card-grid">
-            <!-- <ProductCard />
+            <!-- <ProductCard v-for="product in brandProducts"/>
             <ProductCard />
             <ProductCard />
             <ProductCard />
@@ -217,6 +217,7 @@ export default {
     this.brands = [...this.brands.splice(0, 6)];
     this.brandProducts = brandData.products?.data;
     this.brand = brandData.brand;
+    console.log(this.brandProducts);
   },
   methods: {
     onChange(value) {

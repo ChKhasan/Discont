@@ -110,11 +110,11 @@
             <div class="filter-slider-inputs">
               <span>
                 <input type="text" v-model="sliderValue[0]" placeholder="от" />
-                <span>₽</span>
+                <span></span>
               </span>
               <span>
                 <input type="text" placeholder="до" v-model="sliderValue[1]" />
-                <span>₽</span>
+                <span></span>
               </span>
             </div>
           </div>
