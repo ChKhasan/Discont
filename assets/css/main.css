@@ -77,6 +77,25 @@ body::-webkit-scrollbar-thumb {
     padding: 0;
   }
 }
+@media (max-width: 1024px) {
+  .container_xl {
+    padding: 0 16px;
+  }
+  .mySwiper .swiper-slide {
+    padding: 8px !important;
+    height: 70px !important;
+  }
+  .mySwiper .swiper-slide-thumb-active {
+    border-radius: 6px !important;
+  }
+  .swiper-button-prev-product1,
+  .swiper-button-next-product1 {
+    display: none !important;
+  }
+  .other .container_xl {
+    padding: 0;
+  }
+}
 .height-auto {
   position: relative;
   max-height: 335px !important;
