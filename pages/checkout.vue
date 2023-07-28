@@ -233,12 +233,12 @@
                 <a-checkbox @change="onChange"> </a-checkbox>
                 <p>
                   Barcha ma`lumotlarni tasdiqlayman, <span>foydalanish</span> va
-                  <span>sotib olish shartlariga</span>
+                  <span @click="visibleConsent = true">sotib olish shartlariga</span>
                   roziman
                 </p></span
               >
-              <nuxt-link :to="localePath('/')"
-                >Sotib olishda muammoga duch keldizmi?</nuxt-link
+              <span class="checkout-prob" @click="visibleCheckoutProblem = true"
+                >Sotib olishda muammoga duch keldizmi?</span
               >
             </div>
             <div class="checkout-btn" @click="submit()">Xaridni rasmiylashtirish</div>
@@ -307,7 +307,7 @@
         </div>
       </div>
     </div>
-    <a-modal
+    <!-- <a-modal
       v-model="visible"
       :body-style="{ padding: '32px', borderRadius: '14px' }"
       centered
@@ -401,17 +401,17 @@
       </div>
       <div class="vmodal-btn">Manzilni qo’shish</div>
       <template slot="footer"> <h3></h3></template>
-    </a-modal>
+    </a-modal> -->
     <a-modal
-      v-model="visibleSuccess"
+      v-model="visible"
       :body-style="{ padding: '32px', borderRadius: '14px' }"
       centered
       :closable="false"
-      width="671px"
+      width="804px"
       @ok="handleOk"
     >
       <div class="vmodal-header">
-        <h5></h5>
+        <h5>Yangi manzil qo’shish</h5>
         <span @click="handleOk"
           ><svg
             xmlns="http://www.w3.org/2000/svg"
@@ -436,11 +436,171 @@
             /></svg
         ></span>
       </div>
-      <div class="vmodal-body success-vmodal">
-        <img src="../assets/images/modal-success.png" alt="" />
-        <p>Siz muvaffaqiyatli zakaz berdingiz. Haridlarda davom eting.</p>
+      <div class="vmodal-body">
+        <a-form-model :model="form" ref="ruleFormFaq" :rules="rules" layout="vertical">
+          <div class="modal-select-grid">
+            <a-form-model-item
+              class="form-item mb-0 pb-0"
+              :class="{ 'select-placeholder': form.name == '' }"
+            >
+              <a-select
+                class="checkout-select mb-0"
+                v-model="form.name"
+                placeholder="Shaharni tanlang"
+              >
+                <a-select-option v-for="(city, index) in cities" :key="city.id">
+                  {{ city.name }}
+                </a-select-option>
+              </a-select>
+            </a-form-model-item>
+            <a-form-model-item
+              class="form-item mb-0 pb-0"
+              :class="{ 'select-placeholder': form.name == '' }"
+            >
+              <a-select
+                class="checkout-select mb-0"
+                v-model="form.name"
+                placeholder="Tumanni tanlang"
+              >
+                <a-select-option v-for="(category, index) in regions" :key="category.id">
+                  {{ category.name }}
+                </a-select-option>
+              </a-select>
+            </a-form-model-item>
+            <a-form-model-item class="form-item mb-0 pb-0">
+              <a-input
+                class="checkout-textarea"
+                v-model="form.name"
+                placeholder="Ko’cha uy va manzil haqida ma’lumot"
+              />
+            </a-form-model-item>
+            <a-form-model-item class="form-item mb-0 pb-0">
+              <a-input
+                class="checkout-textarea"
+                v-model="form.name"
+                placeholder="Ko’cha uy va manzil haqida ma’lumot"
+              />
+            </a-form-model-item>
+            <a-form-model-item class="form-item mb-0 pb-0">
+              <a-input
+                class="checkout-textarea"
+                v-model="form.name"
+                placeholder="Ko’cha uy va manzil haqida ma’lumot"
+              />
+            </a-form-model-item>
+            <a-form-model-item class="form-item mb-0 pb-0">
+              <a-input
+                class="checkout-textarea"
+                v-model="form.name"
+                placeholder="Ko’cha uy va manzil haqida ma’lumot"
+              />
+            </a-form-model-item>
+            <a-form-model-item class="form-item mb-0 pb-0">
+              <a-input
+                class="checkout-textarea"
+                v-model="form.name"
+                placeholder="Ko’cha uy va manzil haqida ma’lumot"
+              />
+            </a-form-model-item>
+          </div>
+        </a-form-model>
       </div>
-      <div class="vmodal-btn" @click="$router.push('/')">Haridni davom ettirish</div>
+      <div class="vmodal-btn adress-modal-btn">Manzilni qo’shish</div>
+      <template slot="footer"> <h3></h3></template>
+    </a-modal>
+    <a-modal
+      v-model="visibleSuccess"
+      :body-style="{ padding: 0, borderRadius: '4px', overflow: 'hidden' }"
+      centered
+      :closable="false"
+      width="590px"
+      @ok="handleOk"
+    >
+      <div class="vmodal-header so-modal-header">
+        <h5>Заказ принят</h5>
+        <span @click="handleOk"
+          ><svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="20"
+            height="20"
+            viewBox="0 0 20 20"
+            fill="none"
+          >
+            <path
+              d="M17.9958 1.98438L2.00391 17.9762"
+              stroke="#1F8A70"
+              stroke-width="3.28586"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            />
+            <path
+              d="M18.0003 17.9861L1.99512 1.97754"
+              stroke="#1F8A70"
+              stroke-width="3.28586"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            /></svg
+        ></span>
+      </div>
+      <div class="vmodal-body os-vmodal">
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          width="80"
+          height="80"
+          viewBox="0 0 80 80"
+          fill="none"
+        >
+          <circle cx="40" cy="40" r="40" fill="#F4F5F5" />
+          <path
+            d="M38.1475 46.5859C37.3665 47.367 36.1002 47.367 35.3191 46.5859L30.0833 41.3501C29.5587 40.8255 29.5587 39.9748 30.0833 39.4501C30.608 38.9255 31.4587 38.9255 31.9833 39.4501L35.3191 42.7859C36.1002 43.567 37.3665 43.567 38.1475 42.7859L48.0167 32.9168C48.5413 32.3921 49.392 32.3921 49.9167 32.9168C50.4413 33.4415 50.4413 34.2921 49.9167 34.8168L38.1475 46.5859Z"
+            fill="#009A10"
+          />
+        </svg>
+        <p>Заказ №32839 оформлен. Мы свяжемся с вами в ближайшее время</p>
+        <div class="os-vmodal-btns">
+          <button class="vmodal-btn os-vmodal-btn-close" @click="handleOk">
+            Продолжить покупку
+          </button>
+          <button class="vmodal-btn os-vmodal-btn" @click="$router.push('/')">
+            Перейти к просмотру
+          </button>
+        </div>
+      </div>
+      <template slot="footer"> <h3></h3></template>
+    </a-modal>
+    <a-modal
+      v-model="visibleCheckoutProblem"
+      :body-style="{ padding: '32px', borderRadius: '14px', overflow: 'hidden' }"
+      centered
+      :closable="false"
+      width="571px"
+      @ok="handleOkProblem"
+    >
+      <div class="checkout-problems">
+        <h4>Sotib olishda muammoga duch keldizmi?</h4>
+        <p>Biz bilan bog’laning</p>
+        <a href="tel:+998990118934">+998 (99) 011 89 34</a>
+      </div>
+      <template slot="footer"> <h3></h3></template>
+    </a-modal>
+    <a-modal
+      v-model="visibleConsent"
+      :body-style="{
+        padding: '18px',
+        borderRadius: '12px',
+        overflow: 'hidden',
+        background: '#F1F1F1',
+      }"
+      centered
+      :closable="false"
+      width="361px"
+      @ok="handleOkConsent"
+    >
+      <div class="checkout-consent">
+        <h4>Diskont sotib olish qoidalariga rozilik kiritasizmi?</h4>
+        <p>foydalanish va sotib olish shartlariga shartlari</p>
+        <button>Ha, Qoidalar bilan tanishdim</button>
+      </div>
       <template slot="footer"> <h3></h3></template>
     </a-modal>
   </div>
@@ -465,6 +625,8 @@ export default {
         amount: "",
         last_name: "",
       },
+      visibleConsent: false,
+      visibleCheckoutProblem: false,
       visibleSuccess: false,
       typePayment: null,
       paymentElement: "payme",
@@ -531,6 +693,12 @@ export default {
         valid ? this.__POST_ORDER(data) : false;
       });
     },
+    handleOkConsent() {
+      this.visibleConsent = false;
+    },
+    handleOkProblem() {
+      this.visibleCheckoutProblem = false;
+    },
     async __GET_PROFILE_INFO() {
       const profileData = await this.$store.dispatch("fetchAuth/getProfileInfo");
       this.profile = profileData?.user;
@@ -587,4 +755,117 @@ export default {
 </script>
 <style lang="css">
 @import "../assets/css/pages/checkout.css";
+.so-modal-header {
+  padding: 22px 20px 24px 40px;
+  background: #f7f7f7;
+}
+.os-vmodal {
+  padding: 40px;
+  margin-top: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  /* justify-content: center; */
+  background-color: #fff;
+}
+.os-vmodal p {
+  color: #020105;
+  text-align: center;
+  font-family: var(--SB_500);
+  font-size: 18px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 24px; /* 133.333% */
+  width: 75%;
+  margin-top: 24px;
+}
+.os-vmodal-btns {
+  width: 100%;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-gap: 24px;
+  margin-top: 40px;
+}
+.os-vmodal-btn,
+.os-vmodal-btn-close {
+  font-size: 16px;
+  font-family: var(--SB_500);
+  border: none;
+  margin-top: 0;
+  height: 52px;
+}
+.os-vmodal-btn-close {
+  background: #f4f5f5;
+  color: #000;
+}
+.checkout-problems {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.checkout-problems h4 {
+  color: #000;
+  font-family: var(--SB_600);
+  font-size: 24px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: normal;
+  margin-bottom: 24px;
+}
+.checkout-problems p {
+  color: #000;
+  text-align: center;
+  font-family: var(--SB_400);
+  font-size: 20px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+  margin-bottom: 12px;
+}
+.checkout-problems a {
+  color: var(--color_dark_green);
+  font-family: var(--SB_700);
+  font-size: 24px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: normal;
+  text-decoration-line: underline;
+}
+.checkout-consent {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  gap: 32px;
+}
+.checkout-consent h4 {
+  color: #000;
+  font-family: var(--SB_600);
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: normal;
+}
+.checkout-consent p {
+  color: var(--color_dark_green);
+  font-family: var(--SB_400);
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 150%; /* 24px */
+  text-decoration-line: underline;
+}
+.checkout-consent button {
+  border-radius: 12px;
+  background: #fff;
+  width: 100%;
+  padding-top: 13px;
+  padding-bottom: 14px;
+  color: var(--color_dark_green);
+  font-family: var(--SB_700);
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: normal;
+  border: none;
+}
 </style>

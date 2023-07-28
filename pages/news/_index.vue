@@ -3,10 +3,7 @@
     <div class="container_xl">
       <div class="page-breadcrumb">
         <nuxt-link :to="localePath('/')">Diskont main page</nuxt-link>
-        <nuxt-link :to="localePath('/')">
-          Yangilik
-          <span v-html="arrow"></span>
-        </nuxt-link>
+        <nuxt-link :to="localePath('/')"> Yangilik </nuxt-link>
       </div>
       <div class="d-flex page-container-title">
         <div class="d-flex align-items-end">
@@ -77,13 +74,13 @@ export default {
       value: "all",
     };
   },
-  async asyncData({ store, params }) {
+  async asyncData({ store, params, i18n }) {
     const [postData] = await Promise.all([
       store.dispatch("fetchPosts/getPostsBySlug", {
         id: params.index,
         params: {
           headers: {
-            Language: this.$i18n.locale,
+            Language: i18n.locale,
           },
         },
       }),

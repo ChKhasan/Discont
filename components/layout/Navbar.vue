@@ -1,6 +1,6 @@
 <template lang="html">
   <div class="header-navbar">
-    <div class="container_xl">
+    <div class="container_xl header-navbar_web">
       <div class="d-flex header-navbar_container">
         <div class="d-flex align-items-center">
           <nuxt-link :to="localePath('/')"
@@ -32,7 +32,11 @@
               v-model="search"
               @focus="searchBlockHide = true"
             />
-            <span class="search-btn" @click="searchAction">
+            <span
+              class="search-btn"
+              @click="searchAction"
+              :class="{ disabled: search.length == 0 }"
+            >
               <span v-html="navMic"></span>
               Qidiruv
             </span>
@@ -190,6 +194,37 @@
             </li>
           </ul>
         </div>
+      </div>
+    </div>
+    <div
+      class="header-mobile container_xl  w-100"
+    >
+      <div class="d-flex align-items-center">
+        <button class="drawer-btn">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="45"
+            height="45"
+            viewBox="0 0 45 45"
+            fill="none"
+          >
+            <path
+              d="M9.99902 12.5029H35.0003M9.99902 22.5004H35.0003M9.99902 32.4979H35.0003"
+              stroke="#98A0A6"
+              stroke-width="3"
+              stroke-miterlimit="10"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            />
+          </svg>
+        </button>
+        <nuxt-link :to="localePath('/')"
+          ><span class="nav_logo" v-html="navLogoMobile"></span
+        ></nuxt-link>
+      </div>
+      <div class="coin_btn" @click="$router.push(localePath('/d-coin/about'))">
+        <span><img src="../../assets/images/coin.png" alt="" /></span>
+        {{ $store.state.profile?.dicoin?.quantity }} Di Coin
       </div>
     </div>
     <Transition duration="550" name="nested">
@@ -828,6 +863,7 @@ export default {
         ],
       },
       navLogo: require("../../assets/svg/green-logo.svg?raw"),
+      navLogoMobile: require("../../assets/svg/green-logo-mobile.svg?raw"),
       searchClock: require("../../assets/svg/searchClock.svg?raw"),
       navMic: require("../../assets/svg/mic.svg?raw"),
       navSearch: require("../../assets/svg/search.svg?raw"),

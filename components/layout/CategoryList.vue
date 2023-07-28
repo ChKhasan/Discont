@@ -90,7 +90,7 @@
         <div class="d-flex align-items-center" v-if="$store.state.auth">
           <div class="coin_btn" @click="$router.push(localePath('/d-coin/about'))">
             <span><img src="../../assets/images/coin.png" alt="" /></span>
-            65 Di Coin
+            {{ $store.state.profile?.dicoin?.quantity }} Di Coin
           </div>
           <!-- <nuxt-link class="nav-info" :to="localePath('/d-coin/about')">?</nuxt-link> -->
         </div>

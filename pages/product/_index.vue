@@ -102,6 +102,7 @@
               </div>
             </div>
           </div>
+
           <div class="world" v-else>
             <div thumbsSlider="" class="swiper mySwiper">
               <div class="swiper-wrapper flex-column">
@@ -120,6 +121,24 @@
                 </div>
               </div>
             </div>
+          </div>
+          <div class="available-sale">
+            <p>
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="20"
+                height="21"
+                viewBox="0 0 20 21"
+                fill="none"
+              >
+                <circle cx="10.0029" cy="10.0466" r="9.99707" fill="#16C67A" />
+                <path
+                  d="M15.6536 6.27082L7.90429 14.8278L4.35254 10.9059L5.26308 9.90041L7.90429 12.8098L14.743 5.26538L15.6536 6.27082Z"
+                  fill="white"
+                /></svg
+              >Sotuvda mavjud
+            </p>
+            <span>Код: {{ product?.id }}</span>
           </div>
         </div>
         <div class="col-md-4 col-xs-12 stats">
@@ -1583,5 +1602,35 @@ tbody .img {
   font-weight: 400;
   line-height: 24px; /* 120% */
   letter-spacing: -0.4px;
+}
+.available-sale p {
+  color: #16c67a;
+  font-family: "Inter";
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: normal;
+  padding: 6px;
+  padding-right: 10px;
+  border-radius: 68.467px;
+  background: #e7f9f1;
+}
+.available-sale p svg {
+  margin-right: 7px;
+}
+.available-sale {
+  display: flex;
+  justify-content: flex-start;
+  gap: 24px;
+  align-items: center;
+  margin-top: 24px;
+}
+.available-sale span {
+  color: rgb(0, 0, 0, 0.4);
+  font-family: "Inter";
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
 }
 </style>

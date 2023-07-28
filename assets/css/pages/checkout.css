@@ -207,7 +207,7 @@
 .bottom-text > span p {
   margin-left: 13px;
 }
-.bottom-text a {
+.bottom-text .checkout-prob {
   font-family: var(--SB_400);
   font-style: normal;
   font-weight: 400;
@@ -216,6 +216,7 @@
   color: var(--color_dark_green);
   text-decoration: underline;
   margin-top: 18px;
+  cursor: pointer;
 }
 .bottom-text p {
   font-family: var(--SB_400);
@@ -461,4 +462,7 @@
 }
 .step-active {
   background: var(--color_dark_green) !important;
+}
+.adress-modal-btn {
+  margin-top: 40px;
 }

@@ -12,7 +12,7 @@
           <MainTitle title="Menga yoqqan tovarlar" />
           <span class="d-flex align-items-end">{{ likeProducts.length }} товаров</span>
         </div>
-        <div class="likes-delete">
+        <div class="likes-delete" @click="deleteAll" v-if="likeProducts.length > 0">
           <span v-html="deleteIcon"></span>
           Barchasini o’chirish
         </div>
@@ -87,6 +87,11 @@ export default {
     if (likesProducts.length > 0) this.__GET_PRODUCTS_BY_ID({ products: likesProducts });
   },
   methods: {
+    async deleteAll() {
+      localStorage.setItem("like", JSON.stringify([]));
+      await this.$store.commit("reloadStore");
+      this.likeProducts = [];
+    },
     async __GET_PRODUCTS_BY_ID(dataForm) {
       const data = await this.$store.dispatch("fetchProducts/getProductsById", {
         data: dataForm,

@@ -268,147 +268,169 @@
         <div class="product-show-modal-body">
           <div class="product-show-modal-carousel product-show-modal-carousel-height">
             <a-carousel arrows dots-class="slick-dots slick-thumb">
-              <a slot="customPaging" slot-scope="props">
+              <a slot="customPaging" slot-scope="props" v-if="product?.images.length > 0">
                 <img :src="getImgUrl(product?.images, props.i)" />
               </a>
-              <div v-for="item in product?.images">
+              <a slot="customPaging" slot-scope="props" v-else>
+                <img :src="getImgUrl([1, 2, 3, 4], props.i)" alt="" />
+              </a>
+              <div v-for="item in product?.images" v-if="product?.images.length > 0">
                 <img :src="item?.sm_img" />
+              </div>
+              <div v-for="item in [1, 2, 3, 4]" v-else>
+                <img src="../../assets/images/empty-img.png" alt="" />
               </div>
             </a-carousel>
           </div>
           <div class="product-show-modal-info">
-            <div class="product-show-modal-header2">
-              <h3>{{ product?.info?.name }}</h3>
-              <span @click="handleOkBuy"
-                ><svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  width="20"
-                  height="20"
-                  viewBox="0 0 20 20"
-                  fill="none"
-                >
-                  <path
-                    d="M17.9958 1.98438L2.00391 17.9762"
-                    stroke="#000"
-                    stroke-width="3.28586"
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                  />
-                  <path
-                    d="M18.0003 17.9861L1.99512 1.97754"
-                    stroke="#000"
-                    stroke-width="3.28586"
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                  /></svg
-              ></span>
-            </div>
-            <div class="product-modal-like-comp">
-              <span
-                :class="{
-                  'active-like-comp-btn': $store.state.like.includes(product?.id),
-                }"
-                @click="$store.commit('addToStore', { id: product?.id, name: 'like' })"
-                ><span v-html="activeHeart"></span> Sevimlilarga</span
-              >
-              <span
-                :class="{
-                  'active-like-comp-btn': $store.state.comparison.includes(product?.id),
-                }"
-                @click="
-                  $store.commit('addToStore', { id: product?.id, name: 'comparison' })
-                "
-                ><span v-html="comp"></span> Taqqoslash</span
-              >
-            </div>
-            <div class="product-modal-attribut-block">
-              <h6>
-                {{ productAttributes.find((item) => item?.title == "Цвет")?.title }}
-              </h6>
-              <div class="product-modal-colors">
-                <span
-                  class="product-modal-color"
-                  v-for="colorOption in productAttributes.find(
-                    (item) => item?.title == 'Цвет'
-                  )?.options"
-                  :class="{
-                    'product-modal-attribut-active':
-                      productInner.slug == colorOption?.slug,
-                  }"
-                  @click="getProductBySlug(colorOption?.slug)"
-                  ><span :style="{ 'background-color': colorOption?.title }"></span
+            <div>
+              <div class="product-show-modal-header2">
+                <h3>{{ product?.info?.name }}</h3>
+                <span @click="handleOkBuy"
+                  ><svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="20"
+                    height="20"
+                    viewBox="0 0 20 20"
+                    fill="none"
+                  >
+                    <path
+                      d="M17.9958 1.98438L2.00391 17.9762"
+                      stroke="#000"
+                      stroke-width="3.28586"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                    />
+                    <path
+                      d="M18.0003 17.9861L1.99512 1.97754"
+                      stroke="#000"
+                      stroke-width="3.28586"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                    /></svg
                 ></span>
               </div>
-              <div v-if="skeleton">
-                <h6><b-skeleton width="30%" height="100%"></b-skeleton></h6>
-                <div class="product-modal-attributs">
-                  <div
-                    class="product-modal-attribut"
-                    v-for="option in [1, 2, 3]"
-                    :key="option"
-                  >
-                    <b-skeleton width="40px" height="100%"></b-skeleton>
-                  </div>
-                  <!-- <div class="product-modal-attribut">128 GB</div>
-                <div class="product-modal-attribut">256 GB</div>
-                <div class="product-modal-attribut">1 TBGB</div> -->
-                </div>
-              </div>
-              <div v-if="productAttributes.length > 0 && !skeleton">
-                <h6>{{ productAttributes[0]?.title }}</h6>
-                <div class="product-modal-attributs">
-                  <div
-                    class="product-modal-attribut"
-                    :class="{
-                      'product-modal-attribut-active': productInner.slug == option?.slug,
-                    }"
-                    v-for="option in productAttributes[0]?.options"
-                    :key="option?.id"
-                    @click="getProductBySlug(option?.slug)"
-                  >
-                    {{ option?.title }}
-                  </div>
-                  <!-- <div class="product-modal-attribut">128 GB</div>
-                <div class="product-modal-attribut">256 GB</div>
-                <div class="product-modal-attribut">1 TBGB</div> -->
-                </div>
-              </div>
-
-              <div class="product-modal-count">
-                <div>
-                  <button @click="productCount > 0 && productCount--">-</button
-                  >{{ productCount }}
-                  <button
-                    :class="{ disabled: productInner?.stock == productCount }"
-                    @click="productCount < productInner?.stock && productCount++"
-                  >
-                    +
-                  </button>
-                </div>
-                <p>Осталось всего {{ productInner?.stock }}</p>
-              </div>
-              <nuxt-link
-                class="product-modal-show-more"
-                :to="localePath(`/product/${product?.slug}`)"
-                >Maxsulotni ko’proq ko’rish
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  width="19"
-                  height="16"
-                  viewBox="0 0 19 16"
-                  fill="none"
+              <div class="product-modal-like-comp">
+                <span
+                  :class="{
+                    'active-like-comp-btn': $store.state.like.includes(product?.id),
+                  }"
+                  @click="$store.commit('addToStore', { id: product?.id, name: 'like' })"
+                  ><span v-html="activeHeart"></span> Sevimlilarga</span
                 >
-                  <path
-                    d="M1 7C0.447715 7 4.82823e-08 7.44772 0 8C-4.82823e-08 8.55228 0.447715 9 1 9L1 7ZM18.7071 8.70711C19.0976 8.31658 19.0976 7.68342 18.7071 7.29289L12.3431 0.928933C11.9526 0.538409 11.3195 0.538409 10.9289 0.928933C10.5384 1.31946 10.5384 1.95262 10.9289 2.34315L16.5858 8L10.9289 13.6569C10.5384 14.0474 10.5384 14.6805 10.9289 15.0711C11.3195 15.4616 11.9526 15.4616 12.3431 15.0711L18.7071 8.70711ZM1 9L18 9L18 7L1 7L1 9Z"
-                    fill="#00B2A9"
-                  /></svg
-              ></nuxt-link>
-              <div class="product-modal-price">
-                <h4 v-if="skeleton">
-                  <b-skeleton width="200px" height="100%"></b-skeleton>
-                </h4>
-                <h4 v-else>{{ productInner?.real_price }} СУМ</h4>
-                <p>28 880 000 СУМ</p>
+                <span
+                  :class="{
+                    'active-like-comp-btn': $store.state.comparison.includes(product?.id),
+                  }"
+                  @click="
+                    $store.commit('addToStore', { id: product?.id, name: 'comparison' })
+                  "
+                  ><span v-html="comp"></span> Taqqoslash</span
+                >
+              </div>
+              <div class="product-modal-attribut-block">
+                <h6 v-if="skeleton">
+                  <b-skeleton width="40%" height="100%"></b-skeleton>
+                </h6>
+                <h6 v-else>
+                  {{ productAttributes.find((item) => item?.title == "Цвет")?.title }}
+                </h6>
+                <div class="product-modal-colors" v-if="skeleton">
+                  <span class="product-modal-color" v-for="colorOption in [1, 2, 3, 4]"
+                    ><span><b-skeleton width="100%" height="100%"></b-skeleton></span
+                  ></span>
+                </div>
+                <div class="product-modal-colors" v-else>
+                  <span
+                    class="product-modal-color"
+                    v-for="colorOption in productAttributes.find(
+                      (item) => item?.title == 'Цвет'
+                    )?.options"
+                    :class="{
+                      'product-modal-attribut-active':
+                        productInner.slug == colorOption?.slug,
+                    }"
+                    @click="getProductBySlug(colorOption?.slug)"
+                    ><span :style="{ 'background-color': colorOption?.title }"></span
+                  ></span>
+                </div>
+                <div v-if="skeleton">
+                  <h6><b-skeleton width="30%" height="100%"></b-skeleton></h6>
+                  <div class="product-modal-attributs">
+                    <div
+                      class="product-modal-attribut"
+                      v-for="option in [1, 2, 3]"
+                      :key="option"
+                    >
+                      <b-skeleton width="40px" height="100%"></b-skeleton>
+                    </div>
+                    <!-- <div class="product-modal-attribut">128 GB</div>
+                <div class="product-modal-attribut">256 GB</div>
+                <div class="product-modal-attribut">1 TBGB</div> -->
+                  </div>
+                </div>
+                <div v-if="productAttributes.length > 0 && !skeleton">
+                  <h6>{{ productAttributes[0]?.title }}</h6>
+                  <div class="product-modal-attributs">
+                    <div
+                      class="product-modal-attribut"
+                      :class="{
+                        'product-modal-attribut-active':
+                          productInner.slug == option?.slug,
+                      }"
+                      v-for="option in productAttributes[0]?.options"
+                      :key="option?.id"
+                      @click="getProductBySlug(option?.slug)"
+                    >
+                      {{ option?.title }}
+                    </div>
+                    <!-- <div class="product-modal-attribut">128 GB</div>
+                <div class="product-modal-attribut">256 GB</div>
+                <div class="product-modal-attribut">1 TBGB</div> -->
+                  </div>
+                </div>
+
+                <div class="product-modal-count">
+                  <div>
+                    <button @click="productCount > 0 && productCount--">-</button
+                    >{{ productCount }}
+                    <button
+                      :class="{ disabled: productInner?.stock == productCount }"
+                      @click="productCount < productInner?.stock && productCount++"
+                    >
+                      +
+                    </button>
+                  </div>
+                  <p>Осталось всего {{ productInner?.stock }}</p>
+                </div>
+                <nuxt-link
+                  class="product-modal-show-more"
+                  :to="localePath(`/product/${product?.slug}`)"
+                  >Maxsulotni ko’proq ko’rish
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="19"
+                    height="16"
+                    viewBox="0 0 19 16"
+                    fill="none"
+                  >
+                    <path
+                      d="M1 7C0.447715 7 4.82823e-08 7.44772 0 8C-4.82823e-08 8.55228 0.447715 9 1 9L1 7ZM18.7071 8.70711C19.0976 8.31658 19.0976 7.68342 18.7071 7.29289L12.3431 0.928933C11.9526 0.538409 11.3195 0.538409 10.9289 0.928933C10.5384 1.31946 10.5384 1.95262 10.9289 2.34315L16.5858 8L10.9289 13.6569C10.5384 14.0474 10.5384 14.6805 10.9289 15.0711C11.3195 15.4616 11.9526 15.4616 12.3431 15.0711L18.7071 8.70711ZM1 9L18 9L18 7L1 7L1 9Z"
+                      fill="#00B2A9"
+                    /></svg
+                ></nuxt-link>
+                <div class="product-modal-price">
+                  <h4 v-if="skeleton">
+                    <b-skeleton width="200px" height="100%"></b-skeleton>
+                  </h4>
+                  <h4 v-else>
+                    {{
+                      `${productInner?.real_price}`.replace(/\B(?=(\d{3})+(?!\d))/g, " ")
+                    }}
+                    СУМ
+                  </h4>
+                  <p>28 880 000 СУМ</p>
+                </div>
               </div>
             </div>
             <div class="product-modal-buy-mode-btns">
@@ -789,6 +811,7 @@ export default {
           },
         },
       });
+      console.log(productData);
       this.productInner = productData.product;
       this.productAttributes = productData?.attributes;
       this.skeleton = false;
@@ -1085,6 +1108,11 @@ export default {
   font-size: 18px;
   line-height: 150%;
   color: #000000;
+  overflow: hidden;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  display: -webkit-box;
+  text-overflow: ellipsis;
 }
 .product-show-modal-header2 span svg {
   height: 13px;
@@ -1125,7 +1153,7 @@ export default {
   position: absolute;
   width: 44px;
   height: 44px;
-  background: #fbc100;
+  /* background: #fbc100; */
   border-radius: 4.85414px;
 }
 .product-modal-attributs {

@@ -31,6 +31,7 @@
 </template>
 <script>
 import CategoryList from "./CategoryList.vue";
+import HeaderMobile from "./HeaderMobile.vue";
 import Navbar from "./Navbar.vue";
 
 export default {

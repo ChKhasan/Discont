@@ -246,7 +246,7 @@
               </h5>
               <div
                 class="categories-checkbox-list"
-                :class="{ 'height-0': !atributDrop.includes(attribit.id) }"
+                :class="{ 'height-auto': !atributDrop.includes(attribit.id) }"
               >
                 <a-checkbox
                   v-if="showAllAtr.includes(attribit.id)"

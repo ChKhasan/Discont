@@ -7,7 +7,7 @@
       <img v-if="category?.sm_img" :src="category?.sm_img" alt="" />
       <img
         v-else
-        src="../../assets/images/H62d8be8edb1e4c7f93567e7eb6c5f61e1.png.png"
+        src="../../assets/images/category-default.png"
         alt=""
       />
     </div>

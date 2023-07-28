@@ -26,13 +26,16 @@ export default {};
 </script>
 <style lang="css">
 .discont-banner {
+  background-image: url(../assets/images/dicoin-banner.png);
+  background-size: cover;
+  /* background-position: ; */
   overflow: hidden;
   height: 329px;
   display: flex;
   flex-direction: column;
   padding: 36px;
   border-radius: 16px;
-  background: linear-gradient(90deg, #09454f 0%, #068f96 100%);
+  /* background: linear-gradient(90deg, #09454f 0%, #068f96 100%); */
   justify-content: space-between;
 }
 .discont-banner-header h4 {

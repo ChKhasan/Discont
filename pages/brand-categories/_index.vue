@@ -4,14 +4,12 @@
       <div>
         <div class="page-breadcrumb">
           <nuxt-link :to="localePath('/')">Diskont main page</nuxt-link>
-          <nuxt-link :to="localePath('/')">
-            Smartfonlar
-            <span v-html="arrow"></span>
-          </nuxt-link>
+          <nuxt-link :to="localePath('/')"> {{ brand?.name }} </nuxt-link>
         </div>
         <div class="d-flex categories-page-title justify-content-between">
           <div class="d-flex justify-content-between">
-            <MainTitle :title="`Каталог ${brand?.name}`" /> <span>8 288 товаров</span>
+            <MainTitle :title="`Каталог ${brand?.name}`" />
+            <span>{{ brandProducts?.length }} товаров</span>
           </div>
           <a-select
             v-model="value"
@@ -36,8 +34,8 @@
             <ul>
               <li v-for="brand in brandsAll" :key="brand?.id">
                 <span
+                  @click="$router.push(localePath(`/brand-categories/${brand?.slug}`))"
                   :class="{ 'active-brand': $route.params.index == brand?.slug }"
-                  @click="$router.push(`/brand-categories/${brand?.slug}`)"
                   >{{ brand?.name }}</span
                 >
               </li>
@@ -72,21 +70,19 @@
         </div>
         <div class="categories-products">
           <div class="d-flex justify-content-end w-100"></div>
-          <div class="categories-card-grid">
-            <!-- <ProductCard v-for="product in brandProducts"/>
-            <ProductCard />
-            <ProductCard />
-            <ProductCard />
-            <ProductCard />
-            <ProductCard />
-            <ProductCard />
-            <ProductCard />
-            <ProductCard />
-            <ProductCard />
-            <ProductCard />
-            <ProductCard /> -->
+          <div class="categories-card-grid" v-if="brandProducts.length > 0">
+            <ProductCard
+              v-for="product in brandProducts"
+              :product="{
+                ...product?.default_product,
+                info: {
+                  name: product?.name,
+                },
+              }"
+              :key="product?.id"
+            />
           </div>
-          <div class="comments-empty" v-if="true">
+          <div class="comments-empty" v-else>
             <img src="../../assets/images/comments-empty.png" alt="" />
             <h4>Mahsulot topilmadi</h4>
           </div>
@@ -176,10 +172,10 @@ export default {
       filterX: require("../../assets/svg/selected-filter-x.svg?raw"),
       value: "all",
       disabled: false,
-      brands: [],
-      brandProducts: [],
-      brandsAll: [],
-      brand: {},
+      // brands: [],
+      // brandProducts: [],
+      // brandsAll: [],
+      // brand: {},
       status: [
         {
           value: "all",
@@ -200,24 +196,30 @@ export default {
       ],
     };
   },
-  async fetch() {
+  async asyncData({ store, params, i18n }) {
     const [brandsData, brandData] = await Promise.all([
-      this.$store.dispatch("fetchBrands/getBrands"),
-      this.$store.dispatch("fetchBrands/getBrandsBySlug", {
-        id: this.$route.params.index,
+      store.dispatch("fetchBrands/getBrands"),
+      store.dispatch("fetchBrands/getBrandsBySlug", {
+        id: params.index,
         params: {
           headers: {
-            Language: this.$i18n.locale,
+            Language: i18n.locale,
           },
         },
       }),
     ]);
-    this.brandsAll = brandsData.brands?.data;
-    this.brands = [...brandsData.brands?.data];
-    this.brands = [...this.brands.splice(0, 6)];
-    this.brandProducts = brandData.products?.data;
-    this.brand = brandData.brand;
-    console.log(this.brandProducts);
+    let brands = [...brandsData.brands?.data];
+    let brandsAll = brandsData.brands?.data;
+    brands = [...brandsData.brands?.data];
+    brands = [...brands.splice(0, 6)];
+    let brandProducts = brandData.products?.data;
+    let brand = brandData.brand;
+    return {
+      brandsAll,
+      brands,
+      brandProducts,
+      brand,
+    };
   },
   methods: {
     onChange(value) {

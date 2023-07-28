@@ -20,4 +20,10 @@ export default {
   line-height: 48px;
   color: #000000;
 }
+@media (max-width: 576px) {
+  .main-title h2 {
+    font-size: 18px;
+    line-height: 27px;
+  }
+}
 </style>

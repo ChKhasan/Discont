@@ -321,6 +321,6 @@ export default {
   margin-top: 92px;
 }
 .identification-form-block {
-    margin-bottom: 51px;
+  margin-bottom: 51px;
 }
 </style>

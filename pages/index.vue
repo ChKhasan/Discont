@@ -550,4 +550,10 @@ export default {
   grid-column-start: 1;
   grid-column-end: 2;
 }
+@media (max-width: 576px) {
+  .products-grid-6 {
+    grid-template-columns: repeat(2, 1fr);
+    grid-gap: 16px;
+  }
+}
 </style>

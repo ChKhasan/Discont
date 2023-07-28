@@ -1,5 +1,5 @@
 <template lang="html">
-  <div style="margin-top: 170px">
+  <div class="layout-back">
     <Header />
     <Nuxt />
     <Footer />
@@ -134,6 +134,14 @@ export default {
   }
   100% {
     right: 144px;
+  }
+}
+.layout-back {
+  margin-top: 170px;
+}
+@media (max-width: 576px) {
+  .layout-back {
+    margin-top: 60px;
   }
 }
 </style>

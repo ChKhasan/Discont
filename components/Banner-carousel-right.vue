@@ -1,7 +1,10 @@
 <template lang="html">
   <div class="banner-carousel-right">
     <div class="flex items-center justify-center">
-      <div class="swiper-banner-right mySwiper2" style="overflow: hidden; height: 354px">
+      <div
+        class="swiper-banner-right mySwiper2 banner-carousel-right-box"
+        style="overflow: hidden;"
+      >
         <div class="swiper-wrapper">
           <slot></slot>
         </div>
@@ -113,5 +116,13 @@ export default {
   height: 11px;
   background: #00b2a9;
   border-radius: 46.2px;
+}
+.banner-carousel-right-box {
+  height: 354px;
+}
+@media (max-width: 576px) {
+  .banner-carousel-right-box {
+    height: 140px;
+  }
 }
 </style>
