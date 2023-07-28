@@ -1,4 +1,4 @@
-<template>
+<template lang="html">
   <div class="wrap product-page">
     <div class="container_xl">
       <div class="top">
@@ -47,7 +47,10 @@
                   'active-like-comp-btn': $store.state.comparison.includes(product?.id),
                 }"
                 @click="
-                  $store.commit('addToStore', { id: product?.id, name: 'comparison' })
+                  $store.commit('addToStore', {
+                    id: product?.id,
+                    name: 'comparison',
+                  })
                 "
               >
                 <svg
@@ -80,6 +83,93 @@
             </div>
           </div>
         </div>
+        <div class="flexer__mobile">
+          <div class="available-sale">
+            <p>
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="20"
+                height="21"
+                viewBox="0 0 20 21"
+                fill="none"
+              >
+                <circle cx="10.0029" cy="10.0466" r="9.99707" fill="#16C67A" />
+                <path
+                  d="M15.6536 6.27082L7.90429 14.8278L4.35254 10.9059L5.26308 9.90041L7.90429 12.8098L14.743 5.26538L15.6536 6.27082Z"
+                  fill="white"
+                /></svg
+              >Sotuvda mavjud
+            </p>
+            <span>Код: {{ product?.id }}</span>
+          </div>
+          <div class="buttons__mobile">
+            <button>
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="29"
+                height="29"
+                viewBox="0 0 29 29"
+                fill="none"
+              >
+                <rect
+                  x="2.35115"
+                  y="2.35091"
+                  width="11.6667"
+                  height="9.33333"
+                  rx="2"
+                  stroke="#1F8A70"
+                  stroke-width="2"
+                />
+                <rect
+                  x="14.0178"
+                  y="16.3509"
+                  width="11.6667"
+                  height="9.33333"
+                  rx="2"
+                  stroke="#1F8A70"
+                  stroke-width="2"
+                />
+                <path
+                  d="M23.8344 4.68425L25.3428 6.19263C25.7984 6.64824 25.7984 7.38693 25.3428 7.84254L23.8344 9.35092M18.6845 7.01758L25.0011 7.01758"
+                  stroke="#1F8A70"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                />
+                <path
+                  d="M4.20123 18.6842L2.69286 20.1926C2.23725 20.6482 2.23725 21.3869 2.69286 21.8425L4.20123 23.3509M9.35115 21.0176L3.03457 21.0176"
+                  stroke="#1F8A70"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                />
+              </svg>
+            </button>
+            <button>
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="33"
+                height="33"
+                viewBox="0 0 33 33"
+                fill="none"
+              >
+                <path
+                  d="M8.78621 4.38706C4.09172 5.89939 2.41789 11.0103 3.85012 15.4819C6.15399 22.6524 16.0342 28.029 16.0342 28.029C16.0342 28.029 25.9878 22.5697 28.2169 15.4819C29.6478 11.0103 27.9633 5.89939 23.2688 4.38706C20.8021 3.59553 17.9763 4.10275 16.0342 5.6044C13.9812 4.06004 11.2556 3.59019 8.78621 4.38706Z"
+                  stroke="#1F8A70"
+                  stroke-width="2.14333"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                />
+                <path
+                  opacity="0.4"
+                  d="M21.3734 8.94376C22.8016 9.4056 23.8108 10.6803 23.9322 12.1766"
+                  stroke="#1F8A70"
+                  stroke-width="1.18649"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                />
+              </svg>
+            </button>
+          </div>
+        </div>
       </div>
       <div class="row">
         <div class="col-md-5 col-xs-12 images">
@@ -107,7 +197,7 @@
             <div thumbsSlider="" class="swiper mySwiper">
               <div class="swiper-wrapper flex-column">
                 <div class="swiper-slide" v-for="img in product?.images" :key="img.id">
-                  <img :src="img?.sm_img" />
+                  <img :src="img?.md_img" />
                 </div>
               </div>
             </div>
@@ -117,7 +207,7 @@
             >
               <div class="swiper-wrapper">
                 <div class="swiper-slide" v-for="img in product?.images" :key="img.id">
-                  <img :src="img?.sm_img" />
+                  <img :src="img?.md_img" />
                 </div>
               </div>
             </div>
@@ -168,7 +258,9 @@
             </div>
 
             <div v-if="skeleton" class="colors">
-              <p class="lil"><b-skeleton height="100%" width="20%"></b-skeleton></p>
+              <p class="lil">
+                <b-skeleton height="100%" width="20%"></b-skeleton>
+              </p>
               <div class="grid">
                 <div
                   v-for="colorOption in [1, 2, 3, 4]"
@@ -209,7 +301,9 @@
               v-for="(atribut, atributIndex) in [1, 2]"
               :key="atribut"
             >
-              <p class="lil"><b-skeleton width="50%" height="100%"></b-skeleton></p>
+              <p class="lil">
+                <b-skeleton width="50%" height="100%"></b-skeleton>
+              </p>
               <div class="grid">
                 <div
                   class="variation disabled-attribute"
@@ -304,11 +398,50 @@
                   })
                 "
               >
-                Savatchaga solish
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="18"
+                  height="17"
+                  viewBox="0 0 18 17"
+                  fill="none"
+                >
+                  <path
+                    d="M1.29175 0.708252L3.02508 1.00825L3.82758 10.5691C3.89175 11.3499 4.54425 11.9491 5.32758 11.9466H14.4184C15.1659 11.9483 15.8001 11.3983 15.9059 10.6583L16.6967 5.19325C16.7851 4.58242 16.3609 4.01575 15.7509 3.92742C15.6976 3.91992 3.30341 3.91575 3.30341 3.91575"
+                    stroke="#1F8A70"
+                    stroke-width="1.4"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                  />
+                  <path
+                    d="M10.7709 6.99552H13.0817"
+                    stroke="#1F8A70"
+                    stroke-width="1.4"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                  />
+                  <path
+                    fill-rule="evenodd"
+                    clip-rule="evenodd"
+                    d="M4.96199 14.8354C5.21283 14.8354 5.41533 15.0388 5.41533 15.2888C5.41533 15.5396 5.21283 15.7429 4.96199 15.7429C4.71116 15.7429 4.50866 15.5396 4.50866 15.2888C4.50866 15.0388 4.71116 14.8354 4.96199 14.8354Z"
+                    fill="#1F8A70"
+                    stroke="#1F8A70"
+                    stroke-width="1.4"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                  />
+                  <path
+                    fill-rule="evenodd"
+                    clip-rule="evenodd"
+                    d="M14.3623 14.8354C14.6131 14.8354 14.8164 15.0388 14.8164 15.2888C14.8164 15.5396 14.6131 15.7429 14.3623 15.7429C14.1114 15.7429 13.9089 15.5396 13.9089 15.2888C13.9089 15.0388 14.1114 14.8354 14.3623 14.8354Z"
+                    fill="#1F8A70"
+                    stroke="#1F8A70"
+                    stroke-width="1.4"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                  />
+                </svg>
               </button>
-              <button class="click" @click="visibleOc = true">
-                Birgina click orqali sotib olish
-              </button>
+              <button class="click" @click="visibleOc = true">Hoziroq sotib olish</button>
             </div>
           </div>
 
@@ -374,15 +507,15 @@
               <div class="items">
                 <h4 class="paragraph">Основные характеристики</h4>
                 <div class="grider">
-                  <div class="item">
+                  <div class="spec">
                     <p class="question">Бренд</p>
                     <p class="answer">Xiaomi</p>
                   </div>
-                  <div class="item">
+                  <div class="spec">
                     <p class="question">Бренд</p>
                     <p class="answer">Xiaomi</p>
                   </div>
-                  <div class="item">
+                  <div class="spec">
                     <p class="question">Бренд</p>
                     <p class="answer">Xiaomi</p>
                   </div>
@@ -532,12 +665,6 @@
             <ProductCardVue :product="product" />
           </div>
         </ProductCarousel>
-        <div class="other__grid mb-5">
-          <!-- <ProductCardVue />
-          <ProductCardVue />
-          <ProductCardVue />
-          <ProductCardVue /> -->
-        </div>
       </div>
       <ApplicationBanner class="app" />
       <a-modal
@@ -940,20 +1067,7 @@ export default {
       4
     );
     this.productAttributes = productData?.attributes;
-    var swiper = new Swiper(".mySwiper", {
-      spaceBetween: 16,
-      slidesPerView: 4,
-      freeMode: true,
-      watchSlidesProgress: true,
-      direction: "vertical",
-    });
-    var swiper2 = new Swiper(".mySwiper2", {
-      loop: true,
-      spaceBetween: 10,
-      thumbs: {
-        swiper: swiper,
-      },
-    });
+
     setTimeout(() => {
       this.swiperReload();
     }, 1000);
@@ -1047,11 +1161,18 @@ export default {
     },
     swiperReload() {
       var swiper = new Swiper(".mySwiper", {
-        spaceBetween: 16,
-        slidesPerView: 4,
+        slidesPerView: 5,
+        spaceBetween: 12,
         freeMode: true,
         watchSlidesProgress: true,
-        direction: "vertical",
+        direction: "horizontal",
+        breakoints: {
+          1024: {
+            direction: "vertical",
+            spaceBetween: 16,
+            slidesPerView: 4,
+          },
+        },
       });
       var swiper2 = new Swiper(".mySwiper2", {
         loop: true,
@@ -1632,5 +1753,184 @@ tbody .img {
   font-style: normal;
   font-weight: 400;
   line-height: normal;
+}
+@media screen and (max-width: 1024px) {
+  .world {
+    flex-direction: column-reverse;
+  }
+  .title {
+    font-size: 18px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: 150%;
+    margin-bottom: 24px;
+    color: black;
+  }
+  .mySwiper2 {
+    height: 340px;
+    width: 100%;
+  }
+  .flexer {
+    display: none;
+  }
+  .mySwiper {
+    width: 100%;
+    height: auto;
+  }
+  .swiper-wrapper {
+    flex-direction: initial !important;
+  }
+  .flexer__mobile {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 24px;
+  }
+  .available-sale {
+    display: none;
+  }
+  .flexer__mobile .available-sale {
+    gap: 18px;
+    margin: 0;
+    display: flex;
+  }
+  .buttons__mobile {
+    display: flex;
+    align-items: center;
+    gap: 18px;
+  }
+  .flexer__mobile button {
+    background: transparent;
+    border: none;
+  }
+  .stats {
+    margin-top: 48px;
+    margin-bottom: 48px;
+    padding: 0;
+  }
+  .wrap {
+    overflow: hidden;
+  }
+  .row {
+    margin: 0 !important;
+  }
+  .widther {
+    max-width: 100%;
+    gap: 48px;
+  }
+  .widther .all {
+    display: none;
+  }
+  .colors .grid,
+  .variations .grid {
+    flex-wrap: nowrap;
+    overflow: auto;
+  }
+  .cardo .price {
+    font-size: 13px;
+    font-weight: 500;
+    line-height: 16px;
+    margin: 0;
+  }
+  .delivery,
+  .coin {
+    display: none;
+  }
+  .cardo {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  .buttons {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .cart {
+    margin-bottom: 0;
+    border-radius: 8px;
+    background: #ebebeb;
+    width: 36px;
+    height: 36px;
+  }
+  .click {
+    width: 147px;
+    height: 36px;
+    font-size: 14px;
+  }
+  .order {
+    padding: 0;
+  }
+  .credit {
+    display: none;
+  }
+  .butns {
+    flex-wrap: nowrap;
+    overflow: scroll;
+    gap: 16px;
+  }
+  .butns button {
+    white-space: nowrap;
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: normal;
+  }
+  .butns button.active {
+    background: #1f8a70;
+  }
+  .about::v-deep p {
+    color: #414141;
+    font-size: 18px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 24px;
+  }
+  .spec__wrap {
+    grid-template-columns: repeat(1, 1fr);
+  }
+  .spec .question {
+    color: #727474;
+  }
+  .tabs {
+    padding-bottom: 48px;
+  }
+  .counter {
+    display: none;
+  }
+  tr {
+    display: flex;
+    flex-direction: column;
+    width: max-content;
+    margin-bottom: 18px;
+    border-bottom: 1px solid #e1e1e1;
+  }
+  tbody td {
+    padding-bottom: 18px;
+  }
+  thead {
+    display: none;
+  }
+  .reviews {
+    display: flex;
+    flex-direction: column-reverse;
+  }
+  .rating img {
+    width: 100%;
+  }
+  .other {
+    margin-bottom: 16px;
+    padding-bottom: 16px !important;
+  }
+  .other h4 {
+    font-size: 18px;
+    font-weight: 600;
+    line-height: 150%;
+    margin-bottom: 14px;
+  }
+  .app {
+    padding: 16px;
+    margin-bottom: 0;
+  }
 }
 </style>

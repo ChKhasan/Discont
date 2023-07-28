@@ -7,8 +7,12 @@
             <slot></slot>
           </div>
         </div>
-        <div class="swiper-button-prev-product1"><span v-html="arrow"></span></div>
-        <div class="swiper-button-next-product1"><span v-html="arrow"></span></div>
+        <div class="swiper-button-prev-product1">
+          <span v-html="arrow"></span>
+        </div>
+        <div class="swiper-button-next-product1">
+          <span v-html="arrow"></span>
+        </div>
       </div>
       <div></div>
     </div>
@@ -27,12 +31,9 @@ export default {
   },
   mounted() {
     const swiper = new Swiper(".swiper-product1", {
-      slidesPerView: 6,
-      spaceBetween: 24,
-      effect: "flip",
-      flipEffect: {
-        slideShadows: false,
-      },
+      slidesPerView: 2,
+      spaceBetween: 16,
+
       modules: [Navigation, Pagination, EffectCards, Autoplay],
       pagination: false,
       autoplay: {
@@ -41,6 +42,16 @@ export default {
       navigation: {
         nextEl: ".swiper-button-next-product1",
         prevEl: ".swiper-button-prev-product1",
+      },
+      breakpoints: {
+        1024: {
+          slidesPerView: 6,
+          spaceBetween: 24,
+        },
+        effect: "flip",
+        flipEffect: {
+          slideShadows: false,
+        },
       },
     });
     swiper.on("activeIndexChange", (swiper) => {});

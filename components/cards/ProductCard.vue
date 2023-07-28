@@ -21,7 +21,9 @@
         <span
           class="hover-btns"
           v-html="comp"
-          :class="{ 'active-comparison': $store.state.comparison.includes(product?.id) }"
+          :class="{
+            'active-comparison': $store.state.comparison.includes(product?.id),
+          }"
           @click="$store.commit('addToStore', { id: product?.id, name: 'comparison' })"
         ></span>
         <div class="fast_show" @click="visible = true">Быстрый просмотр</div>
@@ -53,7 +55,10 @@
         <span v-for="badge in product?.badges" :key="badge.id">
           <span
             class="product_badges_item"
-            :style="{ background: badge.background_color, color: badge.text_color }"
+            :style="{
+              background: badge.background_color,
+              color: badge.text_color,
+            }"
             ><p>{{ badge?.name }}</p></span
           >
         </span>
@@ -105,7 +110,11 @@
     </div>
     <a-modal
       v-model="visible"
-      :body-style="{ padding: '24px', borderRadius: '14px', minHeight: '613px' }"
+      :body-style="{
+        padding: '24px',
+        borderRadius: '14px',
+        minHeight: '613px',
+      }"
       centered
       :closable="false"
       width="1023px"
@@ -179,7 +188,10 @@
                   'active-like-comp-btn': $store.state.comparison.includes(product?.id),
                 }"
                 @click="
-                  $store.commit('addToStore', { id: product?.id, name: 'comparison' })
+                  $store.commit('addToStore', {
+                    id: product?.id,
+                    name: 'comparison',
+                  })
                 "
                 ><span v-html="comp"></span> Taqqoslash</span
               >
@@ -274,7 +286,11 @@
     </a-modal>
     <a-modal
       v-model="visibleBuy"
-      :body-style="{ padding: '24px', borderRadius: '14px', minHeight: '613px' }"
+      :body-style="{
+        padding: '24px',
+        borderRadius: '14px',
+        minHeight: '613px',
+      }"
       centered
       :closable="false"
       width="1023px"
@@ -360,7 +376,12 @@
                   :class="{
                     'active-like-comp-btn': $store.state.like.includes(product?.id),
                   }"
-                  @click="$store.commit('addToStore', { id: product?.id, name: 'like' })"
+                  @click="
+                    $store.commit('addToStore', {
+                      id: product?.id,
+                      name: 'like',
+                    })
+                  "
                   ><span v-html="activeHeart"></span> Sevimlilarga</span
                 >
                 <span
@@ -368,7 +389,10 @@
                     'active-like-comp-btn': $store.state.comparison.includes(product?.id),
                   }"
                   @click="
-                    $store.commit('addToStore', { id: product?.id, name: 'comparison' })
+                    $store.commit('addToStore', {
+                      id: product?.id,
+                      name: 'comparison',
+                    })
                   "
                   ><span v-html="comp"></span> Taqqoslash</span
                 >
@@ -830,6 +854,7 @@ export default {
         this.visibleOc = false;
         // this.compToast = true;
         this.visibleSuccess = true;
+        console.log("merge");
       } catch (e) {
         console.log(e);
       }
@@ -1351,5 +1376,27 @@ export default {
   font-size: 16px;
   line-height: 20px;
   transform: rotate(2.5deg);
+}
+@media screen and (max-width: 1024px) {
+  .product-card-header {
+    height: 150px;
+  }
+  .product-card-body p {
+    margin-top: 14px;
+  }
+  .product-card-price h4 {
+    font-size: 16px;
+  }
+  .product-card-price {
+    margin-top: 14px;
+    margin-bottom: 18px;
+  }
+  .product-discount {
+    display: none;
+  }
+  .product-card-footer .to-basket-btn span,
+  .product-card-footer .to-basket-btn {
+    font-size: 12px;
+  }
 }
 </style>

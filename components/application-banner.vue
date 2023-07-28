@@ -12,6 +12,18 @@
         /></span>
         <img class="app-qr-code" src="../assets/images/image 34.png" alt="" />
         <p>Наведите камеру на QR-код, чтобы скачать</p>
+        <div class="flexer">
+          <span class="app-btns"
+            ><img src="../assets/images/Store ggp black.png" alt=""
+          /></span>
+          <span class="app-btns"
+            ><img src="../assets/images/Store as black.png" alt=""
+          /></span>
+        </div>
+        <div class="div">
+          <img class="app-qr-code" src="../assets/images/image 34.png" alt="" />
+          <p>Наведите камеру на QR-код, чтобы скачать</p>
+        </div>
       </div>
     </div>
     <div class="categories-application-banner-images">
@@ -54,6 +66,7 @@ export default {};
   margin-top: 24px;
   display: flex;
   align-items: center;
+  gap: 16px;
 }
 
 .app-btns:first-child {
@@ -97,24 +110,67 @@ export default {};
   top: -180px;
   right: -229px;
 }
-@media (max-width: 576px) {
-  .categories-application-banner-container img {
-    display: none;
-  }
-  .categories-application-banner {
-    border-radius: 0;
-    padding: 16px;
-  }
+.app-btn-container .flexer {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+.app-btns {
+  margin-right: 0 !important;
+}
+.app-qr-code {
+  margin: 0 !important;
+}
+.app-btn-container .div p {
+  margin: 0;
+}
+.app-btn-container .div {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+}
+@media screen and (max-width: 1024px) {
   .categories-application-banner-info h2 {
-    color: var(--black, #030303);
-    font-family: var(--SB_600);
     font-size: 16px;
     font-style: normal;
     font-weight: 600;
-    line-height: 24px; /* 150% */
+    line-height: 24px;
   }
   .categories-application-banner-info {
-    width: 90%;
+    width: 100%;
+  }
+  .categories-application-banner-info p {
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 22px;
+    margin-top: 6px;
+  }
+  .app-btn-container {
+    margin-top: 12px;
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  .app-btns img {
+    width: 112px;
+    object-fit: contain;
+  }
+  .app-qr-code {
+    margin: 0 !important;
+  }
+  .categories-application-banner-images {
+    display: none;
+  }
+  .app-btn-container .div {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+  }
+  .app-btn-container .flexer {
+    margin-bottom: 18px;
+  }
+  .app-btn-container .div p {
+    margin: 0;
   }
 }
 </style>
