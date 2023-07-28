@@ -169,6 +169,17 @@
   color: rgba(0, 0, 0, 0.7);
   margin-top: 14px;
 }
+.radio-card-body {
+  /* display: flex; */
+  /* justify-content: space-between; */
+}
+.radio-card-body button {
+  background-color: transparent;
+  border: none;
+}
+.radio-card-body button svg path {
+  stroke: var(--color_dark_green);
+}
 .add-adress-btn span {
   display: flex;
   width: 37px;

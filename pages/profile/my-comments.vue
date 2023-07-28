@@ -3,16 +3,12 @@
     <div class="container_xl">
       <div class="page-breadcrumb">
         <nuxt-link :to="localePath('/')">Diskont main page</nuxt-link>
-        <nuxt-link :to="localePath('/')">
-          Profile
-          <span v-html="arrow"></span>
-        </nuxt-link>
+        <nuxt-link :to="localePath('/')"> Mening izohlarim </nuxt-link>
       </div>
-      <div><MainTitle title="Каталог Apple" /></div>
+      <div><MainTitle title="Mening izohlarim" /></div>
       <div class="profile-page-grid">
         <div>
           <ProfileMenu />
-
         </div>
         <div>
           <div class="my-comments-grid" v-if="empty">

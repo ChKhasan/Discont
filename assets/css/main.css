@@ -77,6 +77,11 @@ body::-webkit-scrollbar-thumb {
     padding: 0;
   }
 }
+@media (max-width: 576px) {
+  .container_xl {
+    padding: 0 15px;
+  }
+}
 .height-auto {
   position: relative;
   max-height: 335px !important;

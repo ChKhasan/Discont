@@ -4,8 +4,12 @@
       <h2>Заказывайте в новом приложении Маркета и получайте бонусы</h2>
       <p>Diskont скачать мобильное приложение</p>
       <div class="app-btn-container">
-        <span class="app-btns"><img src="../assets/images/Store ggp black.png" alt="" /></span>
-        <span class="app-btns"><img src="../assets/images/Store as black.png" alt="" /></span>
+        <span class="app-btns"
+          ><img src="../assets/images/Store ggp black.png" alt=""
+        /></span>
+        <span class="app-btns"
+          ><img src="../assets/images/Store as black.png" alt=""
+        /></span>
         <img class="app-qr-code" src="../assets/images/image 34.png" alt="" />
         <p>Наведите камеру на QR-код, чтобы скачать</p>
       </div>
@@ -92,5 +96,25 @@ export default {};
 .categories-application-banner-container img:last-child {
   top: -180px;
   right: -229px;
+}
+@media (max-width: 576px) {
+  .categories-application-banner-container img {
+    display: none;
+  }
+  .categories-application-banner {
+    border-radius: 0;
+    padding: 16px;
+  }
+  .categories-application-banner-info h2 {
+    color: var(--black, #030303);
+    font-family: var(--SB_600);
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: 24px; /* 150% */
+  }
+  .categories-application-banner-info {
+    width: 90%;
+  }
 }
 </style>

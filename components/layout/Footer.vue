@@ -3,39 +3,89 @@
     <div class="footer">
       <div class="container_xl">
         <div class="footer-box">
-          <div>
+          <div class="mobile-menu">
             <div class="footer_menu footer_drop">
               <h4 @click="activeDrop = 1">
                 Компания
                 <span v-html="dropArrow" :class="{ rotate180: activeDrop == 1 }"></span>
               </h4>
-              <ul class="footer-drop-board" :class="{ 'height-auto': activeDrop == 1 }">
-                <li>
-                  <nuxt-link :to="localePath('/info/about-b2b')">B2B савдоси</nuxt-link>
-                </li>
-                <li>
-                  <nuxt-link :to="localePath('/info/about-us')">Биз ҳақимизда</nuxt-link>
-                </li>
-                <li>
-                  <nuxt-link :to="localePath('/')">Янгиликлар ва шарҳлар</nuxt-link>
-                </li>
+              <ul
+                class="footer-drop-board mt-0"
+                :class="{ 'height-auto': activeDrop == 1 }"
+              >
+                <div class="mt-3">
+                  <li>
+                    <nuxt-link :to="localePath('/info/about-b2b')">B2B савдоси</nuxt-link>
+                  </li>
+                  <li>
+                    <nuxt-link :to="localePath('/info/about-us')"
+                      >Биз ҳақимизда</nuxt-link
+                    >
+                  </li>
+                  <li>
+                    <nuxt-link :to="localePath('/')">Янгиликлар ва шарҳлар</nuxt-link>
+                  </li>
+                </div>
               </ul>
             </div>
             <div class="footer_menu footer_drop">
-              <h4 @click="activeDrop = 2" :class="{ rotate180: activeDrop == 2 }">
+              <h4
+                @click="activeDrop = 2"
+                :class="{ rotate180: activeDrop == 2, 'mt-0': activeDrop != 2 }"
+              >
                 Маълумот
                 <span v-html="dropArrow"></span>
               </h4>
-              <ul class="footer-drop-board" :class="{ 'height-auto': activeDrop == 2 }">
-                <li>
-                  <nuxt-link :to="localePath('/info/delivery')">Етказиб бериш</nuxt-link>
-                </li>
-                <li>
-                  <nuxt-link :to="localePath('/')">Бонус тизими</nuxt-link>
-                </li>
-                <li>
-                  <nuxt-link :to="localePath('/info/working')">Дисконтда ишлаш</nuxt-link>
-                </li>
+              <ul
+                class="footer-drop-board mt-0"
+                :class="{ 'height-auto': activeDrop == 2 }"
+              >
+                <div class="mt-3">
+                  <li>
+                    <nuxt-link :to="localePath('/info/delivery')"
+                      >Етказиб бериш</nuxt-link
+                    >
+                  </li>
+                  <li>
+                    <nuxt-link :to="localePath('/')">Бонус тизими</nuxt-link>
+                  </li>
+                  <li>
+                    <nuxt-link :to="localePath('/info/working')"
+                      >Дисконтда ишлаш</nuxt-link
+                    >
+                  </li>
+                </div>
+              </ul>
+            </div>
+            <div class="footer_menu footer_drop">
+              <h4
+                @click="activeDrop = 3"
+                :class="{ rotate180: activeDrop == 3, 'mt-0': activeDrop != 3 }"
+              >
+                Ҳаридорга ёрдам <span v-html="dropArrow"></span>
+              </h4>
+              <ul
+                class="footer-drop-board mt-0"
+                :class="{ 'height-auto': activeDrop == 3 }"
+              >
+                <div class="mt-3">
+                  <li>
+                    <nuxt-link :to="localePath('/info/trade-nation')"
+                      >Муддатли толов</nuxt-link
+                    >
+                  </li>
+                  <li>
+                    <nuxt-link :to="localePath('/')">Махсулотни кайтариш</nuxt-link>
+                  </li>
+                  <li>
+                    <nuxt-link :to="localePath('/info/warranty')"
+                      >Махсулотлар учун кафолат</nuxt-link
+                    >
+                  </li>
+                  <li>
+                    <nuxt-link :to="localePath('/')">Коп сораладиган саволлар</nuxt-link>
+                  </li>
+                </div>
               </ul>
             </div>
           </div>
@@ -129,9 +179,9 @@
     <div class="footer-bottom">
       <div class="container_xl">
         <div class="d-flex justify-content-between">
-          <p>2016-2023 © Diskont.uz Барча ҳуқуқлар ҳимояланган.</p>
-          <p>Публичная оферта</p>
-          <p>Политика конфиденциальности</p>
+          <p class="footer-date">2016-2023 © Diskont.uz Барча ҳуқуқлар ҳимояланган.</p>
+          <p class="foooter-bottom-text">Публичная оферта</p>
+          <p class="foooter-bottom-text">Политика конфиденциальности</p>
           <p><span v-html="footerBottom"></span> Веб сайт сделано на компании АББА</p>
         </div>
       </div>
@@ -187,7 +237,21 @@ export default {
   display: flex;
   justify-content: space-between;
 }
+.mobile-menu {
+  display: none;
+  flex-direction: column;
+  gap: 40px;
+}
 @media (max-width: 576px) {
+  .mobile-menu {
+    display: flex;
+  }
+  .foooter-bottom-text {
+    display: none;
+  }
+  .footer-date {
+    display: none;
+  }
   .footer-box {
     flex-direction: column;
     justify-content: space-between;

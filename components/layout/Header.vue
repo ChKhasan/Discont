@@ -23,9 +23,13 @@
         </div>
       </div>
     </div>
-    <div>
-      <Navbar />
-      <CategoryList />
+    <div class="position-relative">
+      <span style="z-index: 3; position: relative" ref="navScroll3">
+        <Navbar />
+      </span>
+      <span ref="navScroll2" class="category-list-scroll">
+        <CategoryList />
+      </span>
     </div>
   </div>
 </template>
@@ -60,20 +64,32 @@ export default {
   },
   mounted() {
     var header = this.$refs.navScroll;
+    var header2 = this.$refs.navScroll2;
+    var header3 = this.$refs.navScroll3;
+    console.log(this.$refs);
 
     window.addEventListener("scroll", () => {
       let scrollTop = window.pageYOffset || document.documentElement.scrollTop;
       if (scrollTop > this.lastScrollTop) {
-        header.style.top = "-104px";
+        header.style.top = "-46px";
+        header2.style.marginTop = "-63px";
+        header2.style.top = "0";
+        header3.style.boxShadow = " 0 0.5rem 1rem rgb(0 0 0 / 15%)";
+
         // header.style.background = "#04babe";
         header.style.marginTop = "0";
       } else if (document.documentElement.scrollTop == 0) {
         header.style.marginTop = "0";
         header.style.boxShadow = "none";
+        // header3.style.boxShadow = "none";
+        header2.style.display = "block";
+
         // header.style.background = "#04babe";
       } else {
+        header2.style.marginTop = "0";
         header.style.top = "0";
         header.style.boxShadow = " 0 0.5rem 1rem rgb(0 0 0 / 15%)";
+        header3.style.boxShadow = " 0 0.5rem 1rem rgb(0 0 0 / 15%)";
         header.style.background = "#fff";
         header.style.marginTop = "0";
       }
@@ -121,5 +137,15 @@ export default {
 .lang_locales span:last-child {
   padding-right: 0;
   margin-right: 0;
+}
+.category-list-scroll {
+  position: relative;
+  z-index: 0;
+  top: 100%;
+  margin-top: 0;
+  width: 100%;
+  display: block;
+  z-index: 0;
+  transition: all 0.5s !important;
 }
 </style>

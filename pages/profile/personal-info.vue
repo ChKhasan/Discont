@@ -3,12 +3,9 @@
     <div class="container_xl">
       <div class="page-breadcrumb">
         <nuxt-link :to="localePath('/')">Diskont main page</nuxt-link>
-        <nuxt-link :to="localePath('/')">
-          Profile
-          <span v-html="arrow"></span>
-        </nuxt-link>
+        <nuxt-link :to="localePath('/')"> Shaxsiy ma`lumotlarim </nuxt-link>
       </div>
-      <div><MainTitle title="Каталог Apple" /></div>
+      <div><MainTitle title="Shaxsiy ma`lumotlarim" /></div>
       <div class="profile-page-grid">
         <div>
           <ProfileMenu />
@@ -26,10 +23,12 @@
               <div class="personal-info-card-body">
                 <div>
                   <div>
-                    <p>
+                    <b-skeleton v-if="skeleton" width="200px" height="20px"></b-skeleton>
+                    <p v-else>
                       Ф.И.О:<span>{{ profile?.name ? profile?.name : "-----" }}</span>
                     </p>
-                    <p>
+                    <b-skeleton v-if="skeleton" width="200px" height="20px"></b-skeleton>
+                    <p v-else>
                       E-mail:<span>{{ profile?.email ? profile?.email : "-----" }}</span>
                     </p>
                     <!-- <p>Пароль:<span>12****AA</span></p> -->
@@ -37,12 +36,14 @@
                 </div>
                 <div>
                   <div>
-                    <p>
+                    <b-skeleton v-if="skeleton" width="200px" height="20px"></b-skeleton>
+                    <p v-else>
                       Телефон:<span>{{
                         profile?.login ? `${profile?.login}` : "-----"
                       }}</span>
                     </p>
-                    <p>
+                    <b-skeleton v-if="skeleton" width="200px" height="20px"></b-skeleton>
+                    <p v-else>
                       Адресс:<span>{{
                         profile?.address ? profile?.address : "-----"
                       }}</span>
@@ -74,10 +75,14 @@
                 class="personal-info-card-header2 d-flex align-items-center justify-content-between"
               >
                 <h3>Ma’lumotlarni ozgartirish</h3>
-
-                <span class="personal-info-save-btn" @click="submitForm()"
-                  ><span v-html="save"></span> Saqlash</span
-                >
+                <div class="d-flex">
+                  <span class="personal-info-colse-btn" @click="profileEdit = false"
+                    ><span v-html="close"></span> Bekor qilish</span
+                  >
+                  <span class="personal-info-save-btn" @click="submitForm()"
+                    ><span v-html="save"></span> Saqlash</span
+                  >
+                </div>
               </div>
               <div class="personal-info-card-body2">
                 <h4 class="form-title">Shaxsiy</h4>
@@ -106,7 +111,7 @@
                     <a-input v-model="form.email" placeholder="Email" />
                   </a-form-model-item>
                 </div>
-                <h4 class="form-title">Manzil</h4>
+                <!-- <h4 class="form-title">Manzil</h4>
                 <div class="form-grid-3">
                   <a-form-model-item
                     class="form-item mb-0"
@@ -148,10 +153,14 @@
                   >
                     <a-input v-model="form.address" placeholder="Adress" />
                   </a-form-model-item>
-                </div>
+                </div> -->
                 <h4 class="form-title">Password</h4>
                 <div class="form-grid-3">
-                  <a-form-model-item class="form-item mb-0" label="Hozirgi parolingiz">
+                  <a-form-model-item
+                    class="form-item mb-0"
+                    label="Hozirgi parolingiz"
+                    v-if="$store.state.profile.password_updated"
+                  >
                     <a-input-password
                       v-model="last_password"
                       placeholder="Last password"
@@ -204,11 +213,21 @@ export default {
   middleware: "auth",
   data() {
     return {
+      skeleton: true,
       profileEdit: false,
       last_password: "",
       edit: require("../../assets/svg/Edit.svg?raw"),
       arrow: require("../../assets/svg/dropdown-icon.svg?raw"),
       save: require("../../assets/svg/Stroke 3.svg?raw"),
+      close: `<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+  <path d="M6.66699 6.64648L17.333 17.3105M6.66699 17.3105L17.333 6.64648" stroke="url(#paint0_linear_2584_34453)" stroke-width="1.5" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"/>
+  <defs>
+    <linearGradient id="paint0_linear_2584_34453" x1="6.66699" y1="17.3105" x2="6.66699" y2="6.64648" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#f5363e"/>
+      <stop offset="1" stop-color="#f5363e"/>
+    </linearGradient>
+  </defs>
+</svg>`,
       form: {
         name: "",
         last_name: "",
@@ -223,8 +242,12 @@ export default {
       },
       regions: [],
       rules: {
-        name: [
-          { required: true, message: "Please input Activity name", trigger: "blur" },
+        name: [{ required: true, message: "This field is required", trigger: "blur" }],
+        password_confirmation: [
+          { required: true, message: "This field is required", trigger: "blur" },
+        ],
+        password: [
+          { required: true, message: "This field is required", trigger: "blur" },
         ],
       },
       profile: {},
@@ -244,6 +267,7 @@ export default {
   methods: {
     async __GET_PROFILE_INFO() {
       try {
+        this.skeleton = true;
         const profileData = await this.$store.dispatch("fetchAuth/getProfileInfo");
         this.profile = profileData?.user;
         this.form = {
@@ -255,6 +279,7 @@ export default {
           region_id: this.profile.region_id ? this.profile.region_id : "",
           district_id: this.profile.district_id ? this.profile.district_id : "",
         };
+        this.skeleton = false;
       } catch (e) {
         if (e.response.status == 401) this.$store.commit("logout");
       }

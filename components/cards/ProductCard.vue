@@ -25,7 +25,7 @@
           @click="$store.commit('addToStore', { id: product?.id, name: 'comparison' })"
         ></span>
         <div class="fast_show" @click="visible = true">Быстрый просмотр</div>
-        <span class="pc-img-container"
+        <span class="pc-img-container" @click="$router.push(`/product/${product?.slug}`)"
           ><img
             v-if="product?.images[0]?.sm_img"
             :src="product?.images[0]?.sm_img"
@@ -140,10 +140,26 @@
         </div>
         <div class="product-show-modal-body">
           <div class="product-show-modal-carousel">
-            <a-carousel arrows dots-class="slick-dots slick-thumb">
+            <a-carousel
+              arrows
+              dots-class="slick-dots slick-thumb"
+              v-if="product?.images.length == 1"
+            >
+              <a slot="customPaging" slot-scope="props">
+                <img
+                  :src="getImgUrl([...product?.images, ...product?.images], props.i)"
+                />
+              </a>
+
+              <div v-for="item in [...product?.images, ...product?.images]">
+                <img :src="item?.sm_img" />
+              </div>
+            </a-carousel>
+            <a-carousel arrows dots-class="slick-dots slick-thumb" v-else>
               <a slot="customPaging" slot-scope="props">
                 <img :src="getImgUrl(product?.images, props.i)" />
               </a>
+
               <div v-for="item in product?.images">
                 <img :src="item?.sm_img" />
               </div>
@@ -267,7 +283,22 @@
       <div class="product-show-modal">
         <div class="product-show-modal-body">
           <div class="product-show-modal-carousel product-show-modal-carousel-height">
-            <a-carousel arrows dots-class="slick-dots slick-thumb">
+            <a-carousel
+              arrows
+              dots-class="slick-dots slick-thumb"
+              v-if="product?.images.length == 1"
+            >
+              <a slot="customPaging" slot-scope="props">
+                <img
+                  :src="getImgUrl([...product?.images, ...product?.images], props.i)"
+                />
+              </a>
+
+              <div v-for="item in [...product?.images, ...product?.images]">
+                <img :src="item?.sm_img" />
+              </div>
+            </a-carousel>
+            <a-carousel arrows dots-class="slick-dots slick-thumb" v-else>
               <a slot="customPaging" slot-scope="props" v-if="product?.images.length > 0">
                 <img :src="getImgUrl(product?.images, props.i)" />
               </a>
@@ -281,6 +312,20 @@
                 <img src="../../assets/images/empty-img.png" alt="" />
               </div>
             </a-carousel>
+            <!-- <a-carousel arrows dots-class="slick-dots slick-thumb">
+              <a slot="customPaging" slot-scope="props" v-if="product?.images.length > 0">
+                <img :src="getImgUrl(product?.images, props.i)" />
+              </a>
+              <a slot="customPaging" slot-scope="props" v-else>
+                <img :src="getImgUrl([1, 2, 3, 4], props.i)" alt="" />
+              </a>
+              <div v-for="item in product?.images" v-if="product?.images.length > 0">
+                <img :src="item?.sm_img" />
+              </div>
+              <div v-for="item in [1, 2, 3, 4]" v-else>
+                <img src="../../assets/images/empty-img.png" alt="" />
+              </div>
+            </a-carousel> -->
           </div>
           <div class="product-show-modal-info">
             <div>

@@ -203,6 +203,24 @@
   justify-content: center;
   cursor: pointer;
 }
+.personal-info-colse-btn {
+  border-radius: 10px;
+  font-family: var(--SF_500);
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 24px; /* 150% */
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  color: #f5363e;
+  border-radius: 10px;
+  border: 1px solid #f5363e;
+  margin-right: 16px;
+  padding: 0 12px 0 7px;
+}
 .personal-info-save-btn span {
   margin-right: 17px;
 }

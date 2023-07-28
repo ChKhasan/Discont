@@ -35,11 +35,8 @@
                 <a-form-model-item class="mb-0" prop="name">
                   <a-input placeholder="Ismingiz (to’liq)*" v-model="form.name" />
                 </a-form-model-item>
-                <a-form-model-item class="mb-0" prop="last_name">
-                  <a-input
-                    placeholder="Familiyangiz (to’liq)*"
-                    v-model="form.last_name"
-                  />
+                <a-form-model-item class="mb-0" prop="surname">
+                  <a-input placeholder="Familiyangiz (to’liq)*" v-model="form.surname" />
                 </a-form-model-item>
               </div>
             </div>
@@ -195,22 +192,39 @@
           <div class="adress-space">
             <div v-if="form.delivery_method == 'courier'">
               <h6>Sizning manzillaringiz ro’yxati</h6>
-              <div class="radio-card radio-card-horizontal mb-3">
-                <span> </span>
-                <div class="radio-card-body">
+              {{ $store.state.profile.address }}
+              <div
+                class="radio-card radio-card-horizontal mb-3"
+                v-for="address in $store.state.profile.addresses"
+                :key="address?.id"
+              >
+                <span
+                  @click="form.user_address_id = address?.id"
+                  :class="{ 'active-radio': form.user_address_id == address?.id }"
+                >
+                </span>
+                <div class="radio-card-body d-flex justify-content-between w-100">
                   <h5>
-                    Tashkent, Mirzo Ulug’bek tumani Tamarakhonum ko’chasi 2chi qavat 8A uy
+                    {{ address?.region?.name }}, {{ address?.district?.name }},
+                    {{ address?.village?.name }}, {{ address?.address }}
                   </h5>
+                  <button>
+                    <span
+                      v-html="addressEdit"
+                      @click="
+                        addressEditAction({
+                          region_id: address?.region?.id,
+                          district_id: address?.district?.id,
+                          village_id: address?.village?.id,
+                          address: address?.address,
+                          id: address?.id,
+                        })
+                      "
+                    ></span>
+                  </button>
                 </div>
               </div>
-              <div class="radio-card radio-card-horizontal mb-3">
-                <span> </span>
-                <div class="radio-card-body">
-                  <h5>
-                    Tashkent, Mirzo Ulug’bek tumani Tamarakhonum ko’chasi 2chi qavat 8A uy
-                  </h5>
-                </div>
-              </div>
+
               <div class="add-adress-btn" @click="visible = true">
                 <span
                   ><svg
@@ -307,7 +321,7 @@
         </div>
       </div>
     </div>
-    <!-- <a-modal
+    <a-modal
       v-model="visible"
       :body-style="{ padding: '32px', borderRadius: '14px' }"
       centered
@@ -342,14 +356,19 @@
         ></span>
       </div>
       <div class="vmodal-body">
-        <a-form-model :model="form" ref="ruleFormFaq" :rules="rules" layout="vertical">
+        <a-form-model
+          :model="formAddress"
+          ref="ruleFormAddress"
+          :rules="rules"
+          layout="vertical"
+        >
           <a-form-model-item
             class="form-item mb-0 pb-0"
-            :class="{ 'select-placeholder': form.region_id == null }"
+            :class="{ 'select-placeholder': formAddress.region_id == null }"
           >
             <a-select
               class="checkout-select"
-              v-model="form.region_id"
+              v-model="formAddress.region_id"
               placeholder="Viloyatni tanlang"
             >
               <a-select-option v-for="(region, index) in regions" :key="region.id">
@@ -360,28 +379,30 @@
           <div class="modal-select-grid">
             <a-form-model-item
               class="form-item mb-0 pb-0"
-              :class="{ 'select-placeholder': form.name == '' }"
+              :class="{ 'select-placeholder': formAddress.district_id == null }"
             >
               <a-select
                 class="checkout-select"
-                v-model="form.name"
+                :class="{ disabled: districts.length == 0 }"
+                v-model="formAddress.district_id"
                 placeholder="Shaharni tanlang"
               >
-                <a-select-option v-for="(city, index) in cities" :key="city.id">
+                <a-select-option v-for="(city, index) in districts" :key="city.id">
                   {{ city.name }}
                 </a-select-option>
               </a-select>
             </a-form-model-item>
             <a-form-model-item
               class="form-item mb-0 pb-0"
-              :class="{ 'select-placeholder': form.name == '' }"
+              :class="{ 'select-placeholder': formAddress.village_id == null }"
             >
               <a-select
+                :class="{ disabled: villages.length == 0 }"
                 class="checkout-select"
-                v-model="form.name"
+                v-model="formAddress.village_id"
                 placeholder="Tumanni tanlang"
               >
-                <a-select-option v-for="(category, index) in regions" :key="category.id">
+                <a-select-option v-for="(category, index) in villages" :key="category.id">
                   {{ category.name }}
                 </a-select-option>
               </a-select>
@@ -393,16 +414,16 @@
               class="checkout-textarea"
               type="textarea"
               rows="5"
-              v-model="form.name"
+              v-model="formAddress.address"
               placeholder="Ko’cha uy va manzil haqida ma’lumot"
             />
           </a-form-model-item>
         </a-form-model>
       </div>
-      <div class="vmodal-btn">Manzilni qo’shish</div>
+      <div class="vmodal-btn" @click="submitAddress">Manzilni qo’shish</div>
       <template slot="footer"> <h3></h3></template>
-    </a-modal> -->
-    <a-modal
+    </a-modal>
+    <!-- <a-modal
       v-model="visible"
       :body-style="{ padding: '32px', borderRadius: '14px' }"
       centered
@@ -507,7 +528,7 @@
       </div>
       <div class="vmodal-btn adress-modal-btn">Manzilni qo’shish</div>
       <template slot="footer"> <h3></h3></template>
-    </a-modal>
+    </a-modal> -->
     <a-modal
       v-model="visibleSuccess"
       :body-style="{ padding: 0, borderRadius: '4px', overflow: 'hidden' }"
@@ -614,27 +635,34 @@ export default {
         name: "",
         delivery_method: "pickup",
         phone_number: "",
-        region_id: null,
-        district_id: null,
-        address: null,
         postcode: null,
         email: null,
         comments: null,
         payment_method: "cash",
         products: [],
         amount: "",
-        last_name: "",
+        user_address_id: null,
+        surname: "",
       },
+      addressEditId: null,
+      addressEdit: require("../assets/svg/Edit.svg?raw"),
       visibleConsent: false,
       visibleCheckoutProblem: false,
       visibleSuccess: false,
-      typePayment: null,
+      typePayment: true,
       paymentElement: "payme",
       deliveryService: true,
       visible: false,
       regions: [],
-      cities: [],
+      districts: [],
+      villages: [],
       products: [],
+      formAddress: {
+        region_id: null,
+        district_id: null,
+        village_id: null,
+        address: "",
+      },
       rules: {
         name: [
           {
@@ -643,7 +671,7 @@ export default {
             trigger: "change",
           },
         ],
-        last_name: [
+        surname: [
           {
             required: true,
             message: "This field is required",
@@ -681,6 +709,7 @@ export default {
             price: item.price,
           };
         }),
+        phone_number: this.form.phone_number.split(" ").join("").replace("+", ""),
         amount: this.products.reduce((summ, item) => {
           return (
             summ +
@@ -688,9 +717,30 @@ export default {
           );
         }, 0),
       };
-
       this.$refs["ruleForm"].validate((valid) => {
         valid ? this.__POST_ORDER(data) : false;
+      });
+    },
+    addressEditAction(obj) {
+      this.addressEditId = obj.id;
+      this.visible = true;
+      this.districts = this.regions.find((item) => item.id == obj.region_id).districts;
+      this.villages = this.districts.find((item) => item.id == obj.district_id).villages;
+      this.formAddress = {
+        region_id: obj.region_id,
+        district_id: obj.district_id,
+        village_id: obj.village_id,
+        address: obj.address,
+      };
+    },
+    submitAddress() {
+      console.log(this.formAddress);
+      this.$refs["ruleFormAddress"].validate((valid) => {
+        valid
+          ? this.addressEditId
+            ? this.__EDIT_ADDRESSS(this.formAddress)
+            : this.__POST_ADDRESSS(this.formAddress)
+          : false;
       });
     },
     handleOkConsent() {
@@ -726,6 +776,7 @@ export default {
         },
       });
       this.regions = data?.regions;
+      console.log(this.regions);
     },
     async __POST_ORDER(formData) {
       try {
@@ -733,7 +784,28 @@ export default {
         this.visibleSuccess = true;
         localStorage.setItem("cart", JSON.stringify([]));
         this.$store.commit("reloadStore");
-        this.$router.push("/");
+      } catch (e) {
+        console.log(e);
+      }
+    },
+    async __POST_ADDRESSS(formData) {
+      try {
+        console.log(formData);
+        const data = await this.$store.dispatch("fetchRegions/postAddress", formData);
+        this.$store.dispatch("profileInfo");
+        this.visible = false;
+      } catch (e) {
+        console.log(e);
+      }
+    },
+    async __EDIT_ADDRESSS(formData) {
+      try {
+        const data = await this.$store.dispatch("fetchRegions/editAddress", {
+          data: formData,
+          id: this.addressEditId,
+        });
+        this.$store.dispatch("profileInfo");
+        this.visible = false;
       } catch (e) {
         console.log(e);
       }
@@ -747,8 +819,29 @@ export default {
     },
   },
   watch: {
-    "form.region_id"(val) {
-      this.cities = this.regions.find((item) => item.id == val).districts;
+    "formAddress.region_id"(val) {
+      this.districts = this.regions.find((item) => item.id == val).districts;
+    },
+    "formAddress.district_id"(val) {
+      this.villages = this.districts.find((item) => item.id == val).villages;
+    },
+    visible(val) {
+      if (!val) {
+        this.addressEditId = null;
+      }
+    },
+    "form.delivery_method"(val) {
+      if (val == "pickup") {
+        this.form.user_address_id = null;
+      }
+    },
+    visibleSuccess(val) {
+      if (!val) this.$router.push("/");
+    },
+    typePayment(val) {
+      if (val) {
+        this.form.payment_method = "cash";
+      }
     },
   },
 };
