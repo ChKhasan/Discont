@@ -84,7 +84,7 @@ export default {
           label: "Others",
         },
         {
-          value: "qwerty3",
+          value: "qwerty33",
           label: "Others",
         },
       ],
@@ -98,6 +98,7 @@ export default {
       }),
     ]);
     const searchProducts = searchProductsData?.products;
+    
     return {
       searchProducts,
     };
