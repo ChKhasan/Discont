@@ -105,7 +105,7 @@
     </div>
     <div class="container_xl" v-if="showcases[2]">
       <MainTitle :title="showcases[2]?.name" />
-      <div class="mb-120">
+      <div class="last mb-120">
         <div class="products-grid-6" v-if="showcases[2]?.products.length > 0">
           <ProductCard
             v-for="product in showcases[2]?.products"
@@ -227,7 +227,7 @@
     </div> -->
     <div class="container_xl" v-if="brands?.length > 0">
       <MainTitle title="Top brendlar" />
-      <div class="mb-120">
+      <div class="last mb-120">
         <BrandCarousel>
           <div class="swiper-slide" v-for="brand in brands" :key="brand.id">
             <BrandCard :brand="brand" />
@@ -247,7 +247,9 @@
     >
       <div class="small_banners_grid">
         <SmallBannerCard
-          v-for="img in banners.filter((item) => item.type == 'small').slice(0, 3)"
+          v-for="img in banners
+            .filter((item) => item.type == 'small')
+            .slice(0, 3)"
           :key="img?.id"
           :img="img"
         />
@@ -274,7 +276,7 @@
     </div> -->
     <div class="container_xl" v-if="showcases[5]">
       <MainTitle :title="showcases[5]?.name" />
-      <div class="mb-120">
+      <div class="last mb-120">
         <div class="products-grid-6">
           <ProductCard
             v-if="howcases[5]?.products.length > 0"
@@ -298,7 +300,7 @@
     >
       <HomeBanner :banner="banners.filter((item) => item.type == 'bottom')" />
     </div>
-    <div class="container_xl mb-120" v-if="posts?.length > 0">
+    <div class="container_xl classic mb-120" v-if="posts?.length > 0">
       <div class="d-flex justify-content-between align-items-end">
         <MainTitle title="Yangiliklar va bloglar" />
         <nuxt-link class="to-page-underline" :to="localePath('/all-news')"
@@ -311,38 +313,41 @@
         </div>
       </PostsCarousel>
     </div>
-    <div class="container_xl mb-120">
+    <div class="rising container_xl mb-120">
       <DiscontBanner />
     </div>
-    <div class="container_xl mb-120">
+    <div class="rising container_xl mb-120">
       <ApplicationBanner />
     </div>
-    <div class="container_xl mb-120">
+    <div class="location container_xl mb-120">
       <div class="home-bottom-desc">
         <p>
-          m Ipsum is simply dummy text of the printing and typesetting industry. Lorem
-          Ipsum has been the industry's standard dummy text ever since the 1500s, when an
-          unknown printer took a galley of type and scrambled it to make a type specimen
-          book. It has survived not only five centuries, but also the leap into electronic
-          typesetting, remaining simply dummy text of the printing and typesetting
-          industry. Lorem Ipsum has been the industry's standard dummy text ever since the
-          1500s, when an unknown printer took a galley of type and scrambled it to make a
-          type specimen book. It has survived not only five centuries, but also the leap
-          into electronic typesetting, remaining essentially unchanged. It was popularised
-          in the 1960s with the release of Letraset sheets containing Lorem Ipsum
-          passages, and more recently with desktop publishing software like Aldus
-          PageMaker including versionm Ipsum is simply dummy text of the printing and
-          typesetting industry. Lorem Ipsum has been the industry's standard dummy text
-          ever since the 1500s, when an unknown printer took a galley of type and
-          scrambled it to make a type specimen book. It has survived not only five
-          centuries, but also the leap into electronic typesetting, remaining simply dummy
-          text of the printing and typesetting industry. Lorem Ipsum has been the
-          industry's standard dummy text ever since the 1500s, when an unknown printer
-          took a galley of type and scrambled it to make a type specimen book. It has
-          survived not only five centuries, but also the leap into electronic typesetting,
-          remaining essentially unchanged. It was popularised in the 1960s with the
-          release of Letraset sheets containing Lorem Ipsum passages, and more recently
-          with desktop publishing software like Aldus PageMaker including version
+          m Ipsum is simply dummy text of the printing and typesetting industry.
+          Lorem Ipsum has been the industry's standard dummy text ever since the
+          1500s, when an unknown printer took a galley of type and scrambled it
+          to make a type specimen book. It has survived not only five centuries,
+          but also the leap into electronic typesetting, remaining simply dummy
+          text of the printing and typesetting industry. Lorem Ipsum has been
+          the industry's standard dummy text ever since the 1500s, when an
+          unknown printer took a galley of type and scrambled it to make a type
+          specimen book. It has survived not only five centuries, but also the
+          leap into electronic typesetting, remaining essentially unchanged. It
+          was popularised in the 1960s with the release of Letraset sheets
+          containing Lorem Ipsum passages, and more recently with desktop
+          publishing software like Aldus PageMaker including versionm Ipsum is
+          simply dummy text of the printing and typesetting industry. Lorem
+          Ipsum has been the industry's standard dummy text ever since the
+          1500s, when an unknown printer took a galley of type and scrambled it
+          to make a type specimen book. It has survived not only five centuries,
+          but also the leap into electronic typesetting, remaining simply dummy
+          text of the printing and typesetting industry. Lorem Ipsum has been
+          the industry's standard dummy text ever since the 1500s, when an
+          unknown printer took a galley of type and scrambled it to make a type
+          specimen book. It has survived not only five centuries, but also the
+          leap into electronic typesetting, remaining essentially unchanged. It
+          was popularised in the 1960s with the release of Letraset sheets
+          containing Lorem Ipsum passages, and more recently with desktop
+          publishing software like Aldus PageMaker including version
         </p>
       </div>
     </div>
@@ -549,6 +554,8 @@ export default {
   grid-row-start: 2;
   grid-column-start: 1;
   grid-column-end: 2;
+}
+@media screen and (max-width: 1024px) {
 }
 @media (max-width: 576px) {
   .products-grid-6 {

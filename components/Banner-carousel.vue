@@ -1,7 +1,10 @@
 <template lang="html">
   <div class="banner-carousel">
     <div class="flex items-center justify-center">
-      <div class="swiper-banner mySwiper banner-carousel-box" style="overflow: hidden">
+      <div
+        class="swiper-banner mySwiper banner-carousel-box"
+        style="overflow: hidden"
+      >
         <div class="swiper-wrapper">
           <slot></slot>
         </div>

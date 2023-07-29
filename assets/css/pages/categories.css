@@ -245,7 +245,7 @@
   justify-content: space-between;
   transition: 0.3s;
 }
-.filter-checkbox .ant-checkbox-checked .ant-checkbox-inner  {
+.filter-checkbox .ant-checkbox-checked .ant-checkbox-inner {
   background-color: #1f8a70;
   border-color: #1f8a70;
   border-radius: 4px;
@@ -383,4 +383,62 @@
 .select-filters .clear-filter:hover {
   color: #fff;
   background: #ff4646;
+}
+.mobile__filter {
+  display: none;
+}
+@media screen and (max-width: 1024px) {
+  .categories-inner-carousel,
+  .categories-filter-list {
+    display: none;
+  }
+  .together {
+    display: none;
+  }
+  .categories-products {
+    margin-bottom: 0;
+  }
+  .main-title {
+    margin: 0;
+  }
+  .categories-page-title {
+    margin-bottom: 24px;
+  }
+  .mobile__filter {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+  }
+  .mobile__filter button {
+    color: #000;
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 16.8px; /* 105% */
+    letter-spacing: -0.24px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 8px 12px;
+    border-radius: 12px;
+    background: #f7f7f7;
+    border: none;
+  }
+  .categories-page-title span {
+    margin-left: 16px;
+    margin-bottom: 0;
+  }
+  .categories-inner-carousel::after {
+    display: none;
+  }
+  .categories-page-inner-grid {
+    grid-template-columns: repeat(1, 1fr);
+  }
+  .categories-card-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 15px;
+  }
+  .categories-filter-select {
+    display: none;
+  }
 }

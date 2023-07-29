@@ -4,14 +4,22 @@
       <h2>Заказывайте в новом приложении Маркета и получайте бонусы</h2>
       <p>Diskont скачать мобильное приложение</p>
       <div class="app-btn-container app-btn-container-2">
-        <span class="app-btns"
-          ><img src="../../assets/images/Store ggp.png" alt=""
-        /></span>
-        <span class="app-btns"
-          ><img src="../../assets/images/Store as.png" alt=""
-        /></span>
-        <img class="app-qr-code-2" src="../../assets/images/image 34.png" alt="" />
-        <p>Наведите камеру на QR-код, чтобы скачать</p>
+        <div class="flexer">
+          <span class="app-btns"
+            ><img src="../../assets/images/Store ggp.png" alt=""
+          /></span>
+          <span class="app-btns"
+            ><img src="../../assets/images/Store as.png" alt=""
+          /></span>
+        </div>
+        <div class="div">
+          <img
+            class="app-qr-code-2 m-0"
+            src="../../assets/images/image 34.png"
+            alt=""
+          />
+          <p>Наведите камеру на QR-код, чтобы скачать</p>
+        </div>
       </div>
     </div>
     <div class="application-banner-images">
@@ -96,5 +104,60 @@ export default {};
 .application-banner-container-2 img:first-child {
   bottom: -110px;
   right: 0;
+}
+@media screen and (max-width: 1024px) {
+  .application-banner {
+    padding: 16px;
+    flex-direction: column;
+  }
+  .application-banner-info h2 {
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: 24px;
+  }
+  .application-banner-info {
+    width: 100%;
+  }
+  .application-banner-info p {
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 22px;
+    margin-top: 6px;
+  }
+  .application-banner-container {
+    display: none;
+  }
+  .app-btn-container {
+    margin-top: 12px;
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  .app-btns img {
+    width: 112px;
+    object-fit: contain;
+  }
+  .app-qr-code {
+    margin: 0 !important;
+  }
+  .categories-application-banner-images {
+    display: none;
+  }
+  .app-btn-container .div {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+  }
+  .app-btn-container .flexer {
+    margin-bottom: 18px;
+    width: 100%;
+  }
+  .app-btn-container .div p {
+    margin: 0;
+  }
+  .app-qr-code-2 {
+    margin: 0;
+  }
 }
 </style>

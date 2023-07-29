@@ -171,4 +171,15 @@ export default {};
   transform: rotate(-20deg);
   right: -48px;
 }
+@media screen and (max-width: 1024px) {
+  .day-product-card-head {
+    height: 28px;
+  }
+  .day-product-card-head h3 {
+    font-size: 14px;
+  }
+  .day-product-card-head a {
+    font-size: 12px;
+  }
+}
 </style>
