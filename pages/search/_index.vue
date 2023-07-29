@@ -35,9 +35,7 @@
           <div></div>
           <div class="search-card-grid" v-if="searchProducts?.length > 0">
             <ProductCard
-              v-for="product in searchProducts.map((item) => {
-                return { ...item.products[0] };
-              })"
+              v-for="product in searchProducts"
               :key="product.id"
               :product="product"
             />
@@ -98,7 +96,7 @@ export default {
       }),
     ]);
     const searchProducts = searchProductsData?.products;
-    
+
     return {
       searchProducts,
     };

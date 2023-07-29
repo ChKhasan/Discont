@@ -15,7 +15,11 @@ export const actions = {
     return res;
   },
   async postProductComment({}, payload) {
-    const res = await this.$axios.$post(`/comments`, payload.data);
+    const res = await this.$axios.$post(`/products/comments`, payload.data, {
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem("dis_auth_token")}`,
+      },
+    });
 
     return res;
   },

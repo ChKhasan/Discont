@@ -263,7 +263,7 @@
               <div class="catalog-menu-body">
                 <div class="d-flex categories-page-title mt-0 mb-5 align-items-end">
                   <MainTitle :title="activeCategory?.name" />
-                  <span class="d-flex align-items-end">8 288 товаров</span>
+                  <span class="d-flex align-items-end">{{activeCategory?.products_count}} товаров</span>
                 </div>
                 <div class="catalog-menu-items">
                   <div>

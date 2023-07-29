@@ -280,14 +280,25 @@ body::-webkit-scrollbar-thumb {
 .rotate180 svg {
   transform: rotate(180deg) !important;
 }
-.product-page .ant-rate-star-full i {
+.product-rate .ant-rate-star-full i {
   color: #1f8a70 !important;
 }
-.product-page .ant-rate-star i svg {
+.product-rate .ant-rate-star i svg {
   width: 15px;
   height: 15px;
 }
-.product-page .ant-rate-star:not(:last-child) {
+.product-rate .ant-rate-star:not(:last-child) {
+  margin-right: 4px;
+}
+
+.comment-rate-icon .ant-rate-star i svg {
+  width: 15px;
+  height: 15px;
+}
+.comment-rate-icon .ant-rate-star i svg path {
+  stroke: red !important;
+}
+.comment-rate-icon .ant-rate-star:not(:last-child) {
   margin-right: 4px;
 }
 .active-like-comp-btn svg path {

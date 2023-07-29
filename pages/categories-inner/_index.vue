@@ -6,19 +6,13 @@
           <nuxt-link :to="localePath('/')">Main</nuxt-link>
           <nuxt-link
             v-if="categoryChilds?.parent?.parent?.slug"
-            :to="
-              localePath(
-                `/categories-inner/${categoryChilds?.parent?.parent?.slug}`
-              )
-            "
+            :to="localePath(`/categories-inner/${categoryChilds?.parent?.parent?.slug}`)"
           >
             {{ categoryChilds?.parent?.parent?.name }}
           </nuxt-link>
           <nuxt-link
             v-if="categoryChilds?.parent?.slug"
-            :to="
-              localePath(`/categories-inner/${categoryChilds?.parent?.slug}`)
-            "
+            :to="localePath(`/categories-inner/${categoryChilds?.parent?.slug}`)"
           >
             {{ categoryChilds?.parent?.name }}
           </nuxt-link>
@@ -167,9 +161,7 @@
                       (item) => item.slug == $route.params.index
                     ) ||
                     firstCategory.children.find((item) =>
-                      item.children.find(
-                        (elem) => elem.slug == $route.params.index
-                      )
+                      item.children.find((elem) => elem.slug == $route.params.index)
                     )
                   "
                 >
@@ -179,12 +171,9 @@
                   >
                     <span
                       :class="{
-                        'active-category':
-                          $route.params.index == middCategory?.slug,
+                        'active-category': $route.params.index == middCategory?.slug,
                       }"
-                      @click="
-                        $router.push(`/categories-inner/${middCategory?.slug}`)
-                      "
+                      @click="$router.push(`/categories-inner/${middCategory?.slug}`)"
                       >{{ middCategory?.name }}</span
                     >
                     <div
@@ -202,8 +191,7 @@
                         :to="localePath(`/categories-inner/${childs?.slug}`)"
                         class="mb-0"
                         :class="{
-                          'active-category':
-                            $route.params.index == childs?.slug,
+                          'active-category': $route.params.index == childs?.slug,
                         }"
                         :key="childs.id"
                         >{{ childs?.name }}</nuxt-link
@@ -274,30 +262,22 @@
               />
               <div class="filter-slider-inputs">
                 <span>
-                  <input
-                    type="text"
-                    v-model="sliderValue[0]"
-                    placeholder="от"
-                  />
+                  <input type="text" v-model="sliderValue[0]" placeholder="от" />
                   <span></span>
                 </span>
                 <span>
-                  <input
-                    type="text"
-                    placeholder="до"
-                    v-model="sliderValue[1]"
-                  />
+                  <input type="text" placeholder="до" v-model="sliderValue[1]" />
                   <span></span>
                 </span>
               </div>
             </div>
             <div v-for="attribit in attributes" :key="attribit.id">
               <h5 @click="atributDropAction(attribit.id)">
-                {{ attribit?.name }} <span v-html="arrow"></span>
+                {{ attribit?.name }}<span v-html="arrow"></span>
               </h5>
               <div
                 class="categories-checkbox-list"
-                :class="{ 'height-auto': !atributDrop.includes(attribit.id) }"
+                :class="{ 'height-auto': atributDrop.includes(attribit.id) }"
               >
                 <a-checkbox
                   v-if="showAllAtr.includes(attribit.id)"
@@ -319,10 +299,7 @@
                 </a-checkbox>
 
                 <span
-                  v-if="
-                    !showAllAtr.includes(attribit.id) &&
-                    attribit.options.length > 5
-                  "
+                  v-if="!showAllAtr.includes(attribit.id) && attribit.options.length > 5"
                   class="categories-list_show-more"
                   @click="showAllAtributs(attribit.id)"
                   >Показать еще</span
@@ -379,10 +356,7 @@
             <img src="../../assets/images/comments-empty.png" alt="" />
             <h4>Mahsulot topilmadi</h4>
           </div>
-          <div
-            class="categories-products-show-more"
-            v-if="products.length > 30"
-          >
+          <div class="categories-products-show-more" v-if="products.length > 30">
             Показать еще 44
           </div>
           <div class="products-pagination" v-if="products.length > 30">
@@ -395,44 +369,41 @@
         <div>
           <div class="categories-page-info">
             <h5>
-              ШИРОКИЙ АССОРТИМЕНТ МЕБЕЛИ В ТАШКЕНТЕ ПРЕДСТАВЛЕН В
-              ИНТЕРНЕТ-МАГАЗИНЕ DISKONT (ТАШКЕНТ, УЗБЕКИСТАН) ПО ВЫГОДНЫМ ЦЕНАМ
-              ОТ ПРОИЗВОДИТЕЛЯ.
+              ШИРОКИЙ АССОРТИМЕНТ МЕБЕЛИ В ТАШКЕНТЕ ПРЕДСТАВЛЕН В ИНТЕРНЕТ-МАГАЗИНЕ
+              DISKONT (ТАШКЕНТ, УЗБЕКИСТАН) ПО ВЫГОДНЫМ ЦЕНАМ ОТ ПРОИЗВОДИТЕЛЯ.
             </h5>
             <p>
-              DISKONT предлагает: мебель для гостиной, шкафы и комоды, кровати и
-              матрасы, мягкую мебель, стулья, кресла и столы, садовую мебель и
-              мебель для офиса.
+              DISKONT предлагает: мебель для гостиной, шкафы и комоды, кровати и матрасы,
+              мягкую мебель, стулья, кресла и столы, садовую мебель и мебель для офиса.
             </p>
             <p>
-              В нашем интернет-магазине представлен широкий ассортимент
-              предметов мебели на любой вкус и бюджет. Мы предлагаем удобный
-              выбор непосредственно на сайте, минуя долгие утомительные разъезды
-              по множеству мебельных магазинов и рынков Ташкента, где можно
-              купить хорошую недорогую мебель. Но! Поскольку их ассортимент
-              сильно отличается, и вы вынуждены тратить время и силы на
-              перемещения из одной точки Ташкента в другую. А на DISKONT собраны
-              лучшие предложения многих производителей по выгодным ценам!
-              Покупая мебель у нас вы гарантированно получаете качественный
-              товар, оперативную доставку и сборку мебели у вас дома.
+              В нашем интернет-магазине представлен широкий ассортимент предметов мебели
+              на любой вкус и бюджет. Мы предлагаем удобный выбор непосредственно на
+              сайте, минуя долгие утомительные разъезды по множеству мебельных магазинов и
+              рынков Ташкента, где можно купить хорошую недорогую мебель. Но! Поскольку их
+              ассортимент сильно отличается, и вы вынуждены тратить время и силы на
+              перемещения из одной точки Ташкента в другую. А на DISKONT собраны лучшие
+              предложения многих производителей по выгодным ценам! Покупая мебель у нас вы
+              гарантированно получаете качественный товар, оперативную доставку и сборку
+              мебели у вас дома.
             </p>
             <p>
-              Модельный ряд мебели пополняется практически ежедневно, следите за
-              нашими новостями и подписывайтесь на нашу рассылку в форме ниже.
+              Модельный ряд мебели пополняется практически ежедневно, следите за нашими
+              новостями и подписывайтесь на нашу рассылку в форме ниже.
             </p>
             <p>
-              Условия доставки вашего заказа: мы доставляем заказанные товары по
-              Ташкенту и в радиусе 5 км от большой кольцевой дороги.
+              Условия доставки вашего заказа: мы доставляем заказанные товары по Ташкенту
+              и в радиусе 5 км от большой кольцевой дороги.
             </p>
             <p>
-              Форма оплаты заказа: вы производите оплату своего заказа при его
-              получении наличными, пластиковой картой или перечислением (просим
-              уточнить возможность безналичной оплаты у консультанта).
+              Форма оплаты заказа: вы производите оплату своего заказа при его получении
+              наличными, пластиковой картой или перечислением (просим уточнить возможность
+              безналичной оплаты у консультанта).
             </p>
             <p>
-              Оформить заказ можно через Telegram или позвонив в нашу единую
-              службу поддержки по номеру 200 7 002. Добро пожаловать в
-              интернет-магазин товаров для дома DISKONT!
+              Оформить заказ можно через Telegram или позвонив в нашу единую службу
+              поддержки по номеру 200 7 002. Добро пожаловать в интернет-магазин товаров
+              для дома DISKONT!
             </p>
           </div>
         </div>
@@ -514,9 +485,7 @@
                     (item) => item.slug == $route.params.index
                   ) ||
                   firstCategory.children.find((item) =>
-                    item.children.find(
-                      (elem) => elem.slug == $route.params.index
-                    )
+                    item.children.find((elem) => elem.slug == $route.params.index)
                   )
                 "
               >
@@ -526,12 +495,9 @@
                 >
                   <span
                     :class="{
-                      'active-category':
-                        $route.params.index == middCategory?.slug,
+                      'active-category': $route.params.index == middCategory?.slug,
                     }"
-                    @click="
-                      $router.push(`/categories-inner/${middCategory?.slug}`)
-                    "
+                    @click="$router.push(`/categories-inner/${middCategory?.slug}`)"
                     >{{ middCategory?.name }}</span
                   >
                   <div
@@ -611,7 +577,7 @@
             </h5>
             <div
               class="categories-checkbox-list"
-              :class="{ 'height-auto': !atributDrop.includes(attribit.id) }"
+              :class="{ 'height-auto': atributDrop.includes(attribit.id) }"
             >
               <a-checkbox
                 v-if="showAllAtr.includes(attribit.id)"
@@ -633,10 +599,7 @@
               </a-checkbox>
 
               <span
-                v-if="
-                  !showAllAtr.includes(attribit.id) &&
-                  attribit.options.length > 5
-                "
+                v-if="!showAllAtr.includes(attribit.id) && attribit.options.length > 5"
                 class="categories-list_show-more"
                 @click="showAllAtributs(attribit.id)"
                 >Показать еще</span
@@ -777,7 +740,6 @@ export default {
       if (!this.atributDrop.includes(id)) {
         this.atributDrop.push(id);
       } else {
-        console.log(this.atributDrop);
         this.atributDrop = this.atributDrop.filter((item) => item != id);
       }
     },
@@ -789,12 +751,9 @@ export default {
       this.filterOptions = [];
     },
     async __GET_PRODUCTS() {
-      const data = await this.$axios.$get(
-        `/categories/${this.$route.params.index}`,
-        {
-          params: { ...this.$route.query },
-        }
-      );
+      const data = await this.$axios.$get(`/categories/${this.$route.params.index}`, {
+        params: { ...this.$route.query },
+      });
       this.products = data?.product_infos;
     },
     async onChange(value) {
@@ -808,10 +767,7 @@ export default {
         atr.push(value);
       }
       let string = await atr.join(",");
-      if (
-        !this.$route.query.attributes ||
-        this.$route.query.attributes != string
-      ) {
+      if (!this.$route.query.attributes || this.$route.query.attributes != string) {
         let query = { ...this.$route.query, attributes: string };
         await this.$router.replace({
           path: `/categories-inner/${this.$route.params.index}`,

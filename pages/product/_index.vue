@@ -10,24 +10,18 @@
           <div class="left">
             <div class="stars">
               <div v-if="product?.info?.stars != null">
-                <a-rate v-model="product.info.stars" disabled />
+                <a-rate class="product-rate" v-model="product.info.stars" disabled />
               </div>
             </div>
-            <p class="reviews" v-if="product?.info?.stars != null">
-              (12 ta feedbacks)
-            </p>
+            <p class="reviews" v-if="product?.info?.stars != null">(12 ta feedbacks)</p>
           </div>
           <div class="right">
             <div class="bottom">
               <button
                 :class="{
-                  'active-like-comp-btn': $store.state.like.includes(
-                    product?.id
-                  ),
+                  'active-like-comp-btn': $store.state.like.includes(product?.id),
                 }"
-                @click="
-                  $store.commit('addToStore', { id: product?.id, name: 'like' })
-                "
+                @click="$store.commit('addToStore', { id: product?.id, name: 'like' })"
               >
                 <svg
                   width="20"
@@ -50,9 +44,7 @@
               </button>
               <button
                 :class="{
-                  'active-like-comp-btn': $store.state.comparison.includes(
-                    product?.id
-                  ),
+                  'active-like-comp-btn': $store.state.comparison.includes(product?.id),
                 }"
                 @click="
                   $store.commit('addToStore', {
@@ -184,28 +176,17 @@
           <div class="world" v-if="skeleton">
             <div thumbsSlider="" class="swiper mySwiper">
               <div class="swiper-wrapper flex-column">
-                <div
-                  class="swiper-slide"
-                  v-for="img in [1, 2, 3, 4]"
-                  :key="img"
-                >
+                <div class="swiper-slide" v-for="img in [1, 2, 3, 4]" :key="img">
                   <b-skeleton height="100%" width="100%"></b-skeleton>
                 </div>
               </div>
             </div>
             <div
-              style="
-                --swiper-navigation-color: #fff;
-                --swiper-pagination-color: #fff;
-              "
+              style="--swiper-navigation-color: #fff; --swiper-pagination-color: #fff"
               class="swiper mySwiper2"
             >
               <div class="swiper-wrapper">
-                <div
-                  class="swiper-slide"
-                  v-for="img in [1, 2, 3, 4]"
-                  :key="img"
-                >
+                <div class="swiper-slide" v-for="img in [1, 2, 3, 4]" :key="img">
                   <b-skeleton height="100%" width="100%"></b-skeleton>
                 </div>
               </div>
@@ -215,28 +196,17 @@
           <div class="world" v-else>
             <div thumbsSlider="" class="swiper mySwiper">
               <div class="swiper-wrapper flex-column">
-                <div
-                  class="swiper-slide"
-                  v-for="img in product?.images"
-                  :key="img.id"
-                >
+                <div class="swiper-slide" v-for="img in product?.images" :key="img.id">
                   <img :src="img?.md_img" />
                 </div>
               </div>
             </div>
             <div
-              style="
-                --swiper-navigation-color: #fff;
-                --swiper-pagination-color: #fff;
-              "
+              style="--swiper-navigation-color: #fff; --swiper-pagination-color: #fff"
               class="swiper mySwiper2"
             >
               <div class="swiper-wrapper">
-                <div
-                  class="swiper-slide"
-                  v-for="img in product?.images"
-                  :key="img.id"
-                >
+                <div class="swiper-slide" v-for="img in product?.images" :key="img.id">
                   <img :src="img?.md_img" />
                 </div>
               </div>
@@ -280,8 +250,7 @@
                 class="all"
                 @click="scrollElement('characteristic')"
                 v-if="
-                  productCharacteristic?.length <
-                  product?.characteristic_options?.length
+                  productCharacteristic?.length < product?.characteristic_options?.length
                 "
               >
                 Barcha xarakteristikalar
@@ -298,18 +267,16 @@
                   :key="colorOption"
                   class="disabled-attribute color"
                 >
-                  <span
-                    ><b-skeleton height="100%" width="100%"></b-skeleton
-                  ></span>
+                  <span><b-skeleton height="100%" width="100%"></b-skeleton></span>
                 </div>
               </div>
             </div>
             <div
               v-else
               class="colors"
-              v-for="(
-                atributColor, atributColorIndex
-              ) in productAttributes.filter((item) => item.title == 'Цвет')"
+              v-for="(atributColor, atributColorIndex) in productAttributes.filter(
+                (item) => item.title == 'Цвет'
+              )"
               :key="atributColorIndex"
             >
               <p class="lil">{{ atributColor?.title }}</p>
@@ -324,9 +291,7 @@
                     'disabled-attribute': !colorOption?.available,
                   }"
                 >
-                  <span
-                    :style="{ 'background-color': colorOption?.title }"
-                  ></span>
+                  <span :style="{ 'background-color': colorOption?.title }"></span>
                 </div>
               </div>
             </div>
@@ -379,22 +344,11 @@
               <p class="lil">Кол-во</p>
               <div class="grid">
                 <div class="number">
-                  <button
-                    @click="
-                      $store.commit('productCountDown', { id: product?.id })
-                    "
-                  >
+                  <button @click="$store.commit('productCountDown', { id: product?.id })">
                     <a-icon type="minus" />
                   </button>
-                  {{
-                    $store.state.cart.find((item) => item.id == product?.id)
-                      ?.count
-                  }}
-                  <button
-                    @click="
-                      $store.commit('productCountUp', { id: product?.id })
-                    "
-                  >
+                  {{ $store.state.cart.find((item) => item.id == product?.id)?.count }}
+                  <button @click="$store.commit('productCountUp', { id: product?.id })">
                     <a-icon type="plus" />
                   </button>
                 </div>
@@ -488,9 +442,7 @@
                   />
                 </svg>
               </button>
-              <button class="click" @click="visibleOc = true">
-                Hoziroq sotib olish
-              </button>
+              <button class="click" @click="visibleOc = true">Hoziroq sotib olish</button>
             </div>
           </div>
 
@@ -518,10 +470,7 @@
       </div>
       <div class="tabs">
         <div class="butns" id="characteristic">
-          <button
-            :class="{ active: tabHandle == 'desc' }"
-            @click="tabHandle = 'desc'"
-          >
+          <button :class="{ active: tabHandle == 'desc' }" @click="tabHandle = 'desc'">
             Mahsulot haqida
           </button>
           <button
@@ -615,8 +564,8 @@
                         <img src="@/assets/images/logo/map.svg" alt="" />
                       </div>
                       <p>
-                        Фарғона вилояти, Маргилон ш. Тошлоқ тумани, Алишер
-                        Навоий кўчаси, 94 уй. Мўлжал: "Tabassum" мехмонхонаси
+                        Фарғона вилояти, Маргилон ш. Тошлоқ тумани, Алишер Навоий кўчаси,
+                        94 уй. Мўлжал: "Tabassum" мехмонхонаси
                       </p>
                     </div>
                   </td>
@@ -644,8 +593,8 @@
                         <img src="@/assets/images/logo/map.svg" alt="" />
                       </div>
                       <p>
-                        Фарғона вилояти, Маргилон ш. Тошлоқ тумани, Алишер
-                        Навоий кўчаси, 94 уй. Мўлжал: "Tabassum" мехмонхонаси
+                        Фарғона вилояти, Маргилон ш. Тошлоқ тумани, Алишер Навоий кўчаси,
+                        94 уй. Мўлжал: "Tabassum" мехмонхонаси
                       </p>
                     </div>
                   </td>
@@ -671,27 +620,41 @@
           </div>
           <div class="reviews" v-if="tabHandle == 'comment'">
             <div class="reviews__left">
-              <div class="review">
-                <p class="name">Abdulloh Aliyev</p>
+              <div
+                class="review"
+                v-for="comment in product?.info?.comments"
+                :key="comment?.id"
+              >
+                <p class="name">{{ comment?.user?.name }}</p>
                 <div class="flex">
-                  <div class="stars">
-                    <img src="@/assets/images/Star.svg" alt="" />
-                    <img src="@/assets/images/Star.svg" alt="" />
-                    <img src="@/assets/images/Star.svg" alt="" />
-                    <img src="@/assets/images/Star.svg" alt="" />
-                    <img src="@/assets/images/Star.svg" alt="" />
+                  <div class="stars" v-if="comment?.stars">
+                    <!-- <a-rate v-model="comment.stars" disabled /> -->
+                    <a-rate class="comment-rate-icon" v-model="comment.stars" disabled>
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        width="13"
+                        height="12"
+                        viewBox="0 0 13 12"
+                        fill="none"
+                      >
+                        <path
+                          fill-rule="evenodd"
+                          clip-rule="evenodd"
+                          d="M6.80942 0.293887L8.35342 3.39989C8.43075 3.55655 8.58009 3.66589 8.75342 3.69122L12.2101 4.19055C12.3501 4.20922 12.4761 4.28255 12.5621 4.39455C12.7234 4.60455 12.6988 4.90189 12.5054 5.08255L10.0001 7.50522C9.87275 7.62522 9.81609 7.80122 9.84942 7.97255L10.4494 11.3912C10.4914 11.6746 10.2981 11.9399 10.0148 11.9859C9.89742 12.0039 9.77742 11.9852 9.67075 11.9326L6.59209 10.3186C6.43742 10.2346 6.25209 10.2346 6.09742 10.3186L2.99609 11.9412C2.73675 12.0732 2.41942 11.9752 2.27809 11.7212C2.22409 11.6186 2.20542 11.5019 2.22409 11.3879L2.82409 7.96922C2.85409 7.79855 2.79742 7.62322 2.67342 7.50255L0.154753 5.08055C-0.0505808 4.87655 -0.0519141 4.54455 0.152753 4.33922C0.153419 4.33855 0.154086 4.33722 0.154753 4.33655C0.239419 4.25989 0.343419 4.20855 0.456086 4.18855L3.91342 3.68922C4.08609 3.66189 4.23475 3.55389 4.31342 3.39722L5.85609 0.293887C5.91809 0.167887 6.02809 0.0712201 6.16142 0.0272201C6.29542 -0.0174466 6.44209 -0.00677988 6.56809 0.0565534C6.67142 0.107887 6.75609 0.19122 6.80942 0.293887Z"
+                          fill="#F6C65C"
+                        />
+                      </svg>
+                    </a-rate>
                   </div>
-                  <p class="date">16 октября 2023 г.</p>
+                  <p class="date">
+                    {{ moment(comment?.created_at).format("DD") }}
+                    {{ month[moment(comment?.created_at).format("M") - 1] }}
+                    {{ moment(comment?.created_at).format("YYYY") }} г.
+                  </p>
                 </div>
                 <div class="txt">
                   <p>
-                    Нам телефончик очень понравились, покупкой довольны и всем
-                    советуем к приобретению. Главное, пользоваться только
-                    проверенными магазинами! Мы покупали почти на 30% дешевле в
-                    магазине SHOPMEONLINE RU Единственное, у них доставка
-                    долгая, так как товар везут с других стран, ждали 12 дней,
-                    ну ничего, главное, что всё приходит вовремя и за очень
-                    приятную цену.😍
+                    {{ comment?.comment }}
                   </p>
                 </div>
               </div>
@@ -702,9 +665,7 @@
                   <img src="@/assets/images/like.svg" alt="" />
                   O’z fikr va izohlaringizni qoldiring
                 </p>
-                <button class="leave__btn" @click="commentOpen()">
-                  Baho qoldirish
-                </button>
+                <button class="leave__btn" @click="commentOpen()">Baho qoldirish</button>
               </div>
               <div class="rating">
                 <img src="@/assets/images/cheat.png" alt="" />
@@ -716,11 +677,7 @@
       <div class="other pb-5">
         <h4>O’xshash tovarlar</h4>
         <ProductCarousel>
-          <div
-            class="swiper-slide"
-            v-for="product in productsOthers"
-            :key="product.id"
-          >
+          <div class="swiper-slide" v-for="product in productsOthers" :key="product.id">
             <ProductCardVue :product="product" />
           </div>
         </ProductCarousel>
@@ -849,11 +806,7 @@
         >
           Ma`lumotlarni yuborish
         </div>
-        <div
-          class="vmodal-forget-password"
-          v-if="!callBox"
-          @click="callBox = true"
-        >
+        <div class="vmodal-forget-password" v-if="!callBox" @click="callBox = true">
           O’zim bog’lanaman
         </div>
         <a href="#">
@@ -942,23 +895,43 @@
           :rules="rulesComment"
           layout="vertical"
         >
-          <a-form-item prop="comment">
+          <a-form-model-item prop="comment">
             <a-input v-model="formComment.comment" type="textarea" rows="10" />
-          </a-form-item>
+          </a-form-model-item>
         </a-form-model>
       </div>
       <div class="comment-modal-btns">
         <div class="comment-rate">
           <p>Sizning Bahoyingiz:</p>
-          <a-rate v-model="formComment.stars" />
+          <a-rate v-model="formComment.stars">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="13"
+              height="12"
+              viewBox="0 0 13 12"
+              fill="none"
+            >
+              <path
+                fill-rule="evenodd"
+                clip-rule="evenodd"
+                d="M6.80942 0.293887L8.35342 3.39989C8.43075 3.55655 8.58009 3.66589 8.75342 3.69122L12.2101 4.19055C12.3501 4.20922 12.4761 4.28255 12.5621 4.39455C12.7234 4.60455 12.6988 4.90189 12.5054 5.08255L10.0001 7.50522C9.87275 7.62522 9.81609 7.80122 9.84942 7.97255L10.4494 11.3912C10.4914 11.6746 10.2981 11.9399 10.0148 11.9859C9.89742 12.0039 9.77742 11.9852 9.67075 11.9326L6.59209 10.3186C6.43742 10.2346 6.25209 10.2346 6.09742 10.3186L2.99609 11.9412C2.73675 12.0732 2.41942 11.9752 2.27809 11.7212C2.22409 11.6186 2.20542 11.5019 2.22409 11.3879L2.82409 7.96922C2.85409 7.79855 2.79742 7.62322 2.67342 7.50255L0.154753 5.08055C-0.0505808 4.87655 -0.0519141 4.54455 0.152753 4.33922C0.153419 4.33855 0.154086 4.33722 0.154753 4.33655C0.239419 4.25989 0.343419 4.20855 0.456086 4.18855L3.91342 3.68922C4.08609 3.66189 4.23475 3.55389 4.31342 3.39722L5.85609 0.293887C5.91809 0.167887 6.02809 0.0712201 6.16142 0.0272201C6.29542 -0.0174466 6.44209 -0.00677988 6.56809 0.0565534C6.67142 0.107887 6.75609 0.19122 6.80942 0.293887Z"
+                solid="red"
+                fill="red"
+                stroke="red"
+              />
+            </svg>
+          </a-rate>
         </div>
-        <div
-          class="comment-btn comment-btn-close"
-          @click="visibleComment = false"
-        >
+        <div class="comment-btn comment-btn-close" @click="visibleComment = false">
           Bekor qilish
         </div>
-        <div class="comment-btn" @click="submitComment()">Fikr qoldiring</div>
+        <div
+          class="comment-btn"
+          :class="{ disabled: !formComment.stars }"
+          @click="submitComment()"
+        >
+          Fikr qoldiring
+        </div>
       </div>
       <template slot="footer"> <h3></h3></template>
     </a-modal>
@@ -1012,7 +985,7 @@ import "swiper/swiper-bundle.min.css";
 import ProductCardVue from "../../components/cards/ProductCard.vue";
 import applicationBannerVue from "../../components/application-banner.vue";
 import ProductCarousel from "../../components/product-carousel.vue";
-
+import moment from "moment";
 export default {
   name: "DiscontSlug",
 
@@ -1024,6 +997,20 @@ export default {
 
   data() {
     return {
+      month: [
+        "Январь",
+        "Февраль",
+        "Март",
+        "Апрель",
+        "Май",
+        "Июнь",
+        "Июль",
+        "Август",
+        "Сентябрь",
+        "Октябрь",
+        "Ноябрь",
+        "Декабрь",
+      ],
       skeleton: false,
       count: 1,
       callBox: false,
@@ -1039,7 +1026,6 @@ export default {
       tabHandle: "desc",
       productsOthers: [],
       formComment: {
-        user_id: null,
         product_id: null,
         comment: "",
         stars: 0,
@@ -1128,8 +1114,10 @@ export default {
     this.product = productData.product;
     console.log(this.product);
     this.productsOthers = productsData?.products?.data;
-    this.productCharacteristic =
-      productData?.product?.characteristic_options.splice(0, 4);
+    this.productCharacteristic = productData?.product?.characteristic_options.splice(
+      0,
+      4
+    );
     this.productAttributes = productData?.attributes;
 
     setTimeout(() => {
@@ -1138,6 +1126,7 @@ export default {
   },
 
   methods: {
+    moment,
     scrollElement(id) {
       const element = document.getElementById(id);
       this.tabHandle = id;
@@ -1174,11 +1163,9 @@ export default {
     },
     submitComment() {
       this.formComment.product_id = this.product.id;
-      this.formComment.user_id = this.$store.state.profile.id;
-      if (this.formComment.product_id && this.formComment.user_id) {
+      if (this.formComment.product_id) {
         this.$refs["ruleFormComment"].validate((valid) => {
           if (valid) {
-            console.log(this.formComment);
             this.__POST_COMMENT(this.formComment);
           } else {
             return false;
@@ -1189,10 +1176,7 @@ export default {
     submitName() {
       const data = {
         ...this.formOc,
-        phone_number: this.formOc.phone_number
-          .split(" ")
-          .join("")
-          .replace("+", ""),
+        phone_number: this.formOc.phone_number.split(" ").join("").replace("+", ""),
         product_id: this.product.id,
       };
       this.$refs["ruleFormOcClick"].validate((valid) => {
@@ -1208,12 +1192,9 @@ export default {
     },
     async __POST_COMMENT(formData) {
       try {
-        const data = await this.$store.dispatch(
-          "fetchProducts/postProductComment",
-          {
-            data: formData,
-          }
-        );
+        const data = await this.$store.dispatch("fetchProducts/postProductComment", {
+          data: formData,
+        });
         this.visibleComment = false;
       } catch (e) {
         console.log(e);
@@ -1221,10 +1202,7 @@ export default {
     },
     async __POST_ORDER(formData) {
       try {
-        const data = await this.$store.dispatch(
-          "fetchAuth/postClickOrder",
-          formData
-        );
+        const data = await this.$store.dispatch("fetchAuth/postClickOrder", formData);
         this.visibleOc = false;
         // this.compToast = true;
         this.visibleSuccess = true;
@@ -1593,6 +1571,11 @@ export default {
 }
 .about__wrap {
   max-width: 1200px;
+}
+.reviews__left {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
 }
 .about,
 .specifications,
