@@ -73,13 +73,13 @@ export default {
       if (scrollTop > this.lastScrollTop) {
         header.style.top = "-46px";
         header2.style.marginTop = "-63px";
-        header2.style.top = "0";
         header3.style.boxShadow = " 0 0.5rem 1rem rgb(0 0 0 / 15%)";
 
         // header.style.background = "#04babe";
         header.style.marginTop = "0";
       } else if (document.documentElement.scrollTop == 0) {
         header.style.marginTop = "0";
+
         header.style.boxShadow = "none";
         // header3.style.boxShadow = "none";
         header2.style.display = "block";

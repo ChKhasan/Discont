@@ -854,7 +854,6 @@ export default {
         this.visibleOc = false;
         // this.compToast = true;
         this.visibleSuccess = true;
-        console.log("merge");
       } catch (e) {
         console.log(e);
       }

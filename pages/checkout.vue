@@ -70,7 +70,7 @@
                   1500s, when an unknown Lorem Ipsum has been the industry's standard
                 </p>
                 <div class="pay-cards-grid" v-if="!typePayment">
-                  <div class="pay-card" @click="form.payment_method = 'uzum'">
+                  <!-- <div class="pay-card" @click="form.payment_method = 'uzum'">
                     <span v-if="form.payment_method == 'uzum'" class="step-active"
                       ><svg
                         xmlns="http://www.w3.org/2000/svg"
@@ -103,7 +103,7 @@
                     ></span>
                     <span v-else></span>
                     <img src="../assets/images/uzcard.uz.png" alt="" />
-                  </div>
+                  </div> -->
                   <div class="pay-card" @click="form.payment_method = 'click'">
                     <span v-if="form.payment_method == 'click'" class="step-active"
                       ><svg
@@ -138,7 +138,7 @@
                     <span v-else></span>
                     <img src="../assets/images/payme.uz.png" alt="" />
                   </div>
-                  <div class="pay-card" @click="form.payment_method = 'payze'">
+                  <!-- <div class="pay-card" @click="form.payment_method = 'payze'">
                     <span v-if="form.payment_method == 'payze'" class="step-active"
                       ><svg
                         xmlns="http://www.w3.org/2000/svg"
@@ -154,6 +154,23 @@
                     ></span>
                     <span v-else></span>
                     <img src="../assets/images/humocard.uz.png" alt="" />
+                  </div> -->
+                  <div class="pay-card" @click="form.payment_method = 'uzum'">
+                    <span v-if="form.payment_method == 'uzum'" class="step-active"
+                      ><svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        width="13"
+                        height="9"
+                        viewBox="0 0 13 9"
+                        fill="none"
+                      >
+                        <path
+                          d="M12.8148 0.767054L12.2128 0.181052C11.9648 -0.0603507 11.56 -0.0603507 11.3098 0.181052L4.99759 6.3279L1.69096 3.10901C1.44297 2.86758 1.03811 2.86758 0.787992 3.10901L0.185988 3.69502C-0.0619959 3.93645 -0.0619959 4.33054 0.185988 4.57402L4.54399 8.81635C4.66906 8.9381 4.83012 9 4.99335 9C5.15657 9 5.31977 8.9381 5.44274 8.81635L12.8084 1.64609C13.0628 1.40056 13.0628 1.00851 12.8148 0.767054Z"
+                          fill="white"
+                        /></svg
+                    ></span>
+                    <span v-else></span>
+                    <img src="../assets/images/uzum.png" alt="" />
                   </div>
                 </div>
               </div>

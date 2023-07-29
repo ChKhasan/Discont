@@ -1281,8 +1281,8 @@ export default {
   position: absolute;
 }
 .catalog-menu-content {
-  padding-top: 32px;
-  margin-top: 63px;
+  padding-top: 95px;
+  /* margin-top: 63px; */
   background: #fff;
   height: 100vh;
   width: 77%;
