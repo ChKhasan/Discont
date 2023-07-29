@@ -65,36 +65,7 @@ body::-webkit-scrollbar-thumb {
   background: rgba(0, 0, 0, 0.2);
   border-radius: 4px;
 }
-@media (max-width: 1600px) {
-  .container_xl {
-    padding: 0 30px;
-  }
-}
-@media (min-width: 1700px) {
-  .container_xl {
-    max-width: 1632px;
-    padding: 0;
-  }
-}
-@media (max-width: 1024px) {
-  .container_xl {
-    padding: 0 16px;
-  }
-  .mySwiper .swiper-slide {
-    padding: 8px !important;
-    height: 70px !important;
-  }
-  .mySwiper .swiper-slide-thumb-active {
-    border-radius: 6px !important;
-  }
-  .swiper-button-prev-product1,
-  .swiper-button-next-product1 {
-    display: none !important;
-  }
-  .other .container_xl {
-    padding: 0;
-  }
-}
+
 .height-auto {
   position: relative;
   max-height: 335px !important;
@@ -498,6 +469,7 @@ body::-webkit-scrollbar-thumb {
 .bounce-leave-active {
   animation: bounce-in2 0.3s reverse;
 }
+
 @keyframes bounce-in2 {
   0% {
     transform: translateY(30px);
@@ -550,4 +522,61 @@ body::-webkit-scrollbar-thumb {
   line-height: 150%; /* 27px */
   margin-top: 24px;
   width: 50%;
+}
+.mySwiper .swiper-slide {
+  width: 100% !important;
+}
+@media (max-width: 1600px) {
+  .container_xl {
+    padding: 0 30px;
+  }
+}
+@media (min-width: 1700px) {
+  .container_xl {
+    max-width: 1632px;
+    padding: 0;
+  }
+}
+@media (max-width: 1024px) {
+  .container_xl {
+    padding: 0 16px;
+  }
+  .wrap .mySwiper .swiper-slide {
+    padding: 8px !important;
+    height: 70px !important;
+  }
+  .mySwiper .swiper-slide-thumb-active {
+    border-radius: 6px !important;
+  }
+  .swiper-button-prev-product1,
+  .swiper-button-next-product1 {
+    display: none !important;
+  }
+  .other .container_xl,
+  .posts.container_xl {
+    padding: 0 !important;
+  }
+  .wrap .mySwiper .swiper-slide {
+    width: initial !important;
+  }
+  .banner-slider img {
+    border-radius: 12px;
+  }
+  .home-categories .container_xl {
+    padding: 0;
+  }
+  .home-categories {
+    margin-bottom: 40px;
+  }
+  .posts-carousel .swiper-button-prev-posts,
+  .posts-carousel .swiper-button-next-posts {
+    display: none !important;
+  }
+  .rising,
+  .classic {
+    margin-bottom: 56px;
+  }
+  .location {
+    display: none;
+  }
 }

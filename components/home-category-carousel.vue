@@ -7,8 +7,12 @@
             <slot></slot>
           </div>
         </div>
-        <div class="swiper-button-prev-category"><span v-html="arrow"></span></div>
-        <div class="swiper-button-next-category"><span v-html="arrow"></span></div>
+        <div class="swiper-button-prev-category">
+          <span v-html="arrow"></span>
+        </div>
+        <div class="swiper-button-next-category">
+          <span v-html="arrow"></span>
+        </div>
       </div>
       <div></div>
     </div>
@@ -27,12 +31,8 @@ export default {
   },
   mounted() {
     const swiper = new Swiper(".swiper-category", {
-      slidesPerView: 6,
-      spaceBetween: 24,
-      effect: "flip",
-      flipEffect: {
-        slideShadows: false,
-      },
+      slidesPerView: 3,
+      spaceBetween: 12,
       modules: [Navigation, Pagination, EffectCards, Autoplay],
       pagination: false,
       autoplay: {
@@ -41,6 +41,16 @@ export default {
       navigation: {
         nextEl: ".swiper-button-next-category",
         prevEl: ".swiper-button-prev-category",
+      },
+      breakpoints: {
+        1024: {
+          slidesPerView: 6,
+          spaceBetween: 24,
+          effect: "flip",
+          flipEffect: {
+            slideShadows: false,
+          },
+        },
       },
     });
     swiper.on("activeIndexChange", (swiper) => {});
@@ -101,5 +111,11 @@ export default {
 
 .product-swiper {
   overflow: hidden;
+}
+@media screen and (max-width: 1024px) {
+  .swiper-button-next-category,
+  .swiper-button-prev-category {
+    display: none !important;
+  }
 }
 </style>

@@ -8,7 +8,9 @@
       <div class="d-flex page-container-title">
         <div class="d-flex align-items-end">
           <MainTitle title="Barcha yangiliklar" />
-          <span class="d-flex align-items-end">{{ totalCount }} yangiliklar</span>
+          <span class="d-flex align-items-end"
+            >{{ totalCount }} yangiliklar</span
+          >
         </div>
       </div>
       <div class="posts-page-body" v-if="posts.length > 0">
@@ -73,7 +75,11 @@ export default {
   async asyncData({ store, route, i18n }) {
     const [posts1] = await Promise.all([
       store.dispatch("fetchPosts/getPosts", {
-        params: { limit: 4, page: route.query.page, pageSize: route.query.pageSize },
+        params: {
+          limit: 4,
+          page: route.query.page,
+          pageSize: route.query.pageSize,
+        },
         headers: {
           Language: i18n.locale,
         },
@@ -143,5 +149,11 @@ export default {
   grid-template-columns: repeat(4, 1fr);
   grid-gap: 26px;
   margin-bottom: 60px;
+}
+@media screen and (max-width: 1024px) {
+  .posts-page-body {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 16px;
+  }
 }
 </style>

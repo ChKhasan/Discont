@@ -13,15 +13,21 @@
                 <a-rate v-model="product.info.stars" disabled />
               </div>
             </div>
-            <p class="reviews" v-if="product?.info?.stars != null">(12 ta feedbacks)</p>
+            <p class="reviews" v-if="product?.info?.stars != null">
+              (12 ta feedbacks)
+            </p>
           </div>
           <div class="right">
             <div class="bottom">
               <button
                 :class="{
-                  'active-like-comp-btn': $store.state.like.includes(product?.id),
+                  'active-like-comp-btn': $store.state.like.includes(
+                    product?.id
+                  ),
                 }"
-                @click="$store.commit('addToStore', { id: product?.id, name: 'like' })"
+                @click="
+                  $store.commit('addToStore', { id: product?.id, name: 'like' })
+                "
               >
                 <svg
                   width="20"
@@ -44,7 +50,9 @@
               </button>
               <button
                 :class="{
-                  'active-like-comp-btn': $store.state.comparison.includes(product?.id),
+                  'active-like-comp-btn': $store.state.comparison.includes(
+                    product?.id
+                  ),
                 }"
                 @click="
                   $store.commit('addToStore', {
@@ -176,17 +184,28 @@
           <div class="world" v-if="skeleton">
             <div thumbsSlider="" class="swiper mySwiper">
               <div class="swiper-wrapper flex-column">
-                <div class="swiper-slide" v-for="img in [1, 2, 3, 4]" :key="img">
+                <div
+                  class="swiper-slide"
+                  v-for="img in [1, 2, 3, 4]"
+                  :key="img"
+                >
                   <b-skeleton height="100%" width="100%"></b-skeleton>
                 </div>
               </div>
             </div>
             <div
-              style="--swiper-navigation-color: #fff; --swiper-pagination-color: #fff"
+              style="
+                --swiper-navigation-color: #fff;
+                --swiper-pagination-color: #fff;
+              "
               class="swiper mySwiper2"
             >
               <div class="swiper-wrapper">
-                <div class="swiper-slide" v-for="img in [1, 2, 3, 4]" :key="img">
+                <div
+                  class="swiper-slide"
+                  v-for="img in [1, 2, 3, 4]"
+                  :key="img"
+                >
                   <b-skeleton height="100%" width="100%"></b-skeleton>
                 </div>
               </div>
@@ -196,17 +215,28 @@
           <div class="world" v-else>
             <div thumbsSlider="" class="swiper mySwiper">
               <div class="swiper-wrapper flex-column">
-                <div class="swiper-slide" v-for="img in product?.images" :key="img.id">
+                <div
+                  class="swiper-slide"
+                  v-for="img in product?.images"
+                  :key="img.id"
+                >
                   <img :src="img?.md_img" />
                 </div>
               </div>
             </div>
             <div
-              style="--swiper-navigation-color: #fff; --swiper-pagination-color: #fff"
+              style="
+                --swiper-navigation-color: #fff;
+                --swiper-pagination-color: #fff;
+              "
               class="swiper mySwiper2"
             >
               <div class="swiper-wrapper">
-                <div class="swiper-slide" v-for="img in product?.images" :key="img.id">
+                <div
+                  class="swiper-slide"
+                  v-for="img in product?.images"
+                  :key="img.id"
+                >
                   <img :src="img?.md_img" />
                 </div>
               </div>
@@ -250,7 +280,8 @@
                 class="all"
                 @click="scrollElement('characteristic')"
                 v-if="
-                  productCharacteristic?.length < product?.characteristic_options?.length
+                  productCharacteristic?.length <
+                  product?.characteristic_options?.length
                 "
               >
                 Barcha xarakteristikalar
@@ -267,16 +298,18 @@
                   :key="colorOption"
                   class="disabled-attribute color"
                 >
-                  <span><b-skeleton height="100%" width="100%"></b-skeleton></span>
+                  <span
+                    ><b-skeleton height="100%" width="100%"></b-skeleton
+                  ></span>
                 </div>
               </div>
             </div>
             <div
               v-else
               class="colors"
-              v-for="(atributColor, atributColorIndex) in productAttributes.filter(
-                (item) => item.title == 'Цвет'
-              )"
+              v-for="(
+                atributColor, atributColorIndex
+              ) in productAttributes.filter((item) => item.title == 'Цвет')"
               :key="atributColorIndex"
             >
               <p class="lil">{{ atributColor?.title }}</p>
@@ -291,7 +324,9 @@
                     'disabled-attribute': !colorOption?.available,
                   }"
                 >
-                  <span :style="{ 'background-color': colorOption?.title }"></span>
+                  <span
+                    :style="{ 'background-color': colorOption?.title }"
+                  ></span>
                 </div>
               </div>
             </div>
@@ -344,11 +379,22 @@
               <p class="lil">Кол-во</p>
               <div class="grid">
                 <div class="number">
-                  <button @click="$store.commit('productCountDown', { id: product?.id })">
+                  <button
+                    @click="
+                      $store.commit('productCountDown', { id: product?.id })
+                    "
+                  >
                     <a-icon type="minus" />
                   </button>
-                  {{ $store.state.cart.find((item) => item.id == product?.id)?.count }}
-                  <button @click="$store.commit('productCountUp', { id: product?.id })">
+                  {{
+                    $store.state.cart.find((item) => item.id == product?.id)
+                      ?.count
+                  }}
+                  <button
+                    @click="
+                      $store.commit('productCountUp', { id: product?.id })
+                    "
+                  >
                     <a-icon type="plus" />
                   </button>
                 </div>
@@ -398,6 +444,7 @@
                   })
                 "
               >
+                <p>Savatchaga solish</p>
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   width="18"
@@ -441,7 +488,9 @@
                   />
                 </svg>
               </button>
-              <button class="click" @click="visibleOc = true">Hoziroq sotib olish</button>
+              <button class="click" @click="visibleOc = true">
+                Hoziroq sotib olish
+              </button>
             </div>
           </div>
 
@@ -469,7 +518,10 @@
       </div>
       <div class="tabs">
         <div class="butns" id="characteristic">
-          <button :class="{ active: tabHandle == 'desc' }" @click="tabHandle = 'desc'">
+          <button
+            :class="{ active: tabHandle == 'desc' }"
+            @click="tabHandle = 'desc'"
+          >
             Mahsulot haqida
           </button>
           <button
@@ -563,8 +615,8 @@
                         <img src="@/assets/images/logo/map.svg" alt="" />
                       </div>
                       <p>
-                        Фарғона вилояти, Маргилон ш. Тошлоқ тумани, Алишер Навоий кўчаси,
-                        94 уй. Мўлжал: "Tabassum" мехмонхонаси
+                        Фарғона вилояти, Маргилон ш. Тошлоқ тумани, Алишер
+                        Навоий кўчаси, 94 уй. Мўлжал: "Tabassum" мехмонхонаси
                       </p>
                     </div>
                   </td>
@@ -592,8 +644,8 @@
                         <img src="@/assets/images/logo/map.svg" alt="" />
                       </div>
                       <p>
-                        Фарғона вилояти, Маргилон ш. Тошлоқ тумани, Алишер Навоий кўчаси,
-                        94 уй. Мўлжал: "Tabassum" мехмонхонаси
+                        Фарғона вилояти, Маргилон ш. Тошлоқ тумани, Алишер
+                        Навоий кўчаси, 94 уй. Мўлжал: "Tabassum" мехмонхонаси
                       </p>
                     </div>
                   </td>
@@ -633,12 +685,13 @@
                 </div>
                 <div class="txt">
                   <p>
-                    Нам телефончик очень понравились, покупкой довольны и всем советуем к
-                    приобретению. Главное, пользоваться только проверенными магазинами! Мы
-                    покупали почти на 30% дешевле в магазине SHOPMEONLINE RU Единственное,
-                    у них доставка долгая, так как товар везут с других стран, ждали 12
-                    дней, ну ничего, главное, что всё приходит вовремя и за очень приятную
-                    цену.😍
+                    Нам телефончик очень понравились, покупкой довольны и всем
+                    советуем к приобретению. Главное, пользоваться только
+                    проверенными магазинами! Мы покупали почти на 30% дешевле в
+                    магазине SHOPMEONLINE RU Единственное, у них доставка
+                    долгая, так как товар везут с других стран, ждали 12 дней,
+                    ну ничего, главное, что всё приходит вовремя и за очень
+                    приятную цену.😍
                   </p>
                 </div>
               </div>
@@ -649,7 +702,9 @@
                   <img src="@/assets/images/like.svg" alt="" />
                   O’z fikr va izohlaringizni qoldiring
                 </p>
-                <button class="leave__btn" @click="commentOpen()">Baho qoldirish</button>
+                <button class="leave__btn" @click="commentOpen()">
+                  Baho qoldirish
+                </button>
               </div>
               <div class="rating">
                 <img src="@/assets/images/cheat.png" alt="" />
@@ -661,7 +716,11 @@
       <div class="other pb-5">
         <h4>O’xshash tovarlar</h4>
         <ProductCarousel>
-          <div class="swiper-slide" v-for="product in productsOthers" :key="product.id">
+          <div
+            class="swiper-slide"
+            v-for="product in productsOthers"
+            :key="product.id"
+          >
             <ProductCardVue :product="product" />
           </div>
         </ProductCarousel>
@@ -790,7 +849,11 @@
         >
           Ma`lumotlarni yuborish
         </div>
-        <div class="vmodal-forget-password" v-if="!callBox" @click="callBox = true">
+        <div
+          class="vmodal-forget-password"
+          v-if="!callBox"
+          @click="callBox = true"
+        >
           O’zim bog’lanaman
         </div>
         <a href="#">
@@ -889,7 +952,10 @@
           <p>Sizning Bahoyingiz:</p>
           <a-rate v-model="formComment.stars" />
         </div>
-        <div class="comment-btn comment-btn-close" @click="visibleComment = false">
+        <div
+          class="comment-btn comment-btn-close"
+          @click="visibleComment = false"
+        >
           Bekor qilish
         </div>
         <div class="comment-btn" @click="submitComment()">Fikr qoldiring</div>
@@ -1062,10 +1128,8 @@ export default {
     this.product = productData.product;
     console.log(this.product);
     this.productsOthers = productsData?.products?.data;
-    this.productCharacteristic = productData?.product?.characteristic_options.splice(
-      0,
-      4
-    );
+    this.productCharacteristic =
+      productData?.product?.characteristic_options.splice(0, 4);
     this.productAttributes = productData?.attributes;
 
     setTimeout(() => {
@@ -1125,7 +1189,10 @@ export default {
     submitName() {
       const data = {
         ...this.formOc,
-        phone_number: this.formOc.phone_number.split(" ").join("").replace("+", ""),
+        phone_number: this.formOc.phone_number
+          .split(" ")
+          .join("")
+          .replace("+", ""),
         product_id: this.product.id,
       };
       this.$refs["ruleFormOcClick"].validate((valid) => {
@@ -1141,9 +1208,12 @@ export default {
     },
     async __POST_COMMENT(formData) {
       try {
-        const data = await this.$store.dispatch("fetchProducts/postProductComment", {
-          data: formData,
-        });
+        const data = await this.$store.dispatch(
+          "fetchProducts/postProductComment",
+          {
+            data: formData,
+          }
+        );
         this.visibleComment = false;
       } catch (e) {
         console.log(e);
@@ -1151,7 +1221,10 @@ export default {
     },
     async __POST_ORDER(formData) {
       try {
-        const data = await this.$store.dispatch("fetchAuth/postClickOrder", formData);
+        const data = await this.$store.dispatch(
+          "fetchAuth/postClickOrder",
+          formData
+        );
         this.visibleOc = false;
         // this.compToast = true;
         this.visibleSuccess = true;
@@ -1754,6 +1827,12 @@ tbody .img {
   font-weight: 400;
   line-height: normal;
 }
+.flexer__mobile {
+  display: none;
+}
+.cart svg {
+  display: none;
+}
 @media screen and (max-width: 1024px) {
   .world {
     flex-direction: column-reverse;
@@ -1852,6 +1931,12 @@ tbody .img {
     background: #ebebeb;
     width: 36px;
     height: 36px;
+  }
+  .cart svg {
+    display: flex;
+  }
+  .cart p {
+    display: none;
   }
   .click {
     width: 147px;

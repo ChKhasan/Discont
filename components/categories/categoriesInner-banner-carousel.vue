@@ -20,8 +20,8 @@ export default {
   },
   mounted() {
     const swiper = new Swiper(".swiper-categories-inner", {
-      slidesPerView: 1.2,
-      spaceBetween: 24,
+      slidesPerView: 1,
+      spaceBetween: 16,
       effect: "flip",
       flipEffect: {
         slideShadows: false,
@@ -33,9 +33,14 @@ export default {
       },
 
       navigation: false,
+      breakpoints: {
+        1024: {
+          slidesPerView: 1.2,
+          spaceBetween: 24,
+        },
+      },
     });
-    swiper.on("activeIndexChange", (swiper) => {
-    });
+    swiper.on("activeIndexChange", (swiper) => {});
   },
 };
 </script>
@@ -53,7 +58,11 @@ export default {
   right: -90px;
   top: 0;
   z-index: 1;
-  background: linear-gradient(270deg, #ffffff 66.07%, rgba(255, 255, 255, 0) 100%);
+  background: linear-gradient(
+    270deg,
+    #ffffff 66.07%,
+    rgba(255, 255, 255, 0) 100%
+  );
 }
 .categories-inner-carousel .swiper-button-next-banner,
 .categories-inner-carousel .swiper-button-prev-banner {

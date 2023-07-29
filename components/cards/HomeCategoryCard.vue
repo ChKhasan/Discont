@@ -1,11 +1,17 @@
 <template lang="html">
-  <div class="h-category-card" @click="$router.push(`/categories/${category.slug}`)">
-    <div class="h-category-card-title">
-      <h4>{{ category?.name }}</h4>
+  <div class="wrap">
+    <div
+      class="h-category-card"
+      @click="$router.push(`/categories/${category.slug}`)"
+    >
+      <div class="h-category-card-title">
+        <h4>{{ category?.name }}</h4>
+      </div>
+      <div class="h-category-card-img">
+        <img v-if="category?.sm_img" :src="category?.sm_img" alt="" />
+      </div>
     </div>
-    <div class="h-category-card-img">
-      <img v-if="category?.sm_img" :src="category?.sm_img" alt="" />
-    </div>
+    <h4 class="new-title">{{ category?.name }}</h4>
   </div>
 </template>
 <script>
@@ -47,5 +53,31 @@ export default {
   width: 70%;
   position: relative;
   z-index: 2;
+}
+.new-title {
+  display: none;
+}
+@media screen and (max-width: 1024px) {
+  .h-category-card {
+    padding: 0;
+    border-radius: 12px;
+    margin-bottom: 14px;
+  }
+  .h-category-card-title h4 {
+    opacity: 0;
+  }
+  .new-title {
+    display: block;
+    font-family: var(--SB_500);
+    font-style: normal;
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 150%;
+    letter-spacing: -0.2px;
+    color: #000000;
+    position: relative;
+    z-index: 2;
+  }
 }
 </style>

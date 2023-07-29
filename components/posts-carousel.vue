@@ -1,5 +1,5 @@
 <template lang="html">
-  <div class="container_xl">
+  <div class="posts container_xl">
     <div class="posts-carousel">
       <div class="d-flex align-items-center">
         <div class="posts-swiper">
@@ -26,8 +26,8 @@ export default {
   },
   mounted() {
     const swiper = new Swiper(`.posts-swiper`, {
-      slidesPerView: 4,
-      spaceBetween: 24,
+      slidesPerView: 1.3,
+      spaceBetween: 16,
       // effect: "flip",
       // flipEffect: {
       //   slideShadows: false,
@@ -40,6 +40,12 @@ export default {
       navigation: {
         nextEl: ".swiper-button-next-posts",
         prevEl: ".swiper-button-prev-posts",
+      },
+      breakpoints: {
+        1024: {
+          slidesPerView: 4,
+          spaceBetween: 24,
+        },
       },
     });
     swiper.on("activeIndexChange", (swiper) => {});

@@ -1,5 +1,6 @@
 <template lang="html">
   <div class="discont-banner">
+    <img class="glimpse" src="@/assets/coin.svg" alt="" />
     <div>
       <div class="discont-banner-header d-flex align-items-end">
         <h4>Diskont halol bo’lib to’lash</h4>
@@ -7,11 +8,12 @@
       </div>
       <div class="discont-banner-body">
         <p>
-          Assalomu alaykum! Birinchi bor savol yuboryapman, xatolar bo‘lsa oldindan uzr.
-          Men nasiya savdo bilan shug‘ullanaman. Savolim: 1). Nasiyaga mol berayotganimda
-          xaridordan boshiga qancha pul bera olishiga qarab qolgan summaga qarab so‘ngi
-          narxni belgilayman. Masalan 10 so‘mlik molni boshiga 2 so‘m bersa 13 so‘m. Agar
-          4 bersa 11 so‘m. Albatta u bilan kelishgach. Shu ishim joizmi?
+          Assalomu alaykum! Birinchi bor savol yuboryapman, xatolar bo‘lsa
+          oldindan uzr. Men nasiya savdo bilan shug‘ullanaman. Savolim: 1).
+          Nasiyaga mol berayotganimda xaridordan boshiga qancha pul bera
+          olishiga qarab qolgan summaga qarab so‘ngi narxni belgilayman. Masalan
+          10 so‘mlik molni boshiga 2 so‘m bersa 13 so‘m. Agar 4 bersa 11 so‘m.
+          Albatta u bilan kelishgach. Shu ishim joizmi?
         </p>
       </div>
     </div>
@@ -37,6 +39,7 @@ export default {};
   border-radius: 16px;
   /* background: linear-gradient(90deg, #09454f 0%, #068f96 100%); */
   justify-content: space-between;
+  position: relative;
 }
 .discont-banner-header h4 {
   font-family: var(--SB_600);
@@ -90,5 +93,40 @@ export default {};
   border: 0.764706px solid #ffffff;
   background: linear-gradient(90deg, #09454f 0%, #068f96 100%);
   color: #fff;
+}
+.glimpse {
+  display: none;
+}
+@media screen and (max-width: 1024px) {
+  .discont-banner {
+    height: auto;
+    padding: 16px;
+    gap: 24px;
+  }
+  .discont-banner-header p {
+    display: none;
+  }
+  .discont-banner-body p {
+    display: none;
+  }
+  .discont-banner-header h4 {
+    font-size: 18px;
+    font-style: normal;
+    font-weight: 600;
+    max-width: 220px;
+  }
+  .discont-banner-body {
+    display: none;
+  }
+  .discont-banner-footer div:last-child {
+    display: none;
+  }
+  .glimpse {
+    display: flex;
+    position: absolute;
+    right: 22px;
+    top: 50%;
+    transform: translateY(-50%);
+  }
 }
 </style>
