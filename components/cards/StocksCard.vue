@@ -6,11 +6,10 @@
 
     <div class="stocks-card-body">
       <span>
-        {{ promotion.color_text }}
         <div
           class="stocks-card-type"
           v-if="promotion?.short_name"
-          :style="`background: linear-gradient(250deg, ${promotion.short_name_last_color} 0%, ${promotion.short_name_first_color} 100%);color: ${promotion.color_text}`"
+          :style="`background: linear-gradient(250deg, ${promotion.short_name_last_color} 0%, ${promotion.short_name_first_color} 100%);color: ${promotion.short_name_text_color}`"
         >
           <span v-html="promotion?.short_name_icon_svg"></span>
           <p>{{ promotion?.short_name }}</p>
@@ -92,7 +91,6 @@ export default {
   font-size: 14px;
   line-height: 17px;
   margin-top: 7px;
-  color: #1c1f22;
 }
 
 .stocks-card-type {

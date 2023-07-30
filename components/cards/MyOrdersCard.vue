@@ -3,9 +3,14 @@
     <div class="my-orders-card-header">
       <div class="d-flex flex-column">
         <h4>ID заказа {{ order?.id }}</h4>
-        <p>Обновлен 8 ноября 2022 г., 13:00</p>
+        <p>
+          Обновлен {{ moment(order?.updated_at).format("DD") }}
+          {{ month[moment(order?.updated_at).format("M") - 1] }}
+          {{ moment(order?.updated_at).format("YYYY") }} г.,
+          {{ moment(order?.updated_at).format("HH:mm") }}
+        </p>
       </div>
-      <span>Olib ketildi</span>
+      <span class="orders-status success-order">Olib ketildi</span>
     </div>
     <div class="my-orders-card-body" @click="productDrop = !productDrop">
       <div class="order-products">
@@ -15,12 +20,11 @@
           :key="product?.product_id"
         >
           <div class="order-product-img">
-            <img src="../../assets/images/BASKET.png" alt="" />
+            <img :src="product?.product?.images[0]?.md_img" alt="" />
           </div>
           <div class="order-product-body">
             <p>
-              Смартфон Самсунг Галахй А33 6/128Гб Тўқ сариқ ранг (Ёрқин Шафтоли)Смартфон
-              Самсунг Галахй А33 6/128Гб Тўқ сариқ ранг (Ёрқин
+              {{ product?.product?.info?.name?.ru }}
             </p>
           </div>
         </div>
@@ -34,12 +38,11 @@
         :key="product?.product_id"
       >
         <div class="order-product-img">
-          <img src="../../assets/images/BASKET.png" alt="" />
+          <img :src="product?.product?.images[0]?.md_img" alt="" />
         </div>
         <div class="order-product-body">
           <p>
-            Смартфон Самсунг Галахй А33 6/128Гб Тўқ сариқ ранг (Ёрқин Шафтоли)Смартфон
-            Самсунг Галахй А33 6/128Гб Тўқ сариқ ранг (Ёрқин
+            {{ product?.product?.info?.name?.ru }}
           </p>
         </div>
       </div>
@@ -47,20 +50,26 @@
     <div class="my-orders-card-footer">
       <div>
         <p>Дата заказа</p>
-        <span>Вторник, 8 ноября 2022 г., 12:59</span>
+        <span>
+          {{ weekDay[moment(order?.created_at).weekday()] }},
+          {{ moment(order?.created_at).format("DD") }}
+          {{ month[moment(order?.created_at).format("M") - 1] }}
+          {{ moment(order?.created_at).format("YYYY") }} г.,
+          {{ moment(order?.created_at).format("HH:mm") }}</span
+        >
       </div>
       <div>
         <p>Способ доставки</p>
-        <span>Доствака</span>
+        <span>{{pickupMethod[order?.delivery_method]}}</span>
       </div>
       <div>
         <p>Способ оплаты</p>
-        <span>Payme</span>
+        <span>{{ order?.payment_method }}</span>
       </div>
 
       <div>
         <p>Сумма заказа</p>
-        <span>250 000 сум</span>
+        <span>{{ `${order?.amount}`.replace(/\B(?=(\d{3})+(?!\d))/g, " ") }} сум</span>
       </div>
     </div>
   </div>
@@ -73,6 +82,33 @@ export default {
     return {
       arrow: require("../../assets/svg/dropdown-icon.svg?raw"),
       productDrop: false,
+      pickupMethod: {
+        pickup: "Самовывоз",
+        courier: "Доставка",
+      },
+      weekDay: [
+        "воскресенье",
+        "понедельник",
+        "вторник",
+        "среда",
+        "четверг",
+        "пятница",
+        "суббота",
+      ],
+      month: [
+        "Январь",
+        "Февраль",
+        "Март",
+        "Апрель",
+        "Май",
+        "Июнь",
+        "Июль",
+        "Август",
+        "Сентябрь",
+        "Октябрь",
+        "Ноябрь",
+        "Декабрь",
+      ],
     };
   },
   methods: {
@@ -100,28 +136,46 @@ export default {
   line-height: 28px;
   color: #000000;
 }
-.my-orders-card-header span {
+.orders-status {
   padding: 14px 16px;
   padding-left: 34px;
-  background: #fafafa;
   border-radius: 4px;
   font-family: var(--SB_400);
   font-style: normal;
   font-weight: 400;
   font-size: 14px;
   line-height: 18px;
-  color: #1f8a70;
   position: relative;
   display: flex;
   align-items: center;
   max-height: 42px;
 }
-.my-orders-card-header span::after {
+.success-order {
+  color: #1f8a70;
+  background: #fafafa;
+}
+.success-order::after {
+  background: #1f8a70;
+}
+.pending-order {
+  color: #fbc100;
+  background: #fafafa;
+}
+.pending-order::after {
+  background-color: #fbc100;
+}
+.canceled-order {
+  color: #ff2e2e;
+  background-color: #fafafa;
+}
+.canceled-order::after {
+  background: #ff2e2e;
+}
+.orders-status::after {
   content: "";
   position: absolute;
   width: 13px;
   height: 13px;
-  background: #1f8a70;
   border-radius: 50%;
   left: 16px;
 }
@@ -161,6 +215,7 @@ export default {
   line-height: 24px;
   color: #000000;
   margin-top: 4px;
+  text-transform: capitalize;
 }
 .my-orders-card-body > span svg {
   width: 20px;

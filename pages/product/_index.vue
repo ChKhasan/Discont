@@ -382,8 +382,13 @@
 
               <p class="delivery">Yetkazib berish - 0 so’m (21-may)</p>
 
-              <p class="coin">
-                <img src="@/assets/images/coin.svg" alt="" /> +5 ta dis coin
+              <p class="coin" v-if="skeleton">
+                <b-skeleton width="150px" height="100%"> </b-skeleton>
+              </p>
+              <p v-else class="coin">
+                <img src="@/assets/images/coin.svg" alt="" />
+                {{ (product?.real_price / $store.state.dicoin.sum_to_dicoin).toFixed(2) }}
+                ta di coin
               </p>
             </div>
 
@@ -670,34 +675,39 @@
               <div class="rating">
                 <!-- <img src="@/assets/images/cheat.png" alt="" /> -->
                 <div class="total_rating">
-                  <div v-if="product?.info?.stars">
-                    <a-rate v-model="product.info.stars" />
+                  <div>
+                    <a-rate
+                      v-if="product?.info?.stars"
+                      v-model="product.info.stars"
+                      disabled
+                    />
+                    <a-rate v-else disabled />
                     <p>5 оценок</p>
                   </div>
                   <p>
-                    <span>{{ product.info.stars }}</span
+                    <span>{{ product?.info?.stars ? product?.info?.stars : 0 }}</span
                     >/5
                   </p>
                 </div>
                 <div class="rating_list">
                   <div class="rating_row">
-                    <a-rate v-model="value" /><span></span>
+                    <a-rate v-model="value" disabled /><span></span>
                     <p>5</p>
                   </div>
                   <div class="rating_row">
-                    <a-rate v-model="value" /><span></span>
+                    <a-rate v-model="value" disabled /><span></span>
                     <p>5</p>
                   </div>
                   <div class="rating_row">
-                    <a-rate v-model="value" /><span></span>
+                    <a-rate v-model="value" disabled /><span></span>
                     <p>5</p>
                   </div>
                   <div class="rating_row">
-                    <a-rate v-model="value" /><span></span>
+                    <a-rate v-model="value" disabled /><span></span>
                     <p>5</p>
                   </div>
                   <div class="rating_row">
-                    <a-rate v-model="value" /><span></span>
+                    <a-rate v-model="value" disabled /><span></span>
                     <p>5</p>
                   </div>
                 </div>

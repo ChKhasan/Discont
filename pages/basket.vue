@@ -130,7 +130,14 @@
                     </p>
                   </span>
                   <div class="basket-card-price">
-                    <span>+5 ta dicoin</span>
+                    <span
+                      >{{
+                        (product?.real_price / $store.state.dicoin.sum_to_dicoin).toFixed(
+                          2
+                        )
+                      }}
+                      ta dicoin</span
+                    >
                     <h4>
                       {{ productTotalPrice(product) }}
                       so’m
@@ -178,8 +185,9 @@
                             $store.state.cart.find((elem) => elem.id == item.id)?.count
                         );
                       }, 0)
-                      .toFixed(2)}`.replace(/\B(?=(\d{3})+(?!\d))/g, " ") 
-                  }} сум 
+                      .toFixed(2)}`.replace(/\B(?=(\d{3})+(?!\d))/g, " ")
+                  }}
+                  сум
                 </p></span
               >
               <!-- <span
@@ -205,7 +213,16 @@
           </div>
           <div class="basket-coin-block">
             <img src="../assets/images/basket-2coin.png" alt="" />
-            <h3>+15 ta Dicoin</h3>
+            <h3>
+              {{
+                products
+                  .reduce((sum, item) => {
+                    return sum + item.real_price / $store.state.dicoin.sum_to_dicoin;
+                  }, 0)
+                  .toFixed(2)
+              }}
+              ta Dicoin
+            </h3>
             <p>Dicoinlar to’plang va keyingi xaridingizdan tejang!</p>
           </div>
         </div>

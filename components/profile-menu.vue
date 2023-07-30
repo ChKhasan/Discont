@@ -6,6 +6,7 @@
       ><span v-html="profileInfo"></span> Shaxsiy ma`lumotlarim
     </nuxt-link>
     <nuxt-link
+      class="disabled"
       :to="localePath('/profile/my-pay')"
       :class="{ 'profile-menu-active': $route.name.includes('profile-my-pay') }"
       ><span v-html="piecePay"></span> Bo’lib to’lash</nuxt-link

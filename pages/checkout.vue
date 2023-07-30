@@ -155,7 +155,7 @@
                     <span v-else></span>
                     <img src="../assets/images/humocard.uz.png" alt="" />
                   </div> -->
-                  <div class="pay-card" @click="form.payment_method = 'uzum'">
+                  <!-- <div class="pay-card" @click="form.payment_method = 'uzum'">
                     <span v-if="form.payment_method == 'uzum'" class="step-active"
                       ><svg
                         xmlns="http://www.w3.org/2000/svg"
@@ -171,7 +171,7 @@
                     ></span>
                     <span v-else></span>
                     <img src="../assets/images/uzum.png" alt="" />
-                  </div>
+                  </div> -->
                 </div>
               </div>
             </div>
@@ -315,19 +315,7 @@
               </div>
               <p>
                 -
-                {{
-                  `${products
-                    .filter((elem) => elem.dicoin)
-                    .reduce((summ, item) => {
-                      return (
-                        summ +
-                        item.real_price *
-                          item.dicoin *
-                          0.01 *
-                          $store.state.cart.find((elem) => elem.id == item.id)?.count
-                      );
-                    }, 0)}`.replace(/\B(?=(\d{3})+(?!\d))/g, " ")
-                }}
+                {{ priceWithDiCoin }}
                 so’m
               </p>
             </div>
@@ -364,19 +352,7 @@
                 </div>
                 <p>
                   -
-                  {{
-                    `${products
-                      .filter((elem) => elem.dicoin)
-                      .reduce((summ, item) => {
-                        return (
-                          summ +
-                          item.real_price *
-                            item.dicoin *
-                            0.01 *
-                            $store.state.cart.find((elem) => elem.id == item.id)?.count
-                        );
-                      }, 0)}`.replace(/\B(?=(\d{3})+(?!\d))/g, " ")
-                  }}
+                  {{ priceWithDiCoin }}
                   so’m
                 </p>
               </div>
@@ -783,23 +759,8 @@ export default {
           },
         ],
       },
+      priceWithDiCoin: 0,
     };
-  },
-  computed: {
-    priceWithDiCoin() {
-      this.products
-        .filter((elem) => elem.dicoin)
-        .reduce((summ, item) => {
-          return (
-            summ +
-            item.real_price *
-              item.dicoin *
-              0.01 *
-              $store.state.cart.find((elem) => elem.id == item.id)?.count
-          );
-        }, 0)
-        .replace(/\B(?=(\d{3})+(?!\d))/g, " ");
-    },
   },
   async mounted() {
     this.$store.commit("reloadStore");
@@ -897,6 +858,21 @@ export default {
         },
       });
       this.products = data?.products;
+      if (this.products.filter((elem) => elem.dicoin).length > 0) {
+        this.priceWithDiCoin = `${this.products
+          .filter((elem) => elem.dicoin)
+          .reduce((summ, item) => {
+            return (
+              summ +
+              item.real_price *
+                item.dicoin *
+                0.01 *
+                this.$store.state.cart.find((elem) => elem.id == item.id)?.count
+            );
+          }, 0)}`.replace(/\B(?=(\d{3})+(?!\d))/g, " ");
+      } else {
+        this.priceWithDiCoin = 0;
+      }
     },
     async __GET_REGIONS() {
       const data = await this.$store.dispatch("fetchRegions/getRegions", {
@@ -905,14 +881,19 @@ export default {
         },
       });
       this.regions = data?.regions;
-      console.log(this.regions);
     },
     async __POST_ORDER(formData) {
       try {
         const data = await this.$store.dispatch("fetchAuth/postOrder", formData);
-        this.visibleSuccess = true;
-        localStorage.setItem("cart", JSON.stringify([]));
-        this.$store.commit("reloadStore");
+        if (data?.redirect_url) {
+          window.location.replace(data?.redirect_url);
+          localStorage.setItem("cart", JSON.stringify([]));
+          this.$store.commit("reloadStore");
+        } else {
+          this.visibleSuccess = true;
+          localStorage.setItem("cart", JSON.stringify([]));
+          this.$store.commit("reloadStore");
+        }
       } catch (e) {
         console.log(e);
       }

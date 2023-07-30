@@ -2,31 +2,34 @@
   <div class="profile-comment-card">
     <div class="profile-comment-card-head">
       <div class="profile-comment-card-img">
-        <img src="../../assets/images/comment.png" alt="" />
+        <img
+          v-if="comment?.product_info?.products[0]?.images[0]?.md_img"
+          :src="comment?.product_info?.products[0]?.images[0]?.md_img"
+          alt=""
+        />
       </div>
 
       <div class="profile-comment-card-header">
         <div>
-          <h4>Смартфон Samsung Galaxy A53 6/128Gb Тўқ сариқ ранг (Шафтоли)</h4>
-          <a-rate disabled style="color: #00b2a9" v-model="value" />
+          <h4>{{ comment?.product_info?.name?.ru }}</h4>
+          <a-rate
+            v-if="comment?.stars"
+            disabled
+            style="color: #00b2a9"
+            v-model="comment.stars"
+          />
+          <a-rate v-else disabled style="color: #00b2a9" />
         </div>
-        <!-- <div class="profile-comment-card-edit"><span v-html="edit"></span></div> -->
       </div>
     </div>
     <div class="profile-comment-card-body">
-      <p>
-        <span>Sizning izohingiz:</span> is a long established fact that a reader will be
-        distracted by the readable content of a page when looking at its layout. The point
-        of using Lorem Ipsum is that it has a more-or-less normal distribution of letters,
-        as opposed to using 'Content here, content here', making it look like readable
-        English. Many desktop publishing packages and web page editors now use Lorem Ipsum
-        as their default model text, and
-      </p>
+      <p><span>Sizning izohingiz:</span> {{ comment?.comment }}</p>
     </div>
   </div>
 </template>
 <script>
 export default {
+  props: ["comment"],
   data() {
     return {
       edit: require("../../assets/svg/Fill 4.svg?raw"),

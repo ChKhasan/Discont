@@ -11,12 +11,15 @@
           <ProfileMenu />
         </div>
         <div>
-          <div class="my-comments-grid" v-if="empty">
-            <ProfileCommentCard />
-            <ProfileCommentCard />
-            <ProfileCommentCard />
-            <ProfileCommentCard />
-            <ProfileCommentCard />
+          <div
+            class="my-comments-grid"
+            v-if="$store.state.profile?.comments?.data?.length > 0"
+          >
+            <ProfileCommentCard
+              v-for="comment in $store.state.profile?.comments?.data"
+              :comment="comment"
+              :key="comment?.id"
+            />
           </div>
           <div class="comments-empty" v-else>
             <img src="../../assets/images/comments-empty.png" alt="" />

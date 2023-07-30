@@ -100,9 +100,25 @@
         class="to-basket-count"
         v-if="$store.state.cart.find((item) => item.id == product?.id)"
       >
-        <span @click="$store.commit('productCountDown', { id: product?.id })">-</span
+        <span
+          @click="
+            $store.state.cart.find((item) => item.id == product?.id)?.count > 0 &&
+              $store.commit('productCountDown', { id: product?.id })
+          "
+          >-</span
         >{{ $store.state.cart.find((item) => item.id == product?.id)?.count }}
-        <span @click="$store.commit('productCountUp', { id: product?.id })">+</span>
+        <span
+          :class="{
+            disabled:
+              productInner?.stock ==
+              $store.state.cart.find((item) => item.id == product?.id)?.count,
+          }"
+          @click="
+            $store.state.cart.find((item) => item.id == product?.id)?.count <
+              productInner?.stock && $store.commit('productCountUp', { id: product?.id })
+          "
+          >+</span
+        >
       </div>
       <div class="to-basket-btn" v-else @click="visibleBuy = true">
         <span>В корзину</span>В корзину
