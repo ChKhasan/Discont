@@ -167,7 +167,7 @@
           <div class="product-show-modal-carousel">
             <a-carousel
               arrows
-              dots-class="slick-dots slick-thumb"
+              dots-class="slick-dots slick-thumb default-thumb"
               v-if="product?.images.length == 1"
             >
               <a slot="customPaging" slot-scope="props">
@@ -231,10 +231,20 @@
                     so’m
                   </p>
 
-                  <p class="delivery">Yetkazib berish - 0 so’m (21-may)</p>
+                  <p class="delivery">Yetkazib berish - 0 so’m (21-may) {{ skeleton }}</p>
 
-                  <p class="coin">
+                  <!-- <p class="coin">
                     <img src="@/assets/images/coin.svg" alt="" /> +5 ta dis coin
+                  </p> -->
+                  <p class="coin" v-if="skeleton">
+                    <b-skeleton width="150px" height="100%"> </b-skeleton>
+                  </p>
+                  <p v-else class="coin">
+                    <img src="@/assets/images/coin.svg" alt="" />
+                    {{
+                      (product?.real_price / $store.state.dicoin.sum_to_dicoin).toFixed(2)
+                    }}
+                    ta di coin
                   </p>
                 </div>
 
@@ -317,7 +327,7 @@
           <div class="product-show-modal-carousel product-show-modal-carousel-height">
             <a-carousel
               arrows
-              dots-class="slick-dots slick-thumb"
+              dots-class="slick-dots slick-thumb default-thumb"
               v-if="product?.images.length == 1"
             >
               <a slot="customPaging" slot-scope="props">
@@ -514,7 +524,7 @@
                     }}
                     СУМ
                   </h4>
-                  <p>28 880 000 СУМ</p>
+                  <!-- <p>28 880 000 СУМ</p> -->
                 </div>
               </div>
             </div>
@@ -796,7 +806,7 @@ export default {
       visibleBuy: false,
       productAttributes: [],
       productInner: [],
-      skeleton: true,
+      skeleton: false,
       star: require("../../assets/svg/product-star.svg?raw"),
       coin: require("../../assets/svg/product-coin.svg?raw"),
       comp: require("../../assets/svg/product-comp.svg?raw"),
@@ -1391,6 +1401,9 @@ export default {
   font-size: 16px;
   line-height: 20px;
   transform: rotate(2.5deg);
+}
+.default-thumb li:last-child {
+  display: none;
 }
 @media screen and (max-width: 1024px) {
   .product-card-header {
