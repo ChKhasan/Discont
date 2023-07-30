@@ -668,7 +668,39 @@
                 <button class="leave__btn" @click="commentOpen()">Baho qoldirish</button>
               </div>
               <div class="rating">
-                <img src="@/assets/images/cheat.png" alt="" />
+                <!-- <img src="@/assets/images/cheat.png" alt="" /> -->
+                <div class="total_rating">
+                  <div v-if="product?.info?.stars">
+                    <a-rate v-model="product.info.stars" />
+                    <p>5 оценок</p>
+                  </div>
+                  <p>
+                    <span>{{ product.info.stars }}</span
+                    >/5
+                  </p>
+                </div>
+                <div class="rating_list">
+                  <div class="rating_row">
+                    <a-rate v-model="value" /><span></span>
+                    <p>5</p>
+                  </div>
+                  <div class="rating_row">
+                    <a-rate v-model="value" /><span></span>
+                    <p>5</p>
+                  </div>
+                  <div class="rating_row">
+                    <a-rate v-model="value" /><span></span>
+                    <p>5</p>
+                  </div>
+                  <div class="rating_row">
+                    <a-rate v-model="value" /><span></span>
+                    <p>5</p>
+                  </div>
+                  <div class="rating_row">
+                    <a-rate v-model="value" /><span></span>
+                    <p>5</p>
+                  </div>
+                </div>
               </div>
             </div>
           </div>
@@ -1013,6 +1045,7 @@ export default {
       ],
       skeleton: false,
       count: 1,
+      value: 5,
       callBox: false,
       visibleSuccess: false,
       visibleComment: false,
@@ -1815,6 +1848,71 @@ tbody .img {
 }
 .cart svg {
   display: none;
+}
+.total_rating div p {
+  color: #727474;
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 20px; /* 142.857% */
+}
+.total_rating {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.total_rating div {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+.total_rating > p {
+  color: #727474;
+  font-family: var(--SB_500);
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 24px; /* 150% */
+}
+.total_rating > p > span {
+  color: #000;
+}
+.rating_list {
+  margin-top: 23px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+.rating_row {
+  display: flex;
+  justify-content: space-between;
+  position: relative;
+  align-items: center;
+}
+.rating_row > span {
+  display: block;
+  position: absolute;
+  border-radius: 100px;
+  background: #e6e6e6;
+  height: 4px;
+  width: 100%;
+}
+
+.rating_row ul {
+  background: white;
+  position: relative;
+  z-index: 100;
+  padding-right: 16px;
+}
+
+.rating_row p {
+  background: white;
+  position: relative;
+  z-index: 100;
+  padding-left: 16px;
+  color: #727474;
+  font-size: 14px;
+  font-style: normal;
+  line-height: 20px; /* 142.857% */
 }
 @media screen and (max-width: 1024px) {
   .world {

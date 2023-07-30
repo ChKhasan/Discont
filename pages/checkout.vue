@@ -286,13 +286,13 @@
                 ><p>Tovarlar</p>
                 <p>
                   {{
-                    products.reduce((summ, item) => {
+                    `${products.reduce((summ, item) => {
                       return (
                         summ +
-                        item.price *
+                        item.real_price *
                           $store.state.cart.find((elem) => elem.id == item.id)?.count
                       );
-                    }, 0)
+                    }, 0)}`.replace(/\B(?=(\d{3})+(?!\d))/g, " ")
                   }}
                   so’m
                 </p></span
@@ -305,6 +305,82 @@
                 ><p>Yetkazib berish</p>
                 <p>30 000 so’m</p></span
               >
+            </div>
+            <div class="checkout_dicoin_input" v-if="sendDicoin">
+              <div class="d-flex">
+                <img src="../assets/images/d-coin.png" alt="" />
+                <h6 class="active_dicoin">
+                  <span>{{ dicoinSumm }}</span> Di Coin
+                </h6>
+              </div>
+              <p>
+                -
+                {{
+                  `${products
+                    .filter((elem) => elem.dicoin)
+                    .reduce((summ, item) => {
+                      return (
+                        summ +
+                        item.real_price *
+                          item.dicoin *
+                          0.01 *
+                          $store.state.cart.find((elem) => elem.id == item.id)?.count
+                      );
+                    }, 0)}`.replace(/\B(?=(\d{3})+(?!\d))/g, " ")
+                }}
+                so’m
+              </p>
+            </div>
+            <div
+              class="checkout_dicoin"
+              v-if="$store.state.dicoin?.dicoin_to_sum && !sendDicoin"
+            >
+              <div class="d-flex">
+                <p>
+                  Umumiy dicoinlar soni:
+                  <span
+                    ><img src="../assets/images/d-coin.png" alt="" />{{
+                      this.$store.state.profile?.dicoin?.quantity
+                    }}</span
+                  >
+                </p>
+                <p>
+                  1 dicoin qiymati:
+                  <span
+                    >{{
+                      `${$store.state.dicoin?.dicoin_to_sum}`.replace(
+                        /\B(?=(\d{3})+(?!\d))/g,
+                        " "
+                      )
+                    }}
+                    сум
+                  </span>
+                </p>
+              </div>
+              <div class="checkout_dicoin_input">
+                <div>
+                  <img src="../assets/images/d-coin.png" alt="" />
+                  <input type="text" v-model="dicoinSumm" />
+                </div>
+                <p>
+                  -
+                  {{
+                    `${products
+                      .filter((elem) => elem.dicoin)
+                      .reduce((summ, item) => {
+                        return (
+                          summ +
+                          item.real_price *
+                            item.dicoin *
+                            0.01 *
+                            $store.state.cart.find((elem) => elem.id == item.id)?.count
+                        );
+                      }, 0)}`.replace(/\B(?=(\d{3})+(?!\d))/g, " ")
+                  }}
+                  so’m
+                </p>
+              </div>
+              <button @click="sendDicoin = true">Qabul qilish</button>
             </div>
             <div class="checkout-info-products">
               <div
@@ -648,6 +724,8 @@ export default {
   layout: "checkoutLayout",
   data() {
     return {
+      dicoinSumm: null,
+      sendDicoin: false,
       form: {
         name: "",
         delivery_method: "pickup",
@@ -660,6 +738,7 @@ export default {
         amount: "",
         user_address_id: null,
         surname: "",
+        dicoin: null,
       },
       addressEditId: null,
       addressEdit: require("../assets/svg/Edit.svg?raw"),
@@ -674,6 +753,7 @@ export default {
       districts: [],
       villages: [],
       products: [],
+      profile: {},
       formAddress: {
         region_id: null,
         district_id: null,
@@ -705,20 +785,52 @@ export default {
       },
     };
   },
-  mounted() {
+  computed: {
+    priceWithDiCoin() {
+      this.products
+        .filter((elem) => elem.dicoin)
+        .reduce((summ, item) => {
+          return (
+            summ +
+            item.real_price *
+              item.dicoin *
+              0.01 *
+              $store.state.cart.find((elem) => elem.id == item.id)?.count
+          );
+        }, 0)
+        .replace(/\B(?=(\d{3})+(?!\d))/g, " ");
+    },
+  },
+  async mounted() {
     this.$store.commit("reloadStore");
     let storeProducts = JSON.parse(localStorage.getItem("cart"));
-    this.__GET_PROFILE_INFO();
+    await this.__GET_PROFILE_INFO();
     this.__GET_REGIONS();
     if (storeProducts.length > 0) {
       this.skeletonLoad = true;
-      this.__GET_PRODUCTS_BY_ID({ products: storeProducts.map((item) => item.id) });
+      await this.__GET_PRODUCTS_BY_ID({ products: storeProducts.map((item) => item.id) });
+      const dicoinPrice = this.products
+        .filter((elem) => elem.dicoin)
+        .reduce((summ, item) => {
+          return (
+            summ +
+            item.real_price *
+              item.dicoin *
+              0.01 *
+              this.$store.state.cart.find((elem) => elem.id == item.id)?.count
+          );
+        }, 0);
+      this.dicoinSumm =
+        this.profile?.dicoin?.quantity > dicoinPrice
+          ? dicoinPrice / this.$store.state.dicoin.dicoin_to_sum
+          : this.profile?.dicoin?.quantity;
     }
   },
   methods: {
     submit() {
       const data = {
         ...this.form,
+        dicoin: this.dicoinSumm ? this.dicoinSumm : null,
         products: this.products.map((item) => {
           return {
             count: this.$store.state.cart.find((elem) => elem.id == item.id)?.count,
@@ -977,5 +1089,96 @@ export default {
   font-weight: 700;
   line-height: normal;
   border: none;
+}
+.checkout_dicoin {
+  padding: 16px 24px;
+  display: flex;
+  background-color: #fafafa;
+  flex-direction: column;
+}
+.checkout_dicoin button {
+  border: none;
+  border-radius: 12px;
+  border: 1px solid #1f8a70;
+  background: #e8faf5;
+  padding-top: 14px;
+  padding-bottom: 14px;
+  width: 100%;
+  color: var(--color_dark_green);
+  font-family: var(--SB_600);
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: 20px; /* 125% */
+  margin-top: 12px;
+}
+.checkout_dicoin p {
+  color: #727474;
+  font-family: var(--SB_400);
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 20px;
+  display: flex;
+  flex-direction: column;
+  margin-right: 47px;
+}
+.checkout_dicoin p:last-child {
+  margin-right: 0;
+}
+.checkout_dicoin p span {
+  color: #000;
+  font-family: var(--SB_500);
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 20px; /* 142.857% */
+  margin-top: 8px;
+}
+.checkout_dicoin p span img {
+  margin-right: 4px;
+}
+.checkout_dicoin_input {
+  display: flex;
+  border-radius: 16px;
+  border: 1px solid #f1f1f1;
+  background: #fff;
+  padding: 20px;
+  justify-content: space-between;
+  margin-top: 12px;
+}
+.checkout_dicoin_input div input {
+  border: none;
+  padding-left: 4px;
+  color: #666;
+  font-family: var(--SB_400);
+  font-size: 18px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 20px; /* 111.111% */
+}
+.checkout_dicoin_input div input:focus {
+  outline: none;
+}
+.checkout_dicoin_input p {
+  color: var(--color_dark_green);
+  text-align: right;
+  font-family: var(--SB_400);
+  font-size: 18px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 20px; /* 111.111% */
+}
+.active_dicoin {
+  color: #a1a1a1;
+  font-family: var(--SB_400);
+  font-size: 18px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 20px;
+  margin-left: 8px;
+}
+.active_dicoin span {
+  color: #000;
 }
 </style>

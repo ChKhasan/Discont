@@ -161,10 +161,10 @@
                 сум
               </h3>
             </div>
-            <div class="basket-promo-input">
+            <!-- <div class="basket-promo-input">
               <input placeholder="Введите промокод" type="text" />
               <span>Применить</span>
-            </div>
+            </div> -->
             <div class="basket-checkout-body">
               <span
                 ><p>Стоимость:</p>
@@ -178,18 +178,18 @@
                             $store.state.cart.find((elem) => elem.id == item.id)?.count
                         );
                       }, 0)
-                      .toFixed(2)}`.replace(/\B(?=(\d{3})+(?!\d))/g, " ")
-                  }}
+                      .toFixed(2)}`.replace(/\B(?=(\d{3})+(?!\d))/g, " ") 
+                  }} сум 
                 </p></span
               >
-              <span
+              <!-- <span
                 ><p>Промокод:</p>
                 <p>0 сум</p></span
               >
               <span
                 ><p>Di Coinlar:</p>
                 <p>0 сум</p></span
-              >
+              > -->
               <span
                 ><p>Стоимость доставки:</p>
                 <p>25 000 сум</p></span

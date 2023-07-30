@@ -283,6 +283,10 @@ body::-webkit-scrollbar-thumb {
 .product-rate .ant-rate-star-full i {
   color: #1f8a70 !important;
 }
+.rating_row .ant-rate-star i svg {
+  width: 15px;
+  height: 15px;
+}
 .product-rate .ant-rate-star i svg {
   width: 15px;
   height: 15px;

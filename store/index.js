@@ -5,6 +5,7 @@ export const state = () => ({
   like: [],
   comparison: [],
   profile: {},
+  dicoin: {}
 });
 
 export const mutations = {
@@ -14,6 +15,9 @@ export const mutations = {
   },
   getProfileInfo(state, payload) {
     state.profile = payload;
+  },
+  getDiCoinInfo(state, payload) {
+    state.dicoin = payload;
   },
   authHandler(state) {
     const token = localStorage.getItem("dis_auth_token");
@@ -89,7 +93,6 @@ export const mutations = {
 };
 export const actions = {
   profileInfo({ commit }, payload) {
-    console.log(":asdasdaskldsgadasfdghasfgdfas");
     this.$axios
       .$get("/profile/me", {
         headers: {
@@ -100,5 +103,11 @@ export const actions = {
         console.log(res);
         commit("getProfileInfo", res?.user);
       });
+  },
+  dicoinInfo({ commit }, payload) {
+    this.$axios.$get("/dicoins").then((res) => {
+      console.log(res);
+      commit("getDiCoinInfo", res?.dicoin);
+    });
   },
 };

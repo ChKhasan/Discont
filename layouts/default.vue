@@ -179,6 +179,7 @@ export default {
   },
   async mounted() {
     this.$store.dispatch("profileInfo");
+    this.$store.dispatch("dicoinInfo");
     await this.$store.commit("reloadStore");
     this.afterReload = true;
     this.$store.commit("authHandler");

@@ -295,9 +295,9 @@
 .checkout-info-body span:last-child {
   margin-bottom: 28px;
 }
-.checkout-info-body {
+/* .checkout-info-body {
   border-bottom: 1px solid #f1f1f1;
-}
+} */
 .checkout-info-body span p {
   font-family: var(--SB_500);
   font-style: normal;
@@ -353,7 +353,9 @@
   display: grid;
   grid-template-columns: 1fr;
   grid-gap: 28px;
+  border-top: 1px solid #f1f1f1;
   margin-top: 28px;
+  padding-top: 28px;
 }
 
 .vmodal-header {

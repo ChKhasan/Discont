@@ -101,9 +101,7 @@
                         v-for="product in searchProducts"
                         :key="product?.id"
                       >
-                        <nuxt-link
-                          :to="localePath(`/product/${product?.products[0]?.slug}`)"
-                        >
+                        <nuxt-link :to="localePath(`/product/${product?.slug}`)">
                           <span
                             ><svg
                               xmlns="http://www.w3.org/2000/svg"
@@ -129,7 +127,7 @@
                                 stroke-linejoin="round"
                               /></svg
                           ></span>
-                          {{ product?.name?.ru }}
+                          {{ product?.info?.name }}
                         </nuxt-link>
                       </div>
                     </div>
@@ -196,9 +194,7 @@
         </div>
       </div>
     </div>
-    <div
-      class="header-mobile container_xl  w-100"
-    >
+    <div class="header-mobile container_xl w-100">
       <div class="d-flex align-items-center">
         <button class="drawer-btn">
           <svg
@@ -263,7 +259,9 @@
               <div class="catalog-menu-body">
                 <div class="d-flex categories-page-title mt-0 mb-5 align-items-end">
                   <MainTitle :title="activeCategory?.name" />
-                  <span class="d-flex align-items-end">{{activeCategory?.products_count}} товаров</span>
+                  <span class="d-flex align-items-end"
+                    >{{ activeCategory?.products_count }} товаров</span
+                  >
                 </div>
                 <div class="catalog-menu-items">
                   <div>

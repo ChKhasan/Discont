@@ -12,6 +12,7 @@ import Header from "../components/layout/Header.vue";
 export default {
   mounted() {
     this.$store.commit("reloadStore");
+    this.$store.dispatch("dicoinInfo");
     this.$store.dispatch("profileInfo");
     this.$store.commit("authHandler");
   },
