@@ -32,7 +32,7 @@ body {
   --SB_600: "SB_600";
   --SB_700: "SB_700";
   --TT_neue_400: "SF_400";
-  --color_green: #1f8a70;
+  --color_green: #09454f;
   --color_dark_green: #09454f;
 }
 p,
@@ -152,7 +152,7 @@ body::-webkit-scrollbar-thumb {
   align-items: center;
 }
 .products-pagination .ant-pagination-item-active a {
-  color: #1f8a70 !important;
+  color: #09454f !important;
 }
 .products-pagination .ant-pagination-item-link {
   display: flex !important;
@@ -235,7 +235,7 @@ body::-webkit-scrollbar-thumb {
   font-weight: 600;
   font-size: 18px;
   line-height: 24px;
-  color: #1f8a70;
+  color: #09454f;
   display: flex;
   justify-content: center;
   cursor: pointer;
@@ -260,7 +260,7 @@ body::-webkit-scrollbar-thumb {
   display: none !important;
 }
 .vmodal-btn {
-  background: #1f8a70;
+  background: #09454f;
   border-radius: 12px;
   font-family: var(--SB_600);
   font-style: normal;
@@ -281,7 +281,7 @@ body::-webkit-scrollbar-thumb {
   transform: rotate(180deg) !important;
 }
 .product-rate .ant-rate-star-full i {
-  color: #1f8a70 !important;
+  color: #09454f !important;
 }
 .rating_row .ant-rate-star i svg {
   width: 15px;
@@ -306,10 +306,10 @@ body::-webkit-scrollbar-thumb {
   margin-right: 4px;
 }
 .active-like-comp-btn svg path {
-  fill: #1f8a70 !important;
+  fill: #09454f !important;
 }
 .active-like-comp-btn {
-  color: #1f8a70 !important;
+  color: #09454f !important;
 }
 .disabled {
   pointer-events: none !important;
@@ -454,7 +454,7 @@ body::-webkit-scrollbar-thumb {
   /* margin-bottom: 19px; */
 }
 .call-number h4 {
-  color: var(--yashil, #1f8a70);
+  color: var(--yashil, #09454f);
   font-family: var(--SB_600);
   font-size: 24px;
   font-style: normal;

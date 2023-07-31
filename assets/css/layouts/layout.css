@@ -455,7 +455,7 @@
 /* Handle */
 .search-resoult-scroll::-webkit-scrollbar-thumb {
   border-radius: 100px;
-  background: var(--yashil, #1f8a70);
+  background: var(--yashil, #09454f);
 }
 
 /* Handle on hover */

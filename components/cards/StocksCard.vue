@@ -119,7 +119,7 @@ export default {
   margin-right: 6px;
 }
 .stocks-card-type-new {
-  /* background: #1f8a70;
+  /* background: #09454f;
   color: #fff; */
 }
 

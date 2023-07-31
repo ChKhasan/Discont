@@ -250,7 +250,7 @@
                       >
                         <path
                           d="M0.800427 0.286251C0.617141 0.469593 0.514176 0.718224 0.514176 0.977469C0.514176 1.23671 0.617141 1.48535 0.800427 1.66869L4.9976 5.86586L0.800427 10.063C0.707049 10.1532 0.632567 10.2611 0.581328 10.3804C0.530089 10.4997 0.503118 10.628 0.50199 10.7578C0.500862 10.8876 0.5256 11.0163 0.574758 11.1365C0.623917 11.2566 0.696512 11.3658 0.788309 11.4576C0.880106 11.5494 0.989265 11.622 1.10942 11.6711C1.22957 11.7203 1.35831 11.745 1.48813 11.7439C1.61794 11.7428 1.74623 11.7158 1.86551 11.6646C1.98479 11.6133 2.09268 11.5388 2.18286 11.4455L7.07125 6.55708C7.25454 6.37373 7.3575 6.1251 7.3575 5.86586C7.3575 5.60661 7.25454 5.35798 7.07125 5.17464L2.18286 0.286251C1.99952 0.102965 1.75089 0 1.49165 0C1.2324 0 0.983769 0.102965 0.800427 0.286251Z"
-                          fill="#1F8A70"
+                          fill="#09454f"
                         /></svg
                     ></span>
                   </li>
@@ -364,14 +364,14 @@
           >
             <path
               d="M17.9958 1.98438L2.00391 17.9762"
-              stroke="#1F8A70"
+              stroke="#09454f"
               stroke-width="3.28586"
               stroke-linecap="round"
               stroke-linejoin="round"
             />
             <path
               d="M18.0003 17.9861L1.99512 1.97754"
-              stroke="#1F8A70"
+              stroke="#09454f"
               stroke-width="3.28586"
               stroke-linecap="round"
               stroke-linejoin="round"
@@ -445,14 +445,14 @@
           >
             <path
               d="M17.9958 1.98438L2.00391 17.9762"
-              stroke="#1F8A70"
+              stroke="#09454f"
               stroke-width="3.28586"
               stroke-linecap="round"
               stroke-linejoin="round"
             />
             <path
               d="M18.0003 17.9861L1.99512 1.97754"
-              stroke="#1F8A70"
+              stroke="#09454f"
               stroke-width="3.28586"
               stroke-linecap="round"
               stroke-linejoin="round"
@@ -516,14 +516,14 @@
           >
             <path
               d="M17.9958 1.98438L2.00391 17.9762"
-              stroke="#1F8A70"
+              stroke="#09454f"
               stroke-width="3.28586"
               stroke-linecap="round"
               stroke-linejoin="round"
             />
             <path
               d="M18.0003 17.9861L1.99512 1.97754"
-              stroke="#1F8A70"
+              stroke="#09454f"
               stroke-width="3.28586"
               stroke-linecap="round"
               stroke-linejoin="round"
@@ -601,14 +601,14 @@
           >
             <path
               d="M17.9958 1.98438L2.00391 17.9762"
-              stroke="#1F8A70"
+              stroke="#09454f"
               stroke-width="3.28586"
               stroke-linecap="round"
               stroke-linejoin="round"
             />
             <path
               d="M18.0003 17.9861L1.99512 1.97754"
-              stroke="#1F8A70"
+              stroke="#09454f"
               stroke-width="3.28586"
               stroke-linecap="round"
               stroke-linejoin="round"
@@ -690,14 +690,14 @@
           >
             <path
               d="M17.9958 1.98438L2.00391 17.9762"
-              stroke="#1F8A70"
+              stroke="#09454f"
               stroke-width="3.28586"
               stroke-linecap="round"
               stroke-linejoin="round"
             />
             <path
               d="M18.0003 17.9861L1.99512 1.97754"
-              stroke="#1F8A70"
+              stroke="#09454f"
               stroke-width="3.28586"
               stroke-linecap="round"
               stroke-linejoin="round"
@@ -764,14 +764,14 @@
           >
             <path
               d="M17.9958 1.98438L2.00391 17.9762"
-              stroke="#1F8A70"
+              stroke="#09454f"
               stroke-width="3.28586"
               stroke-linecap="round"
               stroke-linejoin="round"
             />
             <path
               d="M18.0003 17.9861L1.99512 1.97754"
-              stroke="#1F8A70"
+              stroke="#09454f"
               stroke-width="3.28586"
               stroke-linecap="round"
               stroke-linejoin="round"
@@ -1251,7 +1251,7 @@ export default {
 </script>
 <style lang="css">
 /* .nav-icons svg path {
-  fill: #1f8a70;
+  fill: #09454f;
 } */
 .close-space {
   width: 33%;
@@ -1327,11 +1327,11 @@ export default {
 
 .catalog-menu-list-active {
   background: #f7f7f7;
-  color: #1f8a70 !important;
+  color: #09454f !important;
 }
 .catalog-menu-list ul li:hover {
   background: #f7f7f7;
-  color: #1f8a70;
+  color: #09454f;
 }
 .nested-enter-active,
 .nested-leave-active {
@@ -1454,7 +1454,7 @@ export default {
   left: 50px;
 }
 .vmodal-btn-outline {
-  border: 2px solid #1f8a70;
+  border: 2px solid #09454f;
   border-radius: 16px;
   height: 59px;
   display: flex;
@@ -1465,7 +1465,7 @@ export default {
   font-size: 18px;
   line-height: 150%;
   letter-spacing: -0.02em;
-  color: #1f8a70;
+  color: #09454f;
   margin-top: 10px;
   cursor: pointer;
 }

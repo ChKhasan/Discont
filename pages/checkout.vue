@@ -479,14 +479,14 @@
           >
             <path
               d="M17.9958 1.98438L2.00391 17.9762"
-              stroke="#1F8A70"
+              stroke="#09454f"
               stroke-width="3.28586"
               stroke-linecap="round"
               stroke-linejoin="round"
             />
             <path
               d="M18.0003 17.9861L1.99512 1.97754"
-              stroke="#1F8A70"
+              stroke="#09454f"
               stroke-width="3.28586"
               stroke-linecap="round"
               stroke-linejoin="round"
@@ -581,14 +581,14 @@
           >
             <path
               d="M17.9958 1.98438L2.00391 17.9762"
-              stroke="#1F8A70"
+              stroke="#09454f"
               stroke-width="3.28586"
               stroke-linecap="round"
               stroke-linejoin="round"
             />
             <path
               d="M18.0003 17.9861L1.99512 1.97754"
-              stroke="#1F8A70"
+              stroke="#09454f"
               stroke-width="3.28586"
               stroke-linecap="round"
               stroke-linejoin="round"
@@ -687,14 +687,14 @@
           >
             <path
               d="M17.9958 1.98438L2.00391 17.9762"
-              stroke="#1F8A70"
+              stroke="#09454f"
               stroke-width="3.28586"
               stroke-linecap="round"
               stroke-linejoin="round"
             />
             <path
               d="M18.0003 17.9861L1.99512 1.97754"
-              stroke="#1F8A70"
+              stroke="#09454f"
               stroke-width="3.28586"
               stroke-linecap="round"
               stroke-linejoin="round"
@@ -1174,7 +1174,7 @@ export default {
 .checkout_dicoin button {
   border: none;
   border-radius: 12px;
-  border: 1px solid #1f8a70;
+  border: 1px solid #09454f;
   background: #e8faf5;
   padding-top: 14px;
   padding-bottom: 14px;

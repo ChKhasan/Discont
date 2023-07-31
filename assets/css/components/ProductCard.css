@@ -96,7 +96,7 @@
   overflow: hidden;
   width: 100%;
   background: #ffffff;
-  border: 1px solid #1f8a70;
+  border: 1px solid #09454f;
   border-radius: 8px;
   cursor: pointer;
   display: flex;
@@ -109,7 +109,7 @@
   line-height: 21px;
   text-align: center;
   letter-spacing: -0.02em;
-  color: #1f8a70;
+  color: #09454f;
   height: 40px;
 }
 .to-basket-count {

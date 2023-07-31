@@ -234,6 +234,6 @@ export default {
 <style lang="css">
 @import "../../assets/css/pages/categories.css";
 .active-brand {
-  color: #1f8a70 !important;
+  color: #09454f !important;
 }
 </style>
