@@ -3,16 +3,12 @@
     <div class="container_xl">
       <div class="page-breadcrumb">
         <nuxt-link :to="localePath('/')">Diskont main page</nuxt-link>
-        <nuxt-link class="disabled" :to="localePath('/')">
-          Solishtirish
-        </nuxt-link>
+        <nuxt-link class="disabled" :to="localePath('/')"> Solishtirish </nuxt-link>
       </div>
       <div class="d-flex page-container-title">
         <div class="d-flex align-items-end">
           <MainTitle title="Solishtirish" />
-          <span class="d-flex align-items-end"
-            >{{ compProducts.length }} товаров</span
-          >
+          <span class="d-flex align-items-end">{{ compProducts?.length }} товаров</span>
         </div>
         <a-select
           v-model="value"
@@ -30,14 +26,20 @@
         </a-select>
       </div>
       <div class="page-container-body" v-if="compProducts.length > 0">
-        <div class="swiper-comparison mySwiper" style="overflow: hidden">
+        <ComparisonCard
+          v-for="(product, index) in compProducts"
+          :product="product"
+          :indexId="index"
+          :comparison="comparisonData"
+        />
+        <!-- <div class="swiper-comparison mySwiper" style="overflow: hidden">
           <div class="swiper-wrapper">
-            <div
-              class="swiper-slide"
-              v-for="product in compProducts"
-              :key="product?.id"
-            >
-              <ComparisonCard :product="product" />
+            <div class="swiper-slide" v-for="(product, index) in compProducts">
+              <ComparisonCard
+                :product="product"
+                :indexId="index"
+                :comparison="comparisonData"
+              />
             </div>
           </div>
         </div>
@@ -46,7 +48,7 @@
         </div>
         <div class="swiper-button-next-comparison">
           <span v-html="arrowCarousel"></span>
-        </div>
+        </div> -->
       </div>
       <div class="empty-box-app" v-else>
         <img src="../assets/images/parcel.png" alt="" />
@@ -81,24 +83,25 @@ export default {
           value: "all",
           label: "Barchasi",
         },
-        {
-          value: "qwerty1",
-          label: "Others",
-        },
-        {
-          value: "qwerty2",
-          label: "Others",
-        },
-        {
-          value: "qwerty3",
-          label: "Others",
-        },
       ],
       value: "all",
       compProducts: [],
+      comparisonData: [],
     };
   },
+
+  computed: {
+    comparisonChange() {
+      return this.$store.state.comparison?.length;
+    },
+  },
   mounted() {
+    let compProductsStore = JSON.parse(localStorage.getItem("comparison"));
+    console.log(compProductsStore);
+    if (compProductsStore.length > 0) {
+      this.__GET_PRODUCTS_BY_ID({ products: compProductsStore });
+      this.__GET_PRODUCTS_COMP({ products: compProductsStore });
+    }
     const swiper = new Swiper(".swiper-comparison", {
       slidesPerView: 4,
       spaceBetween: 24,
@@ -106,7 +109,6 @@ export default {
       flipEffect: {
         slideShadows: false,
       },
-
       modules: [Navigation, Pagination, EffectCards, Autoplay],
       pagination: false,
       autoplay: {
@@ -124,35 +126,37 @@ export default {
     });
     swiper.on("activeIndexChange", (swiper) => {});
   },
-  computed: {
-    comparisonChange() {
-      return this.$store.state.comparison.length;
-    },
-  },
-  mounted() {
-    let compProductsStore = JSON.parse(localStorage.getItem("comparison"));
-    if (compProductsStore.length > 0) {
-      this.__GET_PRODUCTS_BY_ID({ products: compProductsStore });
-    }
-  },
   methods: {
     async __GET_PRODUCTS_BY_ID(dataForm) {
-      const data = await this.$store.dispatch(
-        "fetchProducts/getComparionsProductsById",
-        {
-          data: dataForm,
-          params: {
-            headers: { Language: this.$i18n.locale },
-          },
-        }
-      );
-      // this.compProducts = data?.products;
+      // getComparionsProductsById
+      const data = await this.$store.dispatch("fetchProducts/getProductsById", {
+        data: dataForm,
+        params: {
+          headers: { Language: this.$i18n.locale },
+        },
+      });
+      this.compProducts = data?.products;
+    },
+    async __GET_PRODUCTS_COMP(dataForm) {
+      //
+      const data = await this.$store.dispatch("fetchProducts/getComparionsProductsById", {
+        data: dataForm,
+        params: {
+          headers: { Language: this.$i18n.locale },
+        },
+      });
+      this.comparisonData = data?.data;
+      console.log(data);
     },
   },
   watch: {
     comparisonChange() {
       let compProducts = JSON.parse(localStorage.getItem("comparison"));
-      this.__GET_PRODUCTS_BY_ID({ products: compProducts });
+      if (compProducts.length > 0) {
+        this.__GET_PRODUCTS_BY_ID({ products: compProducts });
+      } else {
+        this.compProducts = [];
+      }
     },
   },
   components: { MainTitle, ComparisonCard, CategoriesAppCard },
@@ -160,4 +164,9 @@ export default {
 </script>
 <style lang="css">
 @import "../assets/css/pages/comparison.css";
+.page-container-body {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  grid-gap: 16px;
+}
 </style>

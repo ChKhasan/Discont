@@ -280,7 +280,9 @@
           <div class="checkout-info">
             <div class="checkout-info-header">
               <h4>Sizning buyurtmangiz</h4>
-              <h5>Savatchaga o’tish</h5>
+              <h5 class="cursor-pointer" @click="$router.push('/basket')">
+                Savatchaga o’tish
+              </h5>
             </div>
             <div class="checkout-info-body">
               <span

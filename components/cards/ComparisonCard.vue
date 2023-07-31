@@ -1,49 +1,43 @@
 <template lang="html">
   <div class="comparison-card">
     <div class="comparison-card-head">
-      <span class="comparison-delete" v-html="x"></span>
+      <span
+        class="comparison-delete"
+        @click="
+          $store.commit('addToStore', {
+            id: product?.id,
+            name: 'comparison',
+          })
+        "
+        v-html="x"
+      ></span>
       <div class="comparison-card-head-img">
-        <img src="../../assets/images/dfzgdxhg 1.png" alt="" />
+        <img :src="product?.images[0]?.md_img" alt="" />
       </div>
       <div class="comparison-card-head-body">
-        <h5>Холодильник Samsung RB 29 FERNDSA/WT</h5>
-        <h4>7 300 000 сум</h4>
-        <p><span v-html="star"></span>5.0</p>
+        <h5>{{ product?.info?.name }}</h5>
+        <h4>{{ `${product?.real_price}`.replace(/\B(?=(\d{3})+(?!\d))/g, " ") }} сум</h4>
+        <p><span v-html="star"></span>{{ product?.info?.stars }}</p>
       </div>
     </div>
     <div class="comparison-card-body">
-      <div class="comparison-card-characteristic">
-        <p>Фронтальная камера <span>20MP</span></p>
-      </div>
-      <div class="comparison-card-characteristic">
-        <p>Фронтальная камера <span>20MP</span></p>
-      </div>
-      <div class="comparison-card-characteristic">
-        <p>Фронтальная камера <span>20MP</span></p>
-      </div>
-      <div class="comparison-card-characteristic">
-        <p>Фронтальная камера <span>20MP</span></p>
-      </div>
-      <div class="comparison-card-characteristic">
-        <p>Фронтальная камера <span>20MP</span></p>
-      </div>
-      <div class="comparison-card-characteristic">
-        <p>Фронтальная камера <span>20MP</span></p>
-      </div>
-      <div class="comparison-card-characteristic">
-        <p>Фронтальная камера <span>20MP</span></p>
-      </div>
-      <div class="comparison-card-characteristic">
-        <p>Фронтальная камера <span>20MP</span></p>
-      </div>
-      <div class="comparison-card-characteristic">
-        <p>Фронтальная камера <span>20MP</span></p>
+      <div v-for="characteristicsGroup in comparison">
+        <div
+          class="comparison-card-characteristic"
+          v-for="item in characteristicsGroup?.characteristics"
+        >
+          <p>
+            {{ item?.name }}
+            <span>{{ item?.products[indexId] ? item?.products[indexId] : "-" }}</span>
+          </p>
+        </div>
       </div>
     </div>
   </div>
 </template>
 <script>
 export default {
+  props: ["product", "comparison", "indexId"],
   data() {
     return {
       star: require("../../assets/svg/product-star.svg?raw"),

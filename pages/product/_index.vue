@@ -12,8 +12,14 @@
               <div v-if="product?.info?.stars != null">
                 <a-rate class="product-rate" v-model="product.info.stars" disabled />
               </div>
+              <div v-else>
+                <a-rate class="product-rate" v-model="nolVal" disabled />
+              </div>
             </div>
-            <p class="reviews" v-if="product?.info?.stars != null">(12 ta feedbacks)</p>
+            <p class="reviews" v-if="product?.info?.stars != null">
+              ({{ product?.info?.comments.length }} ta feedbacks)
+            </p>
+            <p class="reviews" v-else>(0 ta feedbacks)</p>
           </div>
           <div class="right">
             <div class="bottom">
@@ -1071,6 +1077,7 @@ export default {
         "Ноябрь",
         "Декабрь",
       ],
+      nolVal: 0,
       skeleton: false,
       count: 1,
       value: 5,
