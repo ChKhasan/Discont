@@ -120,7 +120,16 @@
           >+</span
         >
       </div>
-      <div class="to-basket-btn" v-else @click="visibleBuy = true">
+      <div
+        class="to-basket-btn"
+        v-else
+        @click="
+          $store.commit('addToCart', {
+            obj: { id: product?.id, count: productCount },
+            name: 'cart',
+          })
+        "
+      >
         <span>В корзину</span>В корзину
       </div>
     </div>

@@ -372,7 +372,11 @@
   grid-template-columns: repeat(3, 1fr);
   grid-gap: 16px;
 }
-
+.payment-types img {
+  width: 108px;
+  height: 57px;
+  object-fit: contain;
+}
 /* .search-btn:hover svg path {
   fill: #fff;
 } */

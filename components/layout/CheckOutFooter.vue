@@ -17,8 +17,8 @@
       <div class="container_xl">
         <div class="d-flex justify-content-between">
           <p>2016-2023 © Diskont.uz Барча ҳуқуқлар ҳимояланган.</p>
-          <p>Публичная оферта</p>
-          <p>Политика конфиденциальности</p>
+          <p class="cursor-pointer">Публичная оферта</p>
+          <p class="cursor-pointer">Политика конфиденциальности</p>
           <p><span v-html="footerBottom"></span> Веб сайт сделано на компании АББА</p>
         </div>
       </div>

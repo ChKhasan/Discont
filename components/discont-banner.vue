@@ -8,18 +8,19 @@
       </div>
       <div class="discont-banner-body">
         <p>
-          Assalomu alaykum! Birinchi bor savol yuboryapman, xatolar bo‘lsa
-          oldindan uzr. Men nasiya savdo bilan shug‘ullanaman. Savolim: 1).
-          Nasiyaga mol berayotganimda xaridordan boshiga qancha pul bera
-          olishiga qarab qolgan summaga qarab so‘ngi narxni belgilayman. Masalan
-          10 so‘mlik molni boshiga 2 so‘m bersa 13 so‘m. Agar 4 bersa 11 so‘m.
-          Albatta u bilan kelishgach. Shu ishim joizmi?
+          Assalomu alaykum! Birinchi bor savol yuboryapman, xatolar bo‘lsa oldindan uzr.
+          Men nasiya savdo bilan shug‘ullanaman. Savolim: 1). Nasiyaga mol berayotganimda
+          xaridordan boshiga qancha pul bera olishiga qarab qolgan summaga qarab so‘ngi
+          narxni belgilayman. Masalan 10 so‘mlik molni boshiga 2 so‘m bersa 13 so‘m. Agar
+          4 bersa 11 so‘m. Albatta u bilan kelishgach. Shu ishim joizmi?
         </p>
       </div>
     </div>
     <div class="discont-banner-footer">
-      <div>Operator bilan aloqa</div>
-      <div>Barcha shartlari</div>
+      <div class="cursor-pointer">Operator bilan aloqa</div>
+      <div class="cursor-pointer" @click="$router.push('/info/trade-nation')">
+        Barcha shartlari
+      </div>
     </div>
   </div>
 </template>

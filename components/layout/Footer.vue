@@ -156,12 +156,12 @@
             <h4>Толов турлари</h4>
             <p>To’lov tizimi</p>
             <div class="payment-types">
-              <span>
+              <!-- <span>
                 <img src="../../assets/images/apelsin.uz.png" alt="" />
-              </span>
-              <span>
+              </span> -->
+              <!-- <span>
                 <img src="../../assets/images/uzcard.uz.png" alt="" />
-              </span>
+              </span> -->
               <span>
                 <img src="../../assets/images/click.uz.png" alt="" />
               </span>
@@ -169,8 +169,11 @@
                 <img src="../../assets/images/payme.uz.png" alt="" />
               </span>
               <span>
-                <img src="../../assets/images/humocard.uz.png" alt="" />
+                <img src="../../assets/images/uzum.png" alt="" />
               </span>
+              <!-- <span>
+                <img src="../../assets/images/humocard.uz.png" alt="" />
+              </span> -->
             </div>
           </div>
         </div>
@@ -180,8 +183,8 @@
       <div class="container_xl">
         <div class="d-flex justify-content-between">
           <p class="footer-date">2016-2023 © Diskont.uz Барча ҳуқуқлар ҳимояланган.</p>
-          <p class="foooter-bottom-text">Публичная оферта</p>
-          <p class="foooter-bottom-text">Политика конфиденциальности</p>
+          <p class="foooter-bottom-text cursor-pointer">Публичная оферта</p>
+          <p class="cursor-pointer foooter-bottom-text">Политика конфиденциальности</p>
           <p><span v-html="footerBottom"></span> Веб сайт сделано на компании АББА</p>
         </div>
       </div>
@@ -270,6 +273,10 @@ export default {
   }
   .footer .payment-types {
     margin-top: 16px;
+  }
+  .footer .payment-types img {
+    width: 108px;
+    height: 57px;
   }
   .footer-box {
     gap: 56px;
