@@ -46,9 +46,8 @@
             <h4>Ma`lumotlaringizni kiriting</h4>
           </div>
           <div class="radio-card-grid">
-            <div class="radio-card">
-              <span :class="{ 'active-radio': typePayment }" @click="typePayment = true">
-              </span>
+            <div class="radio-card cursor-pointer" @click="typePayment = true">
+              <span :class="{ 'active-radio': typePayment }"> </span>
               <div class="radio-card-body">
                 <h6>Naqd pul bilan to’lash</h6>
                 <p>
@@ -57,12 +56,8 @@
                 </p>
               </div>
             </div>
-            <div class="radio-card">
-              <span
-                :class="{ 'active-radio': !typePayment }"
-                @click="typePayment = false"
-              >
-              </span>
+            <div class="radio-card cursor-pointer" @click="typePayment = false">
+              <span :class="{ 'active-radio': !typePayment }"> </span>
               <div class="radio-card-body">
                 <h6>Bank kartasi orqali to’lash</h6>
                 <p>
@@ -181,12 +176,11 @@
             <h4>Yetkazib berish usulini tanlang</h4>
           </div>
           <div class="radio-card-grid-horizontal">
-            <div class="radio-card radio-card-horizontal">
-              <span
-                :class="{ 'active-radio': form.delivery_method == 'pickup' }"
-                @click="form.delivery_method = 'pickup'"
-              >
-              </span>
+            <div
+              class="radio-card radio-card-horizontal cursor-pointer"
+              @click="form.delivery_method = 'pickup'"
+            >
+              <span :class="{ 'active-radio': form.delivery_method == 'pickup' }"> </span>
               <div class="radio-card-body">
                 <h6>Diskont do’konlaridan borib olib ketish</h6>
                 <p>
@@ -194,11 +188,11 @@
                 </p>
               </div>
             </div>
-            <div class="radio-card radio-card-horizontal">
-              <span
-                :class="{ 'active-radio': form.delivery_method == 'courier' }"
-                @click="form.delivery_method = 'courier'"
-              >
+            <div
+              class="radio-card radio-card-horizontal cursor-pointer"
+              @click="form.delivery_method = 'courier'"
+            >
+              <span :class="{ 'active-radio': form.delivery_method == 'courier' }">
               </span>
               <div class="radio-card-body">
                 <h6>Diskont yetkazib berish xizmati</h6>
@@ -211,14 +205,16 @@
               <h6>Sizning manzillaringiz ro’yxati</h6>
               {{ $store.state.profile.address }}
               <div
-                class="radio-card radio-card-horizontal mb-3"
+                class="radio-card radio-card-horizontal mb-3 position-relative"
                 v-for="address in $store.state.profile.addresses"
                 :key="address?.id"
               >
-                <span
+                <div
+                  class="cursor-pointer"
+                  style="position: absolute; width: 70%; height: 100%"
                   @click="form.user_address_id = address?.id"
-                  :class="{ 'active-radio': form.user_address_id == address?.id }"
-                >
+                ></div>
+                <span :class="{ 'active-radio': form.user_address_id == address?.id }">
                 </span>
                 <div class="radio-card-body d-flex justify-content-between w-100">
                   <h5>

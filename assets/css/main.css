@@ -541,6 +541,9 @@ body::-webkit-scrollbar-thumb {
 .mySwiper .swiper-slide {
   width: 100% !important;
 }
+.cursor-pointer {
+  cursor: pointer;
+}
 @media (max-width: 1600px) {
   .container_xl {
     padding: 0 30px;

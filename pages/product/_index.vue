@@ -387,7 +387,7 @@
               </p>
               <p v-else class="coin">
                 <img src="@/assets/images/coin.svg" alt="" />
-                {{ (product?.real_price / $store.state.dicoin.sum_to_dicoin).toFixed(2) }}
+                {{ Math.floor(product?.real_price / $store.state.dicoin.sum_to_dicoin) }},
                 ta di coin
               </p>
             </div>

@@ -1093,9 +1093,14 @@ export default {
   align-items: center;
   justify-content: space-between;
   margin-bottom: 24px;
+  position: relative;
 }
+
 .product-show-modal-header span {
   cursor: pointer;
+  padding: 20px;
+  position: absolute;
+  right: -20px;
 }
 .product-show-modal-header h3 {
   font-family: var(--SB_600);
@@ -1195,6 +1200,13 @@ export default {
 }
 .product-show-modal-header2 {
   margin-bottom: 34px;
+  position: relative;
+}
+.product-show-modal-header2 span {
+  position: absolute;
+  cursor: pointer;
+  padding: 10px;
+  right: -10px;
 }
 .product-show-modal-header2 h3 {
   font-family: var(--SB_600);
