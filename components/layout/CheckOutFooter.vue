@@ -3,11 +3,12 @@
     <div class="footer footer-checkout">
       <div class="container_xl">
         <div class="d-flex justify-content-between">
-          <div class="chekout-footer-head d-flex">
+          <div class="hey chekout-footer-head d-flex">
             <span v-html="footerLogo"></span>
             <p>
-              2016-2023 © diskont.uz. Барча ҳуқуқлар ҳимояланган. Товарларнинг кўрсатилган
-              қиймати ва уларни сотиб олиш шартлари жорий санага амал қилади
+              2016-2023 © diskont.uz. Барча ҳуқуқлар ҳимояланган. Товарларнинг
+              кўрсатилган қиймати ва уларни сотиб олиш шартлари жорий санага
+              амал қилади
             </p>
           </div>
         </div>
@@ -15,11 +16,14 @@
     </div>
     <div class="footer-bottom">
       <div class="container_xl">
-        <div class="d-flex justify-content-between">
+        <div class="hey d-flex justify-content-between">
           <p>2016-2023 © Diskont.uz Барча ҳуқуқлар ҳимояланган.</p>
           <p>Публичная оферта</p>
           <p>Политика конфиденциальности</p>
-          <p><span v-html="footerBottom"></span> Веб сайт сделано на компании АББА</p>
+          <p>
+            <span v-html="footerBottom"></span> Веб сайт сделано на компании
+            АББА
+          </p>
         </div>
       </div>
     </div>
@@ -37,4 +41,11 @@ export default {
   },
 };
 </script>
-<style lang=""></style>
+<style>
+@media screen and (max-width: 1024px) {
+  .hey {
+    flex-direction: column;
+    gap: 16px;
+  }
+}
+</style>

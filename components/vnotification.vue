@@ -83,4 +83,32 @@ export default {
   right: 0;
   cursor: pointer;
 }
+@media screen and (max-width: 1024px) {
+  .v-notification {
+    top: 16px;
+    right: 16px;
+    padding: 16px;
+    border-radius: 12px;
+    max-width: 80%;
+  }
+
+  .v-notification-body h4 {
+    font-size: 14px;
+    line-height: 150%;
+  }
+  .v-notification-body p {
+    font-size: 12px;
+    margin-top: 4px;
+  }
+  .v-notification-body {
+    justify-content: center;
+    padding: 0;
+  }
+  .v-notification-icon {
+    width: 72px;
+  }
+  .v-notification-icon {
+    width: 90%;
+  }
+}
 </style>

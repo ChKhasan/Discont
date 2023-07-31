@@ -1,5 +1,5 @@
 <template lang="html">
-  <div style="margin-top: 170px">
+  <div class="check__wrap">
     <Header />
     <Nuxt />
     <CheckOutFooter />
@@ -19,4 +19,10 @@ export default {
   components: { Header, CheckOutFooter },
 };
 </script>
-<style lang=""></style>
+<style>
+@media screen and (max-width: 1024px) {
+  .check__wrap {
+    margin-top: 60px;
+  }
+}
+</style>

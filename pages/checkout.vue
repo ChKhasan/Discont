@@ -22,7 +22,12 @@
             <span v-else>1</span>
             <h4>Ma`lumotlaringizni kiriting</h4>
           </div>
-          <a-form-model :model="form" ref="ruleForm" :rules="rules" layout="vertical">
+          <a-form-model
+            :model="form"
+            ref="ruleForm"
+            :rules="rules"
+            layout="vertical"
+          >
             <div class="checkout-form">
               <a-form-model-item class="mb-3" prop="phone_number">
                 <a-input
@@ -33,10 +38,16 @@
               </a-form-model-item>
               <div class="checkout-input-grid">
                 <a-form-model-item class="mb-0" prop="name">
-                  <a-input placeholder="Ismingiz (to’liq)*" v-model="form.name" />
+                  <a-input
+                    placeholder="Ismingiz (to’liq)*"
+                    v-model="form.name"
+                  />
                 </a-form-model-item>
                 <a-form-model-item class="mb-0" prop="surname">
-                  <a-input placeholder="Familiyangiz (to’liq)*" v-model="form.surname" />
+                  <a-input
+                    placeholder="Familiyangiz (to’liq)*"
+                    v-model="form.surname"
+                  />
                 </a-form-model-item>
               </div>
             </div>
@@ -51,8 +62,9 @@
               <div class="radio-card-body">
                 <h6>Naqd pul bilan to’lash</h6>
                 <p>
-                  Lorem Ipsum has been the industry's standard dummy text ever since the
-                  1500s, when an unknown Lorem Ipsum has been the industry's standard
+                  Lorem Ipsum has been the industry's standard dummy text ever
+                  since the 1500s, when an unknown Lorem Ipsum has been the
+                  industry's standard
                 </p>
               </div>
             </div>
@@ -61,8 +73,9 @@
               <div class="radio-card-body">
                 <h6>Bank kartasi orqali to’lash</h6>
                 <p>
-                  Lorem Ipsum has been the industry's standard dummy text ever since the
-                  1500s, when an unknown Lorem Ipsum has been the industry's standard
+                  Lorem Ipsum has been the industry's standard dummy text ever
+                  since the 1500s, when an unknown Lorem Ipsum has been the
+                  industry's standard
                 </p>
                 <div class="pay-cards-grid" v-if="!typePayment">
                   <!-- <div class="pay-card" @click="form.payment_method = 'uzum'">
@@ -100,7 +113,9 @@
                     <img src="../assets/images/uzcard.uz.png" alt="" />
                   </div> -->
                   <div class="pay-card" @click="form.payment_method = 'click'">
-                    <span v-if="form.payment_method == 'click'" class="step-active"
+                    <span
+                      v-if="form.payment_method == 'click'"
+                      class="step-active"
                       ><svg
                         xmlns="http://www.w3.org/2000/svg"
                         width="13"
@@ -117,7 +132,9 @@
                     <img src="../assets/images/click.uz.png" alt="" />
                   </div>
                   <div class="pay-card" @click="form.payment_method = 'payme'">
-                    <span v-if="form.payment_method == 'payme'" class="step-active"
+                    <span
+                      v-if="form.payment_method == 'payme'"
+                      class="step-active"
                       ><svg
                         xmlns="http://www.w3.org/2000/svg"
                         width="13"
@@ -180,11 +197,15 @@
               class="radio-card radio-card-horizontal cursor-pointer"
               @click="form.delivery_method = 'pickup'"
             >
-              <span :class="{ 'active-radio': form.delivery_method == 'pickup' }"> </span>
+              <span
+                :class="{ 'active-radio': form.delivery_method == 'pickup' }"
+              >
+              </span>
               <div class="radio-card-body">
                 <h6>Diskont do’konlaridan borib olib ketish</h6>
                 <p>
-                  Lorem Ipsum has been the industry's standard dummy text ever since the
+                  Lorem Ipsum has been the industry's standard dummy text ever
+                  since the
                 </p>
               </div>
             </div>
@@ -192,7 +213,9 @@
               class="radio-card radio-card-horizontal cursor-pointer"
               @click="form.delivery_method = 'courier'"
             >
-              <span :class="{ 'active-radio': form.delivery_method == 'courier' }">
+              <span
+                :class="{ 'active-radio': form.delivery_method == 'courier' }"
+              >
               </span>
               <div class="radio-card-body">
                 <h6>Diskont yetkazib berish xizmati</h6>
@@ -214,9 +237,15 @@
                   style="position: absolute; width: 70%; height: 100%"
                   @click="form.user_address_id = address?.id"
                 ></div>
-                <span :class="{ 'active-radio': form.user_address_id == address?.id }">
+                <span
+                  :class="{
+                    'active-radio': form.user_address_id == address?.id,
+                  }"
+                >
                 </span>
-                <div class="radio-card-body d-flex justify-content-between w-100">
+                <div
+                  class="radio-card-body d-flex justify-content-between w-100"
+                >
                   <h5>
                     {{ address?.region?.name }}, {{ address?.district?.name }},
                     {{ address?.village?.name }}, {{ address?.address }}
@@ -260,7 +289,9 @@
                 <a-checkbox @change="onChange"> </a-checkbox>
                 <p>
                   Barcha ma`lumotlarni tasdiqlayman, <span>foydalanish</span> va
-                  <span @click="visibleConsent = true">sotib olish shartlariga</span>
+                  <span @click="visibleConsent = true"
+                    >sotib olish shartlariga</span
+                  >
                   roziman
                 </p></span
               >
@@ -268,7 +299,9 @@
                 >Sotib olishda muammoga duch keldizmi?</span
               >
             </div>
-            <div class="checkout-btn" @click="submit()">Xaridni rasmiylashtirish</div>
+            <div class="checkout-btn" @click="submit()">
+              Xaridni rasmiylashtirish
+            </div>
           </div>
         </div>
         <div class="checkout-info-block">
@@ -286,7 +319,8 @@
                       return (
                         summ +
                         item.real_price *
-                          $store.state.cart.find((elem) => elem.id == item.id)?.count
+                          $store.state.cart.find((elem) => elem.id == item.id)
+                            ?.count
                       );
                     }, 0)}`.replace(/\B(?=(\d{3})+(?!\d))/g, " ")
                   }}
@@ -367,14 +401,18 @@
                   <p>{{ product?.info?.name }}</p>
                   <span
                     >Soni:
-                    {{ $store.state.cart.find((item) => item.id == product.id)?.count }}
+                    {{
+                      $store.state.cart.find((item) => item.id == product.id)
+                        ?.count
+                    }}
                     dona</span
                   >
                   <h5>
                     {{
                       `${
                         product.real_price *
-                        $store.state.cart.find((item) => item.id == product.id)?.count
+                        $store.state.cart.find((item) => item.id == product.id)
+                          ?.count
                       }`.replace(/\B(?=(\d{3})+(?!\d))/g, " ")
                     }}
                     сўм
@@ -382,6 +420,84 @@
                 </div>
               </div>
             </div>
+          </div>
+        </div>
+        <div class="what adress-space">
+          <div v-if="form.delivery_method == 'courier'">
+            <h6>Sizning manzillaringiz ro’yxati</h6>
+            {{ $store.state.profile.address }}
+            <div
+              class="radio-card radio-card-horizontal mb-3 position-relative"
+              v-for="address in $store.state.profile.addresses"
+              :key="address?.id"
+            >
+              <div
+                class="cursor-pointer"
+                style="position: absolute; width: 70%; height: 100%"
+                @click="form.user_address_id = address?.id"
+              ></div>
+              <span
+                :class="{
+                  'active-radio': form.user_address_id == address?.id,
+                }"
+              >
+              </span>
+              <div class="radio-card-body d-flex justify-content-between w-100">
+                <h5>
+                  {{ address?.region?.name }}, {{ address?.district?.name }},
+                  {{ address?.village?.name }}, {{ address?.address }}
+                </h5>
+                <button>
+                  <span
+                    v-html="addressEdit"
+                    @click="
+                      addressEditAction({
+                        region_id: address?.region?.id,
+                        district_id: address?.district?.id,
+                        village_id: address?.village?.id,
+                        address: address?.address,
+                        id: address?.id,
+                      })
+                    "
+                  ></span>
+                </button>
+              </div>
+            </div>
+
+            <div class="add-adress-btn" @click="visible = true">
+              <span
+                ><svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="15"
+                  height="15"
+                  viewBox="0 0 15 15"
+                  fill="none"
+                >
+                  <path
+                    d="M5.82927 14.1069V0.892578H9.17017V14.1069H5.82927ZM0.892578 9.17017V5.82927H14.1069V9.17017H0.892578Z"
+                    fill="white"
+                  /></svg
+              ></span>
+              Yangi Manzil qo’shish
+            </div>
+          </div>
+          <div class="bottom-text">
+            <span>
+              <a-checkbox @change="onChange"> </a-checkbox>
+              <p>
+                Barcha ma`lumotlarni tasdiqlayman, <span>foydalanish</span> va
+                <span @click="visibleConsent = true"
+                  >sotib olish shartlariga</span
+                >
+                roziman
+              </p></span
+            >
+            <span class="checkout-prob" @click="visibleCheckoutProblem = true"
+              >Sotib olishda muammoga duch keldizmi?</span
+            >
+          </div>
+          <div class="checkout-btn" @click="submit()">
+            Xaridni rasmiylashtirish
           </div>
         </div>
       </div>
@@ -436,7 +552,10 @@
               v-model="formAddress.region_id"
               placeholder="Viloyatni tanlang"
             >
-              <a-select-option v-for="(region, index) in regions" :key="region.id">
+              <a-select-option
+                v-for="(region, index) in regions"
+                :key="region.id"
+              >
                 {{ region.name }}
               </a-select-option>
             </a-select>
@@ -452,7 +571,10 @@
                 v-model="formAddress.district_id"
                 placeholder="Shaharni tanlang"
               >
-                <a-select-option v-for="(city, index) in districts" :key="city.id">
+                <a-select-option
+                  v-for="(city, index) in districts"
+                  :key="city.id"
+                >
                   {{ city.name }}
                 </a-select-option>
               </a-select>
@@ -467,7 +589,10 @@
                 v-model="formAddress.village_id"
                 placeholder="Tumanni tanlang"
               >
-                <a-select-option v-for="(category, index) in villages" :key="category.id">
+                <a-select-option
+                  v-for="(category, index) in villages"
+                  :key="category.id"
+                >
                   {{ category.name }}
                 </a-select-option>
               </a-select>
@@ -656,7 +781,11 @@
     </a-modal>
     <a-modal
       v-model="visibleCheckoutProblem"
-      :body-style="{ padding: '32px', borderRadius: '14px', overflow: 'hidden' }"
+      :body-style="{
+        padding: '32px',
+        borderRadius: '14px',
+        overflow: 'hidden',
+      }"
       centered
       :closable="false"
       width="571px"
@@ -765,7 +894,9 @@ export default {
     this.__GET_REGIONS();
     if (storeProducts.length > 0) {
       this.skeletonLoad = true;
-      await this.__GET_PRODUCTS_BY_ID({ products: storeProducts.map((item) => item.id) });
+      await this.__GET_PRODUCTS_BY_ID({
+        products: storeProducts.map((item) => item.id),
+      });
       const dicoinPrice = this.products
         .filter((elem) => elem.dicoin)
         .reduce((summ, item) => {
@@ -790,16 +921,21 @@ export default {
         dicoin: this.dicoinSumm ? this.dicoinSumm : null,
         products: this.products.map((item) => {
           return {
-            count: this.$store.state.cart.find((elem) => elem.id == item.id)?.count,
+            count: this.$store.state.cart.find((elem) => elem.id == item.id)
+              ?.count,
             product_id: item.id,
             price: item.price,
           };
         }),
-        phone_number: this.form.phone_number.split(" ").join("").replace("+", ""),
+        phone_number: this.form.phone_number
+          .split(" ")
+          .join("")
+          .replace("+", ""),
         amount: this.products.reduce((summ, item) => {
           return (
             summ +
-            item.price * this.$store.state.cart.find((elem) => elem.id == item.id)?.count
+            item.price *
+              this.$store.state.cart.find((elem) => elem.id == item.id)?.count
           );
         }, 0),
       };
@@ -810,8 +946,12 @@ export default {
     addressEditAction(obj) {
       this.addressEditId = obj.id;
       this.visible = true;
-      this.districts = this.regions.find((item) => item.id == obj.region_id).districts;
-      this.villages = this.districts.find((item) => item.id == obj.district_id).villages;
+      this.districts = this.regions.find(
+        (item) => item.id == obj.region_id
+      ).districts;
+      this.villages = this.districts.find(
+        (item) => item.id == obj.district_id
+      ).villages;
       this.formAddress = {
         region_id: obj.region_id,
         district_id: obj.district_id,
@@ -836,7 +976,9 @@ export default {
       this.visibleCheckoutProblem = false;
     },
     async __GET_PROFILE_INFO() {
-      const profileData = await this.$store.dispatch("fetchAuth/getProfileInfo");
+      const profileData = await this.$store.dispatch(
+        "fetchAuth/getProfileInfo"
+      );
       this.profile = profileData?.user;
       this.form = {
         ...this.form,
@@ -880,7 +1022,10 @@ export default {
     },
     async __POST_ORDER(formData) {
       try {
-        const data = await this.$store.dispatch("fetchAuth/postOrder", formData);
+        const data = await this.$store.dispatch(
+          "fetchAuth/postOrder",
+          formData
+        );
         if (data?.redirect_url) {
           window.location.replace(data?.redirect_url);
           localStorage.setItem("cart", JSON.stringify([]));
@@ -897,7 +1042,10 @@ export default {
     async __POST_ADDRESSS(formData) {
       try {
         console.log(formData);
-        const data = await this.$store.dispatch("fetchRegions/postAddress", formData);
+        const data = await this.$store.dispatch(
+          "fetchRegions/postAddress",
+          formData
+        );
         this.$store.dispatch("profileInfo");
         this.visible = false;
       } catch (e) {
@@ -1157,5 +1305,35 @@ export default {
 }
 .active_dicoin span {
   color: #000;
+}
+
+.what {
+  display: none;
+}
+@media screen and (max-width: 1024px) {
+  .adress-space {
+    display: none;
+  }
+  .what {
+    display: block;
+  }
+  .checkout-info-product-card .checkout-info-product-card-img {
+    width: 80px;
+    height: 80px;
+  }
+  .checkout-info-product-card {
+    display: grid;
+    grid-template-columns: 2fr 8fr;
+    gap: 24px;
+  }
+  .checkout-info-product-card-body {
+    padding: 0;
+  }
+  .checkout-info-product-card-body {
+    gap: 14px;
+  }
+  .chekout-footer-head p {
+    margin: 0;
+  }
 }
 </style>

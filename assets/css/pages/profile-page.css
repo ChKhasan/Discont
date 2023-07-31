@@ -224,3 +224,50 @@
 .personal-info-save-btn span {
   margin-right: 17px;
 }
+@media screen and (max-width: 1024px) {
+  .personal-info {
+    padding-bottom: 64px;
+  }
+  .profile-page-grid,
+  .personal-info-grid,
+  .personal-info-card-body {
+    grid-template-columns: repeat(1, 1fr);
+  }
+  .main-title h2 {
+    margin-bottom: 24px;
+  }
+  .personal-info-card-header2 {
+    flex-direction: column;
+    max-height: none;
+    align-items: flex-start !important;
+    gap: 16px;
+  }
+  .form-grid-3 {
+    grid-template-columns: repeat(1, 1fr);
+    gap: 16px;
+  }
+  .form-item label {
+    margin-bottom: 0 !important;
+  }
+  .my-orders-card-header {
+    flex-direction: column;
+  }
+  .my-orders-card {
+    padding: 16px;
+    border-radius: 16px;
+  }
+  .my-orders-card-header p {
+    margin-bottom: 18px;
+  }
+  .order-product-body {
+    padding-left: 14px;
+  }
+  .order-product-body p {
+    font-size: 13px;
+  }
+  .my-orders-card-footer {
+    grid-template-columns: repeat(1, 1fr);
+    gap: 16px;
+    margin-top: 10px;
+  }
+}

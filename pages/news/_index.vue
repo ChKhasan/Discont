@@ -19,10 +19,8 @@
           <img v-else src="../../assets/images/image 317.png" alt="" />
         </div>
         <div class="post-page-info">
-          <h1>{{ post?.title?.ru }}</h1>
-          <p>
-            {{ post?.desc?.ru }}
-          </p>
+          <h1>{{ post?.title }}</h1>
+          <p v-html="post?.desc"></p>
         </div>
       </div>
       <div class="last-news">
@@ -96,7 +94,13 @@ export default {
   methods: {
     moment,
   },
-  components: { MainTitle, CategoriesAppCard, ProductCard, PostsCarousel, PostCard },
+  components: {
+    MainTitle,
+    CategoriesAppCard,
+    ProductCard,
+    PostsCarousel,
+    PostCard,
+  },
 };
 </script>
 <style lang="css">
@@ -124,6 +128,7 @@ export default {
   line-height: 130%;
   color: #000000;
   margin-bottom: 24px;
+  margin-top: 12px;
 }
 .post-page-info p {
   font-family: var(--SB_400);

@@ -1,5 +1,5 @@
 <template lang="html">
-  <div class="post-card">
+  <div @click="$router.push(`/news/${post?.slug}`)" class="post-card">
     <div class="post-card-img">
       <img v-if="post?.sm_img" :src="post?.sm_img" alt="" />
       <img v-else src="../../assets/images/Rectangle 24083.png" alt="" />
@@ -9,7 +9,7 @@
         {{ moment(post?.created_at).format("DD.MM.YYYY") }}
       </p>
       <p v-else>27.03.2023</p>
-      <h6 v-if="post?.title" @click="$router.push(`/news/${post?.slug}`)">
+      <h6 v-if="post?.title">
         {{ post?.title }}
       </h6>
       <h6 v-else>Apple запатентовала складной экран смартфона.</h6>

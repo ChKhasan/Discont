@@ -128,7 +128,13 @@
               viewBox="0 0 31 31"
               fill="none"
             >
-              <circle opacity="0.6" cx="15.5" cy="15.5" r="15.5" fill="#E3F1FF" />
+              <circle
+                opacity="0.6"
+                cx="15.5"
+                cy="15.5"
+                r="15.5"
+                fill="#E3F1FF"
+              />
               <path
                 d="M9.90781 20.9801C10.4619 21.5342 11.3602 21.5342 11.9143 20.9801L20.868 12.0264C21.422 11.4723 21.422 10.574 20.868 10.0199C20.3139 9.46584 19.4155 9.46584 18.8615 10.0199L9.90781 18.9736C9.35373 19.5277 9.35373 20.426 9.90781 20.9801ZM18.8541 20.9801C19.4102 21.5362 20.3118 21.5362 20.868 20.9801C21.4241 20.4239 21.4241 19.5223 20.868 18.9662L11.9217 10.0199C11.3656 9.4638 10.4639 9.4638 9.90781 10.0199C9.35168 10.576 9.35168 11.4777 9.90781 12.0338L18.8541 20.9801Z"
                 fill="#0071BC"
@@ -137,8 +143,8 @@
           </div>
           <h4 class="title">Omadingizni sinab ko’ring!</h4>
           <p class="sub">
-            Diskont dokonida royxatdan oting va sovgalar yutib olisng royxatdan oting va
-            sovgalar yutib olisng
+            Diskont dokonida royxatdan oting va sovgalar yutib olisng royxatdan
+            oting va sovgalar yutib olisng
           </p>
 
           <form action="">
@@ -167,9 +173,9 @@ import Header from "../components/layout/Header.vue";
 export default {
   data() {
     return {
-      buyToast: false,
-      likeToast: false,
-      compToast: false,
+      buyToast: true,
+      likeToast: true,
+      compToast: true,
       afterReload: false,
       iconBuy: require("../assets/Buy.svg?raw"),
       iconLike: require("../assets/svg/toast-like.svg?raw"),
@@ -215,7 +221,8 @@ export default {
       let button = document.getElementById("button");
       let value = Math.ceil(Math.random() * 3600);
 
-      wheel.style.transform = " translate(-50%, -50%) rotate( " + value + "deg  )";
+      wheel.style.transform =
+        " translate(-50%, -50%) rotate( " + value + "deg  )";
       this.detectRange(value);
     },
     detectRange(value) {

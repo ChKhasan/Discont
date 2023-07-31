@@ -436,7 +436,9 @@
 .ant-select-dropdown-menu-item:last-child {
   border-bottom: none;
 }
-.ant-select-dropdown-menu-item:hover:not(.ant-select-dropdown-menu-item-disabled) {
+.ant-select-dropdown-menu-item:hover:not(
+    .ant-select-dropdown-menu-item-disabled
+  ) {
   background-color: #fff !important;
   font-family: var(--SB_400) !important;
   font-style: normal;
@@ -478,4 +480,34 @@
 }
 .adress-modal-btn {
   margin-top: 40px;
+}
+@media screen and (max-width: 1024px) {
+  .checkout-container {
+    grid-template-columns: repeat(1, 1fr);
+  }
+  .radio-card-grid-horizontal,
+  .checkout-input-grid {
+    grid-template-columns: repeat(1, 1fr);
+  }
+  .checkout-info {
+    padding: 0;
+    border: none;
+  }
+  .ant-form-vertical .ant-form-item {
+    padding-bottom: 0;
+  }
+  .checkout-input-grid {
+    gap: 16px;
+  }
+  .radio-card-body p {
+    display: none;
+  }
+  .radio-card > span {
+    margin-right: 18px;
+  }
+  .checkout_dicoin_input {
+    display: grid !important;
+    grid-template-columns: repeat(1, 1fr);
+    gap: 12px;
+  }
 }
