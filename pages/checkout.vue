@@ -418,10 +418,10 @@
                 </p>
               </div>
               <button
-                @click="sendDicoin = true"
+                @click="currentDicoin"
                 :class="{
                   disabled:
-                    priceWithDiCoin < dicoinSumm * $store.state.dicoin?.dicoin_to_sum,
+                    priceWithDiCoin < dicoinSumm * $store.state.dicoin?.dicoin_to_sum || $store.state.profile?.dicoin?.quantity < dicoinSumm,
                 }"
               >
                 Qabul qilish
@@ -715,7 +715,7 @@
             fill="#009A10"
           />
         </svg>
-        <p>Заказ №32839 оформлен. Мы свяжемся с вами в ближайшее время</p>
+        <p>Заказ №{{ orderId }} оформлен. Мы свяжемся с вами в ближайшее время</p>
         <div class="os-vmodal-btns">
           <button class="vmodal-btn os-vmodal-btn-close" @click="handleOk">
             Продолжить покупку
@@ -803,6 +803,7 @@ export default {
       villages: [],
       products: [],
       profile: {},
+      orderId: null,
       formAddress: {
         region_id: null,
         district_id: null,
@@ -878,6 +879,10 @@ export default {
       if (!txt.match(/[A-Za-z0-9&.]/)) {
         return false;
       }
+    },
+    currentDicoin() {
+      this.sendDicoin = true;
+      this.form.dicoin = this.dicoinSumm;
     },
     submit() {
       const data = {
@@ -983,6 +988,7 @@ export default {
           this.$store.commit("reloadStore");
         } else {
           this.visibleSuccess = true;
+          this.orderId = data?.order?.id;
           localStorage.setItem("cart", JSON.stringify([]));
           this.$store.commit("reloadStore");
         }
