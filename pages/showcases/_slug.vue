@@ -217,18 +217,6 @@ export default {
           value: "all",
           label: "Barchasi",
         },
-        {
-          value: "qwerty1",
-          label: "Others",
-        },
-        {
-          value: "qwerty2",
-          label: "Others",
-        },
-        {
-          value: "qwerty3",
-          label: "Others",
-        },
       ],
     };
   },

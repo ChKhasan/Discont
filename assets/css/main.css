@@ -544,6 +544,16 @@ body::-webkit-scrollbar-thumb {
 .cursor-pointer {
   cursor: pointer;
 }
+.checkout-form input:focus {
+  border-color: var(--color_dark_green) !important;
+  outline: 0;
+  box-shadow: 0 0 0 2px rgba(9, 69, 79, 0.2) !important;
+}
+.checkout-form .ant-input:focus {
+  border-color: var(--color_dark_green) !important;
+  outline: 0;
+  box-shadow: 0 0 0 2px rgba(9, 69, 79, 0.2) !important;
+}
 @media (max-width: 1600px) {
   .container_xl {
     padding: 0 30px;

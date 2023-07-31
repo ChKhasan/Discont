@@ -344,14 +344,26 @@
               <p class="lil">Кол-во</p>
               <div class="grid">
                 <div class="number">
-                  <button @click="$store.commit('productCountDown', { id: product?.id })">
+                  <button
+                    @click="
+                      $store.state.cart.find((item) => item.id == product.id)?.count >
+                        1 && $store.commit('productCountDown', { id: product?.id })
+                    "
+                  >
                     <a-icon type="minus" />
                   </button>
                   {{ $store.state.cart.find((item) => item.id == product?.id)?.count }}
-                  <button @click="$store.commit('productCountUp', { id: product?.id })">
+                  <button
+                    @click="
+                      $store.state.cart.find((item) => item.id == product?.id)?.count <
+                        product?.stock &&
+                        $store.commit('productCountUp', { id: product?.id })
+                    "
+                  >
                     <a-icon type="plus" />
                   </button>
                 </div>
+                <p>Осталось всего {{ product?.stock }}</p>
               </div>
             </div>
           </div>
@@ -380,14 +392,15 @@
                 so’m
               </p>
 
-              <p class="delivery">Yetkazib berish - 0 so’m (21-may)</p>
+              <p class="delivery">Yetkazib berish narxi viloyatga qarab belgilanadi</p>
 
               <p class="coin" v-if="skeleton">
                 <b-skeleton width="150px" height="100%"> </b-skeleton>
               </p>
               <p v-else class="coin">
                 <img src="@/assets/images/coin.svg" alt="" />
-                {{ Math.floor(product?.real_price / $store.state.dicoin.sum_to_dicoin) }},
+                +
+                {{ Math.floor(product?.real_price / $store.state.dicoin.sum_to_dicoin) }}
                 ta di coin
               </p>
             </div>
@@ -627,6 +640,7 @@
             <div class="reviews__left">
               <div
                 class="review"
+                v-if="product?.info?.comments.length > 0"
                 v-for="comment in product?.info?.comments"
                 :key="comment?.id"
               >
@@ -662,6 +676,10 @@
                     {{ comment?.comment }}
                   </p>
                 </div>
+              </div>
+              <div class="comments-empty" v-if="product?.info?.comments.length == 0">
+                <img src="../../assets/images/comments-empty.png" alt="" />
+                <h4>Mahsulotlarga baho qo’yilmagan</h4>
               </div>
             </div>
             <div class="reviews__right">
@@ -793,7 +811,7 @@
                     </svg>
                   </button>
                   {{ formOc.count }}
-                  <button @click="formOc.count++">
+                  <button @click="formOc.count < product?.stock && formOc.count++">
                     <svg
                       xmlns="http://www.w3.org/2000/svg"
                       width="12"
@@ -1071,7 +1089,7 @@ export default {
       formComment: {
         product_id: null,
         comment: "",
-        stars: 0,
+        stars: 5,
       },
       formOc: {
         name: "",
@@ -1433,6 +1451,19 @@ export default {
   font-size: 14px;
   line-height: 17px;
   margin-bottom: 14px;
+}
+.counter .grid {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+.counter .grid > p {
+  color: #5d5d5f;
+  font-family: var(--SB_400);
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 20px; /* 142.857% */
 }
 .question,
 .answer {

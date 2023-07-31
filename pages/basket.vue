@@ -88,7 +88,12 @@
                         /></svg
                     ></span>
                     {{ $store.state.cart.find((item) => item.id == product.id)?.count }}
-                    <span @click="$store.commit('productCountUp', { id: product.id })"
+                    <span
+                      @click="
+                        $store.state.cart.find((item) => item.id == product?.id)?.count <
+                          product?.stock &&
+                          $store.commit('productCountUp', { id: product.id })
+                      "
                       ><svg
                         width="11"
                         height="11"
@@ -132,8 +137,8 @@
                   <div class="basket-card-price">
                     <span
                       >{{
-                        (product?.real_price / $store.state.dicoin.sum_to_dicoin).toFixed(
-                          2
+                        Math.floor(
+                          product?.real_price / $store.state.dicoin.sum_to_dicoin
                         )
                       }}
                       ta dicoin</span
@@ -214,12 +219,17 @@
           <div class="basket-coin-block">
             <img src="../assets/images/basket-2coin.png" alt="" />
             <h3>
+              +
               {{
-                products
-                  .reduce((sum, item) => {
-                    return sum + item.real_price / $store.state.dicoin.sum_to_dicoin;
+                Math.floor(
+                  products.reduce((sum, item) => {
+                    return (
+                      sum +
+                      Math.floor(item.real_price / $store.state.dicoin.sum_to_dicoin) *
+                        $store.state.cart.find((item) => item.id == item.id)?.count
+                    );
                   }, 0)
-                  .toFixed(2)
+                )
               }}
               ta Dicoin
             </h3>

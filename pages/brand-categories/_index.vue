@@ -181,18 +181,6 @@ export default {
           value: "all",
           label: "Barchasi",
         },
-        {
-          value: "qwerty1",
-          label: "Goodman",
-        },
-        {
-          value: "qwerty2",
-          label: "Goodman",
-        },
-        {
-          value: "qwerty3",
-          label: "Goodman",
-        },
       ],
     };
   },
