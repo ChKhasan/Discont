@@ -1,5 +1,5 @@
 <template lang="html">
-  <div class="check__wrap">
+  <div class="layout-back">
     <Header />
     <Nuxt />
     <CheckOutFooter />

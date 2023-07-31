@@ -6,11 +6,8 @@
           <div class="mobile-menu">
             <div class="footer_menu footer_drop">
               <h4 @click="activeDrop = 1">
-                Компания
-                <span
-                  v-html="dropArrow"
-                  :class="{ rotate180: activeDrop == 1 }"
-                ></span>
+                Kompaniya
+                <span v-html="dropArrow" :class="{ rotate180: activeDrop == 1 }"></span>
               </h4>
               <ul
                 class="footer-drop-board mt-0"
@@ -18,19 +15,15 @@
               >
                 <div class="mt-3">
                   <li>
-                    <nuxt-link :to="localePath('/info/about-b2b')"
-                      >B2B савдоси</nuxt-link
-                    >
+                    <nuxt-link :to="localePath('/info/about-b2b')">B2B savdosi</nuxt-link>
                   </li>
                   <li>
                     <nuxt-link :to="localePath('/info/about-us')"
-                      >Биз ҳақимизда</nuxt-link
+                      >Biz haqimizda</nuxt-link
                     >
                   </li>
                   <li>
-                    <nuxt-link :to="localePath('/')"
-                      >Янгиликлар ва шарҳлар</nuxt-link
-                    >
+                    <nuxt-link :to="localePath('/')">Yangiliklar va sharxlar</nuxt-link>
                   </li>
                 </div>
               </ul>
@@ -50,15 +43,15 @@
                 <div class="mt-3">
                   <li>
                     <nuxt-link :to="localePath('/info/delivery')"
-                      >Етказиб бериш</nuxt-link
+                      >Yetkazib berish</nuxt-link
                     >
                   </li>
                   <li>
-                    <nuxt-link :to="localePath('/')">Бонус тизими</nuxt-link>
+                    <nuxt-link :to="localePath('/')">Bonus tizimi</nuxt-link>
                   </li>
                   <li>
                     <nuxt-link :to="localePath('/info/working')"
-                      >Дисконтда ишлаш</nuxt-link
+                      >Diskontda ishlash</nuxt-link
                     >
                   </li>
                 </div>
@@ -69,7 +62,7 @@
                 @click="activeDrop = 3"
                 :class="{ rotate180: activeDrop == 3, 'mt-0': activeDrop != 3 }"
               >
-                Ҳаридорга ёрдам <span v-html="dropArrow"></span>
+                Haridorga yordam <span v-html="dropArrow"></span>
               </h4>
               <ul
                 class="footer-drop-board mt-0"
@@ -78,23 +71,19 @@
                 <div class="mt-3">
                   <li>
                     <nuxt-link :to="localePath('/info/trade-nation')"
-                      >Муддатли толов</nuxt-link
+                      >Muddatli to'lov</nuxt-link
                     >
                   </li>
                   <li>
-                    <nuxt-link :to="localePath('/')"
-                      >Махсулотни кайтариш</nuxt-link
-                    >
+                    <nuxt-link :to="localePath('/')">Mahsulotni qaytarish</nuxt-link>
                   </li>
                   <li>
                     <nuxt-link :to="localePath('/info/warranty')"
-                      >Махсулотлар учун кафолат</nuxt-link
+                      >mahsulotlar uchun kafolat</nuxt-link
                     >
                   </li>
                   <li>
-                    <nuxt-link :to="localePath('/')"
-                      >Коп сораладиган саволлар</nuxt-link
-                    >
+                    <nuxt-link :to="localePath('/')">Ko'p beriladigan savollar</nuxt-link>
                   </li>
                 </div>
               </ul>
@@ -115,22 +104,16 @@
             >
           </div>
           <div class="footer_menu footer_list">
-            <h4>Компания</h4>
+            <h4>Kompaniya</h4>
             <ul>
               <li>
-                <nuxt-link :to="localePath('/info/about-b2b')"
-                  >B2B савдоси</nuxt-link
-                >
+                <nuxt-link :to="localePath('/info/about-b2b')">B2B savdosi</nuxt-link>
               </li>
               <li>
-                <nuxt-link :to="localePath('/info/about-us')"
-                  >Биз ҳақимизда</nuxt-link
-                >
+                <nuxt-link :to="localePath('/info/about-us')">Biz haqimizda</nuxt-link>
               </li>
               <li>
-                <nuxt-link :to="localePath('/')"
-                  >Янгиликлар ва шарҳлар</nuxt-link
-                >
+                <nuxt-link :to="localePath('/')">Yangiliklar va sharxlar</nuxt-link>
               </li>
             </ul>
           </div>
@@ -138,45 +121,39 @@
             <h4>Маълумот</h4>
             <ul>
               <li>
-                <nuxt-link :to="localePath('/info/delivery')"
-                  >Етказиб бериш</nuxt-link
-                >
+                <nuxt-link :to="localePath('/info/delivery')">Yordam berish</nuxt-link>
               </li>
               <li>
-                <nuxt-link :to="localePath('/')">Бонус тизими</nuxt-link>
+                <nuxt-link :to="localePath('/')">Bonus tizimi</nuxt-link>
               </li>
               <li>
-                <nuxt-link :to="localePath('/info/working')"
-                  >Дисконтда ишлаш</nuxt-link
-                >
+                <nuxt-link :to="localePath('/info/working')">Diskontda ishlash</nuxt-link>
               </li>
             </ul>
           </div>
           <div class="footer_menu footer_list">
-            <h4>Ҳаридорга ёрдам</h4>
+            <h4>Haridorga yordam</h4>
             <ul>
               <li>
                 <nuxt-link :to="localePath('/info/trade-nation')"
-                  >Муддатли толов</nuxt-link
+                  >Muddatli to'lov</nuxt-link
                 >
               </li>
               <li>
-                <nuxt-link :to="localePath('/')">Махсулотни кайтариш</nuxt-link>
+                <nuxt-link :to="localePath('/')">Mahsulotni qaytarish</nuxt-link>
               </li>
               <li>
                 <nuxt-link :to="localePath('/info/warranty')"
-                  >Махсулотлар учун кафолат</nuxt-link
+                  >Mahsulotlar uchun kafolat</nuxt-link
                 >
               </li>
               <li>
-                <nuxt-link :to="localePath('/')"
-                  >Коп сораладиган саволлар</nuxt-link
-                >
+                <nuxt-link :to="localePath('/')">Ko'p beriladigan savollar</nuxt-link>
               </li>
             </ul>
           </div>
           <div class="footer_menu footer-payment">
-            <h4>Толов турлари</h4>
+            <h4>To'lov turlari</h4>
             <p>To’lov tizimi</p>
             <div class="payment-types">
               <!-- <span>
@@ -205,17 +182,10 @@
     <div class="footer-bottom">
       <div class="container_xl">
         <div class="d-flex justify-content-between">
-          <p class="footer-date">
-            2016-2023 © Diskont.uz Барча ҳуқуқлар ҳимояланган.
-          </p>
+          <p class="footer-date">2016-2023 © Diskont.uz Barcha huquqlar himoyalangan.</p>
           <p class="foooter-bottom-text cursor-pointer">Публичная оферта</p>
-          <p class="cursor-pointer foooter-bottom-text">
-            Политика конфиденциальности
-          </p>
-          <p>
-            <span v-html="footerBottom"></span> Веб сайт сделано на компании
-            АББА
-          </p>
+          <p class="cursor-pointer foooter-bottom-text">Политика конфиденциальности</p>
+          <p><span v-html="footerBottom"></span> Веб сайт сделано на компании АББА</p>
         </div>
       </div>
     </div>

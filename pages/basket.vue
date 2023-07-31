@@ -64,19 +64,14 @@
                   </p>
                   <p>
                     Brend:
-                    {{
-                      product?.info?.brand?.name
-                        ? product?.info?.brand?.name
-                        : "---"
-                    }}
+                    {{ product?.info?.brand?.name ? product?.info?.brand?.name : "---" }}
                   </p>
                 </div>
                 <div class="basket-card-count">
                   <div class="basket-count-btn">
                     <span
                       @click="
-                        $store.state.cart.find((item) => item.id == product.id)
-                          ?.count > 1
+                        $store.state.cart.find((item) => item.id == product.id)?.count > 1
                           ? $store.commit('productCountDown', {
                               id: product.id,
                             })
@@ -95,14 +90,11 @@
                         /></svg
                     ></span>
 
-                    {{
-                      $store.state.cart.find((item) => item.id == product.id)
-                        ?.count
-                    }}
+                    {{ $store.state.cart.find((item) => item.id == product.id)?.count }}
                     <span
                       @click="
-                        $store.state.cart.find((item) => item.id == product?.id)
-                          ?.count < product?.stock &&
+                        $store.state.cart.find((item) => item.id == product?.id)?.count <
+                          product?.stock &&
                           $store.commit('productCountUp', { id: product.id })
                       "
                       ><svg
@@ -120,12 +112,7 @@
                     </span>
                   </div>
                   <p>
-                    {{
-                      `${product?.real_price}`.replace(
-                        /\B(?=(\d{3})+(?!\d))/g,
-                        " "
-                      )
-                    }}
+                    {{ `${product?.real_price}`.replace(/\B(?=(\d{3})+(?!\d))/g, " ") }}
                     so’mdan/donasi
                   </p>
                 </div>
@@ -160,8 +147,7 @@
                     <span
                       >{{
                         Math.floor(
-                          product?.real_price /
-                            $store.state.dicoin.sum_to_dicoin
+                          product?.real_price / $store.state.dicoin.sum_to_dicoin
                         )
                       }}
                       ta dicoin</span
@@ -199,9 +185,7 @@
                     <p class="brand">
                       Brend:
                       {{
-                        product?.info?.brand?.name
-                          ? product?.info?.brand?.name
-                          : "---"
+                        product?.info?.brand?.name ? product?.info?.brand?.name : "---"
                       }}
                     </p>
                   </div>
@@ -254,8 +238,7 @@
                   <div class="basket-count-btn">
                     <span
                       @click="
-                        $store.state.cart.find((item) => item.id == product.id)
-                          ?.count > 1
+                        $store.state.cart.find((item) => item.id == product.id)?.count > 1
                           ? $store.commit('productCountDown', {
                               id: product.id,
                             })
@@ -273,14 +256,8 @@
                           fill="#1F8A70"
                         /></svg
                     ></span>
-                    {{
-                      $store.state.cart.find((item) => item.id == product.id)
-                        ?.count
-                    }}
-                    <span
-                      @click="
-                        $store.commit('productCountUp', { id: product.id })
-                      "
+                    {{ $store.state.cart.find((item) => item.id == product.id)?.count }}
+                    <span @click="$store.commit('productCountUp', { id: product.id })"
                       ><svg
                         width="11"
                         height="11"
@@ -315,8 +292,7 @@
                       return (
                         summ +
                         item.real_price *
-                          $store.state.cart.find((elem) => elem.id == item.id)
-                            ?.count
+                          $store.state.cart.find((elem) => elem.id == item.id)?.count
                       );
                     }, 0)
                     .toFixed(2)}`.replace(/\B(?=(\d{3})+(?!\d))/g, " ")
@@ -338,8 +314,7 @@
                         return (
                           summ +
                           item.real_price *
-                            $store.state.cart.find((elem) => elem.id == item.id)
-                              ?.count
+                            $store.state.cart.find((elem) => elem.id == item.id)?.count
                         );
                       }, 0)
                       .toFixed(2)}`.replace(/\B(?=(\d{3})+(?!\d))/g, " ")
@@ -360,9 +335,7 @@
                 <p>25 000 сум</p></span
               >
             </div>
-            <div class="basket-checkout-btn" @click="checkoutCheck()">
-              Оформить заказ
-            </div>
+            <div class="basket-checkout-btn" @click="checkoutCheck()">Оформить заказ</div>
             <div class="basket-checkout-bottom">
               <p>
                 Нажимая 'Оформить заказ', я соглашаюсь с
@@ -379,11 +352,8 @@
                   products.reduce((sum, item) => {
                     return (
                       sum +
-                      Math.floor(
-                        item.real_price / $store.state.dicoin.sum_to_dicoin
-                      ) *
-                        $store.state.cart.find((item) => item.id == item.id)
-                          ?.count
+                      Math.floor(item.real_price / $store.state.dicoin.sum_to_dicoin) *
+                        $store.state.cart.find((item) => item.id == item.id)?.count
                     );
                   }, 0)
                 )
@@ -446,17 +416,14 @@ export default {
   methods: {
     async __GET_PRODUCTS_BY_ID(dataForm) {
       try {
-        const data = await this.$store.dispatch(
-          "fetchProducts/getProductsById",
-          {
-            data: dataForm,
-            params: {
-              headers: {
-                Language: this.$i18n.locale,
-              },
+        const data = await this.$store.dispatch("fetchProducts/getProductsById", {
+          data: dataForm,
+          params: {
+            headers: {
+              Language: this.$i18n.locale,
             },
-          }
-        );
+          },
+        });
         this.products = data?.products;
         this.skeletonLoad = false;
       } catch (e) {
@@ -800,6 +767,9 @@ export default {
   left: 5px;
   top: -20px;
 }
+.mobile__card {
+  display: none;
+}
 @media screen and (max-width: 1024px) {
   .basket-page-body {
     grid-template-columns: repeat(1, 1fr);
@@ -817,6 +787,7 @@ export default {
     gap: 32px;
   }
   .mobile__card {
+    display: block;
   }
   .mobile__card .top {
     display: flex;

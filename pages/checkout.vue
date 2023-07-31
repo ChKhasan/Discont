@@ -22,12 +22,7 @@
             <span v-else>1</span>
             <h4>Ma`lumotlaringizni kiriting</h4>
           </div>
-          <a-form-model
-            :model="form"
-            ref="ruleForm"
-            :rules="rules"
-            layout="vertical"
-          >
+          <a-form-model :model="form" ref="ruleForm" :rules="rules" layout="vertical">
             <div class="checkout-form">
               <a-form-model-item class="mb-3" prop="phone_number">
                 <input
@@ -39,16 +34,10 @@
               </a-form-model-item>
               <div class="checkout-input-grid">
                 <a-form-model-item class="mb-0" prop="name">
-                  <a-input
-                    placeholder="Ismingiz (to’liq)*"
-                    v-model="form.name"
-                  />
+                  <a-input placeholder="Ismingiz (to’liq)*" v-model="form.name" />
                 </a-form-model-item>
                 <a-form-model-item class="mb-0" prop="surname">
-                  <a-input
-                    placeholder="Familiyangiz (to’liq)*"
-                    v-model="form.surname"
-                  />
+                  <a-input placeholder="Familiyangiz (to’liq)*" v-model="form.surname" />
                 </a-form-model-item>
               </div>
             </div>
@@ -63,9 +52,8 @@
               <div class="radio-card-body">
                 <h6>Naqd pul bilan to’lash</h6>
                 <p>
-                  Lorem Ipsum has been the industry's standard dummy text ever
-                  since the 1500s, when an unknown Lorem Ipsum has been the
-                  industry's standard
+                  Lorem Ipsum has been the industry's standard dummy text ever since the
+                  1500s, when an unknown Lorem Ipsum has been the industry's standard
                 </p>
               </div>
             </div>
@@ -74,9 +62,8 @@
               <div class="radio-card-body">
                 <h6>Bank kartasi orqali to’lash</h6>
                 <p>
-                  Lorem Ipsum has been the industry's standard dummy text ever
-                  since the 1500s, when an unknown Lorem Ipsum has been the
-                  industry's standard
+                  Lorem Ipsum has been the industry's standard dummy text ever since the
+                  1500s, when an unknown Lorem Ipsum has been the industry's standard
                 </p>
                 <div class="pay-cards-grid" v-if="!typePayment">
                   <!-- <div class="pay-card" @click="form.payment_method = 'uzum'">
@@ -114,9 +101,7 @@
                     <img src="../assets/images/uzcard.uz.png" alt="" />
                   </div> -->
                   <div class="pay-card" @click="form.payment_method = 'click'">
-                    <span
-                      v-if="form.payment_method == 'click'"
-                      class="step-active"
+                    <span v-if="form.payment_method == 'click'" class="step-active"
                       ><svg
                         xmlns="http://www.w3.org/2000/svg"
                         width="13"
@@ -133,9 +118,7 @@
                     <img src="../assets/images/click.uz.png" alt="" />
                   </div>
                   <div class="pay-card" @click="form.payment_method = 'payme'">
-                    <span
-                      v-if="form.payment_method == 'payme'"
-                      class="step-active"
+                    <span v-if="form.payment_method == 'payme'" class="step-active"
                       ><svg
                         xmlns="http://www.w3.org/2000/svg"
                         width="13"
@@ -198,15 +181,11 @@
               class="radio-card radio-card-horizontal cursor-pointer"
               @click="form.delivery_method = 'pickup'"
             >
-              <span
-                :class="{ 'active-radio': form.delivery_method == 'pickup' }"
-              >
-              </span>
+              <span :class="{ 'active-radio': form.delivery_method == 'pickup' }"> </span>
               <div class="radio-card-body">
                 <h6>Diskont do’konlaridan borib olib ketish</h6>
                 <p>
-                  Lorem Ipsum has been the industry's standard dummy text ever
-                  since the
+                  Lorem Ipsum has been the industry's standard dummy text ever since the
                 </p>
               </div>
             </div>
@@ -214,9 +193,7 @@
               class="radio-card radio-card-horizontal cursor-pointer"
               @click="form.delivery_method = 'courier'"
             >
-              <span
-                :class="{ 'active-radio': form.delivery_method == 'courier' }"
-              >
+              <span :class="{ 'active-radio': form.delivery_method == 'courier' }">
               </span>
               <div class="radio-card-body">
                 <h6>Diskont yetkazib berish xizmati</h6>
@@ -244,9 +221,7 @@
                   }"
                 >
                 </span>
-                <div
-                  class="radio-card-body d-flex justify-content-between w-100"
-                >
+                <div class="radio-card-body d-flex justify-content-between w-100">
                   <h5>
                     {{ address?.region?.name }}, {{ address?.district?.name }},
                     {{ address?.village?.name }}, {{ address?.address }}
@@ -290,9 +265,7 @@
                 <a-checkbox @change="onChange"> </a-checkbox>
                 <p>
                   Barcha ma`lumotlarni tasdiqlayman, <span>foydalanish</span> va
-                  <span @click="visibleConsent = true"
-                    >sotib olish shartlariga</span
-                  >
+                  <span @click="visibleConsent = true">sotib olish shartlariga</span>
                   roziman
                 </p></span
               >
@@ -300,9 +273,7 @@
                 >Sotib olishda muammoga duch keldizmi?</span
               >
             </div>
-            <div class="checkout-btn" @click="submit()">
-              Xaridni rasmiylashtirish
-            </div>
+            <div class="checkout-btn" @click="submit()">Xaridni rasmiylashtirish</div>
           </div>
         </div>
         <div class="checkout-info-block">
@@ -315,9 +286,7 @@
               <span
                 ><p>Tovarlar</p>
                 <p>
-                  {{
-                    `${reduceTotalPrice}`.replace(/\B(?=(\d{3})+(?!\d))/g, " ")
-                  }}
+                  {{ `${reduceTotalPrice}`.replace(/\B(?=(\d{3})+(?!\d))/g, " ") }}
                   so’m
                 </p></span
               >
@@ -331,9 +300,7 @@
                 <p>
                   {{
                     `- ${
-                      sendDicoin
-                        ? dicoinSumm * $store.state.dicoin?.dicoin_to_sum
-                        : 0
+                      sendDicoin ? dicoinSumm * $store.state.dicoin?.dicoin_to_sum : 0
                     }`.replace(/\B(?=(\d{3})+(?!\d))/g, " ")
                   }}
                   so’m
@@ -425,9 +392,7 @@
                     type="number"
                     v-model="dicoinSumm"
                     oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);"
-                    :maxlength="
-                      `${$store.state.profile?.dicoin?.quantity}`.length
-                    "
+                    :maxlength="`${$store.state.profile?.dicoin?.quantity}`.length"
                     @keyup.enter="numberFormat"
                   />
                 </div>
@@ -436,8 +401,7 @@
                 </p>
                 <p
                   v-if="
-                    priceWithDiCoin >
-                      dicoinSumm * $store.state.dicoin?.dicoin_to_sum &&
+                    priceWithDiCoin > dicoinSumm * $store.state.dicoin?.dicoin_to_sum &&
                     !skeleton
                   "
                 >
@@ -449,8 +413,7 @@
                   style="color: red"
                   v-if="
                     !skeleton &&
-                    priceWithDiCoin <
-                      dicoinSumm * $store.state.dicoin?.dicoin_to_sum
+                    priceWithDiCoin < dicoinSumm * $store.state.dicoin?.dicoin_to_sum
                   "
                 >
                   -
@@ -462,8 +425,7 @@
                 @click="currentDicoin"
                 :class="{
                   disabled:
-                    priceWithDiCoin <
-                      dicoinSumm * $store.state.dicoin?.dicoin_to_sum ||
+                    priceWithDiCoin < dicoinSumm * $store.state.dicoin?.dicoin_to_sum ||
                     $store.state.profile?.dicoin?.quantity < dicoinSumm,
                 }"
               >
@@ -483,18 +445,14 @@
                   <p>{{ product?.info?.name }}</p>
                   <span
                     >Soni:
-                    {{
-                      $store.state.cart.find((item) => item.id == product.id)
-                        ?.count
-                    }}
+                    {{ $store.state.cart.find((item) => item.id == product.id)?.count }}
                     dona</span
                   >
                   <h5>
                     {{
                       `${
                         product.real_price *
-                        $store.state.cart.find((item) => item.id == product.id)
-                          ?.count
+                        $store.state.cart.find((item) => item.id == product.id)?.count
                       }`.replace(/\B(?=(\d{3})+(?!\d))/g, " ")
                     }}
                     сўм
@@ -568,9 +526,7 @@
               <a-checkbox @change="onChange"> </a-checkbox>
               <p>
                 Barcha ma`lumotlarni tasdiqlayman, <span>foydalanish</span> va
-                <span @click="visibleConsent = true"
-                  >sotib olish shartlariga</span
-                >
+                <span @click="visibleConsent = true">sotib olish shartlariga</span>
                 roziman
               </p></span
             >
@@ -578,9 +534,7 @@
               >Sotib olishda muammoga duch keldizmi?</span
             >
           </div>
-          <div class="checkout-btn" @click="submit()">
-            Xaridni rasmiylashtirish
-          </div>
+          <div class="checkout-btn" @click="submit()">Xaridni rasmiylashtirish</div>
         </div>
       </div>
     </div>
@@ -635,10 +589,7 @@
                 v-model="formAddress.region_id"
                 placeholder="Viloyatni tanlang"
               >
-                <a-select-option
-                  v-for="(region, index) in regions"
-                  :key="region.id"
-                >
+                <a-select-option v-for="(region, index) in regions" :key="region.id">
                   {{ region.name }}
                 </a-select-option>
               </a-select>
@@ -653,10 +604,7 @@
                 v-model="formAddress.district_id"
                 placeholder="Shaharni tanlang"
               >
-                <a-select-option
-                  v-for="(city, index) in districts"
-                  :key="city.id"
-                >
+                <a-select-option v-for="(city, index) in districts" :key="city.id">
                   {{ city.name }}
                 </a-select-option>
               </a-select>
@@ -832,9 +780,7 @@
             fill="#009A10"
           />
         </svg>
-        <p>
-          Заказ №{{ orderId }} оформлен. Мы свяжемся с вами в ближайшее время
-        </p>
+        <p>Заказ №{{ orderId }} оформлен. Мы свяжемся с вами в ближайшее время</p>
         <div class="os-vmodal-btns">
           <button class="vmodal-btn os-vmodal-btn-close" @click="handleOk">
             Продолжить покупку
@@ -895,7 +841,7 @@ export default {
   layout: "checkoutLayout",
   data() {
     return {
-      dicoinSumm: null,
+      dicoinSumm: 0,
       sendDicoin: false,
       skeleton: false,
       form: {
@@ -1015,21 +961,16 @@ export default {
         dicoin: this.dicoinSumm ? this.dicoinSumm : null,
         products: this.products.map((item) => {
           return {
-            count: this.$store.state.cart.find((elem) => elem.id == item.id)
-              ?.count,
+            count: this.$store.state.cart.find((elem) => elem.id == item.id)?.count,
             product_id: item.id,
             price: item.price,
           };
         }),
-        phone_number: this.form.phone_number
-          .split(" ")
-          .join("")
-          .replace("+", ""),
+        phone_number: this.form.phone_number.split(" ").join("").replace("+", ""),
         amount: this.products.reduce((summ, item) => {
           return (
             summ +
-            item.price *
-              this.$store.state.cart.find((elem) => elem.id == item.id)?.count
+            item.price * this.$store.state.cart.find((elem) => elem.id == item.id)?.count
           );
         }, 0),
       };
@@ -1040,12 +981,8 @@ export default {
     addressEditAction(obj) {
       this.addressEditId = obj.id;
       this.visible = true;
-      this.districts = this.regions.find(
-        (item) => item.id == obj.region_id
-      ).districts;
-      this.villages = this.districts.find(
-        (item) => item.id == obj.district_id
-      ).villages;
+      this.districts = this.regions.find((item) => item.id == obj.region_id).districts;
+      this.villages = this.districts.find((item) => item.id == obj.district_id).villages;
       this.formAddress = {
         region_id: obj.region_id,
         district_id: obj.district_id,
@@ -1070,9 +1007,7 @@ export default {
     },
     async __GET_PROFILE_INFO() {
       this.skeleton = true;
-      const profileData = await this.$store.dispatch(
-        "fetchAuth/getProfileInfo"
-      );
+      const profileData = await this.$store.dispatch("fetchAuth/getProfileInfo");
       this.profile = profileData?.user;
       this.skeleton = false;
       this.form = {
@@ -1117,10 +1052,7 @@ export default {
     },
     async __POST_ORDER(formData) {
       try {
-        const data = await this.$store.dispatch(
-          "fetchAuth/postOrder",
-          formData
-        );
+        const data = await this.$store.dispatch("fetchAuth/postOrder", formData);
         if (data?.redirect_url) {
           window.location.replace(data?.redirect_url);
           localStorage.setItem("cart", JSON.stringify([]));
@@ -1137,10 +1069,7 @@ export default {
     },
     async __POST_ADDRESSS(formData) {
       try {
-        const data = await this.$store.dispatch(
-          "fetchRegions/postAddress",
-          formData
-        );
+        const data = await this.$store.dispatch("fetchRegions/postAddress", formData);
 
         this.$store.dispatch("profileInfo");
         this.visible = false;
@@ -1174,8 +1103,7 @@ export default {
       this.districts = this.regions.find((item) => item.id == val).districts;
     },
     "formAddress.district_id"(val) {
-      if (val)
-        this.villages = this.districts.find((item) => item.id == val).villages;
+      if (val) this.villages = this.districts.find((item) => item.id == val).villages;
     },
     visible(val) {
       if (!val) {
