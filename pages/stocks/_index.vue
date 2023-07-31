@@ -245,11 +245,11 @@ export default {
 }
 .stocks-menu ul li a:hover,
 .active-stock {
-  color: #1f8a70 !important;
+  color: #09454f !important;
   background: #f1f1f1;
 }
 .stocks-menu ul li > span {
-  background: #1f8a70;
+  background: #09454f;
   border-radius: 12px;
   padding: 12px 17px;
   display: flex;
@@ -303,14 +303,14 @@ export default {
 .stocks-category-list .ant-checkbox-wrapper:hover .ant-checkbox-inner,
 .ant-checkbox:hover .ant-checkbox-inner,
 .ant-checkbox-input:focus + .ant-checkbox-inner {
-  border-color: #1f8a70 !important;
+  border-color: #09454f !important;
 }
 .stocks-category-list .ant-checkbox-checked::after {
-  border-color: #1f8a70 !important;
+  border-color: #09454f !important;
 }
 .stocks-category-list .ant-checkbox-checked .ant-checkbox-inner {
-  border-color: #1f8a70 !important;
-  background: #1f8a70 !important;
+  border-color: #09454f !important;
+  background: #09454f !important;
 }
 .stocks-category-list .ant-checkbox-inner {
   border: 1px solid #ececec !important;

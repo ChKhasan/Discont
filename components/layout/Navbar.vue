@@ -44,11 +44,16 @@
               <div
                 class="seach-resoult-container"
                 v-if="
-                  searchBlockHide && (searchResoults.length > 0 || searchProducts.length)
+                  searchBlockHide &&
+                  (searchResoults.length > 0 || searchProducts.length)
                 "
               >
                 <div class="search-resoult-scroll">
-                  <div v-if="searchResoults.length > 0 && searchProducts.length == 0">
+                  <div
+                    v-if="
+                      searchResoults.length > 0 && searchProducts.length == 0
+                    "
+                  >
                     <div class="search-tt">
                       <h6>Вы недавно искали</h6>
                       <button @click="clearSearchResoults">Очистить</button>
@@ -101,7 +106,9 @@
                         v-for="product in searchProducts"
                         :key="product?.id"
                       >
-                        <nuxt-link :to="localePath(`/product/${product?.slug}`)">
+                        <nuxt-link
+                          :to="localePath(`/product/${product?.slug}`)"
+                        >
                           <span
                             ><svg
                               xmlns="http://www.w3.org/2000/svg"
@@ -167,9 +174,11 @@
               @click="$router.push('/comparison')"
               :class="{ navbar_block_active: $route.name == 'comparison' }"
             >
-              <span class="count-index" v-if="$store.state.comparison.length > 0">{{
-                $store.state.comparison.length
-              }}</span>
+              <span
+                class="count-index"
+                v-if="$store.state.comparison.length > 0"
+                >{{ $store.state.comparison.length }}</span
+              >
               <span class="nav-icons" v-html="navComp"></span>Solishtirish
             </li>
             <li
@@ -236,7 +245,8 @@
                     :key="category?.id"
                     @mouseover="targetCategory(category)"
                     :class="{
-                      'catalog-menu-list-active': activeCategory?.id == category?.id,
+                      'catalog-menu-list-active':
+                        activeCategory?.id == category?.id,
                     }"
                   >
                     {{ category?.name
@@ -250,14 +260,16 @@
                       >
                         <path
                           d="M0.800427 0.286251C0.617141 0.469593 0.514176 0.718224 0.514176 0.977469C0.514176 1.23671 0.617141 1.48535 0.800427 1.66869L4.9976 5.86586L0.800427 10.063C0.707049 10.1532 0.632567 10.2611 0.581328 10.3804C0.530089 10.4997 0.503118 10.628 0.50199 10.7578C0.500862 10.8876 0.5256 11.0163 0.574758 11.1365C0.623917 11.2566 0.696512 11.3658 0.788309 11.4576C0.880106 11.5494 0.989265 11.622 1.10942 11.6711C1.22957 11.7203 1.35831 11.745 1.48813 11.7439C1.61794 11.7428 1.74623 11.7158 1.86551 11.6646C1.98479 11.6133 2.09268 11.5388 2.18286 11.4455L7.07125 6.55708C7.25454 6.37373 7.3575 6.1251 7.3575 5.86586C7.3575 5.60661 7.25454 5.35798 7.07125 5.17464L2.18286 0.286251C1.99952 0.102965 1.75089 0 1.49165 0C1.2324 0 0.983769 0.102965 0.800427 0.286251Z"
-                          fill="#1F8A70"
+                          fill="#09454f"
                         /></svg
                     ></span>
                   </li>
                 </ul>
               </div>
               <div class="catalog-menu-body">
-                <div class="d-flex categories-page-title mt-0 mb-5 align-items-end">
+                <div
+                  class="d-flex categories-page-title mt-0 mb-5 align-items-end"
+                >
                   <MainTitle :title="activeCategory?.name" />
                   <span class="d-flex align-items-end"
                     >{{ activeCategory?.products_count }} товаров</span
@@ -266,13 +278,18 @@
                 <div class="catalog-menu-items">
                   <div>
                     <ul
-                      v-for="categoryChild in chunkIntoN(activeCategory?.children, 3)[0]"
+                      v-for="categoryChild in chunkIntoN(
+                        activeCategory?.children,
+                        3
+                      )[0]"
                       :key="categoryChild?.id"
                     >
                       <h4
                         @click="
                           $router.push(
-                            localePath(`/categories-inner/${categoryChild?.slug}`)
+                            localePath(
+                              `/categories-inner/${categoryChild?.slug}`
+                            )
                           )
                         "
                       >
@@ -289,13 +306,18 @@
                   </div>
                   <div>
                     <ul
-                      v-for="categoryChild in chunkIntoN(activeCategory?.children, 3)[1]"
+                      v-for="categoryChild in chunkIntoN(
+                        activeCategory?.children,
+                        3
+                      )[1]"
                       :key="categoryChild?.id"
                     >
                       <h4
                         @click="
                           $router.push(
-                            localePath(`/categories-inner/${categoryChild?.slug}`)
+                            localePath(
+                              `/categories-inner/${categoryChild?.slug}`
+                            )
                           )
                         "
                       >
@@ -312,13 +334,18 @@
                   </div>
                   <div>
                     <ul
-                      v-for="categoryChild in chunkIntoN(activeCategory?.children, 3)[2]"
+                      v-for="categoryChild in chunkIntoN(
+                        activeCategory?.children,
+                        3
+                      )[2]"
                       :key="categoryChild?.id"
                     >
                       <h4
                         @click="
                           $router.push(
-                            localePath(`/categories-inner/${categoryChild?.slug}`)
+                            localePath(
+                              `/categories-inner/${categoryChild?.slug}`
+                            )
                           )
                         "
                       >
@@ -351,8 +378,16 @@
       @ok="handleOk"
     >
       <div class="vmodal-anim-header">
-        <img class="shadow-ell-1" src="../../assets/images/Ellipse 57.png" alt="" />
-        <img class="shadow-ell-2" src="../../assets/images/Ellipse 59.png" alt="" />
+        <img
+          class="shadow-ell-1"
+          src="../../assets/images/Ellipse 57.png"
+          alt=""
+        />
+        <img
+          class="shadow-ell-2"
+          src="../../assets/images/Ellipse 59.png"
+          alt=""
+        />
         <h5>Akauntingizga kiring yoki ro’yxatdan o’ting</h5>
         <span @click="handleOk"
           ><svg
@@ -364,14 +399,14 @@
           >
             <path
               d="M17.9958 1.98438L2.00391 17.9762"
-              stroke="#1F8A70"
+              stroke="#09454f"
               stroke-width="3.28586"
               stroke-linecap="round"
               stroke-linejoin="round"
             />
             <path
               d="M18.0003 17.9861L1.99512 1.97754"
-              stroke="#1F8A70"
+              stroke="#09454f"
               stroke-width="3.28586"
               stroke-linecap="round"
               stroke-linejoin="round"
@@ -390,7 +425,9 @@
             label="Telefon raqamingiz"
             prop="phone_number"
           >
-            <span class="position-relative d-flex align-items-center justify-content-end">
+            <span
+              class="position-relative d-flex align-items-center justify-content-end"
+            >
               <!-- <span class="position-absolute number-error" v-if="checkNumberError"
                 >Raqam noto’g’ri kiritildi</span
               > -->
@@ -432,8 +469,16 @@
       @ok="handleOkForgetPass"
     >
       <div class="vmodal-anim-header">
-        <img class="shadow-ell-1" src="../../assets/images/Ellipse 57.png" alt="" />
-        <img class="shadow-ell-2" src="../../assets/images/Ellipse 59.png" alt="" />
+        <img
+          class="shadow-ell-1"
+          src="../../assets/images/Ellipse 57.png"
+          alt=""
+        />
+        <img
+          class="shadow-ell-2"
+          src="../../assets/images/Ellipse 59.png"
+          alt=""
+        />
         <h5>Akauntingizga kiring yoki ro’yxatdan o’ting</h5>
         <span @click="handleOkForgetPass"
           ><svg
@@ -445,14 +490,14 @@
           >
             <path
               d="M17.9958 1.98438L2.00391 17.9762"
-              stroke="#1F8A70"
+              stroke="#09454f"
               stroke-width="3.28586"
               stroke-linecap="round"
               stroke-linejoin="round"
             />
             <path
               d="M18.0003 17.9861L1.99512 1.97754"
-              stroke="#1F8A70"
+              stroke="#09454f"
               stroke-width="3.28586"
               stroke-linecap="round"
               stroke-linejoin="round"
@@ -471,7 +516,9 @@
             label="Telefon raqamingiz"
             prop="phone_number"
           >
-            <span class="position-relative d-flex align-items-center justify-content-end">
+            <span
+              class="position-relative d-flex align-items-center justify-content-end"
+            >
               <!-- <the-mask
                 @keyup.enter="submitForgetPass()"
                 :mask="['+998 (##) ### ## ##', '+998 (##) ### ## ##']"
@@ -516,14 +563,14 @@
           >
             <path
               d="M17.9958 1.98438L2.00391 17.9762"
-              stroke="#1F8A70"
+              stroke="#09454f"
               stroke-width="3.28586"
               stroke-linecap="round"
               stroke-linejoin="round"
             />
             <path
               d="M18.0003 17.9861L1.99512 1.97754"
-              stroke="#1F8A70"
+              stroke="#09454f"
               stroke-width="3.28586"
               stroke-linecap="round"
               stroke-linejoin="round"
@@ -601,14 +648,14 @@
           >
             <path
               d="M17.9958 1.98438L2.00391 17.9762"
-              stroke="#1F8A70"
+              stroke="#09454f"
               stroke-width="3.28586"
               stroke-linecap="round"
               stroke-linejoin="round"
             />
             <path
               d="M18.0003 17.9861L1.99512 1.97754"
-              stroke="#1F8A70"
+              stroke="#09454f"
               stroke-width="3.28586"
               stroke-linecap="round"
               stroke-linejoin="round"
@@ -641,7 +688,9 @@
               v-model="formSms.phone_number"
               placeholder="+998 (__) ___ __ __"
             />
-            <span class="change_number" @click="replaceNumber()">O’zgartirish</span>
+            <span class="change_number" @click="replaceNumber()"
+              >O’zgartirish</span
+            >
           </a-form-model-item>
           <a-form-model-item
             class="form-item register-input mb-0 pb-0"
@@ -656,7 +705,9 @@
               type="text"
               placeholder="sms"
             />
-            <span class="sms_code_error_text" v-if="smsCodeError">Ko’d notogri</span>
+            <span class="sms_code_error_text" v-if="smsCodeError"
+              >Ko’d notogri</span
+            >
           </a-form-model-item>
         </a-form-model>
       </div>
@@ -690,14 +741,14 @@
           >
             <path
               d="M17.9958 1.98438L2.00391 17.9762"
-              stroke="#1F8A70"
+              stroke="#09454f"
               stroke-width="3.28586"
               stroke-linecap="round"
               stroke-linejoin="round"
             />
             <path
               d="M18.0003 17.9861L1.99512 1.97754"
-              stroke="#1F8A70"
+              stroke="#09454f"
               stroke-width="3.28586"
               stroke-linecap="round"
               stroke-linejoin="round"
@@ -764,14 +815,14 @@
           >
             <path
               d="M17.9958 1.98438L2.00391 17.9762"
-              stroke="#1F8A70"
+              stroke="#09454f"
               stroke-width="3.28586"
               stroke-linecap="round"
               stroke-linejoin="round"
             />
             <path
               d="M18.0003 17.9861L1.99512 1.97754"
-              stroke="#1F8A70"
+              stroke="#09454f"
               stroke-width="3.28586"
               stroke-linecap="round"
               stroke-linejoin="round"
@@ -782,7 +833,9 @@
         <img src="../../assets/images/modal-success.png" alt="" />
         <p>Siz muvaffaqiyatli ro’yxatdan o’tdingiz. Haridlarda davom eitng.</p>
       </div>
-      <div class="vmodal-btn" @click="handleOkSuccess()">Haridni davom ettirish</div>
+      <div class="vmodal-btn" @click="handleOkSuccess()">
+        Haridni davom ettirish
+      </div>
       <template slot="footer"> <h3></h3></template>
     </a-modal>
     <!-- access profile register  -->
@@ -896,7 +949,6 @@ export default {
 
     this.categories = categoriesData?.categories?.data;
     this.activeCategory = categoriesData?.categories?.data[0];
-    console.log(this.categories);
   },
   computed: {
     routerPath() {
@@ -928,7 +980,10 @@ export default {
     },
     searchResoultDelete(id) {
       this.searchResoults = this.searchResoults.filter((item) => item.id != id);
-      localStorage.setItem("search_resoults", JSON.stringify(this.searchResoults));
+      localStorage.setItem(
+        "search_resoults",
+        JSON.stringify(this.searchResoults)
+      );
       this.searchResoults = JSON.parse(localStorage.getItem("search_resoults"));
     },
     searchAction() {
@@ -939,13 +994,18 @@ export default {
             : 1,
         resoult: this.search,
       });
-      localStorage.setItem("search_resoults", JSON.stringify(this.searchResoults));
+      localStorage.setItem(
+        "search_resoults",
+        JSON.stringify(this.searchResoults)
+      );
 
       this.$router.push(`/search/${this.search}`);
     },
     chunkIntoN(arr, n) {
       const size = Math.ceil(arr.length / n);
-      return Array.from({ length: n }, (v, i) => arr.slice(i * size, i * size + size));
+      return Array.from({ length: n }, (v, i) =>
+        arr.slice(i * size, i * size + size)
+      );
     },
     handleOkForgetPass() {
       this.visibleForgetPass = false;
@@ -988,7 +1048,6 @@ export default {
       this.visibleName = false;
     },
     submitCheckNumber() {
-      console.log(this.formCheckNumber.phone_number);
       const data = {
         phone_number: this.formCheckNumber.phone_number
           .split(" ")
@@ -1013,7 +1072,10 @@ export default {
     submitSms() {
       const data = {
         ...this.formSms,
-        phone_number: this.formSms.phone_number.split(" ").join("").replace("+", ""),
+        phone_number: this.formSms.phone_number
+          .split(" ")
+          .join("")
+          .replace("+", ""),
       };
       this.formName.phone_number =
         this.formSms.phone_number.length == 9
@@ -1025,7 +1087,10 @@ export default {
     },
     submitLogin() {
       const data = {
-        phone_number: this.formLogin.phone_number.split(" ").join("").replace("+", ""),
+        phone_number: this.formLogin.phone_number
+          .split(" ")
+          .join("")
+          .replace("+", ""),
         password: this.formLogin.password,
       };
       this.$refs["ruleFormLogin"].validate((valid) => {
@@ -1054,7 +1119,6 @@ export default {
           "fetchAuth/postRegisterWithSms",
           formData
         );
-        console.log(data);
         localStorage.setItem("dis_auth_token", data.token);
         this.$store.commit("authHandler");
 
@@ -1076,7 +1140,10 @@ export default {
     // putProfileName
     async __PROFILE_NAME(formData) {
       try {
-        const data = await this.$store.dispatch("fetchAuth/putProfileName", formData);
+        const data = await this.$store.dispatch(
+          "fetchAuth/putProfileName",
+          formData
+        );
         this.$store.dispatch("profileInfo");
         this.visibleName = false;
         this.visibleSuccess = true;
@@ -1116,7 +1183,10 @@ export default {
     },
     async __CHECK_NUMBER(formData) {
       try {
-        const data = await this.$store.dispatch("fetchAuth/postCheckNumber", formData);
+        const data = await this.$store.dispatch(
+          "fetchAuth/postCheckNumber",
+          formData
+        );
         if (data?.authorized) {
           this.visibleLogin = true;
         } else {
@@ -1136,7 +1206,10 @@ export default {
     },
     async __LOGIN(formData) {
       try {
-        const data = await this.$store.dispatch("fetchAuth/postLogin", formData);
+        const data = await this.$store.dispatch(
+          "fetchAuth/postLogin",
+          formData
+        );
         localStorage.setItem("dis_auth_token", data.token);
         this.$store.commit("authHandler");
         this.$store.dispatch("profileInfo");
@@ -1251,7 +1324,7 @@ export default {
 </script>
 <style lang="css">
 /* .nav-icons svg path {
-  fill: #1f8a70;
+  fill: #09454f;
 } */
 .close-space {
   width: 33%;
@@ -1327,11 +1400,11 @@ export default {
 
 .catalog-menu-list-active {
   background: #f7f7f7;
-  color: #1f8a70 !important;
+  color: #09454f !important;
 }
 .catalog-menu-list ul li:hover {
   background: #f7f7f7;
-  color: #1f8a70;
+  color: #09454f;
 }
 .nested-enter-active,
 .nested-leave-active {
@@ -1454,7 +1527,7 @@ export default {
   left: 50px;
 }
 .vmodal-btn-outline {
-  border: 2px solid #1f8a70;
+  border: 2px solid #09454f;
   border-radius: 16px;
   height: 59px;
   display: flex;
@@ -1465,7 +1538,7 @@ export default {
   font-size: 18px;
   line-height: 150%;
   letter-spacing: -0.02em;
-  color: #1f8a70;
+  color: #09454f;
   margin-top: 10px;
   cursor: pointer;
 }

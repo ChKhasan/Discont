@@ -30,7 +30,8 @@
           >
             <div class="checkout-form">
               <a-form-model-item class="mb-3" prop="phone_number">
-                <a-input
+                <input
+                  class="w-100"
                   v-mask="'+998 ## ### ## ##'"
                   placeholder="Telefon raqamingiz*"
                   v-model="form.phone_number"
@@ -315,28 +316,53 @@
                 ><p>Tovarlar</p>
                 <p>
                   {{
-                    `${products.reduce((summ, item) => {
-                      return (
-                        summ +
-                        item.real_price *
-                          $store.state.cart.find((elem) => elem.id == item.id)
-                            ?.count
-                      );
-                    }, 0)}`.replace(/\B(?=(\d{3})+(?!\d))/g, " ")
+                    `${reduceTotalPrice}`.replace(/\B(?=(\d{3})+(?!\d))/g, " ")
+                  }}
+                  so’m
+                </p></span
+              >
+
+              <span
+                ><p>Скидка</p>
+                <p>0 so’m</p></span
+              >
+              <span
+                ><p>Di Coin</p>
+                <p>
+                  {{
+                    `- ${
+                      sendDicoin
+                        ? dicoinSumm * $store.state.dicoin?.dicoin_to_sum
+                        : 0
+                    }`.replace(/\B(?=(\d{3})+(?!\d))/g, " ")
                   }}
                   so’m
                 </p></span
               >
               <span
-                ><p>Скидка</p>
-                <p>5 230 000 so’m</p></span
-              >
-              <span
                 ><p>Yetkazib berish</p>
                 <p>30 000 so’m</p></span
               >
+              <span
+                ><p>Umumiy narx</p>
+                <p>
+                  {{
+                    `${
+                      sendDicoin
+                        ? reduceTotalPrice -
+                          dicoinSumm * $store.state.dicoin?.dicoin_to_sum
+                        : reduceTotalPrice
+                    }`.replace(/\B(?=(\d{3})+(?!\d))/g, " ")
+                  }}
+                  so’m
+                </p></span
+              >
             </div>
-            <div class="checkout_dicoin_input" v-if="sendDicoin">
+            <div
+              class="checkout_dicoin_input cursor-pointer"
+              v-if="sendDicoin"
+              @click="sendDicoin = false"
+            >
               <div class="d-flex">
                 <img src="../assets/images/d-coin.png" alt="" />
                 <h6 class="active_dicoin">
@@ -345,7 +371,12 @@
               </div>
               <p>
                 -
-                {{ priceWithDiCoin }}
+                {{
+                  `${dicoinSumm * $store.state.dicoin?.dicoin_to_sum}`.replace(
+                    /\B(?=(\d{3})+(?!\d))/g,
+                    " "
+                  )
+                }}
                 so’m
               </p>
             </div>
@@ -358,7 +389,7 @@
                   Umumiy dicoinlar soni:
                   <span
                     ><img src="../assets/images/d-coin.png" alt="" />{{
-                      this.$store.state.profile?.dicoin?.quantity
+                      $store.state.profile?.dicoin?.quantity
                     }}</span
                   >
                 </p>
@@ -375,18 +406,69 @@
                   </span>
                 </p>
               </div>
+              <div class="max-dicoin-sum">
+                <p>
+                  Max:
+                  <span
+                    >{{
+                      `${priceWithDiCoin}`.replace(/\B(?=(\d{3})+(?!\d))/g, " ")
+                    }}
+                    so’m</span
+                  >
+                </p>
+              </div>
               <div class="checkout_dicoin_input">
                 <div>
                   <img src="../assets/images/d-coin.png" alt="" />
-                  <input type="text" v-model="dicoinSumm" />
+                  <input
+                    class="dicoin-input"
+                    type="number"
+                    v-model="dicoinSumm"
+                    oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);"
+                    :maxlength="
+                      `${$store.state.profile?.dicoin?.quantity}`.length
+                    "
+                    @keyup.enter="numberFormat"
+                  />
                 </div>
-                <p>
+                <p v-if="skeleton">
+                  <b-skeleton width="100px" height="100%"></b-skeleton>
+                </p>
+                <p
+                  v-if="
+                    priceWithDiCoin >
+                      dicoinSumm * $store.state.dicoin?.dicoin_to_sum &&
+                    !skeleton
+                  "
+                >
                   -
-                  {{ priceWithDiCoin }}
+                  {{ dicoinSumm * $store.state.dicoin?.dicoin_to_sum }}
+                  so’m
+                </p>
+                <p
+                  style="color: red"
+                  v-if="
+                    !skeleton &&
+                    priceWithDiCoin <
+                      dicoinSumm * $store.state.dicoin?.dicoin_to_sum
+                  "
+                >
+                  -
+                  {{ dicoinSumm * $store.state.dicoin?.dicoin_to_sum }}
                   so’m
                 </p>
               </div>
-              <button @click="sendDicoin = true">Qabul qilish</button>
+              <button
+                @click="currentDicoin"
+                :class="{
+                  disabled:
+                    priceWithDiCoin <
+                      dicoinSumm * $store.state.dicoin?.dicoin_to_sum ||
+                    $store.state.profile?.dicoin?.quantity < dicoinSumm,
+                }"
+              >
+                Qabul qilish
+              </button>
             </div>
             <div class="checkout-info-products">
               <div
@@ -522,14 +604,14 @@
           >
             <path
               d="M17.9958 1.98438L2.00391 17.9762"
-              stroke="#1F8A70"
+              stroke="#09454f"
               stroke-width="3.28586"
               stroke-linecap="round"
               stroke-linejoin="round"
             />
             <path
               d="M18.0003 17.9861L1.99512 1.97754"
-              stroke="#1F8A70"
+              stroke="#09454f"
               stroke-width="3.28586"
               stroke-linecap="round"
               stroke-linejoin="round"
@@ -543,24 +625,24 @@
           :rules="rules"
           layout="vertical"
         >
-          <a-form-model-item
-            class="form-item mb-0 pb-0"
-            :class="{ 'select-placeholder': formAddress.region_id == null }"
-          >
-            <a-select
-              class="checkout-select"
-              v-model="formAddress.region_id"
-              placeholder="Viloyatni tanlang"
-            >
-              <a-select-option
-                v-for="(region, index) in regions"
-                :key="region.id"
-              >
-                {{ region.name }}
-              </a-select-option>
-            </a-select>
-          </a-form-model-item>
           <div class="modal-select-grid">
+            <a-form-model-item
+              class="form-item mb-0 pb-0"
+              :class="{ 'select-placeholder': formAddress.region_id == null }"
+            >
+              <a-select
+                class="checkout-select"
+                v-model="formAddress.region_id"
+                placeholder="Viloyatni tanlang"
+              >
+                <a-select-option
+                  v-for="(region, index) in regions"
+                  :key="region.id"
+                >
+                  {{ region.name }}
+                </a-select-option>
+              </a-select>
+            </a-form-model-item>
             <a-form-model-item
               class="form-item mb-0 pb-0"
               :class="{ 'select-placeholder': formAddress.district_id == null }"
@@ -579,24 +661,7 @@
                 </a-select-option>
               </a-select>
             </a-form-model-item>
-            <a-form-model-item
-              class="form-item mb-0 pb-0"
-              :class="{ 'select-placeholder': formAddress.village_id == null }"
             >
-              <a-select
-                :class="{ disabled: villages.length == 0 }"
-                class="checkout-select"
-                v-model="formAddress.village_id"
-                placeholder="Tumanni tanlang"
-              >
-                <a-select-option
-                  v-for="(category, index) in villages"
-                  :key="category.id"
-                >
-                  {{ category.name }}
-                </a-select-option>
-              </a-select>
-            </a-form-model-item>
           </div>
 
           <a-form-model-item class="form-item mb-0 pb-0">
@@ -633,14 +698,14 @@
           >
             <path
               d="M17.9958 1.98438L2.00391 17.9762"
-              stroke="#1F8A70"
+              stroke="#09454f"
               stroke-width="3.28586"
               stroke-linecap="round"
               stroke-linejoin="round"
             />
             <path
               d="M18.0003 17.9861L1.99512 1.97754"
-              stroke="#1F8A70"
+              stroke="#09454f"
               stroke-width="3.28586"
               stroke-linecap="round"
               stroke-linejoin="round"
@@ -739,14 +804,14 @@
           >
             <path
               d="M17.9958 1.98438L2.00391 17.9762"
-              stroke="#1F8A70"
+              stroke="#09454f"
               stroke-width="3.28586"
               stroke-linecap="round"
               stroke-linejoin="round"
             />
             <path
               d="M18.0003 17.9861L1.99512 1.97754"
-              stroke="#1F8A70"
+              stroke="#09454f"
               stroke-width="3.28586"
               stroke-linecap="round"
               stroke-linejoin="round"
@@ -767,12 +832,17 @@
             fill="#009A10"
           />
         </svg>
-        <p>Заказ №32839 оформлен. Мы свяжемся с вами в ближайшее время</p>
+        <p>
+          Заказ №{{ orderId }} оформлен. Мы свяжемся с вами в ближайшее время
+        </p>
         <div class="os-vmodal-btns">
           <button class="vmodal-btn os-vmodal-btn-close" @click="handleOk">
             Продолжить покупку
           </button>
-          <button class="vmodal-btn os-vmodal-btn" @click="$router.push('/')">
+          <button
+            class="vmodal-btn os-vmodal-btn"
+            @click="$router.push('/profile/my-orders')"
+          >
             Перейти к просмотру
           </button>
         </div>
@@ -827,6 +897,7 @@ export default {
     return {
       dicoinSumm: null,
       sendDicoin: false,
+      skeleton: false,
       form: {
         name: "",
         delivery_method: "pickup",
@@ -855,6 +926,7 @@ export default {
       villages: [],
       products: [],
       profile: {},
+      orderId: null,
       formAddress: {
         region_id: null,
         district_id: null,
@@ -914,7 +986,29 @@ export default {
           : this.profile?.dicoin?.quantity;
     }
   },
+  computed: {
+    reduceTotalPrice() {
+      const totalSum = this.products.reduce((summ, item) => {
+        return (
+          summ +
+          item.real_price *
+            this.$store.state.cart.find((elem) => elem.id == item.id)?.count
+        );
+      }, 0);
+      return totalSum;
+    },
+  },
   methods: {
+    numberFormat(e) {
+      var txt = String.fromCharCode(e.which);
+      if (!txt.match(/[A-Za-z0-9&.]/)) {
+        return false;
+      }
+    },
+    currentDicoin() {
+      this.sendDicoin = true;
+      this.form.dicoin = this.dicoinSumm;
+    },
     submit() {
       const data = {
         ...this.form,
@@ -960,7 +1054,6 @@ export default {
       };
     },
     submitAddress() {
-      console.log(this.formAddress);
       this.$refs["ruleFormAddress"].validate((valid) => {
         valid
           ? this.addressEditId
@@ -976,10 +1069,12 @@ export default {
       this.visibleCheckoutProblem = false;
     },
     async __GET_PROFILE_INFO() {
+      this.skeleton = true;
       const profileData = await this.$store.dispatch(
         "fetchAuth/getProfileInfo"
       );
       this.profile = profileData?.user;
+      this.skeleton = false;
       this.form = {
         ...this.form,
         name: this.profile.name ? this.profile.name : "",
@@ -997,7 +1092,7 @@ export default {
       });
       this.products = data?.products;
       if (this.products.filter((elem) => elem.dicoin).length > 0) {
-        this.priceWithDiCoin = `${this.products
+        this.priceWithDiCoin = this.products
           .filter((elem) => elem.dicoin)
           .reduce((summ, item) => {
             return (
@@ -1007,7 +1102,7 @@ export default {
                 0.01 *
                 this.$store.state.cart.find((elem) => elem.id == item.id)?.count
             );
-          }, 0)}`.replace(/\B(?=(\d{3})+(?!\d))/g, " ");
+          }, 0);
       } else {
         this.priceWithDiCoin = 0;
       }
@@ -1032,6 +1127,7 @@ export default {
           this.$store.commit("reloadStore");
         } else {
           this.visibleSuccess = true;
+          this.orderId = data?.order?.id;
           localStorage.setItem("cart", JSON.stringify([]));
           this.$store.commit("reloadStore");
         }
@@ -1041,11 +1137,11 @@ export default {
     },
     async __POST_ADDRESSS(formData) {
       try {
-        console.log(formData);
         const data = await this.$store.dispatch(
           "fetchRegions/postAddress",
           formData
         );
+
         this.$store.dispatch("profileInfo");
         this.visible = false;
       } catch (e) {
@@ -1074,10 +1170,12 @@ export default {
   },
   watch: {
     "formAddress.region_id"(val) {
+      this.formAddress.district_id = null;
       this.districts = this.regions.find((item) => item.id == val).districts;
     },
     "formAddress.district_id"(val) {
-      this.villages = this.districts.find((item) => item.id == val).villages;
+      if (val)
+        this.villages = this.districts.find((item) => item.id == val).villages;
     },
     visible(val) {
       if (!val) {
@@ -1224,7 +1322,7 @@ export default {
 .checkout_dicoin button {
   border: none;
   border-radius: 12px;
-  border: 1px solid #1f8a70;
+  border: 1px solid #09454f;
   background: #e8faf5;
   padding-top: 14px;
   padding-bottom: 14px;
@@ -1335,5 +1433,34 @@ export default {
   .chekout-footer-head p {
     margin: 0;
   }
+}
+.max-dicoin-sum {
+  display: flex;
+  justify-content: flex-end;
+  position: relative;
+}
+.max-dicoin-sum p {
+  display: flex;
+  flex-direction: row;
+  font-size: 12px;
+  align-items: center;
+  position: absolute;
+  right: 16px;
+  bottom: -12px;
+}
+.max-dicoin-sum p span {
+  margin-top: 0;
+  font-size: 12px;
+
+  margin-left: 5px;
+}
+.dicoin-input::-webkit-outer-spin-button,
+.dicoin-input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+.dicoin-input[type="number"] {
+  -moz-appearance: textfield;
 }
 </style>

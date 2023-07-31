@@ -372,7 +372,11 @@
   grid-template-columns: repeat(3, 1fr);
   grid-gap: 16px;
 }
-
+.payment-types img {
+  width: 108px;
+  height: 57px;
+  object-fit: contain;
+}
 /* .search-btn:hover svg path {
   fill: #fff;
 } */
@@ -455,7 +459,7 @@
 /* Handle */
 .search-resoult-scroll::-webkit-scrollbar-thumb {
   border-radius: 100px;
-  background: var(--yashil, #1f8a70);
+  background: var(--yashil, #09454f);
 }
 
 /* Handle on hover */

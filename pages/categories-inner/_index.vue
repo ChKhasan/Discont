@@ -639,18 +639,6 @@ export default {
           value: "all",
           label: "Barchasi",
         },
-        {
-          value: "qwerty1",
-          label: "Others",
-        },
-        {
-          value: "qwerty2",
-          label: "Others",
-        },
-        {
-          value: "qwerty3",
-          label: "Others",
-        },
       ],
     };
   },
@@ -693,7 +681,6 @@ export default {
     categoryChildsData?.attributes.forEach((item) => {
       options.push(...item.options);
     });
-    console.log(categoryChildsData);
     const filterOptions = [];
     if (query.attributes) {
       let atr = query.attributes.split(",");
@@ -705,7 +692,6 @@ export default {
     const allInfo = categoryChildsData;
     const productsOthers = productsData?.products?.data;
     const allCategories = allCategoriesData?.categories;
-    console.log("all", allCategories);
     return {
       categoryChilds,
       products,
@@ -796,7 +782,6 @@ export default {
       });
       if (!Object.keys(query).includes("attributes")) {
         this.filterOptions = [];
-        console.log(this.filterOptions);
       }
     },
     async onAfterChange(value) {

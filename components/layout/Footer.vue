@@ -7,7 +7,10 @@
             <div class="footer_menu footer_drop">
               <h4 @click="activeDrop = 1">
                 Компания
-                <span v-html="dropArrow" :class="{ rotate180: activeDrop == 1 }"></span>
+                <span
+                  v-html="dropArrow"
+                  :class="{ rotate180: activeDrop == 1 }"
+                ></span>
               </h4>
               <ul
                 class="footer-drop-board mt-0"
@@ -15,7 +18,9 @@
               >
                 <div class="mt-3">
                   <li>
-                    <nuxt-link :to="localePath('/info/about-b2b')">B2B савдоси</nuxt-link>
+                    <nuxt-link :to="localePath('/info/about-b2b')"
+                      >B2B савдоси</nuxt-link
+                    >
                   </li>
                   <li>
                     <nuxt-link :to="localePath('/info/about-us')"
@@ -23,7 +28,9 @@
                     >
                   </li>
                   <li>
-                    <nuxt-link :to="localePath('/')">Янгиликлар ва шарҳлар</nuxt-link>
+                    <nuxt-link :to="localePath('/')"
+                      >Янгиликлар ва шарҳлар</nuxt-link
+                    >
                   </li>
                 </div>
               </ul>
@@ -75,7 +82,9 @@
                     >
                   </li>
                   <li>
-                    <nuxt-link :to="localePath('/')">Махсулотни кайтариш</nuxt-link>
+                    <nuxt-link :to="localePath('/')"
+                      >Махсулотни кайтариш</nuxt-link
+                    >
                   </li>
                   <li>
                     <nuxt-link :to="localePath('/info/warranty')"
@@ -83,7 +92,9 @@
                     >
                   </li>
                   <li>
-                    <nuxt-link :to="localePath('/')">Коп сораладиган саволлар</nuxt-link>
+                    <nuxt-link :to="localePath('/')"
+                      >Коп сораладиган саволлар</nuxt-link
+                    >
                   </li>
                 </div>
               </ul>
@@ -107,13 +118,19 @@
             <h4>Компания</h4>
             <ul>
               <li>
-                <nuxt-link :to="localePath('/info/about-b2b')">B2B савдоси</nuxt-link>
+                <nuxt-link :to="localePath('/info/about-b2b')"
+                  >B2B савдоси</nuxt-link
+                >
               </li>
               <li>
-                <nuxt-link :to="localePath('/info/about-us')">Биз ҳақимизда</nuxt-link>
+                <nuxt-link :to="localePath('/info/about-us')"
+                  >Биз ҳақимизда</nuxt-link
+                >
               </li>
               <li>
-                <nuxt-link :to="localePath('/')">Янгиликлар ва шарҳлар</nuxt-link>
+                <nuxt-link :to="localePath('/')"
+                  >Янгиликлар ва шарҳлар</nuxt-link
+                >
               </li>
             </ul>
           </div>
@@ -121,13 +138,17 @@
             <h4>Маълумот</h4>
             <ul>
               <li>
-                <nuxt-link :to="localePath('/info/delivery')">Етказиб бериш</nuxt-link>
+                <nuxt-link :to="localePath('/info/delivery')"
+                  >Етказиб бериш</nuxt-link
+                >
               </li>
               <li>
                 <nuxt-link :to="localePath('/')">Бонус тизими</nuxt-link>
               </li>
               <li>
-                <nuxt-link :to="localePath('/info/working')">Дисконтда ишлаш</nuxt-link>
+                <nuxt-link :to="localePath('/info/working')"
+                  >Дисконтда ишлаш</nuxt-link
+                >
               </li>
             </ul>
           </div>
@@ -148,7 +169,9 @@
                 >
               </li>
               <li>
-                <nuxt-link :to="localePath('/')">Коп сораладиган саволлар</nuxt-link>
+                <nuxt-link :to="localePath('/')"
+                  >Коп сораладиган саволлар</nuxt-link
+                >
               </li>
             </ul>
           </div>
@@ -156,12 +179,12 @@
             <h4>Толов турлари</h4>
             <p>To’lov tizimi</p>
             <div class="payment-types">
-              <span>
+              <!-- <span>
                 <img src="../../assets/images/apelsin.uz.png" alt="" />
-              </span>
-              <span>
+              </span> -->
+              <!-- <span>
                 <img src="../../assets/images/uzcard.uz.png" alt="" />
-              </span>
+              </span> -->
               <span>
                 <img src="../../assets/images/click.uz.png" alt="" />
               </span>
@@ -169,8 +192,11 @@
                 <img src="../../assets/images/payme.uz.png" alt="" />
               </span>
               <span>
-                <img src="../../assets/images/humocard.uz.png" alt="" />
+                <img src="../../assets/images/uzum.png" alt="" />
               </span>
+              <!-- <span>
+                <img src="../../assets/images/humocard.uz.png" alt="" />
+              </span> -->
             </div>
           </div>
         </div>
@@ -179,10 +205,17 @@
     <div class="footer-bottom">
       <div class="container_xl">
         <div class="d-flex justify-content-between">
-          <p class="footer-date">2016-2023 © Diskont.uz Барча ҳуқуқлар ҳимояланган.</p>
-          <p class="foooter-bottom-text">Публичная оферта</p>
-          <p class="foooter-bottom-text">Политика конфиденциальности</p>
-          <p><span v-html="footerBottom"></span> Веб сайт сделано на компании АББА</p>
+          <p class="footer-date">
+            2016-2023 © Diskont.uz Барча ҳуқуқлар ҳимояланган.
+          </p>
+          <p class="foooter-bottom-text cursor-pointer">Публичная оферта</p>
+          <p class="cursor-pointer foooter-bottom-text">
+            Политика конфиденциальности
+          </p>
+          <p>
+            <span v-html="footerBottom"></span> Веб сайт сделано на компании
+            АББА
+          </p>
         </div>
       </div>
     </div>
@@ -270,6 +303,10 @@ export default {
   }
   .footer .payment-types {
     margin-top: 16px;
+  }
+  .footer .payment-types img {
+    width: 108px;
+    height: 57px;
   }
   .footer-box {
     gap: 56px;

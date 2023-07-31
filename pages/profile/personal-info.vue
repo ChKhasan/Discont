@@ -289,7 +289,6 @@ export default {
         headers: { Language: this.$i18n.locale },
       });
       this.regions = data?.regions;
-      console.log(data);
     },
     async __EDIT_PROFILE_INFO(dataForm) {
       try {
@@ -297,7 +296,6 @@ export default {
         this.profileEdit = false;
         this.__GET_PROFILE_INFO();
       } catch (e) {
-        console.log(e);
       }
     },
     submitForm() {
@@ -311,7 +309,6 @@ export default {
         this.$refs["ruleForm"].validate((valid) => {
           if (valid) {
             this.passwordConfirmationError = false;
-            console.log(this.form);
             this.__EDIT_PROFILE_INFO(data);
           } else {
             return false;
@@ -320,7 +317,6 @@ export default {
       }
     },
     onChange(checked) {
-      console.log(`a-switch to ${checked}`);
     },
   },
   watch: {
@@ -331,7 +327,6 @@ export default {
     },
     "form.region_id"(val) {
       this.cities = this.regions.find((item) => item.id == val)?.districts;
-      console.log(this.cities);
     },
   },
   components: { ProfileMenu },

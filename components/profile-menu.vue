@@ -44,14 +44,14 @@
           >
             <path
               d="M17.9958 1.98438L2.00391 17.9762"
-              stroke="#1F8A70"
+              stroke="#09454f"
               stroke-width="3.28586"
               stroke-linecap="round"
               stroke-linejoin="round"
             />
             <path
               d="M18.0003 17.9861L1.99512 1.97754"
-              stroke="#1F8A70"
+              stroke="#09454f"
               stroke-width="3.28586"
               stroke-linecap="round"
               stroke-linejoin="round"
@@ -110,7 +110,6 @@ export default {
         this.handleOkSuccess();
         this.$router.push("/");
       } catch (e) {
-        console.log(e);
       }
     },
   },
@@ -119,7 +118,7 @@ export default {
 <style lang="css">
 .logout-btn {
   height: 59px;
-  background: #1f8a70;
+  background: #09454f;
   border-radius: 16px;
   font-family: var(--SB_500);
   font-style: normal;
@@ -142,7 +141,7 @@ export default {
   line-height: 150%;
   text-align: center;
   letter-spacing: -0.02em;
-  color: #1f8a70;
+  color: #09454f;
   display: flex;
   justify-content: center;
   margin-top: 31px;

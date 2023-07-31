@@ -217,18 +217,6 @@ export default {
           value: "all",
           label: "Barchasi",
         },
-        {
-          value: "qwerty1",
-          label: "Others",
-        },
-        {
-          value: "qwerty2",
-          label: "Others",
-        },
-        {
-          value: "qwerty3",
-          label: "Others",
-        },
       ],
     };
   },
@@ -270,7 +258,6 @@ export default {
       if (!this.atributDrop.includes(id)) {
         this.atributDrop.push(id);
       } else {
-        console.log(this.atributDrop);
         this.atributDrop = this.atributDrop.filter((item) => item != id);
       }
     },
@@ -325,7 +312,6 @@ export default {
       });
       if (!Object.keys(query).includes("attributes")) {
         this.filterOptions = [];
-        console.log(this.filterOptions);
       }
     },
     async onAfterChange(value) {

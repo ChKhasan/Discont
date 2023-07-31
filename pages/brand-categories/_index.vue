@@ -181,18 +181,6 @@ export default {
           value: "all",
           label: "Barchasi",
         },
-        {
-          value: "qwerty1",
-          label: "Goodman",
-        },
-        {
-          value: "qwerty2",
-          label: "Goodman",
-        },
-        {
-          value: "qwerty3",
-          label: "Goodman",
-        },
       ],
     };
   },
@@ -246,6 +234,6 @@ export default {
 <style lang="css">
 @import "../../assets/css/pages/categories.css";
 .active-brand {
-  color: #1f8a70 !important;
+  color: #09454f !important;
 }
 </style>

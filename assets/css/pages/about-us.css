@@ -8,7 +8,7 @@
   flex-direction: column;
 }
 .about-us__list__active {
-  color: var(--yashil, #1f8a70) !important;
+  color: var(--yashil, #09454f) !important;
 }
 .about-us__list ul li a {
   padding: 12px;

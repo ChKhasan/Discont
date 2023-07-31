@@ -4,9 +4,13 @@
       <div class="container_xl w-100">
         <div class="d-flex justify-content-between">
           <ul class="d-flex align-items-center">
-            <li><span v-html="location" class="nav-location"></span> Toshkent</li>
+            <li>
+              <span v-html="location" class="nav-location"></span> Toshkent
+            </li>
             <li>Do’konlar manzili</li>
-            <li @click="$router.push(localePath('/info/about-us'))">Biz haqimizda</li>
+            <li @click="$router.push(localePath('/info/about-us'))">
+              Biz haqimizda
+            </li>
           </ul>
           <div class="d-flex header-top__right">
             <a href="tel:+998712077788">+998 71 207 77 88</a>
@@ -66,7 +70,6 @@ export default {
     var header = this.$refs.navScroll;
     var header2 = this.$refs.navScroll2;
     var header3 = this.$refs.navScroll3;
-    console.log(this.$refs);
 
     window.addEventListener("scroll", () => {
       let scrollTop = window.pageYOffset || document.documentElement.scrollTop;

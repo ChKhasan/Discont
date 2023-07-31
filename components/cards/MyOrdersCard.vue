@@ -151,11 +151,11 @@ export default {
   max-height: 42px;
 }
 .success-order {
-  color: #1f8a70;
+  color: #09454f;
   background: #fafafa;
 }
 .success-order::after {
-  background: #1f8a70;
+  background: #09454f;
 }
 .pending-order {
   color: #fbc100;

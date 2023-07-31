@@ -3,12 +3,16 @@
     <div class="container_xl">
       <div class="page-breadcrumb">
         <nuxt-link :to="localePath('/')">Diskont main page</nuxt-link>
-        <nuxt-link class="disabled" :to="localePath('/')"> Solishtirish </nuxt-link>
+        <nuxt-link class="disabled" :to="localePath('/')">
+          Solishtirish
+        </nuxt-link>
       </div>
       <div class="d-flex page-container-title">
         <div class="d-flex align-items-end">
           <MainTitle title="Solishtirish" />
-          <span class="d-flex align-items-end">{{ compProducts.length }} товаров</span>
+          <span class="d-flex align-items-end"
+            >{{ compProducts.length }} товаров</span
+          >
         </div>
         <a-select
           v-model="value"
@@ -28,7 +32,11 @@
       <div class="page-container-body" v-if="compProducts.length > 0">
         <div class="swiper-comparison mySwiper" style="overflow: hidden">
           <div class="swiper-wrapper">
-            <div class="swiper-slide" v-for="product in compProducts" :key="product?.id">
+            <div
+              class="swiper-slide"
+              v-for="product in compProducts"
+              :key="product?.id"
+            >
               <ComparisonCard :product="product" />
             </div>
           </div>
@@ -124,21 +132,21 @@ export default {
   mounted() {
     let compProductsStore = JSON.parse(localStorage.getItem("comparison"));
     if (compProductsStore.length > 0) {
-      console.log(compProductsStore.length);
       this.__GET_PRODUCTS_BY_ID({ products: compProductsStore });
     }
   },
   methods: {
     async __GET_PRODUCTS_BY_ID(dataForm) {
-      const data = await this.$store.dispatch("fetchProducts/getComparionsProductsById", {
-        data: dataForm,
-        params: {
-          headers: { Language: this.$i18n.locale },
-        },
-      });
-      console.log(data);
+      const data = await this.$store.dispatch(
+        "fetchProducts/getComparionsProductsById",
+        {
+          data: dataForm,
+          params: {
+            headers: { Language: this.$i18n.locale },
+          },
+        }
+      );
       // this.compProducts = data?.products;
-      console.log(this.compProducts);
     },
   },
   watch: {
