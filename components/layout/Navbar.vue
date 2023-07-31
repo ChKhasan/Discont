@@ -896,7 +896,6 @@ export default {
 
     this.categories = categoriesData?.categories?.data;
     this.activeCategory = categoriesData?.categories?.data[0];
-    console.log(this.categories);
   },
   computed: {
     routerPath() {
@@ -988,7 +987,6 @@ export default {
       this.visibleName = false;
     },
     submitCheckNumber() {
-      console.log(this.formCheckNumber.phone_number);
       const data = {
         phone_number: this.formCheckNumber.phone_number
           .split(" ")
@@ -1054,7 +1052,6 @@ export default {
           "fetchAuth/postRegisterWithSms",
           formData
         );
-        console.log(data);
         localStorage.setItem("dis_auth_token", data.token);
         this.$store.commit("authHandler");
 

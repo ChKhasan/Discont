@@ -19,9 +19,9 @@
           <img v-else src="../../assets/images/image 317.png" alt="" />
         </div>
         <div class="post-page-info">
-          <h1>{{ post?.title?.ru }}</h1>
+          <h1>{{ post?.title }}</h1>
           <p>
-            {{ post?.desc?.ru }}
+            {{ post?.desc }}
           </p>
         </div>
       </div>
@@ -73,7 +73,6 @@ export default {
         },
       }),
     ]);
-    console.log(postData);
     const post = postData?.post;
     const posts = postData?.other_posts;
     return {

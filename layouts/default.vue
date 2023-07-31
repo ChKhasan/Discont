@@ -222,7 +222,6 @@ export default {
       let detectedValue = value % 360;
       let finalValue = Math.ceil(detectedValue / 30) + 7;
 
-      console.log(finalValue);
     },
   },
   watch: {

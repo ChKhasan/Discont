@@ -908,7 +908,6 @@ export default {
           },
         },
       });
-      console.log(productData);
       this.productInner = productData.product;
       this.productAttributes = productData?.attributes;
       this.skeleton = false;

@@ -66,7 +66,6 @@ export default {
     var header = this.$refs.navScroll;
     var header2 = this.$refs.navScroll2;
     var header3 = this.$refs.navScroll3;
-    console.log(this.$refs);
 
     window.addEventListener("scroll", () => {
       let scrollTop = window.pageYOffset || document.documentElement.scrollTop;

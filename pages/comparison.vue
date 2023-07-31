@@ -124,7 +124,6 @@ export default {
   mounted() {
     let compProductsStore = JSON.parse(localStorage.getItem("comparison"));
     if (compProductsStore.length > 0) {
-      console.log("asdasdasd");
       this.__GET_PRODUCTS_BY_ID({ products: compProductsStore });
     }
   },
@@ -136,9 +135,7 @@ export default {
           headers: { Language: this.$i18n.locale },
         },
       });
-      console.log(data);
       // this.compProducts = data?.products;
-      console.log(this.compProducts);
     },
   },
   watch: {

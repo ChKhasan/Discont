@@ -258,7 +258,6 @@ export default {
       if (!this.atributDrop.includes(id)) {
         this.atributDrop.push(id);
       } else {
-        console.log(this.atributDrop);
         this.atributDrop = this.atributDrop.filter((item) => item != id);
       }
     },
@@ -313,7 +312,6 @@ export default {
       });
       if (!Object.keys(query).includes("attributes")) {
         this.filterOptions = [];
-        console.log(this.filterOptions);
       }
     },
     async onAfterChange(value) {

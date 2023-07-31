@@ -1173,7 +1173,6 @@ export default {
     ]);
     this.skeleton = false;
     this.product = productData.product;
-    console.log(this.product);
     this.productsOthers = productsData?.products?.data;
     this.productCharacteristic = productData?.product?.characteristic_options.splice(
       0,
@@ -1210,7 +1209,6 @@ export default {
       }
     },
     productPrice(product) {
-      console.log(product);
       let price =
         product?.discount?.amount || product?.discount?.percent
           ? product?.discount?.amount

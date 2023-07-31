@@ -155,7 +155,6 @@ export default {
   },
   methods: {
     test() {
-      console.log("auuuuggghhh");
     },
   },
   components: {
