@@ -10,7 +10,23 @@
           {{ moment(order?.updated_at).format("HH:mm") }}
         </p>
       </div>
-      <span class="orders-status success-order">Olib ketildi</span>
+      <span
+        class="orders-status"
+        :class="{
+          'success-order': order?.status == 'new',
+          'pending-order': order?.status == 'pending',
+          'returned-order': order?.status == 'returned',
+        }"
+        >{{
+          order?.status == "new"
+            ? "Olib ketildi"
+            : order?.status == "pending"
+            ? "Kutilmoqda"
+            : order?.status == "returned"
+            ? "Qaytarildi"
+            : ""
+        }}</span
+      >
     </div>
     <div class="my-orders-card-body" @click="productDrop = !productDrop">
       <div class="order-products">
@@ -60,7 +76,7 @@
       </div>
       <div>
         <p>Способ доставки</p>
-        <span>{{pickupMethod[order?.delivery_method]}}</span>
+        <span>{{ pickupMethod[order?.delivery_method] }}</span>
       </div>
       <div>
         <p>Способ оплаты</p>
@@ -169,6 +185,13 @@ export default {
   background-color: #fafafa;
 }
 .canceled-order::after {
+  background: #ff2e2e;
+}
+.returned-order {
+  color: #ff2e2e;
+  background-color: #fafafa;
+}
+.returned-order::after {
   background: #ff2e2e;
 }
 .orders-status::after {
