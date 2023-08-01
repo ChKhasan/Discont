@@ -361,16 +361,12 @@
               <a slot="customPaging" slot-scope="props" v-else>
                 <img :src="getImgUrl([1, 2, 3, 4], props.i)" alt="" />
               </a>
-<<<<<<< HEAD
-              <div v-for="item in product?.images" v-if="product?.images.length > 0">
-                <img :src="item?.sm_img" />
-=======
+             
               <div
                 v-for="item in product?.images"
                 v-if="product?.images.length > 0"
               >
                 <img :src="item?.md_img" />
->>>>>>> b71ffb45ec6f5d5e05549fc9442151a7a52e2f55
               </div>
               <div v-for="item in [1, 2, 3, 4]" v-else>
                 <img src="../../assets/images/empty-img.png" alt="" />
