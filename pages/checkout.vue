@@ -212,7 +212,13 @@
               >
                 <div
                   class="cursor-pointer"
-                  style="position: absolute; width: 70%; height: 100%"
+                  style="
+                    position: absolute;
+                    width: 70%;
+                    height: 100%;
+                    left: 0;
+                    z-index: 100;
+                  "
                   @click="form.user_address_id = address?.id"
                 ></div>
                 <span
@@ -224,7 +230,7 @@
                 <div class="radio-card-body d-flex justify-content-between w-100">
                   <h5>
                     {{ address?.region?.name }}, {{ address?.district?.name }},
-                    {{ address?.village?.name }}, {{ address?.address }}
+                    {{ address?.address }}
                   </h5>
                   <button>
                     <span
@@ -262,7 +268,11 @@
             </div>
             <div class="bottom-text">
               <span>
-                <a-checkbox @change="onChange"> </a-checkbox>
+                <a-checkbox
+                  @change="onChange"
+                  :class="{ checkboxRequiredClass: checkboxRequired }"
+                >
+                </a-checkbox>
                 <p>
                   Barcha ma`lumotlarni tasdiqlayman, <span>foydalanish</span> va
                   <span @click="visibleConsent = true">sotib olish shartlariga</span>
@@ -525,7 +535,12 @@
           </div>
           <div class="bottom-text">
             <span>
-              <a-checkbox @change="onChange"> </a-checkbox>
+              <a-checkbox
+                @change="onChange"
+                v-model="checkboxVal"
+                :class="{ checkboxRequiredClass: checkboxRequired }"
+              >
+              </a-checkbox>
               <p>
                 Barcha ma`lumotlarni tasdiqlayman, <span>foydalanish</span> va
                 <span @click="visibleConsent = true">sotib olish shartlariga</span>
@@ -611,7 +626,6 @@
                 </a-select-option>
               </a-select>
             </a-form-model-item>
-            >
           </div>
 
           <a-form-model-item class="form-item mb-0 pb-0">
@@ -626,6 +640,44 @@
         </a-form-model>
       </div>
       <div class="vmodal-btn" @click="submitAddress">Manzilni qo’shish</div>
+      <template slot="footer"> <h3></h3></template>
+    </a-modal>
+    <a-modal
+      v-model="visibleAddressErr"
+      :body-style="{ padding: '32px', borderRadius: '14px' }"
+      centered
+      :closable="false"
+      width="561px"
+      @ok="handleOkErr"
+    >
+      <div class="vmodal-header">
+        <h5>Siz 3 tadan ortiq manzil qo'sha olmaysiz</h5>
+        <span @click="handleOkErr"
+          ><svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="20"
+            height="20"
+            viewBox="0 0 20 20"
+            fill="none"
+          >
+            <path
+              d="M17.9958 1.98438L2.00391 17.9762"
+              stroke="#09454f"
+              stroke-width="3.28586"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            />
+            <path
+              d="M18.0003 17.9861L1.99512 1.97754"
+              stroke="#09454f"
+              stroke-width="3.28586"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            /></svg
+        ></span>
+      </div>
+      <div class="vmodal-body"></div>
+      <div class="vmodal-btn" @click="handleOkErr">Orqaga qaytish</div>
       <template slot="footer"> <h3></h3></template>
     </a-modal>
     <!-- <a-modal
@@ -843,6 +895,9 @@ export default {
   layout: "checkoutLayout",
   data() {
     return {
+      visibleAddressErr: false,
+      checkboxRequired: false,
+      checkboxVal: false,
       dicoinSumm: 0,
       sendDicoin: false,
       skeleton: false,
@@ -947,6 +1002,9 @@ export default {
     },
   },
   methods: {
+    handleOkErr() {
+      this.visibleAddressErr = false;
+    },
     numberFormat(e) {
       var txt = String.fromCharCode(e.which);
       if (!txt.match(/[A-Za-z0-9&.]/)) {
@@ -976,9 +1034,13 @@ export default {
           );
         }, 0),
       };
-      this.$refs["ruleForm"].validate((valid) => {
-        valid ? this.__POST_ORDER(data) : false;
-      });
+      if (this.checkboxVal) {
+        this.$refs["ruleForm"].validate((valid) => {
+          valid ? this.__POST_ORDER(data) : false;
+        });
+      } else {
+        this.checkboxRequired = true;
+      }
     },
     addressEditAction(obj) {
       this.addressEditId = obj.id;
@@ -1076,7 +1138,9 @@ export default {
         this.$store.dispatch("profileInfo");
         this.visible = false;
       } catch (e) {
-        console.log(e);
+        if (e.response.status == 500) {
+          this.visibleAddressErr = true;
+        }
       }
     },
     async __EDIT_ADDRESSS(formData) {
@@ -1096,10 +1160,16 @@ export default {
       this.visibleSuccess = false;
     },
     onChange(e) {
-      console.log(`checked = ${e.target.checked}`);
+      this.checkboxVal = e.target.checked;
+      console.log(this.checkboxVal);
     },
   },
   watch: {
+    checkboxVal(val) {
+      if (val) {
+        this.checkboxRequired = false;
+      }
+    },
     "formAddress.region_id"(val) {
       this.formAddress.district_id = null;
       this.districts = this.regions.find((item) => item.id == val).districts;
@@ -1110,6 +1180,10 @@ export default {
     visible(val) {
       if (!val) {
         this.addressEditId = null;
+        this.formAddress.region_id = null;
+        this.formAddress.district_id = null;
+        this.formAddress.address = null;
+        this.districts = [];
       }
     },
     "form.delivery_method"(val) {
@@ -1117,6 +1191,7 @@ export default {
         this.form.user_address_id = null;
       }
     },
+    visible(val) {},
     visibleSuccess(val) {
       if (!val) this.$router.push("/");
     },
@@ -1389,7 +1464,9 @@ export default {
   -webkit-appearance: none;
   margin: 0;
 }
-
+.checkboxRequiredClass .ant-checkbox-inner {
+  border-color: red !important;
+}
 .dicoin-input[type="number"] {
   -moz-appearance: textfield;
 }

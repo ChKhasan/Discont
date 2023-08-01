@@ -179,7 +179,7 @@
                 v-if="$store.state.comparison.length > 0"
                 >{{ $store.state.comparison.length }}</span
               >
-              <span class="nav-icons" v-html="navComp"></span>Solishtirish
+              <span class="nav-icons comparison-icon" v-html="navComp"></span>Solishtirish
             </li>
             <li
               class="nav_profile user_profile flex-row"

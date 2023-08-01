@@ -114,12 +114,22 @@
 }
 .to-basket-count {
   justify-content: space-between;
-  padding-left: 38px;
-  padding-right: 38px;
+  overflow: hidden;
+  /* padding-left: 38px; */
+  /* padding-right: 38px; */
   font-weight: 600;
 }
 .to-basket-count > span {
   font-size: 30px;
+  width: 90px;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: 0.3s;
+}
+.to-basket-count > span:hover {
+  background-color: #f9f9f9;
 }
 .product-card-footer .to-basket-btn span {
   position: absolute;

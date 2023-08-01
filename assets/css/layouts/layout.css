@@ -127,9 +127,14 @@
 .header-navbar_navbar ul {
   padding-left: 65px;
 }
-.header-navbar_navbar ul li:hover .nav-icons svg rect,
-.header-navbar_navbar ul li:hover .nav-icons svg path {
+.header-navbar_navbar ul li:not(:last-child):hover .nav-icons svg rect,
+.header-navbar_navbar ul li:not(:last-child):hover .nav-icons svg path {
   stroke: #04babe;
+}
+.header-navbar_navbar ul li:hover .comparison-iconsvg rect,
+.header-navbar_navbar ul li:hover .comparison-icon svg path {
+  fill: #04babe;
+  stroke: transparent !important;
 }
 .header-navbar_navbar ul li svg rect,
 .header-navbar_navbar ul li svg path {

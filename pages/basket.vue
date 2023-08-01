@@ -70,6 +70,7 @@
                 <div class="basket-card-count">
                   <div class="basket-count-btn">
                     <span
+                      v-ripple="'rgba(9, 69, 79, 0.1)'"
                       @click="
                         $store.state.cart.find((item) => item.id == product.id)?.count > 1
                           ? $store.commit('productCountDown', {
@@ -92,6 +93,7 @@
 
                     {{ $store.state.cart.find((item) => item.id == product.id)?.count }}
                     <span
+                      v-ripple="'rgba(9, 69, 79, 0.1)'"
                       @click="
                         $store.state.cart.find((item) => item.id == product?.id)?.count <
                           product?.stock &&
@@ -330,10 +332,10 @@
                 ><p>Di Coinlar:</p>
                 <p>0 сум</p></span
               > -->
-              <span
+              <!-- <span
                 ><p>Стоимость доставки:</p>
                 <p>25 000 сум</p></span
-              >
+              > -->
             </div>
             <div class="basket-checkout-btn" @click="checkoutCheck()">Оформить заказ</div>
             <div class="basket-checkout-bottom">
@@ -554,7 +556,7 @@ export default {
 }
 .basket-count-btn {
   height: 36px;
-  padding: 0 15px;
+  /* padding: 0 15px; */
   display: flex;
   align-items: center;
   width: 120px;
@@ -570,11 +572,17 @@ export default {
   color: #1c1f22;
 }
 .basket-count-btn > span {
+  border-radius: 50%;
   height: 100%;
+  aspect-ratio: 1/1;
   display: flex;
   align-items: center;
   justify-content: center;
   cursor: pointer;
+  transition: 0.5s;
+}
+.basket-count-btn > span:hover {
+  background-color: rgba(9, 69, 79, 0.1);
 }
 .basket-price-block > span {
   display: flex;
