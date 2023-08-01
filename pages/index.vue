@@ -316,7 +316,7 @@
     <div class="rising container_xl mb-120">
       <DiscontBanner />
     </div>
-    <div class="rising container_xl mb-120">
+    <div class="nope rising container_xl mb-120">
       <ApplicationBanner />
     </div>
     <div class="location container_xl mb-120">

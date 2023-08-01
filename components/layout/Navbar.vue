@@ -205,7 +205,7 @@
     </div>
     <div class="header-mobile container_xl w-100">
       <div class="d-flex align-items-center">
-        <button class="drawer-btn">
+        <button @click="catalogMenu = !catalogMenu" class="drawer-btn">
           <svg
             xmlns="http://www.w3.org/2000/svg"
             width="45"
@@ -844,6 +844,8 @@
       v-if="searchBlockHide"
       @click="searchBlockHide = false"
     ></div>
+
+    <div class="menue"></div>
   </div>
 </template>
 <script>
@@ -1673,5 +1675,38 @@ export default {
   /* backdrop-filter: blur(2.5px); */
   z-index: 1000;
   top: 100%;
+}
+
+@media screen and (max-width: 1024px) {
+  .catalog-menu-content {
+    padding: 32px 0;
+    display: grid;
+    grid-template-columns: repeat(1, 1fr);
+    width: 100%;
+    gap: 32px;
+  }
+  .catalog-menu-items {
+    gap: 0;
+    grid-template-columns: repeat(1, 1fr);
+    overflow: hidden;
+    height: auto;
+    padding-bottom: 32px;
+  }
+  .close-space {
+    display: none;
+  }
+  .categories-page-title {
+    margin-bottom: 16px !important;
+  }
+  .catalog-menu-items ul {
+    margin-bottom: 16px;
+  }
+  .catalog-menu-container {
+    overflow: scroll;
+    background: white;
+  }
+  .catalog-menu-body {
+    padding: 0 12px;
+  }
 }
 </style>

@@ -74,8 +74,8 @@ export default {
     window.addEventListener("scroll", () => {
       let scrollTop = window.pageYOffset || document.documentElement.scrollTop;
       if (scrollTop > this.lastScrollTop) {
-        header.style.top = "-46px";
-        header2.style.marginTop = "-63px";
+        header.style.top = "-68px";
+        header2.style.marginTop = "8px";
         header3.style.boxShadow = " 0 0.5rem 1rem rgb(0 0 0 / 15%)";
 
         // header.style.background = "#04babe";
