@@ -10,11 +10,7 @@
           <div class="left">
             <div class="stars">
               <div v-if="product?.info?.stars != null">
-                <a-rate
-                  class="product-rate"
-                  v-model="product.info.stars"
-                  disabled
-                />
+                <a-rate class="product-rate" v-model="product.info.stars" disabled />
               </div>
               <div v-else>
                 <a-rate class="product-rate" v-model="nolVal" disabled />
@@ -29,13 +25,9 @@
             <div class="bottom">
               <button
                 :class="{
-                  'active-like-comp-btn': $store.state.like.includes(
-                    product?.id
-                  ),
+                  'active-like-comp-btn': $store.state.like.includes(product?.id),
                 }"
-                @click="
-                  $store.commit('addToStore', { id: product?.id, name: 'like' })
-                "
+                @click="$store.commit('addToStore', { id: product?.id, name: 'like' })"
               >
                 <svg
                   width="20"
@@ -58,9 +50,7 @@
               </button>
               <button
                 :class="{
-                  'active-like-comp-btn': $store.state.comparison.includes(
-                    product?.id
-                  ),
+                  'active-like-comp-btn': $store.state.comparison.includes(product?.id),
                 }"
                 @click="
                   $store.commit('addToStore', {
@@ -192,28 +182,17 @@
           <div class="world" v-if="skeleton">
             <div thumbsSlider="" class="swiper mySwiper">
               <div class="swiper-wrapper flex-column">
-                <div
-                  class="swiper-slide"
-                  v-for="img in [1, 2, 3, 4]"
-                  :key="img"
-                >
+                <div class="swiper-slide" v-for="img in [1, 2, 3, 4]" :key="img">
                   <b-skeleton height="100%" width="100%"></b-skeleton>
                 </div>
               </div>
             </div>
             <div
-              style="
-                --swiper-navigation-color: #fff;
-                --swiper-pagination-color: #fff;
-              "
+              style="--swiper-navigation-color: #fff; --swiper-pagination-color: #fff"
               class="swiper mySwiper2"
             >
               <div class="swiper-wrapper">
-                <div
-                  class="swiper-slide"
-                  v-for="img in [1, 2, 3, 4]"
-                  :key="img"
-                >
+                <div class="swiper-slide" v-for="img in [1, 2, 3, 4]" :key="img">
                   <b-skeleton height="100%" width="100%"></b-skeleton>
                 </div>
               </div>
@@ -223,28 +202,17 @@
           <div class="world" v-else>
             <div thumbsSlider="" class="swiper mySwiper">
               <div class="swiper-wrapper flex-column">
-                <div
-                  class="swiper-slide"
-                  v-for="img in product?.images"
-                  :key="img.id"
-                >
+                <div class="swiper-slide" v-for="img in product?.images" :key="img.id">
                   <img :src="img?.md_img" />
                 </div>
               </div>
             </div>
             <div
-              style="
-                --swiper-navigation-color: #fff;
-                --swiper-pagination-color: #fff;
-              "
+              style="--swiper-navigation-color: #fff; --swiper-pagination-color: #fff"
               class="swiper mySwiper2"
             >
               <div class="swiper-wrapper">
-                <div
-                  class="swiper-slide"
-                  v-for="img in product?.images"
-                  :key="img.id"
-                >
+                <div class="swiper-slide" v-for="img in product?.images" :key="img.id">
                   <img :src="img?.md_img" />
                 </div>
               </div>
@@ -288,8 +256,7 @@
                 class="all"
                 @click="scrollElement('characteristic')"
                 v-if="
-                  productCharacteristic?.length <
-                  product?.characteristic_options?.length
+                  productCharacteristic?.length < product?.characteristic_options?.length
                 "
               >
                 Barcha xarakteristikalar
@@ -306,18 +273,16 @@
                   :key="colorOption"
                   class="disabled-attribute color"
                 >
-                  <span
-                    ><b-skeleton height="100%" width="100%"></b-skeleton
-                  ></span>
+                  <span><b-skeleton height="100%" width="100%"></b-skeleton></span>
                 </div>
               </div>
             </div>
             <div
               v-else
               class="colors"
-              v-for="(
-                atributColor, atributColorIndex
-              ) in productAttributes.filter((item) => item.title == 'Цвет')"
+              v-for="(atributColor, atributColorIndex) in productAttributes.filter(
+                (item) => item.title == 'Цвет'
+              )"
               :key="atributColorIndex"
             >
               <p class="lil">{{ atributColor?.title }}</p>
@@ -332,9 +297,7 @@
                     'disabled-attribute': !colorOption?.available,
                   }"
                 >
-                  <span
-                    :style="{ 'background-color': colorOption?.title }"
-                  ></span>
+                  <span :style="{ 'background-color': colorOption?.title }"></span>
                 </div>
               </div>
             </div>
@@ -389,21 +352,17 @@
                 <div class="number">
                   <button
                     @click="
-                      $store.state.cart.find((item) => item.id == product.id)
-                        ?.count > 1 &&
-                        $store.commit('productCountDown', { id: product?.id })
+                      $store.state.cart.find((item) => item.id == product.id)?.count >
+                        1 && $store.commit('productCountDown', { id: product?.id })
                     "
                   >
                     <a-icon type="minus" />
                   </button>
-                  {{
-                    $store.state.cart.find((item) => item.id == product?.id)
-                      ?.count
-                  }}
+                  {{ $store.state.cart.find((item) => item.id == product?.id)?.count }}
                   <button
                     @click="
-                      $store.state.cart.find((item) => item.id == product?.id)
-                        ?.count < product?.stock &&
+                      $store.state.cart.find((item) => item.id == product?.id)?.count <
+                        product?.stock &&
                         $store.commit('productCountUp', { id: product?.id })
                     "
                   >
@@ -421,13 +380,16 @@
               <div class="discount" v-if="product?.discount">
                 <p class="tag">
                   {{
-                    product?.discount?.amount
-                      ? `${product?.discount?.amount} so'm`
-                      : `-${product?.discount?.percent}%`
+                    product?.discount?.pivot?.amount
+                      ? `-${product?.discount?.pivot?.amount} so'm`
+                      : `-${product?.discount?.pivot?.percent}%`
                   }}
                 </p>
-                <p class="dis__price" v-if="product?.price">
-                  {{ product?.price }}
+                <p class="dis__price" v-if="product?.discount_price">
+                  {{
+                    `${product?.real_price}`.replace(/\B(?=(\d{3})+(?!\d))/g, " ")
+                  }}
+                  so'm
                 </p>
                 <p class="dis__txt">Chegirma narxida</p>
               </div>
@@ -435,13 +397,17 @@
                 <b-skeleton width="50%" height="100%"> </b-skeleton>
               </p>
               <p class="price" v-if="product?.price && !skeleton">
-                {{ productPrice(product) }}
+                {{
+                  `${
+                    product?.discount_price
+                      ? product?.discount_price
+                      : product?.real_price
+                  }`.replace(/\B(?=(\d{3})+(?!\d))/g, " ")
+                }}
                 so’m
               </p>
 
-              <p class="delivery">
-                Yetkazib berish narxi viloyatga qarab belgilanadi
-              </p>
+              <p class="delivery">Yetkazib berish narxi viloyatga qarab belgilanadi</p>
 
               <p class="coin" v-if="skeleton">
                 <b-skeleton width="150px" height="100%"> </b-skeleton>
@@ -449,11 +415,7 @@
               <p v-else class="coin">
                 <img src="@/assets/images/coin.svg" alt="" />
                 +
-                {{
-                  Math.floor(
-                    product?.real_price / $store.state.dicoin.sum_to_dicoin
-                  )
-                }}
+                {{ Math.floor(product?.real_price / $store.state.dicoin.sum_to_dicoin) }}
                 ta di coin
               </p>
             </div>
@@ -513,9 +475,7 @@
                   />
                 </svg>
               </button>
-              <button class="click" @click="visibleOc = true">
-                Hoziroq sotib olish
-              </button>
+              <button class="click" @click="visibleOc = true">Hoziroq sotib olish</button>
             </div>
           </div>
 
@@ -543,10 +503,7 @@
       </div>
       <div class="tabs">
         <div class="butns" id="characteristic">
-          <button
-            :class="{ active: tabHandle == 'desc' }"
-            @click="tabHandle = 'desc'"
-          >
+          <button :class="{ active: tabHandle == 'desc' }" @click="tabHandle = 'desc'">
             Mahsulot haqida
           </button>
           <button
@@ -640,8 +597,8 @@
                         <img src="@/assets/images/logo/map.svg" alt="" />
                       </div>
                       <p>
-                        Фарғона вилояти, Маргилон ш. Тошлоқ тумани, Алишер
-                        Навоий кўчаси, 94 уй. Мўлжал: "Tabassum" мехмонхонаси
+                        Фарғона вилояти, Маргилон ш. Тошлоқ тумани, Алишер Навоий кўчаси,
+                        94 уй. Мўлжал: "Tabassum" мехмонхонаси
                       </p>
                     </div>
                   </td>
@@ -669,8 +626,8 @@
                         <img src="@/assets/images/logo/map.svg" alt="" />
                       </div>
                       <p>
-                        Фарғона вилояти, Маргилон ш. Тошлоқ тумани, Алишер
-                        Навоий кўчаси, 94 уй. Мўлжал: "Tabassum" мехмонхонаси
+                        Фарғона вилояти, Маргилон ш. Тошлоқ тумани, Алишер Навоий кўчаси,
+                        94 уй. Мўлжал: "Tabassum" мехмонхонаси
                       </p>
                     </div>
                   </td>
@@ -706,11 +663,7 @@
                 <div class="flex">
                   <div class="stars" v-if="comment?.stars">
                     <!-- <a-rate v-model="comment.stars" disabled /> -->
-                    <a-rate
-                      class="comment-rate-icon"
-                      v-model="comment.stars"
-                      disabled
-                    >
+                    <a-rate class="comment-rate-icon" v-model="comment.stars" disabled>
                       <svg
                         xmlns="http://www.w3.org/2000/svg"
                         width="13"
@@ -739,10 +692,7 @@
                   </p>
                 </div>
               </div>
-              <div
-                class="comments-empty"
-                v-if="product?.info?.comments.length == 0"
-              >
+              <div class="comments-empty" v-if="product?.info?.comments.length == 0">
                 <img src="../../assets/images/comments-empty.png" alt="" />
                 <h4>Mahsulotlarga baho qo’yilmagan</h4>
               </div>
@@ -753,9 +703,7 @@
                   <img src="@/assets/images/like.svg" alt="" />
                   O’z fikr va izohlaringizni qoldiring
                 </p>
-                <button class="leave__btn" @click="commentOpen()">
-                  Baho qoldirish
-                </button>
+                <button class="leave__btn" @click="commentOpen()">Baho qoldirish</button>
               </div>
               <div class="rating">
                 <!-- <img src="@/assets/images/cheat.png" alt="" /> -->
@@ -770,9 +718,7 @@
                     <p>5 оценок</p>
                   </div>
                   <p>
-                    <span>{{
-                      product?.info?.stars ? product?.info?.stars : 0
-                    }}</span
+                    <span>{{ product?.info?.stars ? product?.info?.stars : 0 }}</span
                     >/5
                   </p>
                 </div>
@@ -806,11 +752,7 @@
       <div class="other pb-5">
         <h4>O’xshash tovarlar</h4>
         <ProductCarousel>
-          <div
-            class="swiper-slide"
-            v-for="product in productsOthers"
-            :key="product.id"
-          >
+          <div class="swiper-slide" v-for="product in productsOthers" :key="product.id">
             <ProductCardVue :product="product" />
           </div>
         </ProductCarousel>
@@ -884,9 +826,7 @@
                     </svg>
                   </button>
                   {{ formOc.count }}
-                  <button
-                    @click="formOc.count < product?.stock && formOc.count++"
-                  >
+                  <button @click="formOc.count < product?.stock && formOc.count++">
                     <svg
                       xmlns="http://www.w3.org/2000/svg"
                       width="12"
@@ -941,11 +881,7 @@
         >
           Ma`lumotlarni yuborish
         </div>
-        <div
-          class="vmodal-forget-password"
-          v-if="!callBox"
-          @click="callBox = true"
-        >
+        <div class="vmodal-forget-password" v-if="!callBox" @click="callBox = true">
           O’zim bog’lanaman
         </div>
         <a href="#">
@@ -1061,10 +997,7 @@
             </svg>
           </a-rate>
         </div>
-        <div
-          class="comment-btn comment-btn-close"
-          @click="visibleComment = false"
-        >
+        <div class="comment-btn comment-btn-close" @click="visibleComment = false">
           Bekor qilish
         </div>
         <div
@@ -1257,8 +1190,10 @@ export default {
     this.skeleton = false;
     this.product = productData.product;
     this.productsOthers = productsData?.products?.data;
-    this.productCharacteristic =
-      productData?.product?.characteristic_options.splice(0, 4);
+    this.productCharacteristic = productData?.product?.characteristic_options.splice(
+      0,
+      4
+    );
     this.productAttributes = productData?.attributes;
 
     setTimeout(() => {
@@ -1316,10 +1251,7 @@ export default {
     submitName() {
       const data = {
         ...this.formOc,
-        phone_number: this.formOc.phone_number
-          .split(" ")
-          .join("")
-          .replace("+", ""),
+        phone_number: this.formOc.phone_number.split(" ").join("").replace("+", ""),
         product_id: this.product.id,
       };
       this.$refs["ruleFormOcClick"].validate((valid) => {
@@ -1335,12 +1267,9 @@ export default {
     },
     async __POST_COMMENT(formData) {
       try {
-        const data = await this.$store.dispatch(
-          "fetchProducts/postProductComment",
-          {
-            data: formData,
-          }
-        );
+        const data = await this.$store.dispatch("fetchProducts/postProductComment", {
+          data: formData,
+        });
         this.visibleComment = false;
       } catch (e) {
         console.log(e);
@@ -1348,10 +1277,7 @@ export default {
     },
     async __POST_ORDER(formData) {
       try {
-        const data = await this.$store.dispatch(
-          "fetchAuth/postClickOrder",
-          formData
-        );
+        const data = await this.$store.dispatch("fetchAuth/postClickOrder", formData);
         this.visibleOc = false;
         // this.compToast = true;
         this.visibleSuccess = true;

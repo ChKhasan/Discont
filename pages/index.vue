@@ -62,7 +62,7 @@
           <nuxt-link
             class="to-page-underline"
             :to="localePath(`/showcases/${showcases[0]?.slug}`)"
-            >Все товары</nuxt-link
+            >Barcha tovarlar</nuxt-link
           >
         </div>
         <div class="product-grid" v-if="showcases[0]?.products.length > 0">
@@ -83,7 +83,7 @@
           <nuxt-link
             class="to-page-underline"
             :to="localePath(`/showcases/${showcases[1]?.slug}`)"
-            >Все товары</nuxt-link
+            >Barcha tovarlar</nuxt-link
           >
         </div>
         <div class="product-grid" v-if="showcases[1]?.products.length > 0">
@@ -136,7 +136,7 @@
           <nuxt-link
             class="to-page-underline"
             :to="localePath(`/showcases/${showcases[3]?.slug}`)"
-            >Все товары</nuxt-link
+            >Barcha tovarlar</nuxt-link
           >
         </div>
         <div class="">
@@ -160,7 +160,7 @@
           <nuxt-link
             class="to-page-underline"
             :to="localePath(`/showcases/${showcases[4]?.slug}`)"
-            >Все товары</nuxt-link
+            >Barcha tovarlar</nuxt-link
           >
         </div>
         <div class="" v-if="showcases[4]?.products.length > 0">

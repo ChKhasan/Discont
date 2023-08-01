@@ -9,7 +9,7 @@
         <div class="d-flex categories-page-title justify-content-between">
           <div class="d-flex justify-content-between">
             <MainTitle :title="`Каталог ${brand?.name}`" />
-            <span>{{ brandProducts?.length }} товаров</span>
+            <span>{{ brandProducts?.length }} tovar</span>
           </div>
           <a-select
             v-model="value"
@@ -30,7 +30,7 @@
       <div class="categories-page-inner-grid">
         <div class="categories-filter-list">
           <div class="categories-list">
-            <h5>Категория</h5>
+            <h5>Kategoriyalar</h5>
             <ul>
               <li v-for="brand in brandsAll" :key="brand?.id">
                 <span
@@ -145,7 +145,7 @@
         </p>
         <p>
           Оформить заказ можно через Telegram или позвонив в нашу единую службу поддержки
-          по номеру 200 7 002. Добро пожаловать в интернет-магазин товаров для дома
+          по номеру 200 7 002. Добро пожаловать в интернет-магазин tovarlar для дома
           DISKONT!
         </p>
       </div>

@@ -6,9 +6,9 @@
           <div class="hey chekout-footer-head d-flex">
             <span v-html="footerLogo"></span>
             <p>
-              2016-2023 © diskont.uz. Барча ҳуқуқлар ҳимояланган. Товарларнинг
-              кўрсатилган қиймати ва уларни сотиб олиш шартлари жорий санага
-              амал қилади
+              2016-2023 © diskont.uz. Barcha huquqlar himoyalangan.  Tovarlarning
+              ko‘rsatilgan qiymati va ularni sotib olish shartlari joriy sanaga amal
+              qiladi
             </p>
           </div>
         </div>
@@ -17,14 +17,10 @@
     <div class="footer-bottom">
       <div class="container_xl">
         <div class="hey d-flex justify-content-between">
-          <p>2016-2023 © Diskont.uz Барча ҳуқуқлар ҳимояланган.</p>
-
-          <p class="cursor-pointer">Публичная оферта</p>
-          <p class="cursor-pointer">Политика конфиденциальности</p>
-          <p>
-            <span v-html="footerBottom"></span> Веб сайт сделано на компании
-            АББА
-          </p>
+          <p>2016-2023 © Diskont.uz Barcha huquqlar himoyalangan.</p>
+          <p class="cursor-pointer">Ommaviy oferta</p>
+          <p class="cursor-pointer">Maxfiylik siyosati</p>
+          <p><span v-html="footerBottom"></span> Veb-sayt ABBA tomonidan yaratilgan</p>
         </div>
       </div>
     </div>

@@ -363,7 +363,7 @@
               >
 
               <span
-                ><p>Скидка</p>
+                ><p>Chegirma</p>
                 <p>0 so’m</p></span
               >
               <span
@@ -530,8 +530,10 @@
                   <h5>
                     {{
                       `${
-                        product.real_price *
-                        $store.state.cart.find((item) => item.id == product.id)?.count
+                        product.discount_price
+                          ? product.discount_price
+                          : product.real_price *
+                            $store.state.cart.find((item) => item.id == product.id)?.count
                       }`.replace(/\B(?=(\d{3})+(?!\d))/g, " ")
                     }}
                     сўм
@@ -1044,21 +1046,6 @@ export default {
       await this.__GET_PRODUCTS_BY_ID({
         products: storeProducts.map((item) => item.id),
       });
-      const dicoinPrice = this.products
-        .filter((elem) => elem.dicoin)
-        .reduce((summ, item) => {
-          return (
-            summ +
-            item.real_price *
-              item.dicoin *
-              0.01 *
-              this.$store.state.cart.find((elem) => elem.id == item.id)?.count
-          );
-        }, 0);
-      // this.dicoinSumm =
-      //   this.profile?.dicoin?.quantity > dicoinPrice
-      //     ? dicoinPrice / this.$store.state.dicoin.dicoin_to_sum
-      //     : this.profile?.dicoin?.quantity;
     }
   },
   computed: {
@@ -1066,7 +1053,7 @@ export default {
       const totalSum = this.products.reduce((summ, item) => {
         return (
           summ +
-          item.real_price *
+          (item.discount_price ? item.discount_price : item.real_price) *
             this.$store.state.cart.find((elem) => elem.id == item.id)?.count
         );
       }, 0);
@@ -1109,13 +1096,7 @@ export default {
         phone_number: this.form.phone_number.split(" ").join("").replace("+", ""),
         amount: this.form.amount
           ? this.form.amount
-          : this.products.reduce((summ, item) => {
-              return (
-                summ +
-                item.real_price *
-                  this.$store.state.cart.find((elem) => elem.id == item.id)?.count
-              );
-            }, 0) + this.deliveryCost,
+          : this.reduceTotalPrice + this.deliveryCost,
       };
       if (this.typePayment == null) {
         this.required.cash = true;
@@ -1142,7 +1123,6 @@ export default {
     },
     scrollElement(id) {
       const element = document.getElementById(id);
-      console.log(element);
       element.scrollIntoView({ block: "center", behavior: "smooth" });
     },
     addressEditAction(obj) {
@@ -1199,7 +1179,7 @@ export default {
           .reduce((summ, item) => {
             return (
               summ +
-              item.real_price *
+              (item.discount_price ? item.discount_price : item.real_price) *
                 item.dicoin *
                 0.01 *
                 this.$store.state.cart.find((elem) => elem.id == item.id)?.count

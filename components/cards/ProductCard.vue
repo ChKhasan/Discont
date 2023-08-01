@@ -26,7 +26,7 @@
           }"
           @click="$store.commit('addToStore', { id: product?.id, name: 'comparison' })"
         ></span>
-        <div class="fast_show" @click="visible = true">Быстрый просмотр</div>
+        <div class="fast_show" @click="visible = true">Tezkor ko'rish</div>
         <span class="pc-img-container" @click="$router.push(`/product/${product?.slug}`)"
           ><img
             v-if="product?.images[0]?.md_img"
@@ -78,14 +78,18 @@
       </p>
       <span class="product-card-price"
         ><h4>
-          {{ productPrice(product) }}
+          {{
+            `${
+              product?.discount_price ? product?.discount_price : product?.real_price
+            }`.replace(/\B(?=(\d{3})+(?!\d))/g, " ")
+          }}
           so’m
         </h4>
         <!-- <span> +5 ta dicoin</span> -->
       </span>
     </div>
     <div class="product-discount">
-      <p v-if="product?.discount">
+      <p v-if="product?.discount_price">
         {{ `${product?.real_price}`.replace(/\B(?=(\d{3})+(?!\d))/g, " ") }}
         <!-- .slice(0, product?.price?.indexOf("."))
             .replace(".", ",")
@@ -129,7 +133,7 @@
           })
         "
       >
-        <span>В корзину</span>В корзину
+        <span>Savatchaga</span>Savatchaga
       </div>
     </div>
     <a-modal
@@ -229,7 +233,7 @@
                       - {{ product?.discount?.pivot?.percent }}%
                     </p>
                     <p v-if="product?.discount?.pivot?.amount" class="dis__price">
-                      - {{product?.discount?.pivot?.amount}} so’m
+                      - {{ product?.discount?.pivot?.amount }} so’m
                     </p>
                     <p class="dis__txt">Chegirma narxida</p>
                   </div>
@@ -286,7 +290,7 @@
               </div>
             </div>
             <div class="product-modal-characteristic">
-              <h4>Маҳсулот ҳақида қисқача</h4>
+              <h4>Mahsulot haqida qisqacha</h4>
               <div>
                 <p>Бренд</p>
                 <p>Samsung</p>
@@ -361,11 +365,8 @@
               <a slot="customPaging" slot-scope="props" v-else>
                 <img :src="getImgUrl([1, 2, 3, 4], props.i)" alt="" />
               </a>
-             
-              <div
-                v-for="item in product?.images"
-                v-if="product?.images.length > 0"
-              >
+
+              <div v-for="item in product?.images" v-if="product?.images.length > 0">
                 <img :src="item?.md_img" />
               </div>
               <div v-for="item in [1, 2, 3, 4]" v-else>
@@ -514,7 +515,7 @@
                       +
                     </button>
                   </div>
-                  <p>Осталось всего {{ productInner?.stock }}</p>
+                  <p>Sotuvda bor {{ productInner?.stock }}</p>
                 </div>
                 <nuxt-link
                   class="product-modal-show-more"
@@ -801,7 +802,7 @@
       </div>
       <div class="vmodal-body comment-modal-success">
         <img src="../../assets/images/modal-success.png" alt="" />
-        <p>Заказ оформлен. Мы свяжемся с вами в ближайшее время</p>
+        <p>Buyurtma tasdiqlandi. Tez orada siz bilan bog'lanamiz</p>
       </div>
       <div class="vmodal-btn" @click="handleOkSuccess">Yaxshi raxmat</div>
       <template slot="footer"> <h3></h3></template>

@@ -11,7 +11,7 @@
         <div class="d-flex align-items-end">
           <MainTitle title="Solishtirish" />
           <span class="d-flex align-items-end"
-            >{{ compProducts?.length }} товаров</span
+            >{{ compProducts?.length }} tovar</span
           >
         </div>
         <a-select

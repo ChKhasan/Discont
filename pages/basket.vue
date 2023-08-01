@@ -8,9 +8,7 @@
       <div class="d-flex page-container-title">
         <div class="d-flex align-items-end">
           <MainTitle title="Savatcha" />
-          <span class="d-flex align-items-end"
-            >{{ $store.state.cart.length }} товаров</span
-          >
+          <span class="d-flex align-items-end">{{ $store.state.cart.length }} tovar</span>
         </div>
       </div>
       <div class="basket-page-body" v-if="products.length > 0 || skeletonLoad">
@@ -39,7 +37,7 @@
             </div>
             <div
               class="basket-card"
-              v-for="(product,index) in products"
+              v-for="(product, index) in products"
               :key="index"
               v-if="!skeletonLoad"
             >
@@ -308,7 +306,7 @@
             </div> -->
             <div class="basket-checkout-body">
               <span
-                ><p>Стоимость:</p>
+                ><p>Narxi:</p>
                 <p>
                   {{
                     `${products
@@ -337,11 +335,13 @@
                 <p>25 000 сум</p></span
               > -->
             </div>
-            <div class="basket-checkout-btn" @click="checkoutCheck()">Оформить заказ</div>
+            <div class="basket-checkout-btn" @click="checkoutCheck()">
+              Buyurtmani rasmiylshtirish
+            </div>
             <div class="basket-checkout-bottom">
               <p>
-                Нажимая 'Оформить заказ', я соглашаюсь с
-                <span>публичным договором оферты</span>
+                “Buyurtmani rasmiylshtirish” tugmasini bosish orqali men
+                <span> ommaviy oferta shartnomasiga rozilik bildiraman</span>
               </p>
             </div>
           </div>
