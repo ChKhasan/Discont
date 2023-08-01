@@ -192,6 +192,14 @@ export default {};
 
 <style scoped>
 .wrap {
+  display: none;
+}
+@media (max-width: 1024px) {
+  .wrap {
+    display: flex;
+  }
+}
+.wrap {
   position: fixed;
   bottom: 0;
   left: 0;
