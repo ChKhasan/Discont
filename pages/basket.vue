@@ -112,7 +112,13 @@
                     </span>
                   </div>
                   <p>
-                    {{ `${product?.real_price}`.replace(/\B(?=(\d{3})+(?!\d))/g, " ") }}
+                    {{
+                      `${
+                        product?.discount_price
+                          ? product?.discount_price
+                          : product?.real_price
+                      }`.replace(/\B(?=(\d{3})+(?!\d))/g, " ")
+                    }}
                     so’mdan/donasi
                   </p>
                 </div>
@@ -147,7 +153,9 @@
                     <span
                       >{{
                         Math.floor(
-                          product?.real_price / $store.state.dicoin.sum_to_dicoin
+                          (product?.discount_price
+                            ? product?.discount_price
+                            : product?.real_price) / $store.state.dicoin.sum_to_dicoin
                         )
                       }}
                       ta dicoin</span
@@ -291,7 +299,7 @@
                     .reduce((summ, item) => {
                       return (
                         summ +
-                        item.real_price *
+                        (item.discount_price ? item.discount_price : item.real_price) *
                           $store.state.cart.find((elem) => elem.id == item.id)?.count
                       );
                     }, 0)
@@ -313,7 +321,7 @@
                       .reduce((summ, item) => {
                         return (
                           summ +
-                          item.real_price *
+                          (item.discount_price ? item.discount_price : item.real_price) *
                             $store.state.cart.find((elem) => elem.id == item.id)?.count
                         );
                       }, 0)
@@ -354,7 +362,10 @@
                   products.reduce((sum, item) => {
                     return (
                       sum +
-                      Math.floor(item.real_price / $store.state.dicoin.sum_to_dicoin) *
+                      Math.floor(
+                        (item.discount_price ? item.discount_price : item.real_price) /
+                          $store.state.dicoin.sum_to_dicoin
+                      ) *
                         $store.state.cart.find((item) => item.id == item.id)?.count
                     );
                   }, 0)
@@ -454,11 +465,9 @@ export default {
       }
     },
     productTotalPrice(product) {
-      let price =
-        product?.real_price *
-        this.$store.state.cart.find((item) => item.id == product.id)?.count;
-      let strPrice = `${price}`;
-      return `${price}`.replace(/\B(?=(\d{3})+(?!\d))/g, " ");
+      return `${
+        product.discount_price ? product.discount_price : product.real_price
+      }`.replace(/\B(?=(\d{3})+(?!\d))/g, " ");
       // .slice(0, product?.price?.indexOf("."))
       // .replace(".", ",")
       // .replace(/\B(?=(\d{3})+(?!\d))/g, " ");
