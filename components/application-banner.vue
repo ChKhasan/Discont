@@ -121,6 +121,39 @@ export default {};
   align-items: center;
   gap: 18px;
 }
+@media screen and (max-width: 1600px) {
+  .categories-application-banner {
+    padding: 32px 40px;
+  }
+  .categories-application-banner-info h2 {
+    font-size: 40px;
+    line-height: 56px;
+  }
+  .categories-application-banner-info p {
+    margin-top: 10px;
+    font-size: 18px;
+  }
+  .app-btn-container {
+    gap: 60px;
+  }
+  .app-btn-container p {
+    font-size: 16px;
+    line-height: 150%;
+  }
+  .categories-application-banner-container img:first-child,
+  .categories-application-banner-container img:last-child {
+    width: 250px;
+    top: 50%;
+    transform: translateY(-50%);
+  }
+  .categories-application-banner-container img:first-child {
+    left: -100px;
+  }
+  .categories-application-banner-container img:last-child {
+    right: -150px;
+    top: 45%;
+  }
+}
 @media screen and (max-width: 1024px) {
   .categories-application-banner {
     padding: 16px;

@@ -121,7 +121,7 @@
 }
 .to-basket-count > span {
   font-size: 30px;
-  width: 90px;
+  width: 40%;
   height: 100%;
   display: flex;
   align-items: center;
@@ -176,4 +176,33 @@
   line-height: 17px;
   text-decoration-line: line-through;
   color: rgba(0, 0, 0, 0.4);
+}
+@media screen and (max-width: 1600px) {
+  .product-card {
+    padding: 8px;
+  }
+  .product-card-header {
+    height: 168px;
+  }
+  .product-card-body {
+    margin-top: 8px;
+  }
+  .product-card-body p {
+    margin-top: 16px;
+  }
+  .product-card-price {
+    margin-top: 16px;
+  }
+  .product-card-price h4 {
+    font-size: 16px;
+  }
+  .product-discount {
+    margin: 8px 0 24px 0;
+    height: 10px;
+  }
+  .product-card-footer .to-basket-btn span,
+  .product-card-footer .to-basket-btn,
+  .to-basket-count {
+    font-size: 14px;
+  }
 }

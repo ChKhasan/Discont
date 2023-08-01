@@ -37,8 +37,8 @@
           class="pc-img-container"
           @click="$router.push(`/product/${product?.slug}`)"
           ><img
-            v-if="product?.images[0]?.sm_img"
-            :src="product?.images[0]?.sm_img"
+            v-if="product?.images[0]?.md_img"
+            :src="product?.images[0]?.md_img"
             alt=""
           />
           <img v-else src="../../assets/images/empty-img.png" alt="" />
@@ -198,7 +198,7 @@
               </a>
 
               <div v-for="item in [...product?.images, ...product?.images]">
-                <img :src="item?.sm_img" />
+                <img :src="item?.md_img" />
               </div>
             </a-carousel>
             <a-carousel arrows dots-class="slick-dots slick-thumb" v-else>
@@ -207,7 +207,7 @@
               </a>
 
               <div v-for="item in product?.images">
-                <img :src="item?.sm_img" />
+                <img :src="item?.md_img" />
               </div>
             </a-carousel>
           </div>
@@ -372,7 +372,7 @@
               </a>
 
               <div v-for="item in [...product?.images, ...product?.images]">
-                <img :src="item?.sm_img" />
+                <img :src="item?.md_img" />
               </div>
             </a-carousel>
             <a-carousel arrows dots-class="slick-dots slick-thumb" v-else>
@@ -390,7 +390,7 @@
                 v-for="item in product?.images"
                 v-if="product?.images.length > 0"
               >
-                <img :src="item?.sm_img" />
+                <img :src="item?.md_img" />
               </div>
               <div v-for="item in [1, 2, 3, 4]" v-else>
                 <img src="../../assets/images/empty-img.png" alt="" />
@@ -404,7 +404,7 @@
                 <img :src="getImgUrl([1, 2, 3, 4], props.i)" alt="" />
               </a>
               <div v-for="item in product?.images" v-if="product?.images.length > 0">
-                <img :src="item?.sm_img" />
+                <img :src="item?.md_img" />
               </div>
               <div v-for="item in [1, 2, 3, 4]" v-else>
                 <img src="../../assets/images/empty-img.png" alt="" />
@@ -919,7 +919,7 @@ export default {
       this.visibleOc = false;
     },
     getImgUrl(props, i) {
-      return props[i].sm_img;
+      return props[i].md_img;
     },
     handleOkBuy() {
       this.visibleBuy = false;

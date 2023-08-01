@@ -179,6 +179,16 @@ export default {
 .banner-carousel-box {
   height: 354px;
 }
+@media screen and (max-width: 1600px) {
+  .banner-carousel-box {
+    height: 278px;
+  }
+  .banner-carousel .swiper-button-prev-banner,
+  .banner-carousel .swiper-button-next-banner {
+    top: 50%;
+    transform: translateY(-50%);
+  }
+}
 @media (max-width: 576px) {
   .banner-carousel-box {
     height: 140px;

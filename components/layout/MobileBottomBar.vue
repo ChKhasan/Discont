@@ -1,6 +1,6 @@
 <template>
   <div class="wrap">
-    <div class="container">
+    <div class="container p-0">
       <ul>
         <li>
           <NuxtLink to="/categories/telefony" class="link">
@@ -32,7 +32,7 @@
           </NuxtLink>
         </li>
         <li>
-          <NuxtLink to="/" class="link">
+          <NuxtLink to="/likes" class="link">
             <svg
               xmlns="http://www.w3.org/2000/svg"
               width="27"
@@ -109,7 +109,7 @@
           </NuxtLink>
         </li>
         <li>
-          <NuxtLink to="/" class="link">
+          <NuxtLink to="/comparison" class="link">
             <svg
               xmlns="http://www.w3.org/2000/svg"
               width="28"
@@ -157,7 +157,10 @@
           </NuxtLink>
         </li>
         <li>
-          <NuxtLink to="/" class="link">
+          <button
+            @click="$store.commit('authVisibleChange', true)"
+            class="link"
+          >
             <svg
               xmlns="http://www.w3.org/2000/svg"
               width="29"
@@ -179,7 +182,7 @@
               />
             </svg>
             Kirish
-          </NuxtLink>
+          </button>
         </li>
       </ul>
     </div>
@@ -211,11 +214,12 @@ export default {};
   padding: 12px;
 }
 .wrap ul {
-  display: flex;
+  display: grid;
   align-items: center;
-  justify-content: space-between;
+  grid-template-columns: repeat(5, 1fr);
 }
-.wrap a {
+.wrap a,
+.wrap button {
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -227,5 +231,8 @@ export default {};
   line-height: 120%;
   letter-spacing: -0.24px;
   position: relative;
+  background: transparent;
+  border: none;
+  width: 100%;
 }
 </style>

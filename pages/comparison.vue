@@ -3,12 +3,16 @@
     <div class="container_xl">
       <div class="page-breadcrumb">
         <nuxt-link :to="localePath('/')">Diskont main page</nuxt-link>
-        <nuxt-link class="disabled" :to="localePath('/')"> Solishtirish </nuxt-link>
+        <nuxt-link class="disabled" :to="localePath('/')">
+          Solishtirish
+        </nuxt-link>
       </div>
       <div class="d-flex page-container-title">
         <div class="d-flex align-items-end">
           <MainTitle title="Solishtirish" />
-          <span class="d-flex align-items-end">{{ compProducts?.length }} товаров</span>
+          <span class="d-flex align-items-end"
+            >{{ compProducts?.length }} товаров</span
+          >
         </div>
         <a-select
           v-model="value"
@@ -25,33 +29,31 @@
           </a-select-option>
         </a-select>
       </div>
-      <div class="page-container-body" v-if="compProducts.length > 0">
-        <ComparisonCard
-          v-for="(product, index) in compProducts"
-          :product="product"
-          :key="product?.id"
-          :indexId="index"
-          :comparison="comparisonData"
-        />
-        <!-- <div class="swiper-comparison mySwiper" style="overflow: hidden">
-          <div class="swiper-wrapper">
-            <div class="swiper-slide" v-for="(product, index) in compProducts">
-              <ComparisonCard
-                :product="product"
-                :indexId="index"
-                :comparison="comparisonData"
-              />
+      <div v-if="compProducts.length > 0" class="yes">
+        <div class="page-container-body">
+          <div class="swiper-comparison mySwiper" style="overflow: hidden">
+            <div class="swiper-wrapper">
+              <div
+                class="swiper-slide"
+                v-for="(product, index) in compProducts"
+              >
+                <ComparisonCard
+                  :product="product"
+                  :indexId="index"
+                  :comparison="comparisonData"
+                />
+              </div>
             </div>
           </div>
+          <div class="swiper-button-prev-comparison">
+            <span v-html="arrowCarousel"></span>
+          </div>
+          <div class="swiper-button-next-comparison">
+            <span v-html="arrowCarousel"></span>
+          </div>
         </div>
-        <div class="swiper-button-prev-comparison">
-          <span v-html="arrowCarousel"></span>
-        </div>
-        <div class="swiper-button-next-comparison">
-          <span v-html="arrowCarousel"></span>
-        </div> -->
       </div>
-      <div class="empty-box-app" v-else>
+      <div v-else class="empty-box-app no">
         <img src="../assets/images/parcel.png" alt="" />
         <h2>Biror narsani solishtiraylikmi?</h2>
         <p>
@@ -96,12 +98,12 @@ export default {
       return this.$store.state.comparison?.length;
     },
   },
-  mounted() {
+  async mounted() {
     let compProductsStore = JSON.parse(localStorage.getItem("comparison"));
     console.log(compProductsStore);
     if (compProductsStore.length > 0) {
-      this.__GET_PRODUCTS_BY_ID({ products: compProductsStore });
-      this.__GET_PRODUCTS_COMP({ products: compProductsStore });
+      await this.__GET_PRODUCTS_BY_ID({ products: compProductsStore });
+      await this.__GET_PRODUCTS_COMP({ products: compProductsStore });
     }
     const swiper = new Swiper(".swiper-comparison", {
       slidesPerView: 4,
@@ -140,12 +142,15 @@ export default {
     },
     async __GET_PRODUCTS_COMP(dataForm) {
       //
-      const data = await this.$store.dispatch("fetchProducts/getComparionsProductsById", {
-        data: dataForm,
-        params: {
-          headers: { Language: this.$i18n.locale },
-        },
-      });
+      const data = await this.$store.dispatch(
+        "fetchProducts/getComparionsProductsById",
+        {
+          data: dataForm,
+          params: {
+            headers: { Language: this.$i18n.locale },
+          },
+        }
+      );
       this.comparisonData = data?.data;
       console.log(data);
     },
@@ -165,9 +170,4 @@ export default {
 </script>
 <style lang="css">
 @import "../assets/css/pages/comparison.css";
-.page-container-body {
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  grid-gap: 16px;
-}
 </style>

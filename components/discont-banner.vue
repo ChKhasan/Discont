@@ -8,11 +8,12 @@
       </div>
       <div class="discont-banner-body">
         <p>
-          Assalomu alaykum! Birinchi bor savol yuboryapman, xatolar bo‘lsa oldindan uzr.
-          Men nasiya savdo bilan shug‘ullanaman. Savolim: 1). Nasiyaga mol berayotganimda
-          xaridordan boshiga qancha pul bera olishiga qarab qolgan summaga qarab so‘ngi
-          narxni belgilayman. Masalan 10 so‘mlik molni boshiga 2 so‘m bersa 13 so‘m. Agar
-          4 bersa 11 so‘m. Albatta u bilan kelishgach. Shu ishim joizmi?
+          Assalomu alaykum! Birinchi bor savol yuboryapman, xatolar bo‘lsa
+          oldindan uzr. Men nasiya savdo bilan shug‘ullanaman. Savolim: 1).
+          Nasiyaga mol berayotganimda xaridordan boshiga qancha pul bera
+          olishiga qarab qolgan summaga qarab so‘ngi narxni belgilayman. Masalan
+          10 so‘mlik molni boshiga 2 so‘m bersa 13 so‘m. Agar 4 bersa 11 so‘m.
+          Albatta u bilan kelishgach. Shu ishim joizmi?
         </p>
       </div>
     </div>
@@ -97,6 +98,20 @@ export default {};
 }
 .glimpse {
   display: none;
+}
+@media screen and (max-width: 1600px) {
+  .discont-banner {
+    height: 300px;
+  }
+  .discont-banner-body {
+    margin-top: 22px;
+  }
+  .discont-banner-header h4 {
+    line-height: 30px;
+  }
+  .discont-banner-body p {
+    font-size: 14px;
+  }
 }
 @media screen and (max-width: 1024px) {
   .discont-banner {
