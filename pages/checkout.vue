@@ -357,14 +357,22 @@
               <span
                 ><p>Tovarlar</p>
                 <p>
-                  {{ `${reduceTotalPrice}`.replace(/\B(?=(\d{3})+(?!\d))/g, " ") }}
+                  {{ `${totalRealPrice}`.replace(/\B(?=(\d{3})+(?!\d))/g, " ") }}
                   so’m
                 </p></span
               >
 
               <span
                 ><p>Chegirma</p>
-                <p>0 so’m</p></span
+                <p>
+                  {{
+                    `-${totalRealPrice - reduceTotalPrice}`.replace(
+                      /\B(?=(\d{3})+(?!\d))/g,
+                      " "
+                    )
+                  }}
+                  so’m
+                </p></span
               >
               <span
                 ><p>Di Coin</p>
@@ -1049,6 +1057,16 @@ export default {
     }
   },
   computed: {
+    totalRealPrice() {
+      const totalSumm = this.products.reduce((summ, item) => {
+        return (
+          summ +
+          item.real_price *
+            this.$store.state.cart.find((elem) => elem.id == item.id)?.count
+        );
+      }, 0);
+      return totalSumm;
+    },
     reduceTotalPrice() {
       const totalSum = this.products.reduce((summ, item) => {
         return (
