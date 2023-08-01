@@ -1,7 +1,7 @@
 <template lang="html">
   <div @click="$router.push(`/news/${post?.slug}`)" class="post-card">
     <div class="post-card-img">
-      <img v-if="post?.sm_img" :src="post?.sm_img" alt="" />
+      <img v-if="post?.md_img" :src="post?.md_img" alt="" />
       <img v-else src="../../assets/images/Rectangle 24083.png" alt="" />
     </div>
     <div class="post-card-body">
@@ -69,5 +69,13 @@ export default {
   -webkit-box-orient: vertical;
   display: -webkit-box;
   text-overflow: ellipsis;
+}
+@media screen and (max-width: 1600px) {
+  .post-card-img {
+    height: 160px;
+  }
+  .post-card-body p {
+    margin-top: 16px;
+  }
 }
 </style>

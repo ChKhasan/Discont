@@ -124,6 +124,45 @@ export default {
 .banner-carousel-right-box {
   height: 354px;
 }
+@media screen and (max-width: 1600px) {
+  .banner-carousel-right-box {
+    height: 278px !important;
+  }
+  .day-product-card-head {
+    height: 40px !important;
+  }
+  .day-product-card-body {
+    padding: 20px !important;
+  }
+  .day-product-card-left h1 {
+    font-size: 24px !important;
+    line-height: 120% !important;
+    margin-bottom: 12px !important;
+  }
+  .day-product-card-discont p {
+    font-size: 12px !important;
+  }
+  .day-product-card-discont div span {
+    font-size: 38px !important;
+  }
+  .day-product-card-discont div {
+    width: 90px !important;
+    height: 44px !important;
+  }
+  .day-product-card-discont {
+    margin-bottom: 12px !important;
+  }
+  .day-product-card-left span {
+    font-size: 12px !important;
+  }
+  .day-product-card {
+    height: 100% !important;
+  }
+  .day-product-card-right img {
+    top: 50% !important;
+    transform: translateY(-60%) rotate(-20deg) !important;
+  }
+}
 @media (max-width: 576px) {
   .banner-carousel-right-box {
     height: 140px;

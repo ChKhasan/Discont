@@ -8,7 +8,7 @@
         <h4>{{ category?.name }}</h4>
       </div>
       <div class="h-category-card-img">
-        <img v-if="category?.sm_img" :src="category?.sm_img" alt="" />
+        <img v-if="category?.md_img" :src="category?.md_img" alt="" />
       </div>
     </div>
     <h4 class="new-title">{{ category?.name }}</h4>
@@ -56,6 +56,16 @@ export default {
 }
 .new-title {
   display: none;
+}
+@media screen and (max-width: 1600px) {
+  .h-category-card {
+    border-radius: 18px;
+    padding: 12px 16px;
+  }
+  .h-category-card-title h4 {
+    font-size: 16px;
+    width: 80%;
+  }
 }
 @media screen and (max-width: 1024px) {
   .h-category-card {

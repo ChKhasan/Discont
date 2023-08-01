@@ -45,11 +45,14 @@ export default {
       breakpoints: {
         1024: {
           slidesPerView: 6,
-          spaceBetween: 24,
+          spaceBetween: 16,
           effect: "flip",
           flipEffect: {
             slideShadows: false,
           },
+        },
+        1600: {
+          spaceBetween: 24,
         },
       },
     });
@@ -112,6 +115,7 @@ export default {
 .product-swiper {
   overflow: hidden;
 }
+
 @media screen and (max-width: 1024px) {
   .swiper-button-next-category,
   .swiper-button-prev-category {

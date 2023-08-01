@@ -179,7 +179,8 @@
                 v-if="$store.state.comparison.length > 0"
                 >{{ $store.state.comparison.length }}</span
               >
-              <span class="nav-icons comparison-icon" v-html="navComp"></span>Solishtirish
+              <span class="nav-icons comparison-icon" v-html="navComp"></span
+              >Solishtirish
             </li>
             <li
               class="nav_profile user_profile flex-row"
@@ -1676,10 +1677,67 @@ export default {
   z-index: 1000;
   top: 100%;
 }
-
+@media screen and (max-width: 1600px) {
+  .coin_btn {
+    padding: 0 12px 0 40px;
+    font-size: 13px;
+  }
+  .nav_logo svg {
+    width: 100px;
+  }
+  .catalog-btn {
+    padding: 10px 22px;
+    margin-right: 24px;
+  }
+  .search_input_container {
+    width: 473px;
+  }
+  .header-top {
+    background: transparent;
+  }
+  .header-navbar_container > div:first-child {
+    width: auto !important;
+  }
+  .header-navbar_container > div:last-child {
+    width: auto !important;
+  }
+  .header-navbar_container {
+    display: grid !important;
+    grid-template-columns: repeat(2, 1fr);
+  }
+  .header-navbar_navbar ul li {
+    padding: 10px 22px;
+  }
+  .count-index {
+    top: 6px;
+    right: 22px;
+  }
+  .user_profile p {
+    width: unset;
+    color: white;
+  }
+  .user_profile path,
+  .user_profile circle {
+    stroke: white !important;
+  }
+  .user_profile {
+    border-radius: 41px;
+    background: var(--color_dark_green);
+  }
+  .header-category_container ul li a {
+    margin-right: 8px;
+    font-size: 14px;
+  }
+  .header-category_container ul li a span {
+    margin-right: 10px;
+  }
+  .coin_btn {
+    white-space: nowrap;
+  }
+}
 @media screen and (max-width: 1024px) {
   .catalog-menu-content {
-    padding: 32px 0;
+    padding: 0;
     display: grid;
     grid-template-columns: repeat(1, 1fr);
     width: 100%;

@@ -124,6 +124,32 @@
   grid-gap: 24px;
   margin-bottom: 121px;
 }
+@media screen and (max-width: 1600px) {
+  .product_container {
+    padding-bottom: 88px;
+  }
+  .last,
+  .classic {
+    margin-bottom: 88px;
+  }
+  .home-categories {
+    margin-bottom: 88px !important;
+  }
+  .home-banner-container {
+    margin-bottom: 72px;
+  }
+  .home-categories .container_xl {
+    padding: 0 !important;
+  }
+  .product-grid,
+  .products-grid-6 {
+    grid-template-columns: repeat(5, 1fr);
+    gap: 8px;
+  }
+  .posts.container_xl {
+    padding: 0;
+  }
+}
 @media (max-width: 1024px) {
   .product_container {
     padding-bottom: 56px;

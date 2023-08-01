@@ -455,4 +455,19 @@ export default {
   font-weight: 400;
   line-height: normal;
 }
+@media screen and (max-width: 1024px) {
+  @keyframes bounce-toast-in {
+    0% {
+      right: -100%;
+      opacity: 0;
+    }
+    50% {
+      right: 16px;
+      opacity: 1;
+    }
+    100% {
+      right: 16px;
+    }
+  }
+}
 </style>

@@ -546,7 +546,7 @@ body::-webkit-scrollbar-thumb {
   margin-top: 24px;
   width: 50%;
 }
-.mySwiper .swiper-slide {
+.world .mySwiper .swiper-slide {
   width: 100% !important;
 }
 .cursor-pointer {
@@ -565,6 +565,9 @@ body::-webkit-scrollbar-thumb {
 @media (max-width: 1600px) {
   .container_xl {
     padding: 0 30px;
+  }
+  .home-banner-container {
+    gap: 16px !important;
   }
 }
 @media (min-width: 1700px) {
