@@ -5,7 +5,7 @@
         <div class="check-form-block">
           <div class="checkout-step-title">
             <span
-              v-if="form.phone_number && form.name && form.last_name"
+              v-if="form.phone_number && form.name && form.surname"
               class="step-active"
               ><svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -42,13 +42,34 @@
               </div>
             </div>
           </a-form-model>
-          <div class="checkout-step-title">
-            <span>2</span>
+          <div class="checkout-step-title" id="cash">
+            <span
+              v-if="form.phone_number && form.name && form.surname && typePayment != null"
+              class="step-active"
+              ><svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="13"
+                height="9"
+                viewBox="0 0 13 9"
+                fill="none"
+              >
+                <path
+                  d="M12.8148 0.767054L12.2128 0.181052C11.9648 -0.0603507 11.56 -0.0603507 11.3098 0.181052L4.99759 6.3279L1.69096 3.10901C1.44297 2.86758 1.03811 2.86758 0.787992 3.10901L0.185988 3.69502C-0.0619959 3.93645 -0.0619959 4.33054 0.185988 4.57402L4.54399 8.81635C4.66906 8.9381 4.83012 9 4.99335 9C5.15657 9 5.31977 8.9381 5.44274 8.81635L12.8084 1.64609C13.0628 1.40056 13.0628 1.00851 12.8148 0.767054Z"
+                  fill="white"
+                /></svg
+            ></span>
+            <span v-else>2</span>
             <h4>Ma`lumotlaringizni kiriting</h4>
           </div>
           <div class="radio-card-grid">
-            <div class="radio-card cursor-pointer" @click="typePayment = true">
-              <span :class="{ 'active-radio': typePayment }"> </span>
+            <div class="radio-card cursor-pointer" @click="typePayment = 'cash'">
+              <span
+                :class="{
+                  'active-radio': typePayment == 'cash',
+                  'required-border': required.cash && typePayment == null,
+                }"
+              >
+              </span>
               <div class="radio-card-body">
                 <h6>Naqd pul bilan to’lash</h6>
                 <p>
@@ -57,15 +78,21 @@
                 </p>
               </div>
             </div>
-            <div class="radio-card cursor-pointer" @click="typePayment = false">
-              <span :class="{ 'active-radio': !typePayment }"> </span>
+            <div class="radio-card cursor-pointer" @click="typePayment = 'pay'">
+              <span
+                :class="{
+                  'active-radio': typePayment == 'pay',
+                  'required-border': required.cash && typePayment == null,
+                }"
+              >
+              </span>
               <div class="radio-card-body">
                 <h6>Bank kartasi orqali to’lash</h6>
                 <p>
                   Lorem Ipsum has been the industry's standard dummy text ever since the
                   1500s, when an unknown Lorem Ipsum has been the industry's standard
                 </p>
-                <div class="pay-cards-grid" v-if="!typePayment">
+                <div class="pay-cards-grid" v-if="typePayment == 'pay'">
                   <!-- <div class="pay-card" @click="form.payment_method = 'uzum'">
                     <span v-if="form.payment_method == 'uzum'" class="step-active"
                       ><svg
@@ -172,8 +199,29 @@
               </div>
             </div>
           </div>
-          <div class="checkout-step-title">
-            <span>3</span>
+          <div class="checkout-step-title" id="delivery">
+            <span
+              v-if="
+                form.phone_number &&
+                form.name &&
+                form.surname &&
+                typePayment != null &&
+                form.delivery_method != null
+              "
+              class="step-active"
+              ><svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="13"
+                height="9"
+                viewBox="0 0 13 9"
+                fill="none"
+              >
+                <path
+                  d="M12.8148 0.767054L12.2128 0.181052C11.9648 -0.0603507 11.56 -0.0603507 11.3098 0.181052L4.99759 6.3279L1.69096 3.10901C1.44297 2.86758 1.03811 2.86758 0.787992 3.10901L0.185988 3.69502C-0.0619959 3.93645 -0.0619959 4.33054 0.185988 4.57402L4.54399 8.81635C4.66906 8.9381 4.83012 9 4.99335 9C5.15657 9 5.31977 8.9381 5.44274 8.81635L12.8084 1.64609C13.0628 1.40056 13.0628 1.00851 12.8148 0.767054Z"
+                  fill="white"
+                /></svg
+            ></span>
+            <span v-else>3</span>
             <h4>Yetkazib berish usulini tanlang</h4>
           </div>
           <div class="radio-card-grid-horizontal">
@@ -181,7 +229,13 @@
               class="radio-card radio-card-horizontal cursor-pointer"
               @click="form.delivery_method = 'pickup'"
             >
-              <span :class="{ 'active-radio': form.delivery_method == 'pickup' }"> </span>
+              <span
+                :class="{
+                  'active-radio': form.delivery_method == 'pickup',
+                  'required-border': required.delivery && form.delivery_method == null,
+                }"
+              >
+              </span>
               <div class="radio-card-body">
                 <h6>Diskont do’konlaridan borib olib ketish</h6>
                 <p>
@@ -193,7 +247,12 @@
               class="radio-card radio-card-horizontal cursor-pointer"
               @click="form.delivery_method = 'courier'"
             >
-              <span :class="{ 'active-radio': form.delivery_method == 'courier' }">
+              <span
+                :class="{
+                  'active-radio': form.delivery_method == 'courier',
+                  'required-border': required.delivery && form.delivery_method == null,
+                }"
+              >
               </span>
               <div class="radio-card-body">
                 <h6>Diskont yetkazib berish xizmati</h6>
@@ -270,7 +329,7 @@
               <span>
                 <a-checkbox
                   @change="onChange"
-                  :class="{ checkboxRequiredClass: checkboxRequired }"
+                  :class="{ checkboxRequiredClass: required.checkbox }"
                 >
                 </a-checkbox>
                 <p>
@@ -320,17 +379,25 @@
               >
               <span
                 ><p>Yetkazib berish</p>
-                <p>30 000 so’m</p></span
+                <p>
+                  {{
+                    `${deliveryCost ? deliveryCost : 0}`.replace(
+                      /\B(?=(\d{3})+(?!\d))/g,
+                      " "
+                    )
+                  }}
+                  so’m
+                </p></span
               >
               <span
                 ><p>Umumiy narx</p>
                 <p>
                   {{
                     `${
-                      sendDicoin
+                      (sendDicoin
                         ? reduceTotalPrice -
                           dicoinSumm * $store.state.dicoin?.dicoin_to_sum
-                        : reduceTotalPrice
+                        : reduceTotalPrice) + deliveryCost
                     }`.replace(/\B(?=(\d{3})+(?!\d))/g, " ")
                   }}
                   so’m
@@ -538,7 +605,7 @@
               <a-checkbox
                 @change="onChange"
                 v-model="checkboxVal"
-                :class="{ checkboxRequiredClass: checkboxRequired }"
+                :class="{ checkboxRequiredClass: required.checkbox }"
               >
               </a-checkbox>
               <p>
@@ -897,13 +964,18 @@ export default {
     return {
       visibleAddressErr: false,
       checkboxRequired: false,
+      required: {
+        cash: false,
+        checkbox: false,
+        delivery: false,
+      },
       checkboxVal: false,
       dicoinSumm: 0,
       sendDicoin: false,
       skeleton: false,
       form: {
         name: "",
-        delivery_method: "pickup",
+        delivery_method: null,
         phone_number: "",
         postcode: null,
         email: null,
@@ -920,9 +992,8 @@ export default {
       visibleConsent: false,
       visibleCheckoutProblem: false,
       visibleSuccess: false,
-      typePayment: true,
+      typePayment: null,
       paymentElement: "payme",
-      deliveryService: true,
       visible: false,
       regions: [],
       districts: [],
@@ -930,6 +1001,7 @@ export default {
       products: [],
       profile: {},
       orderId: null,
+      deliveryCost: 0,
       formAddress: {
         region_id: null,
         district_id: null,
@@ -983,10 +1055,10 @@ export default {
               this.$store.state.cart.find((elem) => elem.id == item.id)?.count
           );
         }, 0);
-      this.dicoinSumm =
-        this.profile?.dicoin?.quantity > dicoinPrice
-          ? dicoinPrice / this.$store.state.dicoin.dicoin_to_sum
-          : this.profile?.dicoin?.quantity;
+      // this.dicoinSumm =
+      //   this.profile?.dicoin?.quantity > dicoinPrice
+      //     ? dicoinPrice / this.$store.state.dicoin.dicoin_to_sum
+      //     : this.profile?.dicoin?.quantity;
     }
   },
   computed: {
@@ -1014,6 +1086,14 @@ export default {
     currentDicoin() {
       this.sendDicoin = true;
       this.form.dicoin = this.dicoinSumm;
+      this.totalPrice();
+    },
+    totalPrice() {
+      this.form.amount =
+        (this.sendDicoin
+          ? this.reduceTotalPrice -
+            this.dicoinSumm * this.$store.state.dicoin?.dicoin_to_sum
+          : this.reduceTotalPrice + this.deliveryCost) + this.deliveryCost;
     },
     submit() {
       const data = {
@@ -1027,20 +1107,44 @@ export default {
           };
         }),
         phone_number: this.form.phone_number.split(" ").join("").replace("+", ""),
-        amount: this.products.reduce((summ, item) => {
-          return (
-            summ +
-            item.price * this.$store.state.cart.find((elem) => elem.id == item.id)?.count
-          );
-        }, 0),
+        amount: this.form.amount
+          ? this.form.amount
+          : this.products.reduce((summ, item) => {
+              return (
+                summ +
+                item.real_price *
+                  this.$store.state.cart.find((elem) => elem.id == item.id)?.count
+              );
+            }, 0) + this.deliveryCost,
       };
-      if (this.checkboxVal) {
+      if (this.typePayment == null) {
+        this.required.cash = true;
+        this.scrollElement("cash");
+      } else {
+        this.required.cash = false;
+      }
+      if (this.form.delivery_method == null) {
+        this.required.delivery = true;
+        this.scrollElement("delivery");
+      } else {
+        this.required.delivery = false;
+      }
+      if (!this.checkboxVal) {
+        this.required.checkbox = true;
+      } else {
+        this.required.checkbox = false;
+      }
+      console.log(Object.values(this.required));
+      if (Object.values(this.required).filter((item) => item).length == 0) {
         this.$refs["ruleForm"].validate((valid) => {
           valid ? this.__POST_ORDER(data) : false;
         });
-      } else {
-        this.checkboxRequired = true;
       }
+    },
+    scrollElement(id) {
+      const element = document.getElementById(id);
+      console.log(element);
+      element.scrollIntoView({ block: "center", behavior: "smooth" });
     },
     addressEditAction(obj) {
       this.addressEditId = obj.id;
@@ -1190,6 +1294,27 @@ export default {
       if (val == "pickup") {
         this.form.user_address_id = null;
       }
+    },
+    "form.user_address_id"(val) {
+      if (val) {
+        const regionGroupId = this.$store.state.profile.addresses.find(
+          (item) => item.id == val
+        ).region.group_id;
+        if (regionGroupId) {
+          const currentGroup = this.regions.find(
+            (elem) => elem.group_id == regionGroupId
+          );
+          if (currentGroup) {
+            this.deliveryCost = currentGroup.group.delivery_price;
+          }
+        }
+        console.log(this.deliveryCost);
+      } else {
+        this.deliveryCost = null;
+      }
+    },
+    deliveryCost() {
+      this.totalPrice();
     },
     visible(val) {},
     visibleSuccess(val) {
@@ -1469,5 +1594,8 @@ export default {
 }
 .dicoin-input[type="number"] {
   -moz-appearance: textfield;
+}
+.required-border {
+  border-color: red !important;
 }
 </style>

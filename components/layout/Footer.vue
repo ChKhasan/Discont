@@ -33,15 +33,18 @@
             </div>
             <div class="footer_menu footer_drop">
               <h4
-                @click="activeDrop = 2"
-                :class="{ rotate180: activeDrop == 2, 'mt-0': activeDrop != 2 }"
+                @click="dropAction(2)"
+                :class="{
+                  rotate180: activeDrop.includes(2),
+                  'mt-0': !activeDrop.includes(2),
+                }"
               >
                 Маълумот
                 <span v-html="dropArrow"></span>
               </h4>
               <ul
                 class="footer-drop-board mt-0"
-                :class="{ 'height-auto': activeDrop == 2 }"
+                :class="{ 'height-auto': activeDrop.includes(2) }"
               >
                 <div class="mt-3">
                   <li>
@@ -62,14 +65,17 @@
             </div>
             <div class="footer_menu footer_drop">
               <h4
-                @click="activeDrop = 3"
-                :class="{ rotate180: activeDrop == 3, 'mt-0': activeDrop != 3 }"
+                @click="dropAction(3)"
+                :class="{
+                  rotate180: activeDrop.includes(3),
+                  'mt-0': !activeDrop.includes(3),
+                }"
               >
                 Haridorga yordam <span v-html="dropArrow"></span>
               </h4>
               <ul
                 class="footer-drop-board mt-0"
-                :class="{ 'height-auto': activeDrop == 3 }"
+                :class="{ 'height-auto': activeDrop.includes(3) }"
               >
                 <div class="mt-3">
                   <li>
@@ -214,13 +220,14 @@ export default {
       footerLocation: require("../../assets/svg/footer-location.svg?raw"),
       footerEmail: require("../../assets/svg/footer-email.svg?raw"),
       footerBottom: require("../../assets/svg/footer-bottom.svg?raw"),
-      activeDrop: null,
+      activeDrop: [],
     };
   },
   methods: {
     dropAction(id) {
-      if (this.activeDrop.find(id)) {
-        this.activeDrop = this.activeDrop.filter((item) => item.id != id);
+      console.log(id);
+      if (this.activeDrop.includes(id)) {
+        this.activeDrop = this.activeDrop.filter((item) => item != id);
       } else {
         this.activeDrop.push(id);
       }
