@@ -7,6 +7,7 @@
       <span><img src="../../assets/images/coin.png" alt="" /></span>
       {{ $store.state.profile?.dicoin?.quantity }} Di Coin
     </div>
+    <div class="bottom"></div>
   </div>
 </template>
 <script>
@@ -16,6 +17,8 @@ export default {
       navLogo: require("../../assets/svg/green-logo.svg?raw"),
     };
   },
+
+  components: {},
 };
 </script>
 <style lang=""></style>
