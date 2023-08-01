@@ -1536,23 +1536,26 @@ export default {
   border-radius: 4px;
   display: inline-flex;
   align-items: center;
-  gap: 24px;
-  padding: 12px 16px;
+  gap: 12px;
+  /* padding: 12px 16px; */
   font-weight: 400;
   font-size: 20px;
   line-height: 24px;
   color: black;
 }
 .number button {
+  width: 46px;
+  height: 46px;
   color: #9a999b;
   background: transparent;
   border: none;
-  width: 16px;
-  height: 16px;
   display: flex;
   align-items: center;
   justify-content: center;
   font-size: 16px;
+}
+.number button:hover {
+  background-color: #f9f9f9;
 }
 .credit {
   background: #ffffff;

@@ -29,6 +29,7 @@
         <ComparisonCard
           v-for="(product, index) in compProducts"
           :product="product"
+          :key="product?.id"
           :indexId="index"
           :comparison="comparisonData"
         />
