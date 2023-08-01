@@ -39,8 +39,8 @@
             </div>
             <div
               class="basket-card"
-              v-for="product in products"
-              :key="product?.id"
+              v-for="(product,index) in products"
+              :key="index"
               v-if="!skeletonLoad"
             >
               <div

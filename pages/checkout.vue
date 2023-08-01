@@ -1134,7 +1134,6 @@ export default {
       } else {
         this.required.checkbox = false;
       }
-      console.log(Object.values(this.required));
       if (Object.values(this.required).filter((item) => item).length == 0) {
         this.$refs["ruleForm"].validate((valid) => {
           valid ? this.__POST_ORDER(data) : false;

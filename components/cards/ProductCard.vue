@@ -225,8 +225,12 @@
               <div class="cardo">
                 <div class="cardo__header">
                   <div class="discount" v-if="product?.discount">
-                    <p class="tag">-12%</p>
-                    <p class="dis__price">10 540 000 so’m</p>
+                    <p v-if="product?.discount?.pivot?.percent" class="tag">
+                      - {{ product?.discount?.pivot?.percent }}%
+                    </p>
+                    <p v-if="product?.discount?.pivot?.amount" class="dis__price">
+                      - {{product?.discount?.pivot?.amount}} so’m
+                    </p>
                     <p class="dis__txt">Chegirma narxida</p>
                   </div>
 
@@ -895,16 +899,13 @@ export default {
       }
     },
     productPrice(product) {
-      let price =
-        product?.discount?.amount || product?.discount?.percent
-          ? product?.discount?.amount
-            ? product?.real_price - product?.discount?.amount
-            : product?.real_price -
-              (product?.real_price / 100) * product?.discount?.percent
-          : product?.real_price;
-      // .replace(".", ",")
-      // .replace(/\B(?=(\d{3})+(?!\d))/g, " ");
-      return `${price}`.replace(/\B(?=(\d{3})+(?!\d))/g, " ");
+      if (product?.discount?.amount) {
+        return product?.real_price - product?.discount?.amount;
+      } else if (product?.discount?.percent) {
+        return (product?.real_price / 100) * product?.discount?.percent;
+      } else {
+        return product?.real_price;
+      }
     },
     async __GET_PRODUCTS_BY_SLUG(slug) {
       this.skeleton = true;
