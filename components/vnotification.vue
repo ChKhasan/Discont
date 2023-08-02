@@ -47,8 +47,8 @@ export default {
   grid-template-columns: 85px auto;
   max-width: 528px;
   position: fixed;
-  top: 123px;
-  right: 144px;
+  top: 32px;
+  right: 32px;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
   z-index: 1000;
   transition: 0.5s;

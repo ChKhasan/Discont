@@ -33,7 +33,6 @@ export default {
     const swiper = new Swiper(".swiper-product1", {
       slidesPerView: 2,
       spaceBetween: 16,
-
       modules: [Navigation, Pagination, EffectCards, Autoplay],
       pagination: false,
       autoplay: {
@@ -45,12 +44,12 @@ export default {
       },
       breakpoints: {
         1024: {
+          slidesPerView: 5,
+          spaceBetween: 16,
+        },
+        1500: {
           slidesPerView: 6,
           spaceBetween: 24,
-        },
-        effect: "flip",
-        flipEffect: {
-          slideShadows: false,
         },
       },
     });

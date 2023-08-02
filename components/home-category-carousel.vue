@@ -52,6 +52,7 @@ export default {
           },
         },
         1600: {
+          slidesPerView: 6,
           spaceBetween: 24,
         },
       },

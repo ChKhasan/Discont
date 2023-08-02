@@ -4,12 +4,8 @@
     @click="$router.push(`/categories-inner/${category?.slug}`)"
   >
     <div class="categoies-card-img">
-      <img v-if="category?.sm_img" :src="category?.sm_img" alt="" />
-      <img
-        v-else
-        src="../../assets/images/category-default.png"
-        alt=""
-      />
+      <img v-if="category?.md_img" :src="category?.md_img" alt="" />
+      <img v-else src="../../assets/images/category-default.png" alt="" />
     </div>
     <div class="categoies-card-title">
       <h6>{{ category?.name }}</h6>

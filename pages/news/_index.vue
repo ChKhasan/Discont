@@ -15,7 +15,7 @@
       </div>
       <div class="post-page-body">
         <div class="post-page-img">
-          <img v-if="post?.sm_img" :src="post?.sm_img" alt="" />
+          <img v-if="post?.lg_img" :src="post?.lg_img" alt="" />
           <img v-else src="../../assets/images/image 317.png" alt="" />
         </div>
         <div class="post-page-info">
@@ -94,12 +94,14 @@ export default {
 @import "../../assets/css/pages/comparison.css";
 .post-page-img {
   height: 372px;
+  width: 660px;
   display: inline-flex;
   overflow: hidden;
   border-radius: 24px;
   margin-bottom: 6px;
 }
 .post-page-img img {
+  width: 100%;
   height: 100%;
   object-fit: cover;
 }
