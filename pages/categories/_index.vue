@@ -3,7 +3,7 @@
     <div class="container_xl">
       <div class="categories-page-grid">
         <div class="categories-list">
-          <h5>Категория</h5>
+          <h5>Kategoriyalar</h5>
           <ul>
             <li
               v-for="category in categories"
@@ -50,7 +50,7 @@
             </div>
             <div class="d-flex categories-page-title">
               <MainTitle :title="categoryChilds?.name" />
-              <span>{{ categoryChilds?.children?.length }} категорий</span>
+              <span>{{ categoryChilds?.children?.length }} kategoriya</span>
             </div>
           </div>
           <div class="categories-card-grid">
@@ -104,7 +104,7 @@
         </p>
         <p>
           Оформить заказ можно через Telegram или позвонив в нашу единую службу поддержки
-          по номеру 200 7 002. Добро пожаловать в интернет-магазин товаров для дома
+          по номеру 200 7 002. Добро пожаловать в интернет-магазин tovarlar для дома
           DISKONT!
         </p>
       </div>

@@ -28,7 +28,7 @@
         >
           <p>
             {{ item?.name }}
-            <span>{{ item?.products[indexId] ? item?.products[indexId] : "-" }}</span>
+            <span>{{ item?.products[indexId] ? item?.products[indexId]?.name : "-" }}</span>
           </p>
         </div>
       </div>

@@ -25,7 +25,7 @@
                   <div>
                     <b-skeleton v-if="skeleton" width="200px" height="20px"></b-skeleton>
                     <p v-else>
-                      Ф.И.О:<span>{{ profile?.name ? profile?.name : "-----" }}</span>
+                      F.I.Sh:<span>{{ profile?.name ? profile?.name : "-----" }}</span>
                     </p>
                     <b-skeleton v-if="skeleton" width="200px" height="20px"></b-skeleton>
                     <p v-else>
@@ -38,13 +38,13 @@
                   <div>
                     <b-skeleton v-if="skeleton" width="200px" height="20px"></b-skeleton>
                     <p v-else>
-                      Телефон:<span>{{
+                      Telefon:<span>{{
                         profile?.login ? `${profile?.login}` : "-----"
                       }}</span>
                     </p>
                     <b-skeleton v-if="skeleton" width="200px" height="20px"></b-skeleton>
                     <p v-else>
-                      Адресс:<span>{{
+                      Adress:<span>{{
                         profile?.address ? profile?.address : "-----"
                       }}</span>
                     </p>
@@ -54,16 +54,16 @@
             </div>
             <div class="personal-info-card">
               <div class="personal-info-card-header2">
-                <h3>Уведомления или новости</h3>
+                <h3>Bildirishnomalar yoki yangiliklar</h3>
 
                 <span class="personal-info-edit-btn"> </span>
               </div>
               <div class="personal-info-card-body2">
-                <p>Получайте информацию об акциях и скидках</p>
+                <p>Aksiyalar va chegirmalar haqida ma'lumot olish</p>
 
                 <span>
                   <a-switch default-checked @change="onChange" /><span class="sms-title"
-                    >через СМС</span
+                    >SMS orqali</span
                   ></span
                 >
               </div>

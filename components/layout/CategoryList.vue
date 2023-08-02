@@ -19,7 +19,7 @@
                 :class="{ stock__active: $route.params.index == 'seasonal-discounts' }"
                 :to="
                   localePath(
-                    topBar?.category_id
+                    topBar?.category?.slug
                       ? `/categories-inner/${topBar?.category?.slug}`
                       : `/stock/${topBar?.promotion?.slug}`
                   )

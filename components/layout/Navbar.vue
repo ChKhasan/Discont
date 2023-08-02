@@ -273,7 +273,7 @@
                 >
                   <MainTitle :title="activeCategory?.name" />
                   <span class="d-flex align-items-end"
-                    >{{ activeCategory?.products_count }} товаров</span
+                    >{{ activeCategory?.products_count }} tovarlar</span
                   >
                 </div>
                 <div class="catalog-menu-items">

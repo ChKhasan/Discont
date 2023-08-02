@@ -11,7 +11,7 @@
         <div class="d-flex justify-content-between align-items-end showcases_top">
           <div class="d-flex categories-page-title">
             <MainTitle :title="showcases?.name" class="mb-0" />
-            <span class="align-items-end">{{ showcases?.products?.length }} товаров</span>
+            <span class="align-items-end">{{ showcases?.products?.length }} tovar</span>
           </div>
           <a-select
             v-model="value"
@@ -32,7 +32,7 @@
       <div class="categories-page-inner-grid">
         <div class="categories-filter-list">
           <div class="categories-list-inner px-0">
-            <h5>Категория</h5>
+            <h5>Kategoriyalar</h5>
             <!-- <div v-for="firstCategory in allCategories" :key="firstCategory?.id">
               <nuxt-link
                 :to="`/categories-inner/${firstCategory?.slug}`"
@@ -95,7 +95,7 @@
             <span class="categories-list_show-more">Показать еще</span>
           </div>
           <div class="filter-range">
-            <h5>Категория</h5>
+            <h5>Kategoriyalar</h5>
 
             <a-slider
               range
@@ -180,7 +180,7 @@
             </p>
             <p>
               Оформить заказ можно через Telegram или позвонив в нашу единую службу
-              поддержки по номеру 200 7 002. Добро пожаловать в интернет-магазин товаров
+              поддержки по номеру 200 7 002. Добро пожаловать в интернет-магазин tovarlar
               для дома DISKONT!
             </p>
           </div>

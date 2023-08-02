@@ -7,18 +7,14 @@
             class="like-active"
             v-html="activeHeart"
             v-if="$store.state.like.includes(product?.id)"
-            @click="
-              $store.commit('addToStore', { id: product?.id, name: 'like' })
-            "
+            @click="$store.commit('addToStore', { id: product?.id, name: 'like' })"
           >
           </span>
           <span
             class="like-inactive"
             v-else
             v-html="like"
-            @click="
-              $store.commit('addToStore', { id: product?.id, name: 'like' })
-            "
+            @click="$store.commit('addToStore', { id: product?.id, name: 'like' })"
           >
           </span>
         </span>
@@ -28,14 +24,10 @@
           :class="{
             'active-comparison': $store.state.comparison.includes(product?.id),
           }"
-          @click="
-            $store.commit('addToStore', { id: product?.id, name: 'comparison' })
-          "
+          @click="$store.commit('addToStore', { id: product?.id, name: 'comparison' })"
         ></span>
-        <div class="fast_show" @click="visible = true">Быстрый просмотр</div>
-        <span
-          class="pc-img-container"
-          @click="$router.push(`/product/${product?.slug}`)"
+        <div class="fast_show" @click="visible = true">Tezkor ko'rish</div>
+        <span class="pc-img-container" @click="$router.push(`/product/${product?.slug}`)"
           ><img
             v-if="product?.images[0]?.md_img"
             :src="product?.images[0]?.md_img"
@@ -44,7 +36,6 @@
           <img v-else src="../../assets/images/empty-img.png" alt="" />
         </span>
       </div>
-
       <div class="product_badges" v-if="product?.badges">
         <span>
           <span
@@ -83,19 +74,22 @@
         </h3>
       </nuxt-link>
       <p>
-        <span v-html="star"></span
-        >{{ product?.info?.stars ? product?.info?.stars : "0" }}
+        <span v-html="star"></span>{{ product?.info?.stars ? product?.info?.stars : "0" }}
       </p>
       <span class="product-card-price"
         ><h4>
-          {{ productPrice(product) }}
+          {{
+            `${
+              product?.discount_price ? product?.discount_price : product?.real_price
+            }`.replace(/\B(?=(\d{3})+(?!\d))/g, " ")
+          }}
           so’m
         </h4>
         <!-- <span> +5 ta dicoin</span> -->
       </span>
     </div>
     <div class="product-discount">
-      <p v-if="product?.discount">
+      <p v-if="product?.discount_price">
         {{ `${product?.real_price}`.replace(/\B(?=(\d{3})+(?!\d))/g, " ") }}
         <!-- .slice(0, product?.price?.indexOf("."))
             .replace(".", ",")
@@ -111,8 +105,8 @@
       >
         <span
           @click="
-            $store.state.cart.find((item) => item.id == product?.id)?.count >
-              0 && $store.commit('productCountDown', { id: product?.id })
+            $store.state.cart.find((item) => item.id == product?.id)?.count > 0 &&
+              $store.commit('productCountDown', { id: product?.id })
           "
           >-</span
         >{{ $store.state.cart.find((item) => item.id == product?.id)?.count }}
@@ -124,8 +118,7 @@
           }"
           @click="
             $store.state.cart.find((item) => item.id == product?.id)?.count <
-              productInner?.stock &&
-              $store.commit('productCountUp', { id: product?.id })
+              productInner?.stock && $store.commit('productCountUp', { id: product?.id })
           "
           >+</span
         >
@@ -140,7 +133,7 @@
           })
         "
       >
-        <span>В корзину</span>В корзину
+        <span>Savatchaga</span>Savatchaga
       </div>
     </div>
     <a-modal
@@ -191,9 +184,7 @@
             >
               <a slot="customPaging" slot-scope="props">
                 <img
-                  :src="
-                    getImgUrl([...product?.images, ...product?.images], props.i)
-                  "
+                  :src="getImgUrl([...product?.images, ...product?.images], props.i)"
                 />
               </a>
 
@@ -215,20 +206,14 @@
             <div class="product-modal-like-comp">
               <span
                 :class="{
-                  'active-like-comp-btn': $store.state.like.includes(
-                    product?.id
-                  ),
+                  'active-like-comp-btn': $store.state.like.includes(product?.id),
                 }"
-                @click="
-                  $store.commit('addToStore', { id: product?.id, name: 'like' })
-                "
+                @click="$store.commit('addToStore', { id: product?.id, name: 'like' })"
                 ><span v-html="activeHeart"></span> Sevimlilarga</span
               >
               <span
                 :class="{
-                  'active-like-comp-btn': $store.state.comparison.includes(
-                    product?.id
-                  ),
+                  'active-like-comp-btn': $store.state.comparison.includes(product?.id),
                 }"
                 @click="
                   $store.commit('addToStore', {
@@ -244,8 +229,12 @@
               <div class="cardo">
                 <div class="cardo__header">
                   <div class="discount" v-if="product?.discount">
-                    <p class="tag">-12%</p>
-                    <p class="dis__price">10 540 000 so’m</p>
+                    <p v-if="product?.discount?.pivot?.percent" class="tag">
+                      - {{ product?.discount?.pivot?.percent }}%
+                    </p>
+                    <p v-if="product?.discount?.pivot?.amount" class="dis__price">
+                      - {{ product?.discount?.pivot?.amount }} so’m
+                    </p>
                     <p class="dis__txt">Chegirma narxida</p>
                   </div>
 
@@ -271,9 +260,7 @@
                   <p v-else class="coin">
                     <img src="@/assets/images/coin.svg" alt="" />
                     {{
-                      Math.floor(
-                        product?.real_price / $store.state.dicoin.sum_to_dicoin
-                      )
+                      Math.floor(product?.real_price / $store.state.dicoin.sum_to_dicoin)
                     }}
                     ta di coin
                   </p>
@@ -303,7 +290,7 @@
               </div>
             </div>
             <div class="product-modal-characteristic">
-              <h4>Маҳсулот ҳақида қисқача</h4>
+              <h4>Mahsulot haqida qisqacha</h4>
               <div>
                 <p>Бренд</p>
                 <p>Samsung</p>
@@ -355,9 +342,7 @@
     >
       <div class="product-show-modal">
         <div class="product-show-modal-body">
-          <div
-            class="product-show-modal-carousel product-show-modal-carousel-height"
-          >
+          <div class="product-show-modal-carousel product-show-modal-carousel-height">
             <a-carousel
               arrows
               dots-class="slick-dots slick-thumb default-thumb"
@@ -365,9 +350,7 @@
             >
               <a slot="customPaging" slot-scope="props">
                 <img
-                  :src="
-                    getImgUrl([...product?.images, ...product?.images], props.i)
-                  "
+                  :src="getImgUrl([...product?.images, ...product?.images], props.i)"
                 />
               </a>
 
@@ -376,20 +359,14 @@
               </div>
             </a-carousel>
             <a-carousel arrows dots-class="slick-dots slick-thumb" v-else>
-              <a
-                slot="customPaging"
-                slot-scope="props"
-                v-if="product?.images.length > 0"
-              >
+              <a slot="customPaging" slot-scope="props" v-if="product?.images.length > 0">
                 <img :src="getImgUrl(product?.images, props.i)" />
               </a>
               <a slot="customPaging" slot-scope="props" v-else>
                 <img :src="getImgUrl([1, 2, 3, 4], props.i)" alt="" />
               </a>
-              <div
-                v-for="item in product?.images"
-                v-if="product?.images.length > 0"
-              >
+
+              <div v-for="item in product?.images" v-if="product?.images.length > 0">
                 <img :src="item?.md_img" />
               </div>
               <div v-for="item in [1, 2, 3, 4]" v-else>
@@ -442,9 +419,7 @@
               <div class="product-modal-like-comp">
                 <span
                   :class="{
-                    'active-like-comp-btn': $store.state.like.includes(
-                      product?.id
-                    ),
+                    'active-like-comp-btn': $store.state.like.includes(product?.id),
                   }"
                   @click="
                     $store.commit('addToStore', {
@@ -456,9 +431,7 @@
                 >
                 <span
                   :class="{
-                    'active-like-comp-btn': $store.state.comparison.includes(
-                      product?.id
-                    ),
+                    'active-like-comp-btn': $store.state.comparison.includes(product?.id),
                   }"
                   @click="
                     $store.commit('addToStore', {
@@ -474,20 +447,11 @@
                   <b-skeleton width="40%" height="100%"></b-skeleton>
                 </h6>
                 <h6 v-else>
-                  {{
-                    productAttributes.find((item) => item?.title == "Цвет")
-                      ?.title
-                  }}
+                  {{ productAttributes.find((item) => item?.title == "Цвет")?.title }}
                 </h6>
                 <div class="product-modal-colors" v-if="skeleton">
-                  <span
-                    class="product-modal-color"
-                    v-for="colorOption in [1, 2, 3, 4]"
-                    ><span
-                      ><b-skeleton
-                        width="100%"
-                        height="100%"
-                      ></b-skeleton></span
+                  <span class="product-modal-color" v-for="colorOption in [1, 2, 3, 4]"
+                    ><span><b-skeleton width="100%" height="100%"></b-skeleton></span
                   ></span>
                 </div>
                 <div class="product-modal-colors" v-else>
@@ -501,9 +465,7 @@
                         productInner.slug == colorOption?.slug,
                     }"
                     @click="getProductBySlug(colorOption?.slug)"
-                    ><span
-                      :style="{ 'background-color': colorOption?.title }"
-                    ></span
+                    ><span :style="{ 'background-color': colorOption?.title }"></span
                   ></span>
                 </div>
                 <div v-if="skeleton">
@@ -544,19 +506,16 @@
 
                 <div class="product-modal-count">
                   <div>
-                    <button @click="productCount > 0 && productCount--">
-                      -</button
+                    <button @click="productCount > 0 && productCount--">-</button
                     >{{ productCount }}
                     <button
                       :class="{ disabled: productInner?.stock == productCount }"
-                      @click="
-                        productCount < productInner?.stock && productCount++
-                      "
+                      @click="productCount < productInner?.stock && productCount++"
                     >
                       +
                     </button>
                   </div>
-                  <p>Осталось всего {{ productInner?.stock }}</p>
+                  <p>Sotuvda bor {{ productInner?.stock }}</p>
                 </div>
                 <nuxt-link
                   class="product-modal-show-more"
@@ -580,10 +539,7 @@
                   </h4>
                   <h4 v-else>
                     {{
-                      `${productInner?.real_price}`.replace(
-                        /\B(?=(\d{3})+(?!\d))/g,
-                        " "
-                      )
+                      `${productInner?.real_price}`.replace(/\B(?=(\d{3})+(?!\d))/g, " ")
                     }}
                     СУМ
                   </h4>
@@ -592,14 +548,10 @@
               </div>
             </div>
             <div class="product-modal-buy-mode-btns">
-              <div @click="visibleOc = true">
-                Birgina click orqali sotib olish
-              </div>
+              <div @click="visibleOc = true">Birgina click orqali sotib olish</div>
               <span
                 :class="{
-                  'disabled-btn': $store.state.cart.find(
-                    (item) => item.id == product.id
-                  ),
+                  'disabled-btn': $store.state.cart.find((item) => item.id == product.id),
                 }"
                 @click="
                   $store.commit('addToCart', {
@@ -776,11 +728,7 @@
       >
         Ma`lumotlarni yuborish
       </div>
-      <div
-        class="vmodal-forget-password"
-        v-if="!callBox"
-        @click="callBox = true"
-      >
+      <div class="vmodal-forget-password" v-if="!callBox" @click="callBox = true">
         O’zim bog’lanaman
       </div>
       <a href="#">
@@ -854,7 +802,7 @@
       </div>
       <div class="vmodal-body comment-modal-success">
         <img src="../../assets/images/modal-success.png" alt="" />
-        <p>Заказ оформлен. Мы свяжемся с вами в ближайшее время</p>
+        <p>Buyurtma tasdiqlandi. Tez orada siz bilan bog'lanamiz</p>
       </div>
       <div class="vmodal-btn" @click="handleOkSuccess">Yaxshi raxmat</div>
       <template slot="footer"> <h3></h3></template>
@@ -931,10 +879,7 @@ export default {
     submitOc() {
       const data = {
         ...this.formName,
-        phone_number: this.formName.phone_number
-          .split(" ")
-          .join("")
-          .replace("+", ""),
+        phone_number: this.formName.phone_number.split(" ").join("").replace("+", ""),
         product_id: this.product.id,
       };
       this.$refs["ruleFormNameClick"].validate((valid) => {
@@ -950,10 +895,7 @@ export default {
     },
     async __POST_ORDER(formData) {
       try {
-        const data = await this.$store.dispatch(
-          "fetchAuth/postClickOrder",
-          formData
-        );
+        const data = await this.$store.dispatch("fetchAuth/postClickOrder", formData);
         this.visibleOc = false;
         // this.compToast = true;
         this.visibleSuccess = true;
@@ -962,30 +904,24 @@ export default {
       }
     },
     productPrice(product) {
-      let price =
-        product?.discount?.amount || product?.discount?.percent
-          ? product?.discount?.amount
-            ? product?.real_price - product?.discount?.amount
-            : product?.real_price -
-              (product?.real_price / 100) * product?.discount?.percent
-          : product?.real_price;
-      // .replace(".", ",")
-      // .replace(/\B(?=(\d{3})+(?!\d))/g, " ");
-      return `${price}`.replace(/\B(?=(\d{3})+(?!\d))/g, " ");
+      if (product?.discount?.amount) {
+        return product?.real_price - product?.discount?.amount;
+      } else if (product?.discount?.percent) {
+        return (product?.real_price / 100) * product?.discount?.percent;
+      } else {
+        return product?.real_price;
+      }
     },
     async __GET_PRODUCTS_BY_SLUG(slug) {
       this.skeleton = true;
-      const productData = await this.$store.dispatch(
-        "fetchProducts/getProductsBySlug",
-        {
-          id: slug,
-          params: {
-            headers: {
-              Language: this.$i18n.locale,
-            },
+      const productData = await this.$store.dispatch("fetchProducts/getProductsBySlug", {
+        id: slug,
+        params: {
+          headers: {
+            Language: this.$i18n.locale,
           },
-        }
-      );
+        },
+      });
 
       this.productInner = productData.product;
       this.productAttributes = productData?.attributes;

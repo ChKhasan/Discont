@@ -9,7 +9,7 @@
         <div class="d-flex align-items-end">
           <MainTitle title="Savatcha" />
           <span class="d-flex align-items-end"
-            >{{ $store.state.cart.length }} товаров</span
+            >{{ $store.state.cart.length }} tovar</span
           >
         </div>
       </div>
@@ -39,8 +39,8 @@
             </div>
             <div
               class="basket-card"
-              v-for="product in products"
-              :key="product?.id"
+              v-for="(product, index) in products"
+              :key="index"
               v-if="!skeletonLoad"
             >
               <div
@@ -123,10 +123,11 @@
                   </div>
                   <p>
                     {{
-                      `${product?.real_price}`.replace(
-                        /\B(?=(\d{3})+(?!\d))/g,
-                        " "
-                      )
+                      `${
+                        product?.discount_price
+                          ? product?.discount_price
+                          : product?.real_price
+                      }`.replace(/\B(?=(\d{3})+(?!\d))/g, " ")
                     }}
                     so’mdan/donasi
                   </p>
@@ -162,7 +163,9 @@
                     <span
                       >{{
                         Math.floor(
-                          product?.real_price /
+                          (product?.discount_price
+                            ? product?.discount_price
+                            : product?.real_price) /
                             $store.state.dicoin.sum_to_dicoin
                         )
                       }}
@@ -316,7 +319,9 @@
                     .reduce((summ, item) => {
                       return (
                         summ +
-                        item.real_price *
+                        (item.discount_price
+                          ? item.discount_price
+                          : item.real_price) *
                           $store.state.cart.find((elem) => elem.id == item.id)
                             ?.count
                       );
@@ -332,14 +337,16 @@
             </div> -->
             <div class="basket-checkout-body">
               <span
-                ><p>Стоимость:</p>
+                ><p>Narxi:</p>
                 <p>
                   {{
                     `${products
                       .reduce((summ, item) => {
                         return (
                           summ +
-                          item.real_price *
+                          (item.discount_price
+                            ? item.discount_price
+                            : item.real_price) *
                             $store.state.cart.find((elem) => elem.id == item.id)
                               ?.count
                         );
@@ -363,12 +370,12 @@
               > -->
             </div>
             <div class="basket-checkout-btn" @click="checkoutCheck()">
-              Оформить заказ
+              Buyurtmani rasmiylshtirish
             </div>
             <div class="basket-checkout-bottom">
               <p>
-                Нажимая 'Оформить заказ', я соглашаюсь с
-                <span>публичным договором оферты</span>
+                “Buyurtmani rasmiylshtirish” tugmasini bosish orqali men
+                <span> ommaviy oferta shartnomasiga rozilik bildiraman</span>
               </p>
             </div>
           </div>
@@ -382,7 +389,9 @@
                     return (
                       sum +
                       Math.floor(
-                        item.real_price / $store.state.dicoin.sum_to_dicoin
+                        (item.discount_price
+                          ? item.discount_price
+                          : item.real_price) / $store.state.dicoin.sum_to_dicoin
                       ) *
                         $store.state.cart.find((item) => item.id == item.id)
                           ?.count
@@ -487,11 +496,9 @@ export default {
       }
     },
     productTotalPrice(product) {
-      let price =
-        product?.real_price *
-        this.$store.state.cart.find((item) => item.id == product.id)?.count;
-      let strPrice = `${price}`;
-      return `${price}`.replace(/\B(?=(\d{3})+(?!\d))/g, " ");
+      return `${
+        product.discount_price ? product.discount_price : product.real_price
+      }`.replace(/\B(?=(\d{3})+(?!\d))/g, " ");
       // .slice(0, product?.price?.indexOf("."))
       // .replace(".", ",")
       // .replace(/\B(?=(\d{3})+(?!\d))/g, " ");

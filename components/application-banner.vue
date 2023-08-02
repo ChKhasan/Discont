@@ -1,8 +1,8 @@
 <template lang="html">
   <div class="categories-application-banner">
     <div class="categories-application-banner-info">
-      <h2>Заказывайте в новом приложении Маркета и получайте бонусы</h2>
-      <p>Diskont скачать мобильное приложение</p>
+      <h2>Yangi Market ilovasida buyurtma bering va bonuslarga ega bo'ling</h2>
+      <p>Diskont mobil ilovasini yuklab olish</p>
       <div class="app-btn-container">
         <div class="flexer">
           <span class="app-btns"
@@ -14,7 +14,7 @@
         </div>
         <div class="div">
           <img class="app-qr-code" src="../assets/images/image 34.png" alt="" />
-          <p>Наведите камеру на QR-код, чтобы скачать</p>
+          <p>Yuklab olish uchun kamerangizni QR kodga qarating</p>
         </div>
       </div>
     </div>
