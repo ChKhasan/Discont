@@ -35,7 +35,8 @@ export default {};
 <style lang="css">
 .application-banner {
   padding: 72px 0;
-  display: flex;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
   overflow: hidden;
 }
 .application-banner-info h2 {
@@ -84,13 +85,11 @@ export default {};
 }
 
 .application-banner-info-2 {
-  width: 38%;
   position: relative;
 }
 .application-banner-images {
   display: flex;
   justify-content: center;
-  width: 48%;
 }
 .application-banner-container {
   position: relative;

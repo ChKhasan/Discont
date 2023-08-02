@@ -8,7 +8,9 @@
       <div class="d-flex page-container-title">
         <div class="d-flex align-items-end">
           <MainTitle title="Savatcha" />
-          <span class="d-flex align-items-end">{{ $store.state.cart.length }} tovar</span>
+          <span class="d-flex align-items-end"
+            >{{ $store.state.cart.length }} tovar</span
+          >
         </div>
       </div>
       <div class="basket-page-body" v-if="products.length > 0 || skeletonLoad">
@@ -62,7 +64,11 @@
                   </p>
                   <p>
                     Brend:
-                    {{ product?.info?.brand?.name ? product?.info?.brand?.name : "---" }}
+                    {{
+                      product?.info?.brand?.name
+                        ? product?.info?.brand?.name
+                        : "---"
+                    }}
                   </p>
                 </div>
                 <div class="basket-card-count">
@@ -70,7 +76,8 @@
                     <span
                       v-ripple="'rgba(9, 69, 79, 0.1)'"
                       @click="
-                        $store.state.cart.find((item) => item.id == product.id)?.count > 1
+                        $store.state.cart.find((item) => item.id == product.id)
+                          ?.count > 1
                           ? $store.commit('productCountDown', {
                               id: product.id,
                             })
@@ -89,12 +96,15 @@
                         /></svg
                     ></span>
 
-                    {{ $store.state.cart.find((item) => item.id == product.id)?.count }}
+                    {{
+                      $store.state.cart.find((item) => item.id == product.id)
+                        ?.count
+                    }}
                     <span
                       v-ripple="'rgba(9, 69, 79, 0.1)'"
                       @click="
-                        $store.state.cart.find((item) => item.id == product?.id)?.count <
-                          product?.stock &&
+                        $store.state.cart.find((item) => item.id == product?.id)
+                          ?.count < product?.stock &&
                           $store.commit('productCountUp', { id: product.id })
                       "
                       ><svg
@@ -155,7 +165,8 @@
                         Math.floor(
                           (product?.discount_price
                             ? product?.discount_price
-                            : product?.real_price) / $store.state.dicoin.sum_to_dicoin
+                            : product?.real_price) /
+                            $store.state.dicoin.sum_to_dicoin
                         )
                       }}
                       ta dicoin</span
@@ -193,7 +204,9 @@
                     <p class="brand">
                       Brend:
                       {{
-                        product?.info?.brand?.name ? product?.info?.brand?.name : "---"
+                        product?.info?.brand?.name
+                          ? product?.info?.brand?.name
+                          : "---"
                       }}
                     </p>
                   </div>
@@ -246,7 +259,8 @@
                   <div class="basket-count-btn">
                     <span
                       @click="
-                        $store.state.cart.find((item) => item.id == product.id)?.count > 1
+                        $store.state.cart.find((item) => item.id == product.id)
+                          ?.count > 1
                           ? $store.commit('productCountDown', {
                               id: product.id,
                             })
@@ -264,8 +278,14 @@
                           fill="#1F8A70"
                         /></svg
                     ></span>
-                    {{ $store.state.cart.find((item) => item.id == product.id)?.count }}
-                    <span @click="$store.commit('productCountUp', { id: product.id })"
+                    {{
+                      $store.state.cart.find((item) => item.id == product.id)
+                        ?.count
+                    }}
+                    <span
+                      @click="
+                        $store.commit('productCountUp', { id: product.id })
+                      "
                       ><svg
                         width="11"
                         height="11"
@@ -299,8 +319,11 @@
                     .reduce((summ, item) => {
                       return (
                         summ +
-                        (item.discount_price ? item.discount_price : item.real_price) *
-                          $store.state.cart.find((elem) => elem.id == item.id)?.count
+                        (item.discount_price
+                          ? item.discount_price
+                          : item.real_price) *
+                          $store.state.cart.find((elem) => elem.id == item.id)
+                            ?.count
                       );
                     }, 0)
                     .toFixed(2)}`.replace(/\B(?=(\d{3})+(?!\d))/g, " ")
@@ -321,8 +344,11 @@
                       .reduce((summ, item) => {
                         return (
                           summ +
-                          (item.discount_price ? item.discount_price : item.real_price) *
-                            $store.state.cart.find((elem) => elem.id == item.id)?.count
+                          (item.discount_price
+                            ? item.discount_price
+                            : item.real_price) *
+                            $store.state.cart.find((elem) => elem.id == item.id)
+                              ?.count
                         );
                       }, 0)
                       .toFixed(2)}`.replace(/\B(?=(\d{3})+(?!\d))/g, " ")
@@ -363,10 +389,12 @@
                     return (
                       sum +
                       Math.floor(
-                        (item.discount_price ? item.discount_price : item.real_price) /
-                          $store.state.dicoin.sum_to_dicoin
+                        (item.discount_price
+                          ? item.discount_price
+                          : item.real_price) / $store.state.dicoin.sum_to_dicoin
                       ) *
-                        $store.state.cart.find((item) => item.id == item.id)?.count
+                        $store.state.cart.find((item) => item.id == item.id)
+                          ?.count
                     );
                   }, 0)
                 )
@@ -429,14 +457,17 @@ export default {
   methods: {
     async __GET_PRODUCTS_BY_ID(dataForm) {
       try {
-        const data = await this.$store.dispatch("fetchProducts/getProductsById", {
-          data: dataForm,
-          params: {
-            headers: {
-              Language: this.$i18n.locale,
+        const data = await this.$store.dispatch(
+          "fetchProducts/getProductsById",
+          {
+            data: dataForm,
+            params: {
+              headers: {
+                Language: this.$i18n.locale,
+              },
             },
-          },
-        });
+          }
+        );
         this.products = data?.products;
         this.skeletonLoad = false;
       } catch (e) {
@@ -636,6 +667,7 @@ export default {
   align-items: flex-end;
 }
 .basket-card-price span {
+  white-space: nowrap;
   font-family: var(--SB_500);
   font-style: normal;
   font-size: 12.2059px;
@@ -786,6 +818,17 @@ export default {
 }
 .mobile__card {
   display: none;
+}
+@media screen and (max-width: 1600px) {
+  .basket-card-body {
+    grid-template-columns: repeat(3, 1fr);
+  }
+  .basket-price-block h4 {
+    font-size: 20px;
+  }
+  .basket-card-text-block h4 {
+    font-size: 16px;
+  }
 }
 @media screen and (max-width: 1024px) {
   .basket-page-body {

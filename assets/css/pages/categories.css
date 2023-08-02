@@ -137,7 +137,6 @@
   align-items: center;
   text-align: right;
   letter-spacing: -0.28px;
-  margin-bottom: 12px;
 }
 .categories-list-inner a {
   color: #000;
@@ -386,6 +385,22 @@
 }
 .mobile__filter {
   display: none;
+}
+@media screen and (max-width: 1600px) {
+  .child-categories-list a,
+  .categories-list a,
+  .categories-list-inner a {
+    margin: 0;
+  }
+  .categories-card-grid {
+    gap: 8px;
+  }
+  .categories-page-inner .main-title {
+    margin: 0;
+  }
+  .categories-page-title span {
+    margin-bottom: 0;
+  }
 }
 @media screen and (max-width: 1024px) {
   .categories-inner-carousel,

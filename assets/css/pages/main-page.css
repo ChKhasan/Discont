@@ -124,6 +124,7 @@
   grid-gap: 24px;
   margin-bottom: 121px;
 }
+
 @media screen and (max-width: 1600px) {
   .product_container {
     padding-bottom: 88px;
@@ -177,5 +178,9 @@
   }
   .product-grid {
     grid-template-columns: repeat(2, 1fr);
+  }
+  .products-grid-6 {
+    grid-template-columns: repeat(2, 1fr);
+    grid-gap: 16px;
   }
 }

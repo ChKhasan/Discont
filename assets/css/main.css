@@ -576,6 +576,15 @@ body::-webkit-scrollbar-thumb {
     padding: 0;
   }
 }
+@media screen and (max-width: 1600px) {
+  .other .container_xl {
+    padding: 0;
+  }
+  .other h4 {
+    font-size: 24px !important;
+    margin-bottom: 20px !important;
+  }
+}
 @media (max-width: 1024px) {
   .container_xl {
     padding: 0 16px;

@@ -307,11 +307,11 @@ export default {
     opacity: 0;
   }
   50% {
-    right: 160px;
+    right: 32px;
     opacity: 1;
   }
   100% {
-    right: 144px;
+    right: 32px;
   }
 }
 
