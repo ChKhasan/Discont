@@ -2,11 +2,11 @@
   <div class="my-orders-card">
     <div class="my-orders-card-header">
       <div class="d-flex flex-column">
-        <h4>ID заказа {{ order?.id }}</h4>
+        <h4>Buyurtma #{{ order?.id }}</h4>
         <p>
-          Обновлен {{ moment(order?.updated_at).format("DD") }}
+          Yangilangan {{ moment(order?.updated_at).format("DD") }}
           {{ month[moment(order?.updated_at).format("M") - 1] }}
-          {{ moment(order?.updated_at).format("YYYY") }} г.,
+          {{ moment(order?.updated_at).format("YYYY") }} y.,
           {{ moment(order?.updated_at).format("HH:mm") }}
         </p>
       </div>
@@ -16,14 +16,17 @@
           'success-order': order?.status == 'new',
           'pending-order': order?.status == 'pending',
           'returned-order': order?.status == 'returned',
+          'accepted-order': order?.status == 'accepted',
         }"
         >{{
           order?.status == "new"
-            ? "Olib ketildi"
+            ? "Yangi"
             : order?.status == "pending"
             ? "Kutilmoqda"
             : order?.status == "returned"
             ? "Qaytarildi"
+            : order?.status == "accepted"
+            ? "Qabul qilindi"
             : ""
         }}</span
       >
@@ -65,26 +68,26 @@
     </div>
     <div class="my-orders-card-footer">
       <div>
-        <p>Дата заказа</p>
+        <p>Buyurtma sanasi</p>
         <span>
           {{ weekDay[moment(order?.created_at).weekday()] }},
           {{ moment(order?.created_at).format("DD") }}
           {{ month[moment(order?.created_at).format("M") - 1] }}
-          {{ moment(order?.created_at).format("YYYY") }} г.,
+          {{ moment(order?.created_at).format("YYYY") }} y.,
           {{ moment(order?.created_at).format("HH:mm") }}</span
         >
       </div>
       <div>
-        <p>Способ доставки</p>
+        <p>Yetkazib berish turi</p>
         <span>{{ pickupMethod[order?.delivery_method] }}</span>
       </div>
       <div>
-        <p>Способ оплаты</p>
+        <p>To'lov turi</p>
         <span>{{ order?.payment_method }}</span>
       </div>
 
       <div>
-        <p>Сумма заказа</p>
+        <p>Buyurtma narxi</p>
         <span>{{ `${order?.amount}`.replace(/\B(?=(\d{3})+(?!\d))/g, " ") }} сум</span>
       </div>
     </div>
@@ -99,31 +102,31 @@ export default {
       arrow: require("../../assets/svg/dropdown-icon.svg?raw"),
       productDrop: false,
       pickupMethod: {
-        pickup: "Самовывоз",
-        courier: "Доставка",
+        pickup: "Do'kondan olib ketish",
+        courier: "Yetkazib berish",
       },
       weekDay: [
-        "воскресенье",
-        "понедельник",
-        "вторник",
-        "среда",
-        "четверг",
-        "пятница",
-        "суббота",
+        "yakshanba",
+        "dushanba",
+        "seshanba",
+        "chorshanba",
+        "payshanba",
+        "juma",
+        "shanba",
       ],
       month: [
-        "Январь",
-        "Февраль",
-        "Март",
-        "Апрель",
-        "Май",
-        "Июнь",
-        "Июль",
-        "Август",
-        "Сентябрь",
-        "Октябрь",
-        "Ноябрь",
-        "Декабрь",
+        "Yanvar",
+        "Fevral",
+        "Mart",
+        "Aprel",
+        "May",
+        "Iyun",
+        "Iyul",
+        "Avgust",
+        "Sentabr",
+        "Oktabr",
+        "Noyabr",
+        "Dekabr",
       ],
     };
   },
@@ -193,6 +196,13 @@ export default {
 }
 .returned-order::after {
   background: #ff2e2e;
+}
+.accepted-order {
+  color: #3699ff;
+  background-color: #e1f0ff;
+}
+.accepted-order::after {
+  background: #3699ff;
 }
 .orders-status::after {
   content: "";

@@ -161,6 +161,7 @@
               <span class="nav-icons" v-html="navLike"></span> Sevimlilar
             </li>
             <li
+            id="cart"
               @click="$router.push('/basket')"
               :class="{ navbar_block_active: $route.name == 'basket' }"
             >

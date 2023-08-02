@@ -129,13 +129,7 @@
               viewBox="0 0 31 31"
               fill="none"
             >
-              <circle
-                opacity="0.6"
-                cx="15.5"
-                cy="15.5"
-                r="15.5"
-                fill="#E3F1FF"
-              />
+              <circle opacity="0.6" cx="15.5" cy="15.5" r="15.5" fill="#E3F1FF" />
               <path
                 d="M9.90781 20.9801C10.4619 21.5342 11.3602 21.5342 11.9143 20.9801L20.868 12.0264C21.422 11.4723 21.422 10.574 20.868 10.0199C20.3139 9.46584 19.4155 9.46584 18.8615 10.0199L9.90781 18.9736C9.35373 19.5277 9.35373 20.426 9.90781 20.9801ZM18.8541 20.9801C19.4102 21.5362 20.3118 21.5362 20.868 20.9801C21.4241 20.4239 21.4241 19.5223 20.868 18.9662L11.9217 10.0199C11.3656 9.4638 10.4639 9.4638 9.90781 10.0199C9.35168 10.576 9.35168 11.4777 9.90781 12.0338L18.8541 20.9801Z"
                 fill="#0071BC"
@@ -144,8 +138,8 @@
           </div>
           <h4 class="title">Omadingizni sinab ko’ring!</h4>
           <p class="sub">
-            Diskont dokonida royxatdan oting va sovgalar yutib olisng royxatdan
-            oting va sovgalar yutib olisng
+            Diskont dokonida royxatdan oting va sovgalar yutib olisng royxatdan oting va
+            sovgalar yutib olisng
           </p>
 
           <form action="">
@@ -164,6 +158,33 @@
       </div>
       <template slot="footer"> <h3></h3></template>
     </a-modal>
+    <a-back-top>
+      <div class="ant-back-top-inner">
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          width="67"
+          height="67"
+          viewBox="0 0 67 67"
+          fill="none"
+        >
+          <g clip-path="url(#clip0_2993_1967)">
+            <path
+              d="M67 33.5C67 14.9985 52.0015 0 33.5 0C14.9985 0 0 14.9985 0 33.5C0 52.0015 14.9985 67 33.5 67C52.0015 67 67 52.0015 67 33.5Z"
+              fill="white"
+            />
+            <path
+              d="M35.0607 21.9393C34.4749 21.3536 33.5251 21.3536 32.9393 21.9393L23.3934 31.4853C22.8076 32.0711 22.8076 33.0208 23.3934 33.6066C23.9792 34.1924 24.9289 34.1924 25.5147 33.6066L34 25.1213L42.4853 33.6066C43.0711 34.1924 44.0208 34.1924 44.6066 33.6066C45.1924 33.0208 45.1924 32.0711 44.6066 31.4853L35.0607 21.9393ZM35.5 44L35.5 23L32.5 23L32.5 44L35.5 44Z"
+              fill="#1F8A70"
+            />
+          </g>
+          <defs>
+            <clipPath id="clip0_2993_1967">
+              <rect width="67" height="67" fill="white" />
+            </clipPath>
+          </defs>
+        </svg>
+      </div>
+    </a-back-top>
   </div>
 </template>
 
@@ -223,8 +244,7 @@ export default {
       let button = document.getElementById("button");
       let value = Math.ceil(Math.random() * 3600);
 
-      wheel.style.transform =
-        " translate(-50%, -50%) rotate( " + value + "deg  )";
+      wheel.style.transform = " translate(-50%, -50%) rotate( " + value + "deg  )";
       this.detectRange(value);
     },
     detectRange(value) {
@@ -469,5 +489,11 @@ export default {
       right: 16px;
     }
   }
+}
+.ant-back-top-inner {
+  width: 67px;
+  height: 67px;
+  box-shadow: 0 0 5px 0px rgba(0, 0, 0, 0.2);
+  border-radius: 50%;
 }
 </style>

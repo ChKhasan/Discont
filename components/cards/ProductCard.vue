@@ -69,7 +69,7 @@
           {{
             product?.info?.name
               ? product?.info?.name
-              : "Кир ювиш машинаси Samsung WW80K42E07SDLD"
+              : "---"
           }}
         </h3>
       </nuxt-link>
@@ -97,6 +97,7 @@
         so'm
       </p>
     </div>
+    <!-- <div class="cart-anim"></div> -->
 
     <div class="product-card-footer">
       <div
@@ -125,13 +126,9 @@
       </div>
       <div
         class="to-basket-btn"
+        id="addtocart"
         v-else
-        @click="
-          $store.commit('addToCart', {
-            obj: { id: product?.id, count: productCount },
-            name: 'cart',
-          })
-        "
+        @click="($event) => addToCart($event, product)"
       >
         <span>Savatchaga</span>Savatchaga
       </div>
@@ -927,6 +924,18 @@ export default {
       this.productAttributes = productData?.attributes;
       this.skeleton = false;
     },
+    addToCart(event, product) {
+      // var xPos = event.clientX;
+      // var yPos = event.clientY;
+      // let element = document.getElementById("cart");
+      // let x = element.offsetLeft;
+      // let y = element.offsetTop;
+      // console.log(x, y, xPos, yPos);
+      this.$store.commit("addToCart", {
+        obj: { id: product?.id, count: this.productCount },
+        name: "cart",
+      });
+    },
   },
   watch: {
     visibleBuy(val) {
@@ -1467,5 +1476,80 @@ export default {
   .product-card-header:hover .pc-img-container {
     transform: scale(1);
   }
+}
+
+button {
+  padding: 20px;
+  border: none;
+  background: lighten(#292d48, 65);
+  position: relative;
+  outline: none;
+  border-radius: 5px;
+  color: #292d48;
+  font-size: 18px;
+}
+.sendtocart .cart-item {
+  display: block;
+  animation: xAxis 1s forwards cubic-bezier(1, 0.44, 0.84, 0.165);
+}
+.sendtocart .cart-item::before {
+  animation: yAxis 1s alternate forwards cubic-bezier(0.165, 0.84, 0.44, 1);
+}
+.cart-item {
+  position: absolute;
+  height: 24px;
+  width: 24px;
+  top: -10px;
+  right: -10px;
+}
+.cart-item::before {
+  content: "1";
+  display: block;
+  line-height: 24px;
+  height: 24px;
+  width: 24px;
+  font-size: 12px;
+  font-weight: 600;
+  background: #2bd156;
+  color: white;
+  border-radius: 20px;
+  text-align: center;
+}
+@keyframes xAxis {
+  0% {
+    transform: translateX(calc(50vw - 105px));
+  }
+}
+
+@keyframes yAxis {
+  100% {
+    transform: translateY(calc(-50vh + 75px));
+  }
+}
+
+@keyframes shakeCart {
+  25% {
+    transform: translateX(6px);
+  }
+  50% {
+    transform: translateX(-4px);
+  }
+  75% {
+    transform: translateX(2px);
+  }
+  100% {
+    transform: translateX(0);
+  }
+}
+.cart-anim {
+  display: flex;
+  width: 40px;
+  height: 40px;
+  /* background-color: red; */
+  position: fixed;
+  left: 400px;
+  top: 600px;
+  z-index: 10;
+  transition: 0.3s;
 }
 </style>

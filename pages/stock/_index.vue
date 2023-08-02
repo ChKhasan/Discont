@@ -27,6 +27,29 @@
       <div class="d-flex justify-content-between align-items-end">
         <ProductListTitle title="Kategoriyadagi top tavarlar" />
       </div>
+      {{ promotion?.products.length }}
+      <div class="categories-products">
+        <div class="categories-card-grid" v-if="promotion?.products.length > 0">
+          <ProductCard
+            v-for="product in promotion?.products"
+            :key="product.id"
+            :product="{
+              ...product,
+              ...product?.default_product,
+            }"
+          />
+        </div>
+        <div class="comments-empty" v-else>
+          <img src="../../assets/images/comments-empty.png" alt="" />
+          <h4>Mahsulot topilmadi</h4>
+        </div>
+        <div class="categories-products-show-more" v-if="promotion?.products.length > 30">
+          Показать еще 44
+        </div>
+        <div class="products-pagination" v-if="promotion?.products.length > 30">
+          <a-pagination size="small" :default-current="6" :total="500" />
+        </div>
+      </div>
       <!-- <div class="product-grid stock-page__products">
         <ProductCard v-for="product in products" :key="product.id" :product="product" />
       </div> -->
@@ -63,6 +86,7 @@ export default {
 <style lang="css">
 @import "../../assets/css/pages/comparison.css";
 @import "../../assets/css/pages/main-page.css";
+@import "../../assets/css/pages/categories.css";
 
 .stock-page__container {
   width: 85%;
