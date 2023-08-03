@@ -44,16 +44,11 @@
               <div
                 class="seach-resoult-container"
                 v-if="
-                  searchBlockHide &&
-                  (searchResoults.length > 0 || searchProducts.length)
+                  searchBlockHide && (searchResoults.length > 0 || searchProducts.length)
                 "
               >
                 <div class="search-resoult-scroll">
-                  <div
-                    v-if="
-                      searchResoults.length > 0 && searchProducts.length == 0
-                    "
-                  >
+                  <div v-if="searchResoults.length > 0 && searchProducts.length == 0">
                     <div class="search-tt">
                       <h6>Вы недавно искали</h6>
                       <button @click="clearSearchResoults">Очистить</button>
@@ -106,9 +101,7 @@
                         v-for="product in searchProducts"
                         :key="product?.id"
                       >
-                        <nuxt-link
-                          :to="localePath(`/product/${product?.slug}`)"
-                        >
+                        <nuxt-link :to="localePath(`/product/${product?.slug}`)">
                           <span
                             ><svg
                               xmlns="http://www.w3.org/2000/svg"
@@ -161,7 +154,7 @@
               <span class="nav-icons" v-html="navLike"></span> Sevimlilar
             </li>
             <li
-            id="cart"
+              id="cart"
               @click="$router.push('/basket')"
               :class="{ navbar_block_active: $route.name == 'basket' }"
             >
@@ -175,13 +168,10 @@
               @click="$router.push('/comparison')"
               :class="{ navbar_block_active: $route.name == 'comparison' }"
             >
-              <span
-                class="count-index"
-                v-if="$store.state.comparison.length > 0"
-                >{{ $store.state.comparison.length }}</span
-              >
-              <span class="nav-icons comparison-icon" v-html="navComp"></span
-              >Solishtirish
+              <span class="count-index" v-if="$store.state.comparison.length > 0">{{
+                $store.state.comparison.length
+              }}</span>
+              <span class="nav-icons comparison-icon" v-html="navComp"></span>Solishtirish
             </li>
             <li
               class="nav_profile user_profile flex-row"
@@ -247,8 +237,7 @@
                     :key="category?.id"
                     @mouseover="targetCategory(category)"
                     :class="{
-                      'catalog-menu-list-active':
-                        activeCategory?.id == category?.id,
+                      'catalog-menu-list-active': activeCategory?.id == category?.id,
                     }"
                   >
                     {{ category?.name
@@ -269,9 +258,7 @@
                 </ul>
               </div>
               <div class="catalog-menu-body">
-                <div
-                  class="d-flex categories-page-title mt-0 mb-5 align-items-end"
-                >
+                <div class="d-flex categories-page-title mt-0 mb-5 align-items-end">
                   <MainTitle :title="activeCategory?.name" />
                   <span class="d-flex align-items-end"
                     >{{ activeCategory?.products_count }} tovarlar</span
@@ -280,18 +267,13 @@
                 <div class="catalog-menu-items">
                   <div>
                     <ul
-                      v-for="categoryChild in chunkIntoN(
-                        activeCategory?.children,
-                        3
-                      )[0]"
+                      v-for="categoryChild in chunkIntoN(activeCategory?.children, 3)[0]"
                       :key="categoryChild?.id"
                     >
                       <h4
                         @click="
                           $router.push(
-                            localePath(
-                              `/categories-inner/${categoryChild?.slug}`
-                            )
+                            localePath(`/categories-inner/${categoryChild?.slug}`)
                           )
                         "
                       >
@@ -308,18 +290,13 @@
                   </div>
                   <div>
                     <ul
-                      v-for="categoryChild in chunkIntoN(
-                        activeCategory?.children,
-                        3
-                      )[1]"
+                      v-for="categoryChild in chunkIntoN(activeCategory?.children, 3)[1]"
                       :key="categoryChild?.id"
                     >
                       <h4
                         @click="
                           $router.push(
-                            localePath(
-                              `/categories-inner/${categoryChild?.slug}`
-                            )
+                            localePath(`/categories-inner/${categoryChild?.slug}`)
                           )
                         "
                       >
@@ -336,18 +313,13 @@
                   </div>
                   <div>
                     <ul
-                      v-for="categoryChild in chunkIntoN(
-                        activeCategory?.children,
-                        3
-                      )[2]"
+                      v-for="categoryChild in chunkIntoN(activeCategory?.children, 3)[2]"
                       :key="categoryChild?.id"
                     >
                       <h4
                         @click="
                           $router.push(
-                            localePath(
-                              `/categories-inner/${categoryChild?.slug}`
-                            )
+                            localePath(`/categories-inner/${categoryChild?.slug}`)
                           )
                         "
                       >
@@ -380,16 +352,8 @@
       @ok="handleOk"
     >
       <div class="vmodal-anim-header">
-        <img
-          class="shadow-ell-1"
-          src="../../assets/images/Ellipse 57.png"
-          alt=""
-        />
-        <img
-          class="shadow-ell-2"
-          src="../../assets/images/Ellipse 59.png"
-          alt=""
-        />
+        <img class="shadow-ell-1" src="../../assets/images/Ellipse 57.png" alt="" />
+        <img class="shadow-ell-2" src="../../assets/images/Ellipse 59.png" alt="" />
         <h5>Akauntingizga kiring yoki ro’yxatdan o’ting</h5>
         <span @click="handleOk"
           ><svg
@@ -427,9 +391,7 @@
             label="Telefon raqamingiz"
             prop="phone_number"
           >
-            <span
-              class="position-relative d-flex align-items-center justify-content-end"
-            >
+            <span class="position-relative d-flex align-items-center justify-content-end">
               <!-- <span class="position-absolute number-error" v-if="checkNumberError"
                 >Raqam noto’g’ri kiritildi</span
               > -->
@@ -471,16 +433,8 @@
       @ok="handleOkForgetPass"
     >
       <div class="vmodal-anim-header">
-        <img
-          class="shadow-ell-1"
-          src="../../assets/images/Ellipse 57.png"
-          alt=""
-        />
-        <img
-          class="shadow-ell-2"
-          src="../../assets/images/Ellipse 59.png"
-          alt=""
-        />
+        <img class="shadow-ell-1" src="../../assets/images/Ellipse 57.png" alt="" />
+        <img class="shadow-ell-2" src="../../assets/images/Ellipse 59.png" alt="" />
         <h5>Akauntingizga kiring yoki ro’yxatdan o’ting</h5>
         <span @click="handleOkForgetPass"
           ><svg
@@ -518,9 +472,7 @@
             label="Telefon raqamingiz"
             prop="phone_number"
           >
-            <span
-              class="position-relative d-flex align-items-center justify-content-end"
-            >
+            <span class="position-relative d-flex align-items-center justify-content-end">
               <!-- <the-mask
                 @keyup.enter="submitForgetPass()"
                 :mask="['+998 (##) ### ## ##', '+998 (##) ### ## ##']"
@@ -690,9 +642,7 @@
               v-model="formSms.phone_number"
               placeholder="+998 (__) ___ __ __"
             />
-            <span class="change_number" @click="replaceNumber()"
-              >O’zgartirish</span
-            >
+            <span class="change_number" @click="replaceNumber()">O’zgartirish</span>
           </a-form-model-item>
           <a-form-model-item
             class="form-item register-input mb-0 pb-0"
@@ -707,9 +657,7 @@
               type="text"
               placeholder="sms"
             />
-            <span class="sms_code_error_text" v-if="smsCodeError"
-              >Ko’d notogri</span
-            >
+            <span class="sms_code_error_text" v-if="smsCodeError">Ko’d notogri</span>
           </a-form-model-item>
         </a-form-model>
       </div>
@@ -835,9 +783,7 @@
         <img src="../../assets/images/modal-success.png" alt="" />
         <p>Siz muvaffaqiyatli ro’yxatdan o’tdingiz. Haridlarda davom eitng.</p>
       </div>
-      <div class="vmodal-btn" @click="handleOkSuccess()">
-        Haridni davom ettirish
-      </div>
+      <div class="vmodal-btn" @click="handleOkSuccess()">Haridni davom ettirish</div>
       <template slot="footer"> <h3></h3></template>
     </a-modal>
     <!-- access profile register  -->
@@ -951,8 +897,8 @@ export default {
       }),
     ]);
 
-    this.categories = categoriesData?.categories?.data;
-    this.activeCategory = categoriesData?.categories?.data[0];
+    this.categories = categoriesData?.data;
+    this.activeCategory = categoriesData?.data[0];
   },
   computed: {
     routerPath() {
@@ -960,10 +906,6 @@ export default {
     },
     authVisible() {
       return this.$store.state.authVisible;
-    },
-    localStoreLength() {
-      // let cart = JSON.parse(localStorage.getItem("cart"));
-      // return cart.length;
     },
   },
   mounted() {
@@ -984,10 +926,7 @@ export default {
     },
     searchResoultDelete(id) {
       this.searchResoults = this.searchResoults.filter((item) => item.id != id);
-      localStorage.setItem(
-        "search_resoults",
-        JSON.stringify(this.searchResoults)
-      );
+      localStorage.setItem("search_resoults", JSON.stringify(this.searchResoults));
       this.searchResoults = JSON.parse(localStorage.getItem("search_resoults"));
     },
     searchAction() {
@@ -998,18 +937,13 @@ export default {
             : 1,
         resoult: this.search,
       });
-      localStorage.setItem(
-        "search_resoults",
-        JSON.stringify(this.searchResoults)
-      );
+      localStorage.setItem("search_resoults", JSON.stringify(this.searchResoults));
 
       this.$router.push(`/search/${this.search}`);
     },
     chunkIntoN(arr, n) {
       const size = Math.ceil(arr.length / n);
-      return Array.from({ length: n }, (v, i) =>
-        arr.slice(i * size, i * size + size)
-      );
+      return Array.from({ length: n }, (v, i) => arr.slice(i * size, i * size + size));
     },
     handleOkForgetPass() {
       this.visibleForgetPass = false;
@@ -1076,10 +1010,7 @@ export default {
     submitSms() {
       const data = {
         ...this.formSms,
-        phone_number: this.formSms.phone_number
-          .split(" ")
-          .join("")
-          .replace("+", ""),
+        phone_number: this.formSms.phone_number.split(" ").join("").replace("+", ""),
       };
       this.formName.phone_number =
         this.formSms.phone_number.length == 9
@@ -1091,10 +1022,7 @@ export default {
     },
     submitLogin() {
       const data = {
-        phone_number: this.formLogin.phone_number
-          .split(" ")
-          .join("")
-          .replace("+", ""),
+        phone_number: this.formLogin.phone_number.split(" ").join("").replace("+", ""),
         password: this.formLogin.password,
       };
       this.$refs["ruleFormLogin"].validate((valid) => {
@@ -1144,10 +1072,7 @@ export default {
     // putProfileName
     async __PROFILE_NAME(formData) {
       try {
-        const data = await this.$store.dispatch(
-          "fetchAuth/putProfileName",
-          formData
-        );
+        const data = await this.$store.dispatch("fetchAuth/putProfileName", formData);
         this.$store.dispatch("profileInfo");
         this.visibleName = false;
         this.visibleSuccess = true;
@@ -1187,10 +1112,7 @@ export default {
     },
     async __CHECK_NUMBER(formData) {
       try {
-        const data = await this.$store.dispatch(
-          "fetchAuth/postCheckNumber",
-          formData
-        );
+        const data = await this.$store.dispatch("fetchAuth/postCheckNumber", formData);
         if (data?.authorized) {
           this.visibleLogin = true;
         } else {
@@ -1210,10 +1132,7 @@ export default {
     },
     async __LOGIN(formData) {
       try {
-        const data = await this.$store.dispatch(
-          "fetchAuth/postLogin",
-          formData
-        );
+        const data = await this.$store.dispatch("fetchAuth/postLogin", formData);
         localStorage.setItem("dis_auth_token", data.token);
         this.$store.commit("authHandler");
         this.$store.dispatch("profileInfo");

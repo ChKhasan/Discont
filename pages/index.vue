@@ -474,7 +474,7 @@ export default {
     const bestsellersProducts = products?.products?.data;
     const byCategoryProducts = byCategory?.products?.data;
     const topProducts = topProductsData?.products?.data;
-    const categories = categories1?.categories?.data;
+    const categories = categories1?.data;
     const brands = brands1?.brands;
     const posts = posts1?.posts?.data;
     const showcases = showcasesData.showcases;
@@ -482,6 +482,7 @@ export default {
     const bannersTop = bannersTopData?.banners?.data;
     const bannersMedium = bannersMediumData?.banners?.data;
     const banners = bannersData?.banners?.data;
+    console.log(categories);
     return {
       bestsellersProducts,
       byCategoryProducts,

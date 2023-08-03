@@ -240,8 +240,7 @@
         <div class="col-md-4 col-xs-12 stats">
           <div class="widther">
             <div class="specs">
-              <p class="lil">Махсулот хакида кискача</p>
-
+              <p class="lil">Maxsulot haqida qisqacha</p>
               <div
                 class="spec"
                 v-for="characteristic in productCharacteristic"
@@ -369,7 +368,7 @@
                     <a-icon type="plus" />
                   </button>
                 </div>
-                <p>Осталось всего {{ product?.stock }}</p>
+                <p>Sotuvda bor {{ product?.stock }}</p>
               </div>
             </div>
           </div>
@@ -386,9 +385,7 @@
                   }}
                 </p>
                 <p class="dis__price" v-if="product?.discount_price">
-                  {{
-                    `${product?.real_price}`.replace(/\B(?=(\d{3})+(?!\d))/g, " ")
-                  }}
+                  {{ `${product?.real_price}`.replace(/\B(?=(\d{3})+(?!\d))/g, " ") }}
                   so'm
                 </p>
                 <p class="dis__txt">Chegirma narxida</p>
@@ -480,7 +477,7 @@
           </div>
 
           <div class="credit">
-            <p>Муддатли тўлов</p>
+            <p>Muddatli to'lov</p>
             <!-- <p>Муддатли тўлов 139 333 сўмдан / 24 ой</p> -->
             <button>Xalol bo’lib to’lashga olish</button>
           </div>
@@ -516,19 +513,19 @@
             :class="{ active: tabHandle == 'location' }"
             @click="tabHandle = 'location'"
           >
-            Дўконларда мавжудлиги
+            Do'konlarda mavjudligi
           </button>
           <button
             :class="{ active: tabHandle == 'comment' }"
             @click="tabHandle = 'comment'"
           >
-            Мижозларнинг шарҳлари
+            Mijozlarning sharhlari
           </button>
         </div>
         <div class="contents">
           <div v-if="tabHandle == 'desc'" class="about">
             <div class="about__wrap">
-              <h4 class="paragraph">Описание</h4>
+              <h4 class="paragraph">Tavsif</h4>
               <p v-html="product?.info?.desc"></p>
             </div>
           </div>
@@ -912,7 +909,9 @@
               ></span>
               <div class="call-number">
                 <p>Call centre Diskont:</p>
-                <h4>71 207 77 88</h4>
+                <a href="tel:+998712077788">
+                  <h4>71 207 77 88</h4>
+                </a>
               </div>
             </div>
           </Transition>
@@ -1126,14 +1125,14 @@ export default {
         name: [
           {
             required: true,
-            message: "This field is required",
+            message: "Ismingizni kiriting",
             trigger: "change",
           },
         ],
         phone_number: [
           {
             required: true,
-            message: "This field is required",
+            message: "Telefon raqamingizni kiriting",
             trigger: "change",
           },
           { min: 9, message: "Length should be 9", trigger: "blur" },

@@ -27,7 +27,6 @@
       <div class="d-flex justify-content-between align-items-end">
         <ProductListTitle title="Kategoriyadagi top tavarlar" />
       </div>
-      {{ promotion?.products.length }}
       <div class="categories-products">
         <div class="categories-card-grid" v-if="promotion?.products.length > 0">
           <ProductCard

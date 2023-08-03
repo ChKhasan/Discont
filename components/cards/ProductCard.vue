@@ -756,7 +756,9 @@
             ></span>
             <div class="call-number">
               <p>Call centre Diskont:</p>
+              <a href="tel:+998712077788">
               <h4>71 207 77 88</h4>
+              </a>
             </div>
           </div>
         </Transition>
@@ -840,14 +842,14 @@ export default {
         name: [
           {
             required: true,
-            message: "This field is required",
+            message: "Ismingizni kiriting",
             trigger: "change",
           },
         ],
         phone_number: [
           {
             required: true,
-            message: "This field is required",
+            message: "Telefon raqamingizni kiriting",
             trigger: "change",
           },
           { min: 9, message: "Length should be 9", trigger: "blur" },

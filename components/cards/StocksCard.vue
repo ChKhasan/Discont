@@ -30,6 +30,7 @@ export default {
 </script>
 <style lang="css">
 .stocks-card {
+  cursor: pointer;
   background: #ffffff;
   border: 1px solid #eaeaea;
   box-shadow: 0px 14px 26px rgba(0, 0, 0, 0.03);
