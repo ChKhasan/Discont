@@ -139,7 +139,13 @@
         </div>
         <div class="header-navbar_navbar d-flex">
           <ul class="d-flex justify-content-between w-100 align-items-center">
-            <li>
+            <li
+              @click="
+                $store.state.auth
+                  ? $router.push('/profile/my-orders')
+                  : $store.commit('authVisibleChange', true)
+              "
+            >
               <!-- <span class="count-index">12</span> -->
               <span class="nav-icons" v-html="navOrder"></span>Buyurtmalar
             </li>
@@ -1137,11 +1143,11 @@ export default {
         this.$store.commit("authHandler");
         this.$store.dispatch("profileInfo");
         this.$store.commit("authVisibleChange", false);
-        if (this.$route.name != "basket" && this.targetPage) {
-          this.$router.push("/profile/personal-info");
-        } else {
-          this.$router.push("/checkout");
-        }
+        // if (this.$route.name != "basket" && this.targetPage) {
+        //   this.$router.push("/profile/personal-info");
+        // } else {
+        //   this.$router.push("/checkout");
+        // }
         this.loginPassError = false;
         this.visibleLogin = false;
       } catch (e) {
