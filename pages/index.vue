@@ -304,7 +304,7 @@
       <div class="d-flex justify-content-between align-items-end">
         <MainTitle title="Yangiliklar va bloglar" />
         <nuxt-link class="to-page-underline" :to="localePath('/all-news')"
-          >Все блоги</nuxt-link
+          >Все блоги</nuxt-link 
         >
       </div>
       <PostsCarousel>
