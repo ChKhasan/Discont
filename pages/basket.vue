@@ -375,7 +375,7 @@
             <div class="basket-checkout-bottom">
               <p>
                 “Buyurtmani rasmiylshtirish” tugmasini bosish orqali men
-                <span> ommaviy oferta shartnomasiga rozilik bildiraman</span>
+                <span> {{ $store.state.translations["main.footertext2"] }} shartnomasiga rozilik bildiraman</span>
               </p>
             </div>
           </div>

@@ -5,10 +5,14 @@ export const state = () => ({
   like: [],
   comparison: [],
   profile: {},
-  dicoin: {}
+  dicoin: {},
+  translations: {}
 });
 
 export const mutations = {
+  getTranslations(state, payload) {
+    state.translations = payload;
+  },
   logout(state) {
     localStorage.removeItem("dis_auth_token");
     state.auth = false;

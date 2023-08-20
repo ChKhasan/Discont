@@ -22,13 +22,14 @@
             ></span>
             <span v-else v-html="navCategory"></span>
 
-            Katalog
+            {{ $store.state.translations["main.directory"] }}
           </button>
           <div class="search_input_container">
             <input
               type="text"
               ref="search"
               placeholder="Search ..."
+              v-on:keyup.enter="searchAction"
               v-model="search"
               @focus="searchBlockHide = true"
             />
@@ -38,7 +39,7 @@
               :class="{ disabled: search.length == 0 }"
             >
               <span v-html="navMic"></span>
-              Qidiruv
+              {{ $store.state.translations["main.search"] }}
             </span>
             <Transition name="bounce">
               <div
@@ -50,8 +51,10 @@
                 <div class="search-resoult-scroll">
                   <div v-if="searchResoults.length > 0 && searchProducts.length == 0">
                     <div class="search-tt">
-                      <h6>Вы недавно искали</h6>
-                      <button @click="clearSearchResoults">Очистить</button>
+                      <h6>{{ $store.state.translations["main.searched"] }}</h6>
+                      <button @click="clearSearchResoults">
+                        {{ $store.state.translations["main.cleaning"] }}
+                      </button>
                     </div>
                     <div class="search-resoults-list">
                       <div
@@ -93,7 +96,7 @@
                   </div>
                   <div v-if="searchProducts.length > 0 && search.length > 3">
                     <div class="search-popular">
-                      <h6>Популярные</h6>
+                      <h6>{{ $store.state.translations["main.popular"] }}</h6>
                     </div>
                     <div class="search-resoults-list">
                       <div
@@ -147,7 +150,8 @@
               "
             >
               <!-- <span class="count-index">12</span> -->
-              <span class="nav-icons" v-html="navOrder"></span>Buyurtmalar
+              <span class="nav-icons" v-html="navOrder"></span
+              >{{ $store.state.translations["main.orders"] }}
             </li>
             <li
               @click="$router.push('/likes')"
@@ -157,7 +161,8 @@
                 $store.state.like.length
               }}</span>
 
-              <span class="nav-icons" v-html="navLike"></span> Sevimlilar
+              <span class="nav-icons" v-html="navLike"></span>
+              {{ $store.state.translations["main.likes"] }}
             </li>
             <li
               id="cart"
@@ -168,7 +173,8 @@
                 $store.state.cart.length
               }}</span>
 
-              <span class="nav-icons" v-html="navBasket"></span>Savatcha
+              <span class="nav-icons" v-html="navBasket"></span>
+              {{ $store.state.translations["main.cart"] }}
             </li>
             <li
               @click="$router.push('/comparison')"
@@ -177,7 +183,8 @@
               <span class="count-index" v-if="$store.state.comparison.length > 0">{{
                 $store.state.comparison.length
               }}</span>
-              <span class="nav-icons comparison-icon" v-html="navComp"></span>Solishtirish
+              <span class="nav-icons comparison-icon" v-html="navComp"></span>
+              {{ $store.state.translations["main.comparison"] }}
             </li>
             <li
               class="nav_profile user_profile flex-row"
@@ -195,7 +202,7 @@
             </li>
             <li class="nav_profile flex-row" @click="toProfile(true)" v-else>
               <span v-html="navUser"></span>
-              <p>profil</p>
+              <p>{{ $store.state.translations["main.profil"] }}</p>
             </li>
           </ul>
         </div>
@@ -227,7 +234,8 @@
       </div>
       <div class="coin_btn" @click="$router.push(localePath('/d-coin/about'))">
         <span><img src="../../assets/images/coin.png" alt="" /></span>
-        {{ $store.state.profile?.dicoin?.quantity }} Di Coin
+        {{ $store.state.profile?.dicoin?.quantity }}
+        {{ $store.state.translations["main.dicoin"] }}
       </div>
     </div>
     <Transition duration="550" name="nested">
@@ -267,7 +275,8 @@
                 <div class="d-flex categories-page-title mt-0 mb-5 align-items-end">
                   <MainTitle :title="activeCategory?.name" />
                   <span class="d-flex align-items-end"
-                    >{{ activeCategory?.products_count }} tovarlar</span
+                    >{{ activeCategory?.products_count }}
+                    {{ $store.state.translations["main.products"] }}</span
                   >
                 </div>
                 <div class="catalog-menu-items">
@@ -360,7 +369,7 @@
       <div class="vmodal-anim-header">
         <img class="shadow-ell-1" src="../../assets/images/Ellipse 57.png" alt="" />
         <img class="shadow-ell-2" src="../../assets/images/Ellipse 59.png" alt="" />
-        <h5>Akauntingizga kiring yoki ro’yxatdan o’ting</h5>
+        <h5>{{ $store.state.translations["main.login-register"] }}</h5>
         <span @click="handleOk"
           ><svg
             xmlns="http://www.w3.org/2000/svg"
@@ -394,7 +403,7 @@
         >
           <a-form-model-item
             class="form-item register-input mb-0 pb-0"
-            label="Telefon raqamingiz"
+            :label="$store.state.translations['main.your-phone-number']"
             prop="phone_number"
           >
             <span class="position-relative d-flex align-items-center justify-content-end">
@@ -423,7 +432,7 @@
         v-ripple="'rgba(255, 255, 255, 0.35)'"
         @click="submitCheckNumber()"
       >
-        Akauntga Kirish
+        {{ $store.state.translations["main.login-text"] }}
       </div>
       <!-- <div class="vmodal-btn-outline" @click="visibleLogin = true">Manzilni qo’shish</div> -->
       <template slot="footer"> <h3></h3></template>
@@ -441,7 +450,7 @@
       <div class="vmodal-anim-header">
         <img class="shadow-ell-1" src="../../assets/images/Ellipse 57.png" alt="" />
         <img class="shadow-ell-2" src="../../assets/images/Ellipse 59.png" alt="" />
-        <h5>Akauntingizga kiring yoki ro’yxatdan o’ting</h5>
+        <h5>{{ $store.state.translations["main.login-register"] }}</h5>
         <span @click="handleOkForgetPass"
           ><svg
             xmlns="http://www.w3.org/2000/svg"
@@ -475,7 +484,7 @@
         >
           <a-form-model-item
             class="form-item register-input mb-0 pb-0"
-            label="Telefon raqamingiz"
+            :label="$store.state.translations['main.your-phone-number']"
             prop="phone_number"
           >
             <span class="position-relative d-flex align-items-center justify-content-end">
@@ -496,7 +505,7 @@
         </a-form-model>
       </div>
       <div class="vmodal-btn vmodal-btn-height" @click="submitForgetPass()">
-        Akauntga Kirish
+        {{ $store.state.translations["main.login-text"] }}
       </div>
       <!-- <div class="vmodal-btn-outline" @click="visibleLogin = true">Manzilni qo’shish</div> -->
       <template slot="footer"> <h3></h3></template>
@@ -512,7 +521,7 @@
       @ok="handleOkLogin"
     >
       <div class="vmodal-header auth-modal">
-        <h5>Akauntingizga kiring yoki ro’yxatdan o’ting</h5>
+        <h5>{{ $store.state.translations["main.login-register"] }}</h5>
         <span @click="handleOkLogin"
           ><svg
             xmlns="http://www.w3.org/2000/svg"
@@ -546,7 +555,7 @@
         >
           <a-form-model-item
             class="form-item register-input mb-3 pb-0"
-            label="Telefon raqamingiz"
+            :label="$store.state.translations['main.your-phone-number']"
           >
             <!-- <the-mask
               class="disabled"
@@ -572,17 +581,17 @@
               type="password"
               placeholder="Password"
             />
-            <span class="sms_code_error_text" v-if="loginPassError"
-              >Parol noto’g’ri kiritildi</span
-            >
+            <span class="sms_code_error_text" v-if="loginPassError">{{
+              $store.state.translations["main.pass-error"]
+            }}</span>
           </a-form-model-item>
         </a-form-model>
       </div>
       <div class="vmodal-btn vmodal-btn-height" @click="submitLogin()">
-        Akauntga Kirish
+        {{ $store.state.translations["main.login-text"] }}
       </div>
       <div class="vmodal-forget-password" @click="forgetPassword()">
-        Parolni unutdingizmi?
+        {{ $store.state.translations["main.forget-pass"] }}
       </div>
       <template slot="footer"> <h3></h3></template>
     </a-modal>
@@ -597,7 +606,7 @@
       @ok="handleOkSms"
     >
       <div class="vmodal-header auth-modal">
-        <h5>Akauntingizga kiring yoki ro’yxatdan o’ting</h5>
+        <h5>{{ $store.state.translations["main.login-register"] }}</h5>
         <span @click="handleOkSms"
           ><svg
             xmlns="http://www.w3.org/2000/svg"
@@ -631,7 +640,7 @@
         >
           <a-form-model-item
             class="form-item register-input mb-3 pb-0 sms_code_number"
-            label="Telefon raqamingiz"
+            :label="$store.state.translations['main.your-phone-number']"
             @keyup.enter="submitSms()"
           >
             <!-- <the-mask
@@ -648,12 +657,14 @@
               v-model="formSms.phone_number"
               placeholder="+998 (__) ___ __ __"
             />
-            <span class="change_number" @click="replaceNumber()">O’zgartirish</span>
+            <span class="change_number" @click="replaceNumber()">{{
+              $store.state.translations["main.change"]
+            }}</span>
           </a-form-model-item>
           <a-form-model-item
             class="form-item register-input mb-0 pb-0"
             :class="{ sms_code_error: smsCodeError }"
-            label="Sms kodni kiriting"
+            :label="$store.state.translations['main.enter-sms-code']"
             prop="sms_code"
           >
             <a-input
@@ -663,15 +674,17 @@
               type="text"
               placeholder="sms"
             />
-            <span class="sms_code_error_text" v-if="smsCodeError">Ko’d notogri</span>
+            <span class="sms_code_error_text" v-if="smsCodeError">{{
+              $store.state.translations["main.code-incorrect"]
+            }}</span>
           </a-form-model-item>
         </a-form-model>
       </div>
       <div class="vmodal-btn vmodal-btn-height" @click="submitSms()">
-        Sms kodni yuborish
+        {{ $store.state.translations["main.send-sms-code"] }}
       </div>
       <div class="vmodal-forget-password" @click="again_sms_code()">
-        Ko’dni qayta yuborish
+        {{ $store.state.translations["main.resend-code"] }}
       </div>
       <template slot="footer"> <h3></h3></template>
     </a-modal>
@@ -686,7 +699,7 @@
       @ok="handleOkName"
     >
       <div class="vmodal-header auth-modal">
-        <h5>Akkauntingizga ro‘yxatdan o‘ting</h5>
+        <h5>{{ $store.state.translations["main.login-register"] }}</h5>
         <span @click="handleOkName"
           ><svg
             xmlns="http://www.w3.org/2000/svg"
@@ -720,14 +733,14 @@
         >
           <a-form-model-item
             class="form-item register-input mb-3 pb-0"
-            label="Ismingizni kiriting"
+            :label="$store.state.translations['main.enter-your-name']"
             prop="name"
           >
             <a-input v-model="formName.name" type="text" placeholder="Name" />
           </a-form-model-item>
           <a-form-model-item
             class="form-item register-input mb-0 pb-0"
-            label="Telefon raqamingiz"
+            :label="$store.state.translations['main.your-phone-number']"
           >
             <the-mask
               class="disabled"
@@ -745,7 +758,7 @@
         </a-form-model>
       </div>
       <div class="vmodal-btn vmodal-btn-height" @click="submitName()">
-        Akkauntga kirish
+        {{ $store.state.translations["main.login-text"] }}
       </div>
       <template slot="footer"> <h3></h3></template>
     </a-modal>
@@ -787,9 +800,11 @@
       </div>
       <div class="vmodal-body success-vmodal">
         <img src="../../assets/images/modal-success.png" alt="" />
-        <p>Siz muvaffaqiyatli ro’yxatdan o’tdingiz. Haridlarda davom eitng.</p>
+        <p>{{ $store.state.translations["main.auth-success-text"] }}</p>
       </div>
-      <div class="vmodal-btn" @click="handleOkSuccess()">Haridni davom ettirish</div>
+      <div class="vmodal-btn" @click="handleOkSuccess()">
+        {{ $store.state.translations["main.continue-shopping"] }}
+      </div>
       <template slot="footer"> <h3></h3></template>
     </a-modal>
     <!-- access profile register  -->
@@ -807,6 +822,7 @@ import MainTitle from "../Main-title.vue";
 import Vnotification from "../vnotification.vue";
 
 export default {
+  name: "Navbar",
   data() {
     return {
       searchLastResoults: true,
@@ -896,7 +912,6 @@ export default {
   async fetch() {
     const [categoriesData] = await Promise.all([
       this.$store.dispatch("fetchCategories/getCategories", {
-        params: { limit: 6 },
         headers: {
           Language: this.$i18n.locale,
         },
@@ -1300,6 +1315,12 @@ export default {
 .catalog-menu-list {
   min-width: 253px;
   margin-right: 28px;
+  max-height: 100vh;
+  overflow-y: scroll;
+  padding-bottom: 140px;
+}
+.catalog-menu-list::-webkit-scrollbar {
+  display: none;
 }
 .catalog-menu-list ul {
   display: grid;
@@ -1391,7 +1412,7 @@ export default {
   margin-bottom: 42px;
 }
 .catalog-menu-items ul h4 {
-  font-family: var(--SB_400);
+  font-family: var(--SB_500);
   font-style: normal;
   font-weight: 400;
   font-size: 16px;

@@ -3,11 +3,13 @@
     <div class="container_xl">
       <div class="page-breadcrumb">
         <nuxt-link :to="localePath('/')">Diskont main page</nuxt-link>
-        <nuxt-link :to="localePath('/')"> Biz haqimizda </nuxt-link>
+        <nuxt-link :to="localePath('/')">
+          {{ $store.state.translations["main.aboutus"] }}
+        </nuxt-link>
       </div>
       <div class="d-flex page-container-title">
         <div class="d-flex align-items-end">
-          <MainTitle title="Biz haqimizda" />
+          <MainTitle :title="$store.state.translations['main.aboutUs']" />
         </div>
       </div>
       <div class="about-us__container">
@@ -16,7 +18,7 @@
           <!-- <div class="about-us__banner">
             <div></div>
           </div> -->
-          <h3>Biz haqimizda.</h3>
+          <h3>{{ $store.state.translations["main.aboutUs"] }}.</h3>
           <p>
             “DIskont” MCHJ 2019 Yilda yirik savdo tarmog’i bo’lib tashkil topgan.
             O’zbekistonda ko’p hildagi maishiy tehnika va elektronika sotishga

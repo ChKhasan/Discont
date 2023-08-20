@@ -17,7 +17,8 @@
                 <h3>Shaxsiy ma’lumotlarim</h3>
 
                 <span class="personal-info-edit-btn" @click="profileEdit = true"
-                  ><span v-html="edit"></span> O’zgartirish
+                  ><span v-html="edit"></span>
+                  {{ $store.state.translations["main.change"] }}
                 </span>
               </div>
               <div class="personal-info-card-body">
@@ -154,37 +155,40 @@
                     <a-input v-model="form.address" placeholder="Adress" />
                   </a-form-model-item>
                 </div> -->
-                <h4 class="form-title">Password</h4>
-                <div class="form-grid-3">
-                  <a-form-model-item
-                    class="form-item mb-0"
-                    label="Hozirgi parolingiz"
-                    v-if="$store.state.profile.password_updated"
-                  >
+                <h4 class="form-title">Parol</h4>
+                <div class="form-grid-3" v-if="$store.state.profile.password_updated">
+                  <a-form-model-item class="form-item mb-0" label="Hozirgi parolingiz">
                     <a-input-password
-                      v-model="last_password"
+                      v-model="form.password"
                       placeholder="Last password"
                     />
                   </a-form-model-item>
-                  <a-form-model-item
-                    class="form-item mb-0"
-                    label="Yangi parol"
-                    prop="password"
-                  >
-                    <a-input-password
-                      v-model="form.password"
-                      placeholder="New password"
-                    />
+                  <a-form-model-item class="form-item mb-0" label="Yangi parol">
+                    <a-input-password v-model="form.password" placeholder="Parol" />
                   </a-form-model-item>
                   <a-form-model-item
                     class="form-item mb-0"
                     label="Yangi parolni takrorlang"
                     :class="{ password_repeat_error: passwordConfirmationError }"
-                    prop="password_confirmation"
                   >
                     <a-input-password
                       v-model="form.password_confirmation"
-                      placeholder="New password"
+                      placeholder="Parol"
+                    />
+                  </a-form-model-item>
+                </div>
+                <div class="form-grid-3" v-else>
+                  <a-form-model-item class="form-item mb-0" label="Yangi parol">
+                    <a-input-password v-model="form.password" placeholder="Parol" />
+                  </a-form-model-item>
+                  <a-form-model-item
+                    class="form-item mb-0"
+                    label="Yangi parolni takrorlang"
+                    :class="{ password_repeat_error: passwordConfirmationError }"
+                  >
+                    <a-input-password
+                      v-model="form.password_confirmation"
+                      placeholder="Parol"
                     />
                   </a-form-model-item>
                 </div>
@@ -243,12 +247,6 @@ export default {
       regions: [],
       rules: {
         name: [{ required: true, message: "This field is required", trigger: "blur" }],
-        password_confirmation: [
-          { required: true, message: "This field is required", trigger: "blur" },
-        ],
-        password: [
-          { required: true, message: "This field is required", trigger: "blur" },
-        ],
       },
       profile: {},
       cities: {},
@@ -295,11 +293,13 @@ export default {
         const data = await this.$store.dispatch("fetchAuth/putProfileInfo", dataForm);
         this.profileEdit = false;
         this.__GET_PROFILE_INFO();
-      } catch (e) {
-      }
+      } catch (e) {}
     },
     submitForm() {
-      if (this.form.password != this.form.password_confirmation) {
+      if (
+        !this.$store.state.profile.password_updated &&
+        this.form.password != this.form.password_confirmation
+      ) {
         this.passwordConfirmationError = true;
       } else {
         const data = {
@@ -316,8 +316,7 @@ export default {
         });
       }
     },
-    onChange(checked) {
-    },
+    onChange(checked) {},
   },
   watch: {
     checkAuth(val) {

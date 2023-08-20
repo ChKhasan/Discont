@@ -247,9 +247,7 @@
     >
       <div class="small_banners_grid">
         <SmallBannerCard
-          v-for="img in banners
-            .filter((item) => item.type == 'small')
-            .slice(0, 3)"
+          v-for="img in banners.filter((item) => item.type == 'small').slice(0, 3)"
           :key="img?.id"
           :img="img"
         />
@@ -304,7 +302,7 @@
       <div class="d-flex justify-content-between align-items-end">
         <MainTitle title="Yangiliklar va bloglar" />
         <nuxt-link class="to-page-underline" :to="localePath('/all-news')"
-          >Все блоги</nuxt-link 
+          >Все блоги</nuxt-link
         >
       </div>
       <PostsCarousel>
@@ -322,32 +320,7 @@
     <div class="location container_xl mb-120">
       <div class="home-bottom-desc">
         <p>
-          m Ipsum is simply dummy text of the printing and typesetting industry.
-          Lorem Ipsum has been the industry's standard dummy text ever since the
-          1500s, when an unknown printer took a galley of type and scrambled it
-          to make a type specimen book. It has survived not only five centuries,
-          but also the leap into electronic typesetting, remaining simply dummy
-          text of the printing and typesetting industry. Lorem Ipsum has been
-          the industry's standard dummy text ever since the 1500s, when an
-          unknown printer took a galley of type and scrambled it to make a type
-          specimen book. It has survived not only five centuries, but also the
-          leap into electronic typesetting, remaining essentially unchanged. It
-          was popularised in the 1960s with the release of Letraset sheets
-          containing Lorem Ipsum passages, and more recently with desktop
-          publishing software like Aldus PageMaker including versionm Ipsum is
-          simply dummy text of the printing and typesetting industry. Lorem
-          Ipsum has been the industry's standard dummy text ever since the
-          1500s, when an unknown printer took a galley of type and scrambled it
-          to make a type specimen book. It has survived not only five centuries,
-          but also the leap into electronic typesetting, remaining simply dummy
-          text of the printing and typesetting industry. Lorem Ipsum has been
-          the industry's standard dummy text ever since the 1500s, when an
-          unknown printer took a galley of type and scrambled it to make a type
-          specimen book. It has survived not only five centuries, but also the
-          leap into electronic typesetting, remaining essentially unchanged. It
-          was popularised in the 1960s with the release of Letraset sheets
-          containing Lorem Ipsum passages, and more recently with desktop
-          publishing software like Aldus PageMaker including version
+          {{ $store.state.translations["main.home-bottom-text"] }}
         </p>
       </div>
     </div>
@@ -397,9 +370,6 @@ export default {
       brands1,
       posts1,
       showcasesData,
-      bannersMainData,
-      bannersTopData,
-      bannersMediumData,
       bannersData,
     ] = await Promise.all([
       store.dispatch("fetchProducts/getProducts", {
@@ -448,24 +418,6 @@ export default {
         },
       }),
       store.dispatch("fetchBanners/getBanners", {
-        params: { type: "main" },
-        headers: {
-          Language: i18n.locale,
-        },
-      }),
-      store.dispatch("fetchBanners/getBanners", {
-        params: { type: "top" },
-        headers: {
-          Language: i18n.locale,
-        },
-      }),
-      store.dispatch("fetchBanners/getBanners", {
-        params: { type: "medium" },
-        headers: {
-          Language: i18n.locale,
-        },
-      }),
-      store.dispatch("fetchBanners/getBanners", {
         headers: {
           Language: i18n.locale,
         },
@@ -478,11 +430,7 @@ export default {
     const brands = brands1?.brands;
     const posts = posts1?.posts?.data;
     const showcases = showcasesData.showcases;
-    const bannersMain = bannersMainData?.banners?.data;
-    const bannersTop = bannersTopData?.banners?.data;
-    const bannersMedium = bannersMediumData?.banners?.data;
     const banners = bannersData?.banners?.data;
-    console.log(categories);
     return {
       bestsellersProducts,
       byCategoryProducts,
@@ -491,9 +439,6 @@ export default {
       brands,
       posts,
       showcases,
-      bannersMain,
-      bannersTop,
-      bannersMedium,
       banners,
     };
   },

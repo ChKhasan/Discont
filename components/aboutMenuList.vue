@@ -7,7 +7,7 @@
             'about-us__list__active': $route.name.includes('info-about-us'),
           }"
           :to="localePath('/info/about-us')"
-          >Biz haqimizda</nuxt-link
+          >{{ $store.state.translations["main.aboutUs"] }}</nuxt-link
         >
       </li>
       <li>
@@ -28,7 +28,8 @@
         <nuxt-link
           :class="{ 'about-us__list__active': $route.name.includes('info-working') }"
           :to="localePath('/info/working')"
-          >Diskontda ishlash</nuxt-link
+        >
+          {{ $store.state.translations["main.workingdiskont"] }}</nuxt-link
         >
       </li>
       <li>
@@ -53,6 +54,8 @@
   </div>
 </template>
 <script>
-export default {};
+export default {
+  name: "aboutMenuList",
+};
 </script>
 <style lang=""></style>

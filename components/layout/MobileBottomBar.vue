@@ -28,7 +28,7 @@
                 fill="#1F8A70"
               />
             </svg>
-            Kategoriya
+            {{ $store.state.translations["main.category"] }}
           </NuxtLink>
         </li>
         <li>
@@ -55,7 +55,7 @@
                 stroke-linejoin="round"
               />
             </svg>
-            Sevimlilar
+            {{ $store.state.translations["main.likes"] }}
           </NuxtLink>
         </li>
         <li>
@@ -102,7 +102,7 @@
                 stroke-linejoin="round"
               />
             </svg>
-            Savatcha
+            {{ $store.state.translations["main.cart"] }}
             <span class="count-index" v-if="$store.state.cart.length > 0">{{
               $store.state.cart.length
             }}</span>
@@ -153,14 +153,11 @@
                 mask="url(#path-1-inside-1_2874_3728)"
               />
             </svg>
-            Solishtirish
+            {{ $store.state.translations["main.comparison"] }}
           </NuxtLink>
         </li>
         <li>
-          <button
-            @click="$store.commit('authVisibleChange', true)"
-            class="link"
-          >
+          <button @click="$store.commit('authVisibleChange', true)" class="link">
             <svg
               xmlns="http://www.w3.org/2000/svg"
               width="29"
@@ -181,7 +178,7 @@
                 stroke-linecap="round"
               />
             </svg>
-            Kirish
+            {{ $store.state.translations["main.access"] }}
           </button>
         </li>
       </ul>

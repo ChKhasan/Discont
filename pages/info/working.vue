@@ -3,11 +3,11 @@
     <div class="container_xl">
       <div class="page-breadcrumb">
         <nuxt-link :to="localePath('/')">Diskont main page</nuxt-link>
-        <nuxt-link :to="localePath('/')"> Diskontda ishlash </nuxt-link>
+        <nuxt-link :to="localePath('/')">  {{ $store.state.translations["main.workingdiskont"] }} </nuxt-link>
       </div>
       <div class="d-flex page-container-title">
         <div class="d-flex align-items-end">
-          <MainTitle title="Diskontda ishlash" />
+          <MainTitle :title="$store.state.translations['main.workingdiskont']" />
         </div>
       </div>
       <div class="about-us__container">

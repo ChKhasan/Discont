@@ -21,7 +21,7 @@
           </nuxt-link>
         </div>
         <div class="d-flex categories-page-title">
-          <MainTitle :title="categoryChilds?.name" />
+          <MainTitle :title="categoryChilds?.name" class="mb-0" />
           <span>{{ products?.length }} tovar</span>
         </div>
         <div class="mobile__filter">
@@ -114,22 +114,14 @@
             </div>
           </CategoriesTabCarousel>
         </div> -->
-        <div class="mt-4">
+        <div class="mt-4" v-if="banners.filter((item) => item.type == 'top').length > 0">
           <CategoriesInnerBannerCarousel>
-            <div class="swiper-slide">
-              <CategoriesInnerBanner />
-            </div>
-            <div class="swiper-slide">
-              <CategoriesInnerBanner />
-            </div>
-            <div class="swiper-slide">
-              <CategoriesInnerBanner />
-            </div>
-            <div class="swiper-slide">
-              <CategoriesInnerBanner />
-            </div>
-            <div class="swiper-slide">
-              <CategoriesInnerBanner />
+            <div
+              class="swiper-slide"
+              v-for="banner in banners.filter((item) => item.type == 'top')"
+              :key="banner?.id"
+            >
+              <CategoriesInnerBanner :banner="banner" />
             </div>
           </CategoriesInnerBannerCarousel>
         </div>
@@ -648,6 +640,7 @@ export default {
       categoryChildsData,
       productsData,
       allCategoriesData,
+      bannersData,
     ] = await Promise.all([
       $axios.$get(`/categories`, {
         params: {
@@ -672,6 +665,11 @@ export default {
           Language: i18n.locale,
         },
       }),
+      store.dispatch("fetchBanners/getBanners", {
+        headers: {
+          Language: i18n.locale,
+        },
+      }),
     ]);
     const categories = categoriesData?.categories?.data;
     const categoryChilds = categoryChildsData?.category;
@@ -692,6 +690,8 @@ export default {
     const allInfo = categoryChildsData;
     const productsOthers = productsData?.products?.data;
     const allCategories = allCategoriesData?.categories;
+    const banners = bannersData?.banners?.data;
+
     return {
       categoryChilds,
       products,
@@ -702,6 +702,7 @@ export default {
       categories,
       productsOthers,
       allCategories,
+      banners,
     };
   },
 

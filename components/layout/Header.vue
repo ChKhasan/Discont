@@ -5,11 +5,12 @@
         <div class="d-flex justify-content-between">
           <ul class="d-flex align-items-center">
             <li>
-              <span v-html="location" class="nav-location"></span> Toshkent
+              <span v-html="location" class="nav-location"></span>
+              {{ $store.state.translations["main.tashkent"] }}
             </li>
-            <li>Do’konlar manzili</li>
+            <li>{{ $store.state.translations["main.store-address"] }}</li>
             <li @click="$router.push(localePath('/info/about-us'))">
-              Biz haqimizda
+              {{ $store.state.translations["main.aboutus"] }}
             </li>
           </ul>
           <div class="d-flex header-top__right">
@@ -47,11 +48,11 @@ export default {
     return {
       locales: [
         { id: 1, code: "uz", name: "O'Z" },
-        {
-          id: 2,
-          code: "en",
-          name: "ENG",
-        },
+        // {
+        //   id: 2,
+        //   code: "en",
+        //   name: "ENG",
+        // },
         {
           id: 3,
           code: "ru",
@@ -68,14 +69,14 @@ export default {
   },
   mounted() {
     var header = this.$refs.navScroll;
-    var header2 = this.$refs.navScroll2;
+    // var header2 = this.$refs.navScroll2;
     var header3 = this.$refs.navScroll3;
 
     window.addEventListener("scroll", () => {
       let scrollTop = window.pageYOffset || document.documentElement.scrollTop;
       if (scrollTop > this.lastScrollTop) {
         header.style.top = "-46px";
-        header2.style.marginTop = "-8px";
+        // header2.style.marginTop = "-8px";
         header3.style.boxShadow = " 0 0.5rem 1rem rgb(0 0 0 / 15%)";
         // header.style.background = "#04babe";
         header.style.marginTop = "0";
@@ -83,10 +84,10 @@ export default {
         header.style.marginTop = "0";
         header.style.boxShadow = "none";
         // header3.style.boxShadow = "none";
-        header2.style.display = "block";
+        // header2.style.display = "block";
         // header.style.background = "#04babe";
       } else {
-        header2.style.marginTop = "0";
+        // header2.style.marginTop = "0";
         header.style.top = "0";
         header.style.boxShadow = " 0 0.5rem 1rem rgb(0 0 0 / 15%)";
         header3.style.boxShadow = " 0 0.5rem 1rem rgb(0 0 0 / 15%)";

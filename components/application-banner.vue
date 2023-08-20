@@ -1,8 +1,8 @@
 <template lang="html">
   <div class="categories-application-banner">
     <div class="categories-application-banner-info">
-      <h2>Yangi Market ilovasida buyurtma bering va bonuslarga ega bo'ling</h2>
-      <p>Diskont mobil ilovasini yuklab olish</p>
+      <h2>{{ $store.state.translations["main.app-title"] }}</h2>
+      <p>{{ $store.state.translations["main.app-subtitle"] }}</p>
       <div class="app-btn-container">
         <div class="flexer">
           <span class="app-btns"
@@ -14,7 +14,7 @@
         </div>
         <div class="div">
           <img class="app-qr-code" src="../assets/images/image 34.png" alt="" />
-          <p>Yuklab olish uchun kamerangizni QR kodga qarating</p>
+          <p>{{ $store.state.translations["main.app-text"] }}</p>
         </div>
       </div>
     </div>

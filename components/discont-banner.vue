@@ -3,24 +3,21 @@
     <img class="glimpse" src="@/assets/coin.svg" alt="" />
     <div>
       <div class="discont-banner-header d-flex align-items-end">
-        <h4>Diskont halol bo’lib to’lash</h4>
-        <p>Nasiya savdo haqida</p>
+        <h4>{{ $store.state.translations["main.d-banner-title"] }}</h4>
+        <p>{{ $store.state.translations["main.d-banner-subtitle"] }}</p>
       </div>
       <div class="discont-banner-body">
         <p>
-          Assalomu alaykum! Birinchi bor savol yuboryapman, xatolar bo‘lsa
-          oldindan uzr. Men nasiya savdo bilan shug‘ullanaman. Savolim: 1).
-          Nasiyaga mol berayotganimda xaridordan boshiga qancha pul bera
-          olishiga qarab qolgan summaga qarab so‘ngi narxni belgilayman. Masalan
-          10 so‘mlik molni boshiga 2 so‘m bersa 13 so‘m. Agar 4 bersa 11 so‘m.
-          Albatta u bilan kelishgach. Shu ishim joizmi?
+          {{ $store.state.translations["main.d-banner-text"] }}
         </p>
       </div>
     </div>
     <div class="discont-banner-footer">
-      <div class="cursor-pointer">Operator bilan aloqa</div>
+      <div class="cursor-pointer">
+        {{ $store.state.translations["main.d-banner-contact"] }}
+      </div>
       <div class="cursor-pointer" @click="$router.push('/info/trade-nation')">
-        Barcha shartlari
+        {{ $store.state.translations["main.d-banner-btn"] }}
       </div>
     </div>
   </div>

@@ -81,11 +81,11 @@
   font-size: 12px;
   line-height: 17px;
   display: flex;
-  align-items: center;
+  align-items: flex-end;
   letter-spacing: -0.24px;
   color: #8c959c;
   margin-left: 40px;
-  margin-bottom: 4px;
+  margin-bottom: 9px;
 }
 .categories-card-grid {
   display: grid;

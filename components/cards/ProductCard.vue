@@ -706,7 +706,7 @@
             </a-form-model-item>
             <a-form-model-item
               class="form-item register-input mb-0 pb-0"
-              label="Telefon raqamingiz"
+              :label="$store.state.translations['main.your-phone-number']"
               prop="phone_number"
             >
               <a-input
@@ -728,7 +728,7 @@
       <div class="vmodal-forget-password" v-if="!callBox" @click="callBox = true">
         O’zim bog’lanaman
       </div>
-      <a href="#">
+      <a href="tel:+998712077788">
         <Transition name="oc-bounce">
           <div class="oc-product-call" v-if="callBox">
             <span
@@ -1480,7 +1480,7 @@ export default {
   }
 }
 
-button {
+.product-card button {
   padding: 20px;
   border: none;
   background: lighten(#292d48, 65);

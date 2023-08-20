@@ -5,7 +5,8 @@
     ></nuxt-link>
     <div class="coin_btn" @click="$router.push(localePath('/d-coin/about'))">
       <span><img src="../../assets/images/coin.png" alt="" /></span>
-      {{ $store.state.profile?.dicoin?.quantity }} Di Coin
+      {{ $store.state.profile?.dicoin?.quantity }}
+      {{ $store.state.translations["main.dicoin"] }}
     </div>
     <div class="bottom"></div>
   </div>

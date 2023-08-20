@@ -204,7 +204,21 @@ export default {
       iconLike: require("../assets/svg/toast-like.svg?raw"),
       iconComp: require("../assets/svg/toast-comparison.svg?raw"),
       wheelModal: false,
+      city: "",
+      region: "",
+      country: "",
+      errorMessage: "",
     };
+  },
+  async fetch() {
+    const [translationsData] = await Promise.all([
+      this.$store.dispatch("fetchTranslations/getTranslations", {
+        headers: {
+          Language: this.$i18n.locale,
+        },
+      }),
+    ]);
+    this.$store.commit("getTranslations", translationsData?.translates);
   },
   async mounted() {
     this.$store.dispatch("profileInfo");
@@ -212,8 +226,14 @@ export default {
     await this.$store.commit("reloadStore");
     this.afterReload = true;
     this.$store.commit("authHandler");
+    this.$getLocation().then((coordinates) => {
+      console.log(coordinates);
+    });
   },
   computed: {
+    targetLang() {
+      return this.$i18n.locale;
+    },
     storeCartLength() {
       return this.$store.state.cart.length;
     },
@@ -253,6 +273,16 @@ export default {
     },
   },
   watch: {
+    async targetLang() {
+      const [translationsData] = await Promise.all([
+        this.$store.dispatch("fetchTranslations/getTranslations", {
+          headers: {
+            Language: this.$i18n.locale,
+          },
+        }),
+      ]);
+      this.$store.commit("getTranslations", translationsData?.translates);
+    },
     buyToast(val) {
       if (val) {
         setTimeout(() => {

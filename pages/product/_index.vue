@@ -477,7 +477,7 @@
           </div>
 
           <div class="credit">
-            <p>Muddatli to'lov</p>
+            <p> {{ $store.state.translations["main.installmentpayment"] }}</p>
             <!-- <p>Муддатли тўлов 139 333 сўмдан / 24 ой</p> -->
             <button>Xalol bo’lib to’lashga olish</button>
           </div>
@@ -859,7 +859,7 @@
               </a-form-model-item>
               <a-form-model-item
                 class="form-item register-input mb-0 pb-0"
-                label="Telefon raqamingiz"
+                :label="$store.state.translations['main.your-phone-number']"
                 prop="phone_number"
               >
                 <a-input
@@ -1194,7 +1194,7 @@ export default {
       4
     );
     this.productAttributes = productData?.attributes;
-
+console.log(productData);
     setTimeout(() => {
       this.swiperReload();
     }, 1000);

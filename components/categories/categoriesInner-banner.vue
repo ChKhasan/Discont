@@ -1,10 +1,14 @@
 <template lang="html">
   <div class="categories-inner-banner">
-    <img src="../../assets/images/image 309.png" alt="" />
+    <a :href="banner?.link">
+      <img :src="banner?.lg_img" alt="" />
+    </a>
   </div>
 </template>
 <script>
-export default {};
+export default {
+  props: ["banner"],
+};
 </script>
 <style lang="css">
 .categories-inner-banner {

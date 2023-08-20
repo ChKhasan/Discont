@@ -3,13 +3,14 @@
     <div class="container_xl">
       <div class="d-flex header-category_container justify-content-between">
         <div class="d-flex">
-          <!-- <button><span v-html="navCategory"></span>Katalog</button> -->
+          <!-- <button><span v-html="navCategory"></span>{{ $store.state.translations["main.directory"] }}</button> -->
           <ul class="d-flex align-items-center">
             <li>
               <nuxt-link
                 :class="{ stock__active: $route.params.index == 'discounts' }"
                 :to="localePath('/stocks/discounts')"
-                ><span v-html="navCatIcon"></span> Aksiyalar</nuxt-link
+                ><span v-html="navCatIcon"></span>
+                {{ $store.state.translations["main.promotions"] }}</nuxt-link
               >
             </li>
             <li v-for="topBar in topBars" :key="topBar?.id">
@@ -90,7 +91,8 @@
         <div class="d-flex align-items-center" v-if="$store.state.auth">
           <div class="coin_btn" @click="$router.push(localePath('/d-coin/about'))">
             <span><img src="../../assets/images/coin.png" alt="" /></span>
-            {{ $store.state.profile?.dicoin?.quantity }} Di Coin
+            {{ $store.state.profile?.dicoin?.quantity }}
+            {{ $store.state.translations["main.dicoin"] }}
           </div>
           <!-- <nuxt-link class="nav-info" :to="localePath('/d-coin/about')">?</nuxt-link> -->
         </div>
@@ -100,6 +102,7 @@
 </template>
 <script>
 export default {
+  name: "CategoryList",
   data() {
     return {
       navCategory: require("../../assets/svg/category_menu.svg?raw"),

@@ -6,9 +6,7 @@
           <div class="hey chekout-footer-head d-flex">
             <span v-html="footerLogo"></span>
             <p>
-              2016-2023 © diskont.uz. Barcha huquqlar himoyalangan.  Tovarlarning
-              ko‘rsatilgan qiymati va ularni sotib olish shartlari joriy sanaga amal
-              qiladi
+              {{ $store.state.translations["checkout.footerText"] }}
             </p>
           </div>
         </div>
@@ -17,10 +15,10 @@
     <div class="footer-bottom">
       <div class="container_xl">
         <div class="hey d-flex justify-content-between">
-          <p>2016-2023 © Diskont.uz Barcha huquqlar himoyalangan.</p>
-          <p class="cursor-pointer">Ommaviy oferta</p>
-          <p class="cursor-pointer">Maxfiylik siyosati</p>
-          <p><span v-html="footerBottom"></span> Veb-sayt ABBA tomonidan yaratilgan</p>
+          <p>{{ $store.state.translations["main.footertext1"] }}</p>
+          <p class="cursor-pointer">{{ $store.state.translations["main.footertext2"] }}</p>
+          <p class="cursor-pointer">{{ $store.state.translations["main.footertext3"] }}</p>
+          <p><span v-html="footerBottom"></span> {{ $store.state.translations["main.footertext4"] }}</p>
         </div>
       </div>
     </div>
