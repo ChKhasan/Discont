@@ -66,11 +66,7 @@
     <div class="product-card-body">
       <nuxt-link :to="localePath(`/product/${product?.slug}`)">
         <h3 class="product-card-title">
-          {{
-            product?.info?.name
-              ? product?.info?.name
-              : "---"
-          }}
+          {{ product?.info?.name ? product?.info?.name : "---" }}
         </h3>
       </nuxt-link>
       <p>
@@ -257,7 +253,12 @@
                   <p v-else class="coin">
                     <img src="@/assets/images/coin.svg" alt="" />
                     {{
-                      Math.floor(product?.real_price / $store.state.dicoin.sum_to_dicoin)
+                      Math.floor(
+                        product?.real_price /
+                          ($store.state.dicoin?.sum_to_dicoin
+                            ? $store.state.dicoin?.sum_to_dicoin
+                            : 1)
+                      )
                     }}
                     ta di coin
                   </p>
@@ -757,7 +758,7 @@
             <div class="call-number">
               <p>Call centre Diskont:</p>
               <a href="tel:+998712077788">
-              <h4>71 207 77 88</h4>
+                <h4>71 207 77 88</h4>
               </a>
             </div>
           </div>
