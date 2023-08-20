@@ -121,6 +121,7 @@ export default {
       }),
     ]);
     this.topBars = topBarsData?.bars?.data;
+    console.log(this.topBars);
   },
 };
 </script>

@@ -6,8 +6,11 @@
         <nuxt-link :to="localePath('/')"> Aksiyalar </nuxt-link>
       </div>
       <div class="stocks-body">
-        <div class="stocks-banner">
-          <img src="../../assets/images/stocks-banner.png" alt="" />
+        <div
+          class="stocks-banner"
+          v-if="banners?.filter((item) => item.type == 'type2').length > 0"
+        >
+          <img :src="banners?.filter((item) => item.type == 'type2')[0]?.lg_img" alt="" />
         </div>
         <!-- <div class="stocks-menu">
           <div class="position-relative">
@@ -173,16 +176,24 @@ export default {
     };
   },
   async asyncData({ store, route, i18n }) {
-    const [promotionsData] = await Promise.all([
+    const [promotionsData, bannersData] = await Promise.all([
       store.dispatch("fetchPromotions/getPromotions", {
+        headers: {
+          Language: i18n.locale,
+        },
+      }),
+      store.dispatch("fetchBanners/getBanners", {
         headers: {
           Language: i18n.locale,
         },
       }),
     ]);
     const promotions = promotionsData?.promotions?.data;
+    const banners = bannersData?.banners?.data;
+
     return {
       promotions,
+      banners,
     };
   },
   methods: {
@@ -199,6 +210,7 @@ export default {
 }
 .stocks-banner {
   max-height: 385px;
+  width: 100%;
   height: 385px;
   border-radius: 24px;
   margin-top: 25px;
@@ -208,6 +220,7 @@ export default {
 .stocks-banner img {
   width: 100%;
   height: 100%;
+  object-fit: cover;
 }
 .stocks-body {
   position: relative;

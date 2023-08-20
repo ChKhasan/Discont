@@ -227,7 +227,7 @@ export default {
     this.afterReload = true;
     this.$store.commit("authHandler");
     this.$getLocation().then((coordinates) => {
-      console.log(coordinates);
+      this.$store.commit("getLocations", coordinates);
     });
   },
   computed: {

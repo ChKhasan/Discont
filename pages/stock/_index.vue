@@ -25,7 +25,7 @@
         <div class="stock-page__info" v-html="promotion?.desc"></div>
       </div>
       <div class="d-flex justify-content-between align-items-end">
-        <ProductListTitle title="Kategoriyadagi top tavarlar" />
+        <ProductListTitle title="Aksiyadagi mahsulotlar" />
       </div>
       <div class="categories-products categories-page-inner-grid">
         <div class="categories-filter-list">
@@ -192,10 +192,11 @@ export default {
           },
         },
       }),
+      
     ]);
     const promotion = promotionsData?.promotion;
     const allCategories = promotionsData?.categories;
-    console.log(allCategories);
+
     return {
       promotion,
       allCategories,
@@ -222,6 +223,9 @@ export default {
         this.$store.dispatch("fetchPromotions/getPromotionsBySlug", {
           slug: this.$route.params.index,
           params: {
+            params: {
+              ...this.$route.query,
+            },
             headers: {
               Language: this.$i18n.locale,
             },

@@ -224,7 +224,7 @@
   font-weight: 400;
   font-size: 16px;
   line-height: 20px;
-  text-transform: capitalize;
+  /* text-transform: capitalize; */
   color: #000000;
   background: #f6f7f9;
   border-radius: 9px;

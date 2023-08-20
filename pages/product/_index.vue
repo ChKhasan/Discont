@@ -540,37 +540,28 @@
             class="specifications"
             v-if="tabHandle == 'characteristic'"
           >
-            <div class="spec__wrap">
-              <div class="items">
-                <h4 class="paragraph">Основные характеристики</h4>
+            <div class="spec__wrap" v-if="characteristics.length > 0">
+              <div
+                class="items"
+                v-for="character in characteristics"
+                :key="character?.id"
+              >
+                <h4 class="paragraph">{{ character?.name }}</h4>
                 <div class="grider">
-                  <div class="spec">
-                    <p class="question">Бренд</p>
-                    <p class="answer">Xiaomi</p>
-                  </div>
-                  <div class="spec">
-                    <p class="question">Бренд</p>
-                    <p class="answer">Xiaomi</p>
-                  </div>
-                  <div class="spec">
-                    <p class="question">Бренд</p>
-                    <p class="answer">Xiaomi</p>
+                  <div
+                    class="spec"
+                    v-for="characterOptions in character?.characteristics"
+                    :key="characterOptions?.id"
+                  >
+                    <p class="question">{{ characterOptions?.name }}</p>
+                    <p class="answer">{{ characterOptions?.options[0]?.name }}</p>
                   </div>
                 </div>
               </div>
-              <div class="items">
-                <h4 class="paragraph">Питание</h4>
-                <div class="grider">
-                  <div class="item">
-                    <p class="question">Бренд</p>
-                    <p class="answer">Xiaomi</p>
-                  </div>
-                  <div class="item">
-                    <p class="question">Бренд</p>
-                    <p class="answer">Xiaomi</p>
-                  </div>
-                </div>
-              </div>
+            </div>
+            <div class="comments-empty" v-if="characteristics.length == 0">
+              <img src="../../assets/images/comments-empty.png" alt="" />
+              <h4>Mahsulotlarga baho qo’yilmagan</h4>
             </div>
           </div>
           <div
@@ -578,7 +569,7 @@
             class="locations"
             v-if="tabHandle == 'location'"
           >
-            <table>
+            <table class="branches-table">
               <thead>
                 <tr>
                   <th>
@@ -593,15 +584,14 @@
                 </tr>
               </thead>
               <tbody>
-                <tr>
+                <tr v-for="branch in branches" :key="branch?.id">
                   <td>
                     <div class="cyber">
                       <div class="img">
                         <img src="@/assets/images/logo/map.svg" alt="" />
                       </div>
                       <p>
-                        Фарғона вилояти, Маргилон ш. Тошлоқ тумани, Алишер Навоий кўчаси,
-                        94 уй. Мўлжал: "Tabassum" мехмонхонаси
+                        {{ branch?.name }}
                       </p>
                     </div>
                   </td>
@@ -610,7 +600,7 @@
                       <div class="img">
                         <img src="@/assets/images/logo/clock.svg" alt="" />
                       </div>
-                      <p>09:00 - 20:30</p>
+                      <p style="white-space: nowrap">{{ branch?.work_time }}</p>
                     </div>
                   </td>
                   <td>
@@ -618,36 +608,14 @@
                       <div class="img">
                         <img src="@/assets/images/logo/call.svg" alt="" />
                       </div>
-                      <p>+998 55 503 6006</p>
-                    </div>
-                  </td>
-                </tr>
-                <tr>
-                  <td>
-                    <div class="cyber">
-                      <div class="img">
-                        <img src="@/assets/images/logo/map.svg" alt="" />
-                      </div>
-                      <p>
-                        Фарғона вилояти, Маргилон ш. Тошлоқ тумани, Алишер Навоий кўчаси,
-                        94 уй. Мўлжал: "Tabassum" мехмонхонаси
+                      <p style="white-space: nowrap">
+                        +{{
+                          `${branch?.phone_number}`
+                            .match(/(\d{3})(\d{2})(\d{3})(\d{4})/)
+                            .filter((item, index) => index != 0)
+                            .join(" ")
+                        }}
                       </p>
-                    </div>
-                  </td>
-                  <td>
-                    <div class="cyber">
-                      <div class="img">
-                        <img src="@/assets/images/logo/clock.svg" alt="" />
-                      </div>
-                      <p>09:00 - 20:30</p>
-                    </div>
-                  </td>
-                  <td>
-                    <div class="cyber">
-                      <div class="img">
-                        <img src="@/assets/images/logo/call.svg" alt="" />
-                      </div>
-                      <p>+998 55 503 6006</p>
                     </div>
                   </td>
                 </tr>
@@ -727,23 +695,23 @@
                 </div>
                 <div class="rating_list">
                   <div class="rating_row">
-                    <a-rate v-model="value" disabled /><span></span>
+                    <a-rate value="5" disabled /><span></span>
                     <p>5</p>
                   </div>
                   <div class="rating_row">
-                    <a-rate v-model="value" disabled /><span></span>
+                    <a-rate value="4" disabled /><span></span>
                     <p>5</p>
                   </div>
                   <div class="rating_row">
-                    <a-rate v-model="value" disabled /><span></span>
+                    <a-rate value="3" disabled /><span></span>
                     <p>5</p>
                   </div>
                   <div class="rating_row">
-                    <a-rate v-model="value" disabled /><span></span>
+                    <a-rate value="2" disabled /><span></span>
                     <p>5</p>
                   </div>
                   <div class="rating_row">
-                    <a-rate v-model="value" disabled /><span></span>
+                    <a-rate value="1" disabled /><span></span>
                     <p>5</p>
                   </div>
                 </div>
@@ -1098,11 +1066,14 @@ export default {
       callBox: false,
       visibleSuccess: false,
       visibleComment: false,
+      characteristics: [],
       commentStarts: 2,
       iconComp: require("../../assets/svg/toast-comparison.svg?raw"),
       compToast: false,
       visibleOc: false,
       product: {},
+      locations: {},
+      branches: [],
       productCharacteristic: [],
       productAttributes: [],
       tabHandle: "desc",
@@ -1175,10 +1146,17 @@ export default {
   // },
   async mounted() {
     this.skeleton = true;
+    await this.$getLocation().then((coordinates) => {
+      this.locations = coordinates;
+    });
     const [productData, productsData] = await Promise.all([
       this.$store.dispatch("fetchProducts/getProductsBySlug", {
         id: this.$route.params.index,
         params: {
+          params: {
+            lat: this.locations.lat,
+            lon: this.locations.lng,
+          },
           headers: {
             Language: this.$i18n.locale,
           },
@@ -1200,6 +1178,8 @@ export default {
       4
     );
     this.productAttributes = productData?.attributes;
+    this.characteristics = productData?.characteristics;
+    this.branches = productData?.branches;
     console.log(productData);
     setTimeout(() => {
       this.swiperReload();
@@ -1313,10 +1293,6 @@ export default {
         },
       });
     },
-    allCharacteristic() {
-      this.productCharacteristic = [...this.product?.characteristic_options];
-      this.swiperReload();
-    },
   },
   watch: {
     visibleOc(val) {
@@ -1335,6 +1311,7 @@ export default {
 
 <style scoped>
 @import "../../assets/css/pages/product.css";
+
 .wrap {
   padding-top: 32px;
   min-height: 100vh;
@@ -2161,6 +2138,11 @@ tbody .img {
   .app {
     padding: 16px;
     margin-bottom: 0;
+  }
+}
+@media (min-width: 1320px) {
+  .branches-table {
+    width: 70%;
   }
 }
 </style>

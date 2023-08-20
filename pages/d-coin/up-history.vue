@@ -14,7 +14,7 @@
         <nuxt-link :to="localePath('/d-coin/about')">
           <div
             class="d-coin__tab-item"
-            :class="{ 'coin-tab__active': $route.name == 'd-coin-about' }"
+            :class="{ 'coin-tab__active': $route.name.includes('about') }"
           >
             <p>Sizning Di Coinlaringiz soni</p>
             <div>
@@ -26,7 +26,7 @@
         <nuxt-link :to="localePath('/d-coin/down-history')">
           <div
             class="d-coin__tab-item coin-tab_down"
-            :class="{ 'coin-tab__active': $route.name == 'd-coin-down-history' }"
+            :class="{ 'coin-tab__active': $route.name.includes('down-history') }"
           >
             <span v-html="download"></span>
             <h5>Tushgan Di Coinlar tarixi</h5>
@@ -35,7 +35,7 @@
         <nuxt-link :to="localePath('/d-coin/up-history')">
           <div
             class="d-coin__tab-item coin-tab_down"
-            :class="{ 'coin-tab__active': $route.name == 'd-coin-up-history' }"
+            :class="{ 'coin-tab__active': $route.name.includes('up-history') }"
           >
             <span v-html="upload"></span>
             <h5>Ishlatilgan Di Coinlar tarixi</h5>
@@ -122,5 +122,4 @@ export default {
 <style lang="css">
 @import "../../assets/css/pages/comparison.css";
 @import "../../assets/css/pages/d-coin.css";
-
 </style>

@@ -1,13 +1,9 @@
 <template lang="html">
   <div class="day-product-card">
-    <img
-      class="day-product-card-bg"
-      src="../../assets/images/day-card-bg.png"
-      alt=""
-    />
+    <img class="day-product-card-bg" :src="banner?.lg_img" alt="" />
     <div class="day-product-card-head">
       <h3>Kunlik chegirmalar</h3>
-      <nuxt-link :to="localePath('/')"
+      <a :href="banner?.link"
         >Barchasi
         <svg
           xmlns="http://www.w3.org/2000/svg"
@@ -20,43 +16,29 @@
             d="M1 7C0.447715 7 4.82823e-08 7.44772 0 8C-4.82823e-08 8.55228 0.447715 9 1 9L1 7ZM18.7071 8.70711C19.0976 8.31658 19.0976 7.68342 18.7071 7.29289L12.3431 0.928933C11.9526 0.538409 11.3195 0.538409 10.9289 0.928933C10.5384 1.31946 10.5384 1.95262 10.9289 2.34315L16.5858 8L10.9289 13.6569C10.5384 14.0474 10.5384 14.6805 10.9289 15.0711C11.3195 15.4616 11.9526 15.4616 12.3431 15.0711L18.7071 8.70711ZM1 9L18 9L18 7L1 7L1 9Z"
             fill="white"
           /></svg
-      ></nuxt-link>
-    </div>
-    <div class="day-product-card-body">
-      <div class="day-product-card-left">
-        <h1>Asus laptop 14 1650 GTX dsfs dsf sdf sdfss</h1>
-        <div class="day-product-card-discont">
-          <p>Chegirmalar</p>
-          <div><span>-50%</span></div>
-        </div>
-        <span
-          >Talaba va o’quvchilar uchun mega skidka ulgurib qoling go!!!</span
-        >
-      </div>
-      <div class="day-product-card-right">
-        <img src="../../assets/images/delete/laptop.jpg" alt="" />
-      </div>
+      ></a>
     </div>
   </div>
 </template>
 <script>
-export default {};
+export default {
+  props: ["banner"],
+};
 </script>
 <style lang="css">
 .day-product-card {
-  background: radial-gradient(
-    98.96% 220.15% at 98.96% 100%,
-    #ffdd6a 0%,
-    #fbc100 100%
-  );
+  background: radial-gradient(98.96% 220.15% at 98.96% 100%, #ffdd6a 0%, #fbc100 100%);
   border-radius: 16px;
   overflow: hidden;
   position: relative;
-  height: auto;
+  height: 100%;
 }
 .day-product-card-bg {
   position: absolute;
   right: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
 }
 .day-product-card-head {
   padding: 0 20px;
@@ -64,11 +46,7 @@ export default {};
   justify-content: space-between;
   align-items: center;
   height: 52px;
-  background: radial-gradient(
-    99.34% 7718.39% at 0.66% 3.85%,
-    #ff3a3a 0%,
-    #e90a0a 100%
-  );
+  background: radial-gradient(99.34% 7718.39% at 0.66% 3.85%, #ff3a3a 0%, #e90a0a 100%);
   position: relative;
   z-index: 10;
 }

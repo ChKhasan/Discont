@@ -14,23 +14,12 @@
           </div>
         </BannerCarousel>
         <BannerCarouselRight>
-          <div class="swiper-slide">
-            <DayProductCard />
-          </div>
-          <div class="swiper-slide">
-            <DayProductCard />
-          </div>
-          <div class="swiper-slide">
-            <DayProductCard />
-          </div>
-          <div class="swiper-slide">
-            <DayProductCard />
-          </div>
-          <div class="swiper-slide">
-            <DayProductCard />
-          </div>
-          <div class="swiper-slide">
-            <DayProductCard />
+          <div
+            class="swiper-slide"
+            v-for="banner in banners?.filter((item) => item.type == 'product_of_the_day')"
+            :key="banner?.id"
+          >
+            <DayProductCard :banner="banner"/>
           </div>
         </BannerCarouselRight>
       </div>
@@ -226,7 +215,13 @@
       </div>
     </div> -->
     <div class="container_xl" v-if="brands?.length > 0">
-      <MainTitle title="Top brendlar" />
+      <div class="d-flex justify-content-between align-items-end">
+        <MainTitle title="Top brendlar" />
+        <nuxt-link class="to-page-underline" :to="localePath(`/brands`)"
+          >Barcha brandlar</nuxt-link
+        >
+      </div>
+
       <div class="last mb-120">
         <BrandCarousel>
           <div class="swiper-slide" v-for="brand in brands" :key="brand.id">

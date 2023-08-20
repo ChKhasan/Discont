@@ -114,11 +114,14 @@
             </div>
           </CategoriesTabCarousel>
         </div> -->
-        <div class="mt-4" v-if="banners.filter((item) => item.type == 'top').length > 0">
+        <div
+          class="mt-4"
+          v-if="banners.filter((item) => item.type == 'type1').length > 0"
+        >
           <CategoriesInnerBannerCarousel>
             <div
               class="swiper-slide"
-              v-for="banner in banners.filter((item) => item.type == 'top')"
+              v-for="banner in banners.filter((item) => item.type == 'type1')"
               :key="banner?.id"
             >
               <CategoriesInnerBanner :banner="banner" />

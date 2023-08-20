@@ -29,9 +29,9 @@ export default {
       modules: [EffectCards, Autoplay],
       pagination: false,
       autoplay: {
-        delay: 1000,
+        delay: 10000,
       },
-
+      speed: 1000,
       navigation: false,
       breakpoints: {
         1024: {
@@ -58,11 +58,7 @@ export default {
   right: -90px;
   top: 0;
   z-index: 1;
-  background: linear-gradient(
-    270deg,
-    #ffffff 66.07%,
-    rgba(255, 255, 255, 0) 100%
-  );
+  background: linear-gradient(270deg, #ffffff 66.07%, rgba(255, 255, 255, 0) 100%);
 }
 .categories-inner-carousel .swiper-button-next-banner,
 .categories-inner-carousel .swiper-button-prev-banner {

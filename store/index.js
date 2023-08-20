@@ -6,12 +6,16 @@ export const state = () => ({
   comparison: [],
   profile: {},
   dicoin: {},
-  translations: {}
+  translations: {},
+  locations: {},
 });
 
 export const mutations = {
   getTranslations(state, payload) {
     state.translations = payload;
+  },
+  getLocations(state, payload) {
+    state.locations = payload;
   },
   logout(state) {
     localStorage.removeItem("dis_auth_token");
