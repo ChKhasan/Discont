@@ -84,7 +84,7 @@ export default {
   },
   mounted() {
     let likesProducts = JSON.parse(localStorage.getItem("like"));
-    if (likesProducts.length > 0) this.__GET_PRODUCTS_BY_ID({ products: likesProducts });
+    if (likesProducts?.length > 0) this.__GET_PRODUCTS_BY_ID({ products: likesProducts });
   },
   methods: {
     async deleteAll() {
@@ -105,9 +105,12 @@ export default {
     },
   },
   watch: {
-    likesChange() {
+    likesChange(val) {
       let likesProducts = JSON.parse(localStorage.getItem("like"));
       this.__GET_PRODUCTS_BY_ID({ products: likesProducts });
+      if (val == 0) {
+        this.likeProducts = [];
+      }
     },
   },
   components: { MainTitle, CategoriesAppCard, ProductCard },

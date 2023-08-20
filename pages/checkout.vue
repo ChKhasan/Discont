@@ -478,6 +478,7 @@
                     class="dicoin-input"
                     type="number"
                     v-model="dicoinSumm"
+                    placeholder="0"
                     oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);"
                     :maxlength="`${$store.state.profile?.dicoin?.quantity}`.length"
                     @keyup.enter="numberFormat"
@@ -980,7 +981,7 @@ export default {
         delivery: false,
       },
       checkboxVal: false,
-      dicoinSumm: 0,
+      dicoinSumm: null,
       sendDicoin: false,
       skeleton: false,
       form: {

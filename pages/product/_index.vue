@@ -1,5 +1,45 @@
 <template lang="html">
   <div class="wrap product-page">
+    <div class="image-modal" :class="{ hideModal: !imageModal }">
+      <div class="image-modal-container">
+        <div class="product-inner-swiper">
+          <div class="swiper-wrapper">
+            <div class="swiper-slide" v-for="img in carouselImages" :key="img.id">
+              <img :src="img?.md_img" />
+            </div>
+          </div>
+        </div>
+        <div class="carousel-hide" @click="imageModal = false">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            xmlns:xlink="http://www.w3.org/1999/xlink"
+            version="1.1"
+            width="24"
+            height="24"
+            viewBox="0 0 24 24"
+            fill="#d9d9d9"
+          >
+            <path
+              d="M19,6.41L17.59,5L12,10.59L6.41,5L5,6.41L10.59,12L5,17.59L6.41,19L12,13.41L17.59,19L19,17.59L13.41,12L19,6.41Z"
+            />
+          </svg>
+        </div>
+        <div class="swiper-button-prev-product-inner">
+          <svg viewBox="0 0 24 24" style="width: 24px; height: 24px">
+            <path
+              d="M15.41,16.58L10.83,12L15.41,7.41L14,6L8,12L14,18L15.41,16.58Z"
+            ></path>
+          </svg>
+        </div>
+        <div class="swiper-button-next-product-inner">
+          <svg viewBox="0 0 24 24" style="width: 24px; height: 24px">
+            <path
+              d="M15.41,16.58L10.83,12L15.41,7.41L14,6L8,12L14,18L15.41,16.58Z"
+            ></path>
+          </svg>
+        </div>
+      </div>
+    </div>
     <div class="container_xl">
       <div class="top">
         <h4 class="title" v-if="skeleton">
@@ -212,7 +252,12 @@
               class="swiper mySwiper2"
             >
               <div class="swiper-wrapper">
-                <div class="swiper-slide" v-for="img in product?.images" :key="img.id">
+                <div
+                  class="swiper-slide"
+                  v-for="img in product?.images"
+                  :key="img.id"
+                  @click="currentImg(img.id)"
+                >
                   <img :src="img?.md_img" />
                 </div>
               </div>
@@ -318,6 +363,7 @@
                   <b-skeleton width="40px"></b-skeleton>
                 </div>
               </div>
+              Xalol bo’lib to’lashga olish
             </div>
             <div
               class="variations"
@@ -410,16 +456,15 @@
                 <b-skeleton width="150px" height="100%"> </b-skeleton>
               </p>
               <p v-else class="coin">
-                <img src="@/assets/images/coin.svg" alt="" />
-                +
-                {{
+                <img src="@/assets/images/Group 1000005199.png" alt="" />
+                +{{
                   Math.floor(
                     product?.real_price / $store.state.dicoin?.sum_to_dicoin
                       ? $store.state.dicoin?.sum_to_dicoin
                       : 1
                   )
                 }}
-                ta di coin
+                Di coin
               </p>
             </div>
 
@@ -482,11 +527,11 @@
             </div>
           </div>
 
-          <div class="credit">
+          <!-- <div class="credit">
             <p>{{ $store.state.translations["main.installmentpayment"] }}</p>
-            <!-- <p>Муддатли тўлов 139 333 сўмдан / 24 ой</p> -->
+            <p>Муддатли тўлов 139 333 сўмдан / 24 ой</p>
             <button>Xalol bo’lib to’lashga olish</button>
-          </div>
+          </div> -->
 
           <div class="credit__items">
             <div>
@@ -1045,6 +1090,7 @@ export default {
 
   data() {
     return {
+      imageModal: false,
       month: [
         "Январь",
         "Февраль",
@@ -1078,6 +1124,7 @@ export default {
       productAttributes: [],
       tabHandle: "desc",
       productsOthers: [],
+      carouselImages: [],
       formComment: {
         product_id: null,
         comment: "",
@@ -1180,13 +1227,20 @@ export default {
     this.productAttributes = productData?.attributes;
     this.characteristics = productData?.characteristics;
     this.branches = productData?.branches;
-    console.log(productData);
+    this.carouselImages = [...this.product.images];
+
     setTimeout(() => {
       this.swiperReload();
     }, 1000);
   },
 
   methods: {
+    currentImg(id) {
+      const currentImg = this.carouselImages.find((item) => item.id == id);
+      this.carouselImages = this.carouselImages.filter((item) => item.id != id);
+      this.carouselImages.unshift(currentImg);
+      this.imageModal = true;
+    },
     moment,
     scrollElement(id) {
       const element = document.getElementById(id);
@@ -1271,6 +1325,21 @@ export default {
       }
     },
     swiperReload() {
+      new Swiper(`.product-inner-swiper`, {
+        slidesPerView: 1,
+        spaceBetween: 24,
+        flipEffect: {
+          slideShadows: false,
+        },
+        pagination: false,
+        autoplay: {
+          delay: 40000,
+        },
+        navigation: {
+          nextEl: ".swiper-button-next-product-inner",
+          prevEl: ".swiper-button-prev-product-inner",
+        },
+      });
       var swiper = new Swiper(".mySwiper", {
         slidesPerView: 5,
         spaceBetween: 12,
@@ -1312,6 +1381,66 @@ export default {
 <style scoped>
 @import "../../assets/css/pages/product.css";
 
+.swiper-button-prev-product-inner,
+.swiper-button-next-product-inner,
+.carousel-hide {
+  position: absolute;
+  backdrop-filter: blur(40px);
+  backface-visibility: hidden;
+  background: rgba(85, 85, 85, 0.5);
+  border-radius: 100px;
+  height: 48px;
+  perspective: 1000;
+  top: calc(50% - 15px);
+  transition: opacity 0.3s ease;
+  width: 48px;
+  top: calc(100vh / 2 - 20px);
+  z-index: 2;
+}
+.swiper-button-prev-product-inner {
+  left: 16px;
+}
+.swiper-button-next-product-inner {
+  right: 16px;
+}
+.carousel-hide {
+  top: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  right: 16px;
+}
+.swiper-button-prev-product-inner svg,
+.swiper-button-next-product-inner svg {
+  fill: #fff;
+  left: calc(50% - 12px);
+  position: absolute;
+  top: calc(50% - 12px);
+  width: 24px;
+  height: 24px;
+}
+.swiper-button-next-product-inner svg {
+  transform: rotate(180deg);
+}
+.image-modal-container {
+  max-width: 40%;
+  margin: 0 auto;
+  overflow: hidden;
+  height: 100vh;
+}
+.image-modal-container .swiper-slide {
+  margin: auto;
+  height: 100vh;
+}
+.image-modal {
+  top: 0;
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.8);
+  z-index: 2000;
+}
 .wrap {
   padding-top: 32px;
   min-height: 100vh;
@@ -1330,7 +1459,10 @@ export default {
   justify-content: center;
   align-items: center;
 }
-
+.hideModal {
+  opacity: 0;
+  z-index: -100 !important;
+}
 .swiper-slide img {
   display: block;
   width: 100%;
@@ -1357,6 +1489,7 @@ export default {
 .mySwiper2 .swiper-slide {
   border-radius: 20px;
   overflow: hidden;
+  cursor: grab;
 }
 .mySwiper {
   width: 20%;
@@ -1602,7 +1735,7 @@ export default {
   object-fit: contain;
 }
 .active-attribute {
-  border: 0.628429px solid #04babe;
+  border: 1px solid #04babe;
 }
 .disabled-attribute {
   pointer-events: none;
@@ -1855,7 +1988,7 @@ tbody .img {
 }
 .available-sale p {
   color: #16c67a;
-  font-family: "Inter";
+  font-family: var(--SB_500);
   font-size: 14px;
   font-style: normal;
   font-weight: 500;

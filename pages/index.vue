@@ -19,12 +19,12 @@
             v-for="banner in banners?.filter((item) => item.type == 'product_of_the_day')"
             :key="banner?.id"
           >
-            <DayProductCard :banner="banner"/>
+            <DayProductCard :banner="banner" />
           </div>
         </BannerCarouselRight>
       </div>
       <div class="home-categories mb-120">
-        <MainTitle title="Kategoriyalar" />
+        <MainTitle :title="$store.state.translations[`main.categories`]" />
         <div>
           <HomeCategoryCarousel>
             <div
@@ -51,7 +51,7 @@
           <nuxt-link
             class="to-page-underline"
             :to="localePath(`/showcases/${showcases[0]?.slug}`)"
-            >Barcha tovarlar</nuxt-link
+            >{{ $store.state.translations["main.all-products"] }}</nuxt-link
           >
         </div>
         <div class="product-grid" v-if="showcases[0]?.products.length > 0">
@@ -72,7 +72,7 @@
           <nuxt-link
             class="to-page-underline"
             :to="localePath(`/showcases/${showcases[1]?.slug}`)"
-            >Barcha tovarlar</nuxt-link
+            >{{ $store.state.translations["main.all-products"] }}</nuxt-link
           >
         </div>
         <div class="product-grid" v-if="showcases[1]?.products.length > 0">
@@ -125,7 +125,7 @@
           <nuxt-link
             class="to-page-underline"
             :to="localePath(`/showcases/${showcases[3]?.slug}`)"
-            >Barcha tovarlar</nuxt-link
+            >{{ $store.state.translations["main.all-products"] }}</nuxt-link
           >
         </div>
         <div class="">
@@ -149,7 +149,7 @@
           <nuxt-link
             class="to-page-underline"
             :to="localePath(`/showcases/${showcases[4]?.slug}`)"
-            >Barcha tovarlar</nuxt-link
+            >{{ $store.state.translations["main.all-products"] }}</nuxt-link
           >
         </div>
         <div class="" v-if="showcases[4]?.products.length > 0">
@@ -216,10 +216,10 @@
     </div> -->
     <div class="container_xl" v-if="brands?.length > 0">
       <div class="d-flex justify-content-between align-items-end">
-        <MainTitle title="Top brendlar" />
-        <nuxt-link class="to-page-underline" :to="localePath(`/brands`)"
-          >Barcha brandlar</nuxt-link
-        >
+        <MainTitle :title="$store.state.translations[`main.top-brands`]" />
+        <nuxt-link class="to-page-underline" :to="localePath(`/brands`)">{{
+          $store.state.translations["main.all-brands"]
+        }}</nuxt-link>
       </div>
 
       <div class="last mb-120">
@@ -297,7 +297,7 @@
       <div class="d-flex justify-content-between align-items-end">
         <MainTitle title="Yangiliklar va bloglar" />
         <nuxt-link class="to-page-underline" :to="localePath('/all-news')"
-          >Все блоги</nuxt-link
+          >Barcha yangiliklar</nuxt-link
         >
       </div>
       <PostsCarousel>

@@ -144,7 +144,7 @@ export default {
         },
       }),
     ]);
-    const categories = categoriesData?.categories?.data;
+    const categories = categoriesData?.data;
     const categoryChilds = categoryChildsData?.category;
     const products = productsData?.products?.data;
     return {
@@ -154,8 +154,7 @@ export default {
     };
   },
   methods: {
-    test() {
-    },
+    test() {},
   },
   components: {
     MainTitle,

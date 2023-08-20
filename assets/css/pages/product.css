@@ -38,6 +38,7 @@
   color: #9c9c9c;
 }
 .price {
+  font-family: var(--SB_700);
   font-weight: 700;
   font-size: 24px;
   line-height: 29px;
@@ -51,7 +52,7 @@
   margin-bottom: 20px;
 }
 .coin {
-  font-weight: 500;
+  font-family: var(--SB_500);
   font-size: 16px;
   line-height: 19px;
   color: #09454f;
