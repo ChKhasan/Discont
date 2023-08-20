@@ -412,7 +412,13 @@
               <p v-else class="coin">
                 <img src="@/assets/images/coin.svg" alt="" />
                 +
-                {{ Math.floor(product?.real_price / $store.state.dicoin.sum_to_dicoin) }}
+                {{
+                  Math.floor(
+                    product?.real_price / $store.state.dicoin?.sum_to_dicoin
+                      ? $store.state.dicoin?.sum_to_dicoin
+                      : 1
+                  )
+                }}
                 ta di coin
               </p>
             </div>
@@ -477,7 +483,7 @@
           </div>
 
           <div class="credit">
-            <p> {{ $store.state.translations["main.installmentpayment"] }}</p>
+            <p>{{ $store.state.translations["main.installmentpayment"] }}</p>
             <!-- <p>Муддатли тўлов 139 333 сўмдан / 24 ой</p> -->
             <button>Xalol bo’lib to’lashga olish</button>
           </div>
@@ -1194,7 +1200,7 @@ export default {
       4
     );
     this.productAttributes = productData?.attributes;
-console.log(productData);
+    console.log(productData);
     setTimeout(() => {
       this.swiperReload();
     }, 1000);

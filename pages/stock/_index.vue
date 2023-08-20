@@ -27,7 +27,129 @@
       <div class="d-flex justify-content-between align-items-end">
         <ProductListTitle title="Kategoriyadagi top tavarlar" />
       </div>
-      <div class="categories-products">
+      <div class="categories-products categories-page-inner-grid">
+        <div class="categories-filter-list">
+          <div>
+            <h5>Kategoriyalar</h5>
+            <div
+              v-for="firstCategory in allCategories"
+              :key="firstCategory?.id"
+              class="categories-list-box"
+            >
+              <nuxt-link
+                :to="
+                  localePath(
+                    `/stock/${$route.params.index}?category=${firstCategory?.slug}`
+                  )
+                "
+                :class="{
+                  'active-category': $route.query?.category == firstCategory?.slug,
+                }"
+                class="first-category"
+                >{{ firstCategory?.name }}</nuxt-link
+              >
+              <ul
+                class="categories-list-inner"
+                v-if="
+                  (firstCategory?.children.length > 0 &&
+                    firstCategory?.slug == $route.query?.category) ||
+                  firstCategory.children.find(
+                    (item) => item.slug == $route.query?.category
+                  ) ||
+                  firstCategory.children.find((item) =>
+                    item.children.find((elem) => elem.slug == $route.query?.category)
+                  )
+                "
+              >
+                <li
+                  v-for="middCategory in firstCategory?.children"
+                  :key="middCategory?.id"
+                >
+                  <span
+                    :class="{
+                      'active-category': $route.query?.category == middCategory?.slug,
+                    }"
+                    @click="
+                      $router.push(
+                        `/stock/${$route.params.index}?category=${middCategory?.slug}`
+                      )
+                    "
+                    >{{ middCategory?.name }}</span
+                  >
+                  <div
+                    class="child-categories-list"
+                    v-if="
+                      middCategory?.slug == $route.query?.category ||
+                      middCategory?.children.find(
+                        (item) => item.slug == $route.query?.category
+                      )
+                    "
+                  >
+                    <nuxt-link
+                      v-if="middCategory?.children.length > 0"
+                      v-for="childs in middCategory?.children"
+                      :to="
+                        localePath(
+                          `/stock/${$route.params.index}?category=${childs?.slug}`
+                        )
+                      "
+                      class="mb-0"
+                      :class="{
+                        'active-category': $route.query?.category == childs?.slug,
+                      }"
+                      :key="childs.id"
+                      >{{ childs?.name }}</nuxt-link
+                    >
+                  </div>
+                </li>
+                <!-- <li>
+                  <span
+                    :class="{
+                      'active-category':
+                        $route.params.index ==
+                        (!categoryChilds?.parent?.parent?.slug && categoryChilds.slug),
+                    }"
+                    @click="
+                      $router.push(
+                        categoryChilds?.parent?.parent.id
+                          ? `/categories-inner/${categoryChilds?.parent?.slug}`
+                          : `/categories-inner/${categoryChilds?.slug}`
+                      )
+                    "
+                    >{{
+                      categoryChilds?.parent?.parent?.name
+                        ? categoryChilds?.parent?.name
+                        : categoryChilds?.name
+                    }}</span
+                  >
+                  <div class="child-categories-list">
+                    <nuxt-link
+                      v-if="
+                        categoryChilds?.parent?.parent?.name &&
+                        categoryChilds?.children.length == 0
+                      "
+                      :to="`/categories-inner/${categoryChilds?.slug}`"
+                      :class="{
+                        'active-category': $route.params.index == categoryChilds?.slug,
+                      }"
+                      >{{ categoryChilds?.name }}</nuxt-link
+                    >
+                    <nuxt-link
+                      v-if="categoryChilds?.children.length > 0"
+                      v-for="childs in categoryChilds?.children"
+                      :to="`/categories-inner/${childs?.slug}`"
+                      :class="{ 'active-category': $route.params.index == childs?.slug }"
+                      :key="childs.id"
+                      >{{ childs?.name }}</nuxt-link
+                    >
+                  </div>
+                </li> -->
+              </ul>
+            </div>
+
+            <!-- <span class="categories-list_show-more">Показать еще</span> -->
+          </div>
+        </div>
         <div class="categories-card-grid" v-if="promotion?.products.length > 0">
           <ProductCard
             v-for="product in promotion?.products"
@@ -72,9 +194,43 @@ export default {
       }),
     ]);
     const promotion = promotionsData?.promotion;
+    const allCategories = promotionsData?.categories;
+    console.log(allCategories);
     return {
       promotion,
+      allCategories,
     };
+  },
+  computed: {
+    currentQuery() {
+      return this.$route.query?.category;
+    },
+  },
+  mounted() {
+    this.$store.dispatch("fetchPromotions/getPromotionsBySlug", {
+      slug: this.$route.params.index,
+      params: {
+        headers: {
+          Language: this.$i18n.locale,
+        },
+      },
+    });
+  },
+  watch: {
+    async currentQuery(val) {
+      const [promotionsData] = await Promise.all([
+        this.$store.dispatch("fetchPromotions/getPromotionsBySlug", {
+          slug: this.$route.params.index,
+          params: {
+            headers: {
+              Language: this.$i18n.locale,
+            },
+          },
+        }),
+      ]);
+      this.promotion = promotionsData?.promotion;
+      this.allCategories = promotionsData?.categories;
+    },
   },
   methods: {
     moment,

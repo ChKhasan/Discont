@@ -164,7 +164,10 @@
                     />
                   </a-form-model-item>
                   <a-form-model-item class="form-item mb-0" label="Yangi parol">
-                    <a-input-password v-model="form.password" placeholder="Parol" />
+                    <a-input-password
+                      v-model="form.current_password"
+                      placeholder="Parol"
+                    />
                   </a-form-model-item>
                   <a-form-model-item
                     class="form-item mb-0"
@@ -237,6 +240,7 @@ export default {
         last_name: "",
         password: "",
         password_confirmation: "",
+        current_password: "",
         phone_number: "",
         address: "",
         postcode: "",
@@ -270,6 +274,7 @@ export default {
         this.profile = profileData?.user;
         this.form = {
           name: this.profile.name ? this.profile.name : "",
+          last_name: this.profile.surname ? this.profile.surname : "",
           address: this.profile.address ? this.profile.address : "",
           postcode: this.profile.postcode ? this.profile.postcode : "",
           email: this.profile.email ? this.profile.email : "",
