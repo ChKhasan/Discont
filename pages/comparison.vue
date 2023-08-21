@@ -3,22 +3,19 @@
     <div class="container_xl">
       <div class="page-breadcrumb">
         <nuxt-link :to="localePath('/')">Diskont main page</nuxt-link>
-        <nuxt-link class="disabled" :to="localePath('/')">
-          Solishtirish
-        </nuxt-link>
+        <nuxt-link class="disabled" :to="localePath('/')"> Solishtirish </nuxt-link>
       </div>
       <div class="d-flex page-container-title">
         <div class="d-flex align-items-end">
           <MainTitle title="Solishtirish" />
-          <span class="d-flex align-items-end"
-            >{{ compProducts?.length }} tovar</span
-          >
+          <span class="d-flex align-items-end">{{ compProducts?.length }} tovar</span>
         </div>
         <a-select
-          v-model="value"
+          v-model="filterValue"
           class="categories-filter-select"
           placeholder="Select good person"
           style="width: 252px"
+          @change="filterChange"
         >
           <a-select-option
             v-for="item in status"
@@ -33,10 +30,7 @@
         <div class="page-container-body">
           <div class="swiper-comparison mySwiper" style="overflow: hidden">
             <div class="swiper-wrapper">
-              <div
-                class="swiper-slide"
-                v-for="(product, index) in compProducts"
-              >
+              <div class="swiper-slide" v-for="(product, index) in compProducts">
                 <ComparisonCard
                   :product="product"
                   :indexId="index"
@@ -86,8 +80,12 @@ export default {
           value: "all",
           label: "Barchasi",
         },
+        {
+          value: "phones",
+          label: "Telefonlar",
+        },
       ],
-      value: "all",
+      filterValue: "all",
       compProducts: [],
       comparisonData: [],
     };
@@ -100,7 +98,6 @@ export default {
   },
   async mounted() {
     let compProductsStore = JSON.parse(localStorage.getItem("comparison"));
-    console.log(compProductsStore);
     if (compProductsStore.length > 0) {
       await this.__GET_PRODUCTS_BY_ID({ products: compProductsStore });
       await this.__GET_PRODUCTS_COMP({ products: compProductsStore });
@@ -117,11 +114,6 @@ export default {
       autoplay: {
         delay: 40000,
       },
-      // pagination: {
-      //   el: ".swiper-pagination-banner",
-      //   type: "bullets",
-      //   clickable: true,
-      // },
       navigation: {
         nextEl: ".swiper-button-next-comparison",
         prevEl: ".swiper-button-prev-comparison",
@@ -140,19 +132,34 @@ export default {
       });
       this.compProducts = data?.products;
     },
+    async filterChange(e) {
+      if (e == "all") {
+        await this.$router.replace({
+          path: `comparison`,
+          query: {},
+        });
+      } else {
+        await this.$router.replace({
+          path: `comparison`,
+          query: { category: e },
+        });
+      }
+      let compProductsStore = JSON.parse(localStorage.getItem("comparison"));
+      if (compProductsStore.length > 0) {
+        await this.__GET_PRODUCTS_BY_ID({ products: compProductsStore });
+        await this.__GET_PRODUCTS_COMP({ products: compProductsStore });
+      }
+    },
     async __GET_PRODUCTS_COMP(dataForm) {
       //
-      const data = await this.$store.dispatch(
-        "fetchProducts/getComparionsProductsById",
-        {
-          data: dataForm,
-          params: {
-            headers: { Language: this.$i18n.locale },
-          },
-        }
-      );
+      const data = await this.$store.dispatch("fetchProducts/getComparionsProductsById", {
+        data: dataForm,
+        params: {
+          params: { ...this.$route.query },
+          headers: { Language: this.$i18n.locale },
+        },
+      });
       this.comparisonData = data?.data;
-      console.log(data);
     },
   },
   watch: {

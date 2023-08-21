@@ -1,6 +1,6 @@
 <template lang="html">
   <div ref="navScroll" class="nav_scroll">
-    <div class="header-top d-flex">
+    <div class="header-top d-flex" ref="header_top">
       <div class="container_xl w-100">
         <div class="d-flex justify-content-between">
           <ul class="d-flex align-items-center">
@@ -69,24 +69,32 @@ export default {
   },
   mounted() {
     var header = this.$refs.navScroll;
-    // var header2 = this.$refs.navScroll2;
+    var header2 = this.$refs.navScroll2;
     var header3 = this.$refs.navScroll3;
+    var headerTop = this.$refs.header_top;
 
     window.addEventListener("scroll", () => {
       let scrollTop = window.pageYOffset || document.documentElement.scrollTop;
       if (scrollTop > this.lastScrollTop) {
-        header.style.top = "-46px";
-        // header2.style.marginTop = "-8px";
+        if (window.innerWidth > 576) {
+          header.style.top = `-${headerTop.offsetHeight}px`;
+        }
+        console.log(headerTop.offsetHeight);
+        // headerTop.style.marginTop = "-100%";
+        // header2.style.marginTop = `-${header2.offsetHeight}px`;
+        header2.style.display = 'none'
         header3.style.boxShadow = " 0 0.5rem 1rem rgb(0 0 0 / 15%)";
         // header.style.background = "#04babe";
         header.style.marginTop = "0";
       } else if (document.documentElement.scrollTop == 0) {
-        header.style.marginTop = "0";
-        header.style.boxShadow = "none";
+        // header.style.marginTop = "0";
+        // header.style.boxShadow = "none";
         // header3.style.boxShadow = "none";
-        // header2.style.display = "block";
+        header2.style.display = "block";
         // header.style.background = "#04babe";
       } else {
+        // header2.style.display = "block";
+
         // header2.style.marginTop = "0";
         header.style.top = "0";
         header.style.boxShadow = " 0 0.5rem 1rem rgb(0 0 0 / 15%)";

@@ -1453,7 +1453,7 @@ export default {
     margin-top: 14px;
   }
   .product-card-price h4 {
-    font-size: 14px;
+    font-size: 14px !important;
   }
   .product-card-price {
     margin-top: 14px;

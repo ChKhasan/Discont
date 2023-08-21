@@ -70,18 +70,32 @@
                 @click="$store.commit('addToStore', { id: product?.id, name: 'like' })"
               >
                 <svg
-                  width="20"
-                  height="19"
-                  viewBox="0 0 20 19"
-                  fill="none"
+                  v-if="$store.state.like.includes(product?.id)"
                   xmlns="http://www.w3.org/2000/svg"
+                  width="17"
+                  height="16"
+                  viewBox="0 0 17 16"
+                  fill="none"
                 >
                   <path
-                    d="M14.1695 0C13.237 0 12.3457 0.223898 11.5205 0.665519C10.9588 0.96608 10.4428 1.36542 10 1.83921C9.5572 1.36542 9.0412 0.96608 8.47946 0.665519C7.65423 0.223898 6.76297 0 5.83043 0C2.61555 0 0 2.73943 0 6.10663C0 8.49155 1.2026 11.0245 3.57435 13.6353C5.55464 15.8152 7.97913 17.6322 9.66429 18.7728L10 19L10.3357 18.7728C12.0209 17.6323 14.4454 15.8152 16.4257 13.6353C18.7974 11.0245 20 8.49155 20 6.10663C20 2.73943 17.3845 0 14.1695 0ZM15.5294 12.7421C13.7596 14.6903 11.6038 16.3464 10 17.4549C8.39616 16.3464 6.24037 14.6903 4.4706 12.7421C2.32499 10.3804 1.23711 8.14789 1.23711 6.10663C1.23711 3.45388 3.29769 1.29571 5.83047 1.29571C7.28866 1.29571 8.62817 1.99725 9.50544 3.2204L10 3.90993L10.4946 3.2204C11.3718 1.99725 12.7113 1.29571 14.1695 1.29571C16.7023 1.29571 18.7629 3.45388 18.7629 6.10663C18.7629 8.14789 17.675 10.3804 15.5294 12.7421Z"
+                    d="M11.8528 0.5C11.1095 0.5 10.3991 0.67846 9.74137 1.03046C9.29363 1.27002 8.88232 1.58832 8.52941 1.96596C8.17647 1.58832 7.76519 1.27002 7.31745 1.03046C6.65969 0.67846 5.94931 0.5 5.20602 0.5C2.64357 0.5 0.558824 2.68349 0.558824 5.36734C0.558824 7.26827 1.51736 9.2872 3.40779 11.3681C4.9862 13.1056 6.91866 14.5539 8.26183 15.463L8.52941 15.6441L8.79699 15.463C10.1402 14.554 12.0726 13.1056 13.6511 11.3681C15.5415 9.2872 16.5 7.26827 16.5 5.36734C16.5 2.68349 14.4153 0.5 11.8528 0.5Z"
+                    fill="#1F8A70"
+                  />
+                </svg>
+                <svg
+                  v-else
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="16"
+                  height="16"
+                  viewBox="0 0 16 16"
+                  fill="none"
+                >
+                  <path
+                    d="M11.2939 0C10.5507 0 9.84027 0.17846 9.18254 0.530458C8.73481 0.770022 8.3235 1.08832 7.97059 1.46596C7.61765 1.08832 7.20636 0.770022 6.75863 0.530458C6.10087 0.17846 5.39048 0 4.6472 0C2.08474 0 0 2.18349 0 4.86734C0 6.76827 0.958541 8.7872 2.84897 10.8681C4.42737 12.6056 6.35984 14.0539 7.70301 14.963L7.97059 15.1441L8.23817 14.963C9.58134 14.054 11.5138 12.6056 13.0922 10.8681C14.9827 8.7872 15.9412 6.76827 15.9412 4.86734C15.9412 2.18349 13.8564 0 11.2939 0ZM12.3779 10.1562C10.9672 11.709 9.24894 13.0291 7.97059 13.9126C6.69224 13.029 4.97394 11.709 3.56333 10.1562C1.85315 8.27378 0.986052 6.49434 0.986052 4.86734C0.986052 2.75295 2.62845 1.03276 4.64723 1.03276C5.80949 1.03276 6.87716 1.59192 7.5764 2.56684L7.97059 3.11644L8.36478 2.56684C9.06402 1.59192 10.1317 1.03276 11.2939 1.03276C13.3127 1.03276 14.9551 2.75295 14.9551 4.86734C14.9551 6.49434 14.088 8.27378 12.3779 10.1562Z"
                     fill="#C7C7C7"
                   />
                   <path
-                    d="M15.5294 12.7421C13.7596 14.6903 11.6038 16.3464 10 17.4549C8.39616 16.3464 6.24037 14.6903 4.4706 12.7421C2.32499 10.3804 1.23711 8.14789 1.23711 6.10663C1.23711 3.45388 3.29769 1.29571 5.83047 1.29571C7.28866 1.29571 8.62817 1.99725 9.50544 3.2204L10 3.90993L10.4946 3.2204C11.3718 1.99725 12.7113 1.29571 14.1695 1.29571C16.7023 1.29571 18.7629 3.45388 18.7629 6.10663C18.7629 8.14789 17.675 10.3804 15.5294 12.7421Z"
+                    d="M12.3779 10.1562C10.9672 11.709 9.24894 13.0291 7.97059 13.9126C6.69224 13.029 4.97394 11.709 3.56333 10.1562C1.85315 8.27378 0.986052 6.49434 0.986052 4.86734C0.986052 2.75295 2.62845 1.03276 4.64723 1.03276C5.80949 1.03276 6.87716 1.59192 7.5764 2.56684L7.97059 3.11644L8.36478 2.56684C9.06402 1.59192 10.1317 1.03276 11.2939 1.03276C13.3127 1.03276 14.9551 2.75295 14.9551 4.86734C14.9551 6.49434 14.088 8.27378 12.3779 10.1562Z"
                     fill="#C7C7C7"
                   />
                 </svg>
@@ -100,26 +114,52 @@
                 "
               >
                 <svg
-                  width="21"
-                  height="19"
-                  viewBox="0 0 21 19"
-                  fill="none"
+                  v-if="$store.state.comparison.includes(product?.id)"
                   xmlns="http://www.w3.org/2000/svg"
+                  width="18"
+                  height="16"
+                  viewBox="0 0 18 16"
+                  fill="none"
                 >
                   <path
-                    d="M1.05 5.27778H19.95C20.58 5.27778 21 4.85556 21 4.22222C21 3.58889 20.58 3.16667 19.95 3.16667H1.05C0.420002 3.16667 1.90735e-06 3.58889 1.90735e-06 4.22222C1.90735e-06 4.85556 0.420002 5.27778 1.05 5.27778Z"
+                    d="M1.27812 4.2067H16.3425C16.8447 4.2067 17.1794 3.87016 17.1794 3.36536C17.1794 2.86056 16.8447 2.52402 16.3425 2.52402H1.27812C0.775974 2.52402 0.44121 2.86056 0.44121 3.36536C0.44121 3.87016 0.775974 4.2067 1.27812 4.2067Z"
+                    fill="#1F8A70"
+                  />
+                  <path
+                    d="M3.78886 6.73072C4.03993 6.73072 4.20731 6.64658 4.37469 6.47832C4.70946 6.14178 4.70946 5.63698 4.37469 5.30044L2.4498 3.36536L4.37469 1.43028C4.70946 1.09374 4.70946 0.588938 4.37469 0.252402C4.03993 -0.084134 3.53778 -0.084134 3.20302 0.252402L0.692282 2.77642C0.357517 3.11296 0.357517 3.61776 0.692282 3.9543L3.20302 6.47832C3.3704 6.64658 3.53778 6.73072 3.78886 6.73072Z"
+                    fill="#1F8A70"
+                  />
+                  <path
+                    d="M13.8318 15.1441C14.0829 15.1441 14.2503 15.06 14.4176 14.8917L16.9284 12.3677C17.2631 12.0312 17.2631 11.5264 16.9284 11.1898L14.4176 8.6658C14.0829 8.32927 13.5807 8.32927 13.246 8.6658C12.9112 9.00234 12.9112 9.50714 13.246 9.84368L15.1709 11.7788L13.246 13.7138C12.9112 14.0504 12.9112 14.5552 13.246 14.8917C13.4133 15.06 13.5807 15.1441 13.8318 15.1441Z"
+                    fill="#1F8A70"
+                  />
+                  <path
+                    d="M1.27812 12.6201H16.3425C16.8447 12.6201 17.1794 12.2836 17.1794 11.7788C17.1794 11.274 16.8447 10.9374 16.3425 10.9374H1.27812C0.775974 10.9374 0.44121 11.274 0.44121 11.7788C0.44121 12.2836 0.775974 12.6201 1.27812 12.6201Z"
+                    fill="#1F8A70"
+                  />
+                </svg>
+                <svg
+                  v-else
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="18"
+                  height="16"
+                  viewBox="0 0 18 16"
+                  fill="none"
+                >
+                  <path
+                    d="M1.77806 4.2067H16.8425C17.3446 4.2067 17.6794 3.87016 17.6794 3.36536C17.6794 2.86056 17.3446 2.52402 16.8425 2.52402H1.77806C1.27591 2.52402 0.941149 2.86056 0.941149 3.36536C0.941149 3.87016 1.27591 4.2067 1.77806 4.2067Z"
                     fill="#C7C7C7"
                   />
                   <path
-                    d="M4.2 8.44444C4.515 8.44444 4.725 8.33889 4.935 8.12778C5.355 7.70555 5.355 7.07222 4.935 6.65L2.52 4.22222L4.935 1.79444C5.355 1.37222 5.355 0.738889 4.935 0.316667C4.515 -0.105556 3.885 -0.105556 3.465 0.316667L0.315001 3.48333C-0.105 3.90556 -0.105 4.53889 0.315001 4.96111L3.465 8.12778C3.675 8.33889 3.885 8.44444 4.2 8.44444Z"
+                    d="M4.2888 6.73072C4.53987 6.73072 4.70725 6.64658 4.87463 6.47832C5.2094 6.14178 5.2094 5.63698 4.87463 5.30044L2.94974 3.36536L4.87463 1.43028C5.2094 1.09374 5.2094 0.588938 4.87463 0.252402C4.53987 -0.084134 4.03772 -0.084134 3.70296 0.252402L1.19222 2.77642C0.857456 3.11296 0.857456 3.61776 1.19222 3.9543L3.70296 6.47832C3.87034 6.64658 4.03772 6.73072 4.2888 6.73072Z"
                     fill="#C7C7C7"
                   />
                   <path
-                    d="M16.8 19C17.115 19 17.325 18.8944 17.535 18.6833L20.685 15.5167C21.105 15.0944 21.105 14.4611 20.685 14.0389L17.535 10.8722C17.115 10.45 16.485 10.45 16.065 10.8722C15.645 11.2944 15.645 11.9278 16.065 12.35L18.48 14.7778L16.065 17.2056C15.645 17.6278 15.645 18.2611 16.065 18.6833C16.275 18.8944 16.485 19 16.8 19Z"
+                    d="M14.3317 15.1441C14.5828 15.1441 14.7502 15.06 14.9176 14.8917L17.4283 12.3677C17.7631 12.0312 17.7631 11.5264 17.4283 11.1898L14.9176 8.6658C14.5828 8.32927 14.0807 8.32927 13.7459 8.6658C13.4111 9.00234 13.4111 9.50714 13.7459 9.84368L15.6708 11.7788L13.7459 13.7138C13.4111 14.0504 13.4111 14.5552 13.7459 14.8917C13.9133 15.06 14.0807 15.1441 14.3317 15.1441Z"
                     fill="#C7C7C7"
                   />
                   <path
-                    d="M1.05 15.8333H19.95C20.58 15.8333 21 15.4111 21 14.7778C21 14.1444 20.58 13.7222 19.95 13.7222H1.05C0.420002 13.7222 1.90735e-06 14.1444 1.90735e-06 14.7778C1.90735e-06 15.4111 0.420002 15.8333 1.05 15.8333Z"
+                    d="M1.77806 12.6201H16.8425C17.3446 12.6201 17.6794 12.2836 17.6794 11.7788C17.6794 11.274 17.3446 10.9374 16.8425 10.9374H1.77806C1.27591 10.9374 0.941149 11.274 0.941149 11.7788C0.941149 12.2836 1.27591 12.6201 1.77806 12.6201Z"
                     fill="#C7C7C7"
                   />
                 </svg>
@@ -426,7 +466,10 @@
                 <p class="tag">
                   {{
                     product?.discount?.pivot?.amount
-                      ? `-${product?.discount?.pivot?.amount} so'm`
+                      ? `-${(
+                          (product?.discount?.pivot?.amount * 100) /
+                          product?.real_price
+                        ).toFixed()}%`
                       : `-${product?.discount?.pivot?.percent}%`
                   }}
                 </p>
@@ -459,9 +502,12 @@
                 <img src="@/assets/images/Group 1000005199.png" alt="" />
                 +{{
                   Math.floor(
-                    product?.real_price / $store.state.dicoin?.sum_to_dicoin
-                      ? $store.state.dicoin?.sum_to_dicoin
-                      : 1
+                    (product?.discount_price
+                      ? product?.discount_price
+                      : product?.real_price) /
+                      ($store.state.dicoin?.sum_to_dicoin
+                        ? $store.state.dicoin?.sum_to_dicoin
+                        : 1)
                   )
                 }}
                 Di coin
@@ -592,14 +638,37 @@
                 :key="character?.id"
               >
                 <h4 class="paragraph">{{ character?.name }}</h4>
-                <div class="grider">
-                  <div
-                    class="spec"
-                    v-for="characterOptions in character?.characteristics"
-                    :key="characterOptions?.id"
-                  >
-                    <p class="question">{{ characterOptions?.name }}</p>
-                    <p class="answer">{{ characterOptions?.options[0]?.name }}</p>
+                <div class="spec__wrap_item">
+                  <div class="grider">
+                    <div
+                      class="spec"
+                      v-for="characterOptions in character?.characteristics.slice(
+                        0,
+                        character?.characteristics.length -
+                          Math.floor(character?.characteristics.length / 2)
+                      )"
+                      :key="characterOptions?.id"
+                    >
+                      <span></span>
+                      <p class="question">{{ characterOptions?.name }}</p>
+                      <p class="answer">{{ characterOptions?.options[0]?.name }}</p>
+                    </div>
+                  </div>
+                  <div class="grider">
+                    <div
+                      class="spec"
+                      v-for="characterOptions in character?.characteristics.slice(
+                        character?.characteristics.length -
+                          Math.floor(character?.characteristics.length / 2),
+                        character?.characteristics.length
+                      )"
+                      :key="characterOptions?.id"
+                    >
+                      <span></span>
+
+                      <p class="question">{{ characterOptions?.name }}</p>
+                      <p class="answer">{{ characterOptions?.options[0]?.name }}</p>
+                    </div>
                   </div>
                 </div>
               </div>
@@ -1397,6 +1466,9 @@ export default {
   top: calc(100vh / 2 - 20px);
   z-index: 2;
 }
+.product-inner-swiper {
+  height: 100%;
+}
 .swiper-button-prev-product-inner {
   left: 16px;
 }
@@ -1427,7 +1499,7 @@ export default {
   max-width: 40%;
   margin: 0 auto;
   overflow: hidden;
-  height: 100vh;
+  height: 100%;
 }
 .image-modal-container .swiper-slide {
   margin: auto;
@@ -1564,6 +1636,13 @@ export default {
   justify-content: space-between;
   padding-bottom: 10px;
   margin-bottom: 10px;
+  /* border-bottom: 1px dashed rgba(0, 0, 0, 0.1); */
+  position: relative;
+}
+.spec span {
+  position: absolute;
+  display: flex;
+  width: 100%;
   border-bottom: 1px dashed rgba(0, 0, 0, 0.1);
 }
 .stats .lil {
@@ -1596,10 +1675,22 @@ export default {
 }
 .question,
 .answer {
-  font-weight: 300;
-  font-size: 14.4812px;
-  line-height: 17px;
-  color: black;
+  color: var(--grey, #727474);
+  font-family: var(--SB_400);
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 20px;
+  background-color: #fff;
+  position: relative;
+  z-index: 3;
+}
+.question {
+  padding-right: 8px;
+}
+.answer {
+  color: var(--grey, #000);
+  padding-left: 8px;
 }
 .top {
   /* max-width: 50%; */
@@ -1750,24 +1841,27 @@ export default {
   margin-bottom: 32px;
 }
 .butns button {
-  font-weight: 500;
+  font-family: var(--SB_500);
   font-size: 14px;
   line-height: 18px;
   color: var(--color_dark_green);
   padding: 12px 34px;
   border: 1px solid #f1f1f1;
   border-radius: 77px;
+  background-color: #fff;
 }
 .butns button.active {
   background: var(--color_dark_green);
   color: white;
 }
 .paragraph {
-  font-weight: 500;
-  font-size: 18px;
-  line-height: 24px;
-  color: black;
   margin-bottom: 24px;
+  color: #000;
+  font-family: var(--SB_500);
+  font-size: 18px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 24px; /* 133.333% */
 }
 .about p {
   font-weight: 400;
@@ -1796,6 +1890,13 @@ export default {
   display: grid !important;
 }
 .spec__wrap {
+  max-width: 820px;
+  display: grid;
+  grid-template-columns: repeat(1, 1fr);
+  column-gap: 164px;
+  row-gap: 42px;
+}
+.spec__wrap_item {
   max-width: 820px;
   display: grid;
   grid-template-columns: repeat(2, 1fr);
@@ -2088,6 +2189,9 @@ tbody .img {
   line-height: 20px; /* 142.857% */
 }
 @media screen and (max-width: 1024px) {
+  .image-modal-container {
+    max-width: 70%;
+  }
   .world {
     flex-direction: column-reverse;
   }
@@ -2276,6 +2380,11 @@ tbody .img {
 @media (min-width: 1320px) {
   .branches-table {
     width: 70%;
+  }
+}
+@media screen and (max-width: 576px) {
+  .image-modal-container {
+    max-width: 100%;
   }
 }
 </style>

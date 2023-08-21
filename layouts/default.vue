@@ -214,7 +214,7 @@ export default {
     const [translationsData] = await Promise.all([
       this.$store.dispatch("fetchTranslations/getTranslations", {
         headers: {
-          Language: this.$i18n.locale,
+          lang: this.$i18n.locale,
         },
       }),
     ]);
@@ -277,7 +277,7 @@ export default {
       const [translationsData] = await Promise.all([
         this.$store.dispatch("fetchTranslations/getTranslations", {
           headers: {
-            Language: this.$i18n.locale,
+            lang: this.$i18n.locale,
           },
         }),
       ]);
