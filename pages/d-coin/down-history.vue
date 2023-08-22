@@ -2,7 +2,7 @@
   <div class="page-container d-coin-page">
     <div class="container_xl">
       <div class="page-breadcrumb">
-        <nuxt-link :to="localePath('/')">Diskont main page</nuxt-link>
+        <nuxt-link :to="localePath('/')">{{ $store.state.translations["main.home-page"] }}</nuxt-link>
         <nuxt-link :to="localePath('/')"> Di Coin </nuxt-link>
       </div>
       <div class="d-flex page-container-title">
@@ -50,7 +50,7 @@
         </div>
         <div class="d-coin__table-row">
           <div>
-            <p><span v-html="upload"></span>+15 ta Di Coin</p>
+            <p><span v-html="upload"></span>+15 {{ $store.state.translations["main.cout-di-coin"] }}</p>
           </div>
           <div><p>Buyurtma #85852</p></div>
           <div>
@@ -59,7 +59,7 @@
         </div>
         <div class="d-coin__table-row">
           <div>
-            <p><span v-html="upload"></span>+15 ta Di Coin</p>
+            <p><span v-html="upload"></span>+15 {{ $store.state.translations["main.cout-di-coin"] }}</p>
           </div>
           <div><p>Buyurtma #85852</p></div>
           <div>
@@ -68,7 +68,7 @@
         </div>
         <div class="d-coin__table-row">
           <div>
-            <p><span v-html="upload"></span>+15 ta Di Coin</p>
+            <p><span v-html="upload"></span>+15 {{ $store.state.translations["main.cout-di-coin"] }}</p>
           </div>
           <div><p>Buyurtma #85852</p></div>
           <div>
@@ -77,7 +77,7 @@
         </div>
         <div class="d-coin__table-row">
           <div>
-            <p><span v-html="upload"></span>+15 ta Di Coin</p>
+            <p><span v-html="upload"></span>+15 {{ $store.state.translations["main.cout-di-coin"] }}</p>
           </div>
           <div><p>Buyurtma #85852</p></div>
           <div>
@@ -86,7 +86,7 @@
         </div>
         <div class="d-coin__table-row">
           <div>
-            <p><span v-html="upload"></span>+15 ta Di Coin</p>
+            <p><span v-html="upload"></span>+15 {{ $store.state.translations["main.cout-di-coin"] }}</p>
           </div>
           <div><p>Buyurtma #85852</p></div>
           <div>

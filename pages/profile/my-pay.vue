@@ -2,7 +2,7 @@
   <div class="personal-info">
     <div class="container_xl">
       <div class="page-breadcrumb">
-        <nuxt-link :to="localePath('/')">Diskont main page</nuxt-link>
+        <nuxt-link :to="localePath('/')">{{ $store.state.translations["main.home-page"] }}</nuxt-link>
         <nuxt-link :to="localePath('/')"> Bo'lib to'lash </nuxt-link>
       </div>
       <div><MainTitle title="Bo'lib to'lash" /></div>

@@ -79,7 +79,6 @@ export default {
         if (window.innerWidth > 576) {
           header.style.top = `-${headerTop.offsetHeight}px`;
         }
-        console.log(headerTop.offsetHeight);
         // headerTop.style.marginTop = "-100%";
         // header2.style.marginTop = `-${header2.offsetHeight}px`;
         header2.style.display = 'none'
@@ -88,7 +87,7 @@ export default {
         header.style.marginTop = "0";
       } else if (document.documentElement.scrollTop == 0) {
         // header.style.marginTop = "0";
-        // header.style.boxShadow = "none";
+        header.style.boxShadow = "none";
         // header3.style.boxShadow = "none";
         header2.style.display = "block";
         // header.style.background = "#04babe";
@@ -97,8 +96,8 @@ export default {
 
         // header2.style.marginTop = "0";
         header.style.top = "0";
-        header.style.boxShadow = " 0 0.5rem 1rem rgb(0 0 0 / 15%)";
-        header3.style.boxShadow = " 0 0.5rem 1rem rgb(0 0 0 / 15%)";
+        header.style.boxShadow = " 0 0.3rem 0.5rem rgb(0 0 0 / 15%)";
+        header3.style.boxShadow = " 0 0.3rem 0.5rem rgb(0 0 0 / 15%)";
         header.style.background = "#fff";
         header.style.marginTop = "0";
       }

@@ -2,7 +2,7 @@
   <div class="page-container">
     <div class="container_xl">
       <div class="page-breadcrumb">
-        <nuxt-link :to="localePath('/')">Diskont main page</nuxt-link>
+        <nuxt-link :to="localePath('/')">{{ $store.state.translations["main.home-page"] }}</nuxt-link>
         <nuxt-link class="disabled" :to="localePath('/')">
           Menga yoqqan tovarlar
         </nuxt-link>
@@ -33,16 +33,16 @@
         </p>
       </div>
       <div class="categories-products-show-more" v-if="likeProducts.length > 44">
-        Показать еще 44
+        {{ $store.state.translations["main.show-more"] }} 44
       </div>
       <div class="products-pagination" v-if="likeProducts.length > 44">
         <a-pagination size="small" :default-current="6" :total="500" />
       </div>
     </div>
     <div class="categories-app-banner-container">
-      <div class="container_xl">
+        <!--<div class="container_xl">
         <CategoriesAppCard />
-      </div>
+      </div>-->
     </div>
   </div>
 </template>

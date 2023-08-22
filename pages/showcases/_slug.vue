@@ -2,16 +2,22 @@
   <div class="categories-page-inner">
     <div class="container_xl">
       <div>
-        <div class="page-breadcrumb">
-          <nuxt-link :to="localePath('/')">Diskont main page</nuxt-link>
+        <div class="page-breadcrumb" v-if="loading">
+          <b-skeleton width="20%"></b-skeleton>
+        </div>
+        <div class="page-breadcrumb" v-else>
+          <nuxt-link :to="localePath('/')">{{
+            $store.state.translations["main.home-page"]
+          }}</nuxt-link>
           <nuxt-link :to="localePath('/')">
             {{ showcases?.name }}
           </nuxt-link>
         </div>
         <div class="d-flex justify-content-between align-items-end showcases_top">
-          <div class="d-flex categories-page-title">
-            <MainTitle :title="showcases?.name" class="mb-0" />
-            <span class="align-items-end">{{ showcases?.products?.length }} tovar</span>
+          <div class="d-flex categories-page-title mb-0">
+            <b-skeleton width="200px" v-if="loading"></b-skeleton>
+            <MainTitle :title="showcases?.name" class="mb-0" v-else />
+            <!-- <span class="align-items-end">{{ showcases?.products?.length }} tovar</span> -->
           </div>
           <a-select
             v-model="value"
@@ -31,72 +37,8 @@
       </div>
       <div class="categories-page-inner-grid">
         <div class="categories-filter-list">
-          <div class="categories-list-inner px-0">
-            <h5>Kategoriyalar</h5>
-            <!-- <div v-for="firstCategory in allCategories" :key="firstCategory?.id">
-              <nuxt-link
-                :to="`/categories-inner/${firstCategory?.slug}`"
-                :class="{
-                  'active-category': $route.params.index == firstCategory?.slug,
-                }"
-                class="first-category"
-                >{{ firstCategory?.name }}</nuxt-link
-              >
-              <Transition name="bounce">
-                <ul
-                  class="categories-list-inner"
-                  v-if="
-                    (firstCategory?.children.length > 0 &&
-                      firstCategory?.slug == $route.params.index) ||
-                    firstCategory.children.find(
-                      (item) => item.slug == $route.params.index
-                    ) ||
-                    firstCategory.children.find((item) =>
-                      item.children.find((elem) => elem.slug == $route.params.index)
-                    )
-                  "
-                >
-                  <li
-                    v-for="middCategory in firstCategory?.children"
-                    :key="middCategory?.id"
-                  >
-                    <span
-                      :class="{
-                        'active-category': $route.params.index == middCategory?.slug,
-                      }"
-                      @click="$router.push(`/categories-inner/${middCategory?.slug}`)"
-                      >{{ middCategory?.name }}</span
-                    >
-                    <div
-                      class="child-categories-list"
-                      v-if="
-                        middCategory?.slug == $route.params.index ||
-                        middCategory?.children.find(
-                          (item) => item.slug == $route.params.index
-                        )
-                      "
-                    >
-                      <nuxt-link
-                        v-if="middCategory?.children.length > 0"
-                        v-for="childs in middCategory?.children"
-                        :to="`/categories-inner/${childs?.slug}`"
-                        :class="{
-                          'active-category': $route.params.index == childs?.slug,
-                        }"
-                        :key="childs.id"
-                        >{{ childs?.name }}</nuxt-link
-                      >
-                    </div>
-                  </li>
-                </ul>
-              </Transition>
-            </div> -->
-
-            <span class="categories-list_show-more">Показать еще</span>
-          </div>
           <div class="filter-range">
-            <h5>Kategoriyalar</h5>
-
+            <h5>Narxi</h5>
             <a-slider
               range
               :step="10000"
@@ -120,7 +62,19 @@
           </div>
         </div>
         <div class="categories-products showcases_products">
-          <div class="categories-card-grid" v-if="showcases?.products.length > 0">
+          <div class="categories-card-grid" v-if="loading">
+            <div
+              class="empty-card"
+              v-for="product in [1, 2, 4, 5, 6, 7, 8]"
+              :key="product"
+            >
+              <b-skeleton width="100%" height="100%"></b-skeleton>
+            </div>
+          </div>
+          <div
+            class="categories-card-grid"
+            v-if="showcases?.products?.length > 0 && !loading"
+          >
             <ProductCard
               v-for="product in showcases?.products"
               :key="product.id"
@@ -131,21 +85,26 @@
             <img src="../../assets/images/comments-empty.png" alt="" />
             <h4>Mahsulot topilmadi</h4>
           </div>
-          <div
+          <!-- <div
             class="categories-products-show-more"
-            v-if="showcases?.products.length > 30"
+            v-if="showcases?.products?.length > 30"
           >
-            Показать еще 44
-          </div>
-          <div class="products-pagination" v-if="showcases?.products.length > 30">
-            <a-pagination size="small" :default-current="6" :total="500" />
+            {{ $store.state.translations["main.show-more"] }} 44
+          </div> -->
+          <div class="products-pagination" v-if="totalPage > params.pageSize">
+            <a-pagination
+              size="small"
+              v-model.number="current"
+              :total="totalPage"
+              :page-size.sync="params.pageSize"
+            />
           </div>
         </div>
       </div>
       <div class="categories-page-inner-grid">
         <span></span>
         <div>
-          <div class="categories-page-info">
+          <!-- <div class="categories-page-info">
             <h5>
               ШИРОКИЙ АССОРТИМЕНТ МЕБЕЛИ В ТАШКЕНТЕ ПРЕДСТАВЛЕН В ИНТЕРНЕТ-МАГАЗИНЕ
               DISKONT (ТАШКЕНТ, УЗБЕКИСТАН) ПО ВЫГОДНЫМ ЦЕНАМ ОТ ПРОИЗВОДИТЕЛЯ.
@@ -183,14 +142,14 @@
               поддержки по номеру 200 7 002. Добро пожаловать в интернет-магазин tovarlar
               для дома DISKONT!
             </p>
-          </div>
+          </div> -->
         </div>
       </div>
     </div>
     <div class="categories-app-banner-container">
-      <div class="container_xl">
+      <!--<div class="container_xl">
         <CategoriesAppCard />
-      </div>
+      </div>-->
     </div>
   </div>
 </template>
@@ -199,9 +158,12 @@ import MainTitle from "../../components/Main-title.vue";
 import CategoriesCard from "../../components/cards/CategoriesCard.vue";
 import ProductCard from "../../components/cards/ProductCard.vue";
 import CategoriesAppCard from "../../components/categories/categories-app-banner.vue";
+import global from "../../mixins/global";
 export default {
+  mixins: [global],
   data() {
     return {
+      loading: false,
       showAllAtr: [],
       sliderValue: [10000, 10000000],
       arrow: require("../../assets/svg/dropdown-icon.svg?raw"),
@@ -210,6 +172,7 @@ export default {
       disabled: false,
       filterOptions: [],
       products: [],
+      showcases: [],
       atr: [],
       atributDrop: [],
       status: [
@@ -233,10 +196,13 @@ export default {
       }),
     ]);
     const showcases = showcasesData?.showcase;
-
+    console.log(showcases);
     return {
       showcases,
     };
+  },
+  mounted() {
+    this.getFirstData("__GET_PRODUCTS");
   },
   computed: {
     filterAtributs() {
@@ -261,18 +227,27 @@ export default {
         this.atributDrop = this.atributDrop.filter((item) => item != id);
       }
     },
+    onChangeSlider(val) {},
     clearFilter() {
       this.$router.replace({
-        path: `/categories-inner/${this.$route.params.index}`,
+        path: this.$route.path,
         query: {},
       });
       this.filterOptions = [];
     },
     async __GET_PRODUCTS() {
-      const data = await this.$axios.$get(`/categories/${this.$route.params.index}`, {
-        params: { ...this.$route.query },
+      this.loading = true;
+      const data = await this.$store.dispatch("fetchShowcases/getShowcasesBySlug", {
+        slug: this.$route.params.slug,
+        params: {
+          params: { ...this.$route.query },
+          headers: {
+            Language: this.$i18n.locale,
+          },
+        },
       });
-      this.products = data?.product_infos;
+      this.loading = false;
+      this.showcases = data?.showcase;
     },
     async onChange(value) {
       let atr = [];
@@ -288,7 +263,7 @@ export default {
       if (!this.$route.query.attributes || this.$route.query.attributes != string) {
         let query = { ...this.$route.query, attributes: string };
         await this.$router.replace({
-          path: `/categories-inner/${this.$route.params.index}`,
+          path: this.$route.path,
           query: query,
         });
       }
@@ -307,7 +282,7 @@ export default {
       let query = { ...this.$route.query, attributes: atr.join(",") };
 
       await this.$router.replace({
-        path: `/categories-inner/${this.$route.params.index}`,
+        path: this.$route.path,
         query: query,
       });
       if (!Object.keys(query).includes("attributes")) {
@@ -322,7 +297,7 @@ export default {
       ) {
         let query = { ...this.$route.query, min_price: value[0], max_price: value[1] };
         await this.$router.replace({
-          path: `/categories-inner/${this.$route.params.index}`,
+          path: this.$route.path,
           query: query,
         });
         this.__GET_PRODUCTS();
@@ -330,6 +305,9 @@ export default {
     },
   },
   watch: {
+    async current(val) {
+      this.changePagination(val, "__GET_PRODUCTS");
+    },
     filterAtributs(val) {
       if (val == 0) this.filterOptions = [];
       this.__GET_PRODUCTS();
@@ -337,7 +315,7 @@ export default {
         let query = { ...this.$route.query };
         delete query.attributes;
         this.$router.replace({
-          path: `/categories-inner/${this.$route.params.index}`,
+          path: this.$route.path,
           query: query,
         });
       }

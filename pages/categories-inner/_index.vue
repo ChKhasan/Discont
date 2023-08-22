@@ -2,26 +2,36 @@
   <div class="categories-page-inner">
     <div class="container_xl">
       <div>
-        <div class="page-breadcrumb">
-          <nuxt-link :to="localePath('/')">Main</nuxt-link>
+        <div class="page-breadcrumb" v-if="loading">
+          <b-skeleton width="20%"></b-skeleton>
+        </div>
+        <div class="page-breadcrumb" v-else>
+          <nuxt-link :to="localePath('/')">{{
+            $store.state.translations["main.home-page"]
+          }}</nuxt-link>
           <nuxt-link
             v-if="categoryChilds?.parent?.parent?.slug"
             :to="localePath(`/categories-inner/${categoryChilds?.parent?.parent?.slug}`)"
           >
             {{ categoryChilds?.parent?.parent?.name }}
           </nuxt-link>
+
           <nuxt-link
             v-if="categoryChilds?.parent?.slug"
             :to="localePath(`/categories-inner/${categoryChilds?.parent?.slug}`)"
           >
             {{ categoryChilds?.parent?.name }}
           </nuxt-link>
-          <nuxt-link :to="localePath('/')">
+          <nuxt-link v-if="loading" :to="localePath(`/`)">
+            <b-skeleton width="100px" v-if="loading"></b-skeleton>
+          </nuxt-link>
+          <nuxt-link :to="localePath('/')" v-else>
             {{ categoryChilds?.name }}
           </nuxt-link>
         </div>
         <div class="d-flex categories-page-title">
-          <MainTitle :title="categoryChilds?.name" class="mb-0" />
+          <b-skeleton width="30%" v-if="loading"></b-skeleton>
+          <MainTitle :title="categoryChilds?.name" v-else class="mb-0" />
           <span>{{ products?.length }} tovar</span>
         </div>
         <div class="mobile__filter">
@@ -132,7 +142,7 @@
       <div class="categories-page-inner-grid">
         <div class="categories-filter-list">
           <div>
-            <h5>Kategoriyalar</h5>
+            <h5>{{ $store.state.translations["main.categories"] }}</h5>
             <div
               v-for="firstCategory in allCategories"
               :key="firstCategory?.id"
@@ -168,7 +178,11 @@
                       :class="{
                         'active-category': $route.params.index == middCategory?.slug,
                       }"
-                      @click="$router.push(`/categories-inner/${middCategory?.slug}`)"
+                      @click="
+                        $router.push(
+                          localePath(`/categories-inner/${middCategory?.slug}`)
+                        )
+                      "
                       >{{ middCategory?.name }}</span
                     >
                     <div
@@ -239,7 +253,7 @@
               </Transition>
             </div>
 
-            <!-- <span class="categories-list_show-more">Показать еще</span> -->
+            <!-- <span class="categories-list_show-more">{{ $store.state.translations["main.show-more"] }}</span> -->
           </div>
           <div class="categories-atribute-box">
             <div class="filter-range">
@@ -297,7 +311,7 @@
                   v-if="!showAllAtr.includes(attribit.id) && attribit.options.length > 5"
                   class="categories-list_show-more"
                   @click="showAllAtributs(attribit.id)"
-                  >Показать еще</span
+                  >{{ $store.state.translations["main.show-more"] }}</span
                 >
               </div>
             </div>
@@ -315,7 +329,7 @@
               <div
                 class="clear-filter"
                 @click="clearFilter"
-                v-if="Object.keys($route.query).length > 0"
+                v-if="Object.keys($route.query).length > 2"
               >
                 Filtrni tozalash
               </div>
@@ -335,79 +349,50 @@
               </a-select-option>
             </a-select>
           </div>
-          <div class="categories-card-grid" v-if="products.length > 0">
+          <div class="categories-card-grid" v-if="loading">
+            <div
+              class="empty-card"
+              v-for="product in [1, 2, 4, 5, 6, 7, 8]"
+              :key="product"
+            >
+              <b-skeleton width="100%" height="100%"></b-skeleton>
+            </div>
+          </div>
+          <div class="categories-card-grid" v-if="products.length > 0 && !loading">
             <ProductCard
               v-for="product in products"
               :key="product.id"
-              :product="{
-                ...product?.default_product,
-                info: {
-                  name: product?.name,
-                },
-              }"
+              :product="product"
             />
           </div>
-          <div class="comments-empty" v-else>
+          <div class="comments-empty" v-if="products.length == 0 && !loading">
             <img src="../../assets/images/comments-empty.png" alt="" />
             <h4>Mahsulot topilmadi</h4>
           </div>
-          <div class="categories-products-show-more" v-if="products.length > 30">
-            Показать еще 44
-          </div>
-          <div class="products-pagination" v-if="products.length > 30">
-            <a-pagination size="small" :default-current="6" :total="500" />
+          <!-- <div class="categories-products-show-more" v-if="products.length > 30">
+            {{ $store.state.translations["main.show-more"] }} 44
+          </div> -->
+          <div class="products-pagination" v-if="totalPage > params.pageSize">
+            <a-pagination
+              size="small"
+              v-model.number="current"
+              :total="totalPage"
+              :page-size.sync="params.pageSize"
+            />
           </div>
         </div>
       </div>
       <div class="categories-page-inner-grid together">
         <span></span>
         <div>
-          <div class="categories-page-info">
-            <h5>
-              ШИРОКИЙ АССОРТИМЕНТ МЕБЕЛИ В ТАШКЕНТЕ ПРЕДСТАВЛЕН В ИНТЕРНЕТ-МАГАЗИНЕ
-              DISKONT (ТАШКЕНТ, УЗБЕКИСТАН) ПО ВЫГОДНЫМ ЦЕНАМ ОТ ПРОИЗВОДИТЕЛЯ.
-            </h5>
-            <p>
-              DISKONT предлагает: мебель для гостиной, шкафы и комоды, кровати и матрасы,
-              мягкую мебель, стулья, кресла и столы, садовую мебель и мебель для офиса.
-            </p>
-            <p>
-              В нашем интернет-магазине представлен широкий ассортимент предметов мебели
-              на любой вкус и бюджет. Мы предлагаем удобный выбор непосредственно на
-              сайте, минуя долгие утомительные разъезды по множеству мебельных магазинов и
-              рынков Ташкента, где можно купить хорошую недорогую мебель. Но! Поскольку их
-              ассортимент сильно отличается, и вы вынуждены тратить время и силы на
-              перемещения из одной точки Ташкента в другую. А на DISKONT собраны лучшие
-              предложения многих производителей по выгодным ценам! Покупая мебель у нас вы
-              гарантированно получаете качественный товар, оперативную доставку и сборку
-              мебели у вас дома.
-            </p>
-            <p>
-              Модельный ряд мебели пополняется практически ежедневно, следите за нашими
-              новостями и подписывайтесь на нашу рассылку в форме ниже.
-            </p>
-            <p>
-              Условия доставки вашего заказа: мы доставляем заказанные товары по Ташкенту
-              и в радиусе 5 км от большой кольцевой дороги.
-            </p>
-            <p>
-              Форма оплаты заказа: вы производите оплату своего заказа при его получении
-              наличными, пластиковой картой или перечислением (просим уточнить возможность
-              безналичной оплаты у консультанта).
-            </p>
-            <p>
-              Оформить заказ можно через Telegram или позвонив в нашу единую службу
-              поддержки по номеру 200 7 002. Добро пожаловать в интернет-магазин tovarlar
-              для дома DISKONT!
-            </p>
-          </div>
+          <div class="categories-page-info" v-html="categoryChilds?.desc"></div>
         </div>
       </div>
     </div>
     <div class="categories-app-banner-container">
-      <div class="container_xl">
+      <!--<div class="container_xl">
         <CategoriesAppCard />
-      </div>
+      </div>-->
     </div>
 
     <div :class="{ show: filterHandle }" class="hidden__filter">
@@ -492,7 +477,9 @@
                     :class="{
                       'active-category': $route.params.index == middCategory?.slug,
                     }"
-                    @click="$router.push(`/categories-inner/${middCategory?.slug}`)"
+                    @click="
+                      $router.push(localePath(`/categories-inner/${middCategory?.slug}`))
+                    "
                     >{{ middCategory?.name }}</span
                   >
                   <div
@@ -563,7 +550,7 @@
             </Transition>
           </div>
 
-          <!-- <span class="categories-list_show-more">Показать еще</span> -->
+          <!-- <span class="categories-list_show-more">{{ $store.state.translations["main.show-more"] }}</span> -->
         </div>
         <div class="categories-atribute-box">
           <div v-for="attribit in attributes" :key="attribit.id">
@@ -597,7 +584,7 @@
                 v-if="!showAllAtr.includes(attribit.id) && attribit.options.length > 5"
                 class="categories-list_show-more"
                 @click="showAllAtributs(attribit.id)"
-                >Показать еще</span
+                >{{ $store.state.translations["main.show-more"] }}</span
               >
             </div>
           </div>
@@ -615,7 +602,9 @@ import CategoriesAppCard from "../../components/categories/categories-app-banner
 import CategoriesInnerBannerCarousel from "../../components/categories/categoriesInner-banner-carousel.vue";
 import CategoriesInnerBanner from "../../components/categories/categoriesInner-banner.vue";
 import CategoriesTabCarousel from "../../components/categories/categoriesInner-tab-carousel.vue";
+import global from "../../mixins/global";
 export default {
+  mixins: [global],
   data() {
     return {
       filterHandle: false,
@@ -628,7 +617,11 @@ export default {
       filterOptions: [],
       products: [],
       atr: [],
+      loading: false,
+      attributes: [],
+      options: [],
       atributDrop: [],
+      categoryChilds: [],
       status: [
         {
           value: "all",
@@ -638,24 +631,9 @@ export default {
     };
   },
   async asyncData({ $axios, params, query, store, i18n }) {
-    const [
-      categoriesData,
-      categoryChildsData,
-      productsData,
-      allCategoriesData,
-      bannersData,
-    ] = await Promise.all([
-      $axios.$get(`/categories`, {
-        params: {
-          limit: 10,
-        },
-        headers: {
-          Language: i18n.locale,
-        },
-      }),
-      $axios.$get(`/categories/${params.index}`),
+    const [productsData, allCategoriesData, bannersData] = await Promise.all([
       store.dispatch("fetchProducts/getProducts", {
-        params: { page: 1 },
+        params: { ...query },
         headers: {
           Language: i18n.locale,
         },
@@ -674,42 +652,19 @@ export default {
         },
       }),
     ]);
-    const categories = categoriesData?.categories?.data;
-    const categoryChilds = categoryChildsData?.category;
-    const products = categoryChildsData?.product_infos;
-    const attributes = categoryChildsData?.attributes;
-    const options = [];
-    categoryChildsData?.attributes.forEach((item) => {
-      options.push(...item.options);
-    });
-    const filterOptions = [];
-    if (query.attributes) {
-      let atr = query.attributes.split(",");
-      atr.forEach((item) => {
-        let findItem = options.find((elem) => elem.id == item);
-        filterOptions.push(findItem);
-      });
-    }
-    const allInfo = categoryChildsData;
     const productsOthers = productsData?.products?.data;
     const allCategories = allCategoriesData?.categories;
     const banners = bannersData?.banners?.data;
-
     return {
-      categoryChilds,
-      products,
-      attributes,
-      allInfo,
-      options,
-      filterOptions,
-      categories,
       productsOthers,
       allCategories,
       banners,
     };
   },
 
-  mounted() {},
+  mounted() {
+    this.getFirstData("__GET_PRODUCTS");
+  },
   computed: {
     filterAtributs() {
       let arr = [];
@@ -736,15 +691,35 @@ export default {
     clearFilter() {
       this.$router.replace({
         path: `/categories-inner/${this.$route.params.index}`,
-        query: {},
+        query: {
+          page: this.$route.query.page,
+        },
       });
       this.filterOptions = [];
     },
     async __GET_PRODUCTS() {
+      this.loading = true;
       const data = await this.$axios.$get(`/categories/${this.$route.params.index}`, {
         params: { ...this.$route.query },
       });
-      this.products = data?.product_infos;
+      this.loading = false;
+      this.products = data?.products?.data;
+      this.categoryChilds = data?.category;
+      this.attributes = data?.attributes;
+      this.options = [];
+      this.totalPage = data?.products?.total;
+      data?.attributes.forEach((item) => {
+        this.options.push(...item.options);
+      });
+      this.filterOptions = [];
+      if (this.$route.query.attributes) {
+        let atr = this.$route.query.attributes.split(",");
+        atr.forEach((item) => {
+          let findItem = this.options.find((elem) => elem.id == item);
+          this.filterOptions.push(findItem);
+        });
+      }
+      this.allInfo = data;
     },
     async onChange(value) {
       let atr = [];
@@ -808,6 +783,9 @@ export default {
     },
   },
   watch: {
+    async current(val) {
+      this.changePagination(val, "__GET_PRODUCTS");
+    },
     filterAtributs(val) {
       if (val == 0) this.filterOptions = [];
       this.__GET_PRODUCTS();

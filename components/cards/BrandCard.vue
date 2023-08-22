@@ -1,5 +1,5 @@
 <template lang="html">
-  <div class="brand-card" @click="$router.push(`/brand-categories/${brand?.slug}`)">
+  <div class="brand-card" @click="$router.push(localePath(`/brand-categories/${brand?.slug}`))">
     <!-- <img v-if="brand?.logo" :src="brand?.logo" alt="" /> -->
     <img src="../../assets/images/image 56.png" alt="" />
   </div>

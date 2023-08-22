@@ -2,7 +2,7 @@
   <div class="wrap">
     <div
       class="h-category-card"
-      @click="$router.push(`/categories/${category.slug}`)"
+      @click="$router.push(localePath(`/categories/${category.slug}`))"
     >
       <div class="h-category-card-title">
         <h4>{{ category?.name }}</h4>

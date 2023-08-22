@@ -2,7 +2,7 @@
   <div class="categories-page-inner">
     <div class="container_xl">
       <div class="page-breadcrumb">
-        <nuxt-link :to="localePath('/')">Diskont main page</nuxt-link>
+        <nuxt-link :to="localePath('/')">{{ $store.state.translations["main.home-page"] }}</nuxt-link>
         <nuxt-link class="disabled" :to="localePath('/')"> Smartfonlar </nuxt-link>
       </div>
       <div class="d-flex categories-page-title">
@@ -49,9 +49,9 @@
       </div>
     </div>
     <div class="categories-app-banner-container">
-      <div class="container_xl">
+        <!--<div class="container_xl">
         <CategoriesAppCard />
-      </div>
+      </div>-->
     </div>
   </div>
 </template>
@@ -93,10 +93,10 @@ export default {
   },
   methods: {
     onChange(value) {
-      console.log("change: ", value);
+      // console.log("change: ", value);
     },
     onAfterChange(value) {
-      console.log("afterChange: ", value);
+      // console.log("afterChange: ", value);
     },
   },
   components: {

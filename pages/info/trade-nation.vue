@@ -2,7 +2,7 @@
   <div class="page-container">
     <div class="container_xl">
       <div class="page-breadcrumb">
-        <nuxt-link :to="localePath('/')">Diskont main page</nuxt-link>
+        <nuxt-link :to="localePath('/')">{{ $store.state.translations["main.home-page"] }}</nuxt-link>
         <nuxt-link :to="localePath('/')">Diskontda Nasiya savdo </nuxt-link>
       </div>
       <div class="d-flex page-container-title">
@@ -52,9 +52,9 @@
       </div>
     </div>
     <div class="categories-app-banner-container">
-      <div class="container_xl">
+        <!--<div class="container_xl">
         <CategoriesAppCard />
-      </div>
+      </div>-->
     </div>
   </div>
 </template>

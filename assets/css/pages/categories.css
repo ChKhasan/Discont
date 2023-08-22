@@ -73,6 +73,7 @@
 
 .categories-page-title {
   margin-top: 18px;
+  margin-bottom: 32px;
 }
 .categories-page-title span {
   font-family: var(--SB_400);
@@ -98,22 +99,31 @@
   width: 80%;
 }
 .categories-page-info h5 {
-  font-family: "Inter";
+  font-family: var(--SB_500);
   font-style: normal;
   font-weight: 500;
   font-size: 16px;
   line-height: 24px;
   color: #353437;
-  margin-bottom: 24px;
+  /* margin-bottom: 24px; */
 }
-.categories-page-info p {
-  font-family: "Inter";
+.categories-page-info p,
+.categories-page-info span {
+  font-family: var(--SB_400);
   font-style: normal;
   font-weight: 400;
   font-size: 16px;
   line-height: 24px;
   color: #5d5d5f;
-  margin-bottom: 24px;
+  /* margin-bottom: 24px; */
+}
+.categories-page-info h1,
+.categories-page-info h2,
+.categories-page-info h3,
+.categories-page-info h4,
+.categories-page-info h5,
+.categories-page-info h6 {
+  font-family: var(--SB_500);
 }
 .categories-page-info p:last-child {
   margin-bottom: 0;

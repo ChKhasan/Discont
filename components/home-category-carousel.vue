@@ -115,6 +115,7 @@ export default {
 
 .product-swiper {
   overflow: hidden;
+  width: 100%;
 }
 
 @media screen and (max-width: 1024px) {

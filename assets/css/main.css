@@ -160,7 +160,7 @@ body::-webkit-scrollbar-thumb {
   align-items: center;
 }
 .products-pagination .ant-pagination-item-active a {
-  color: #09454f !important;
+  color: #1F8A70 !important;
 }
 .products-pagination .ant-pagination-item-link {
   display: flex !important;
@@ -359,7 +359,7 @@ body::-webkit-scrollbar-thumb {
   line-height: 20px;
   display: flex;
   align-items: center;
-  text-align: right;
+  /* text-align: right; */
   letter-spacing: -0.28px;
   margin-bottom: 12px;
 }
@@ -492,7 +492,13 @@ body::-webkit-scrollbar-thumb {
 .bounce-leave-active {
   animation: bounce-in2 0.3s reverse;
 }
-
+.ant-spin-dot-item {
+  background-color: var(--color_dark_green) !important;
+}
+.empty-card {
+  height: 484px;
+  max-height: 484px;
+}
 @keyframes bounce-in2 {
   0% {
     transform: translateY(30px);

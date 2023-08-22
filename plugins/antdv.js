@@ -28,12 +28,14 @@ import {
   // Skeleton,
   // Empty,
   // Alert,
+  Spin,
   BackTop
 } from "ant-design-vue";
 const { info, success, error, warning, confirm } = Modal;
 Vue.prototype.$notification = notification;
 Vue.prototype.$message = message;
 Vue.prototype.$confirm = confirm;
+Vue.use(Spin);
 Vue.use(BackTop);
 Vue.use(Checkbox);
 Vue.use(Slider);

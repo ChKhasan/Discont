@@ -1,5 +1,5 @@
 <template lang="html">
-  <div class="stocks-card" @click="$router.push(`/stock/${promotion?.slug}`)">
+  <div class="stocks-card" @click="$router.push(localePath(`/stock/${promotion?.slug}`))">
     <div class="stocks-card-img">
       <img :src="promotion?.md_banner" alt="" />
     </div>

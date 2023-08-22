@@ -2,7 +2,7 @@
   <div class="personal-info">
     <div class="container_xl">
       <div class="page-breadcrumb">
-        <nuxt-link :to="localePath('/')">Diskont main page</nuxt-link>
+        <nuxt-link :to="localePath('/')">{{ $store.state.translations["main.home-page"] }}</nuxt-link>
         <nuxt-link :to="localePath('/')"> Shaxsiy ma`lumotlarim </nuxt-link>
       </div>
       <div><MainTitle title="Shaxsiy ma`lumotlarim" /></div>
@@ -159,13 +159,13 @@
                 <div class="form-grid-3" v-if="$store.state.profile.password_updated">
                   <a-form-model-item class="form-item mb-0" label="Hozirgi parolingiz">
                     <a-input-password
-                      v-model="form.password"
+                      v-model="form.current_password"
                       placeholder="Last password"
                     />
                   </a-form-model-item>
                   <a-form-model-item class="form-item mb-0" label="Yangi parol">
                     <a-input-password
-                      v-model="form.current_password"
+                      v-model="form.password"
                       placeholder="Parol"
                     />
                   </a-form-model-item>

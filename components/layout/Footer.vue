@@ -241,7 +241,6 @@ export default {
   },
   methods: {
     dropAction(id) {
-      console.log(id);
       if (this.activeDrop.includes(id)) {
         this.activeDrop = this.activeDrop.filter((item) => item != id);
       } else {

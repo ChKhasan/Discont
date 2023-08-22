@@ -3,7 +3,7 @@
     <div class="container_xl">
       <div>
         <div class="page-breadcrumb">
-          <nuxt-link :to="localePath('/')">Diskont main page</nuxt-link>
+          <nuxt-link :to="localePath('/')">{{ $store.state.translations["main.home-page"] }}</nuxt-link>
           <nuxt-link :to="localePath('/')"> {{ brand?.name }} </nuxt-link>
         </div>
         <div class="d-flex categories-page-title justify-content-between">
@@ -30,7 +30,7 @@
       <div class="categories-page-inner-grid">
         <div class="categories-filter-list">
           <div class="categories-list">
-            <h5>Kategoriyalar</h5>
+            <h5>{{ $store.state.translations["main.categories"] }}</h5>
             <ul>
               <li v-for="brand in brandsAll" :key="brand?.id">
                 <span
@@ -44,7 +44,7 @@
               class="categories-list_show-more"
               @click="showAll"
               v-if="brands?.length < brandsAll?.length"
-              >Показать еще</span
+              >{{ $store.state.translations["main.show-more"] }}</span
             > -->
           </div>
           <div class="filter-range">
@@ -86,7 +86,7 @@
             <img src="../../assets/images/comments-empty.png" alt="" />
             <h4>Mahsulot topilmadi</h4>
           </div>
-          <div class="categories-products-show-more" v-if="false">Показать еще 44</div>
+          <div class="categories-products-show-more" v-if="false">{{ $store.state.translations["main.show-more"] }} 44</div>
           <div class="products-pagination" v-if="false">
             <a-pagination size="small" :default-current="6" :total="500" />
           </div>
@@ -136,9 +136,9 @@
       </div>
     </div>
     <div class="categories-app-banner-container">
-      <div class="container_xl">
+        <!--<div class="container_xl">
         <CategoriesAppCard />
-      </div>
+      </div>-->
     </div>
   </div>
 </template>
@@ -196,10 +196,10 @@ export default {
   },
   methods: {
     onChange(value) {
-      console.log("change: ", value);
+      // console.log("change: ", value);
     },
     onAfterChange(value) {
-      console.log("afterChange: ", value);
+      // console.log("afterChange: ", value);
     },
     showAll() {
       this.brands = this.brandsAll;

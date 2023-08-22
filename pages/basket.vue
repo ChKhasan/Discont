@@ -2,7 +2,7 @@
   <div class="page-container">
     <div class="container_xl">
       <div class="page-breadcrumb">
-        <nuxt-link :to="localePath('/')">Diskont main page</nuxt-link>
+        <nuxt-link :to="localePath('/')">{{ $store.state.translations["main.home-page"] }}</nuxt-link>
         <nuxt-link class="disabled" :to="localePath('/')"> Savatcha </nuxt-link>
       </div>
       <div class="d-flex page-container-title">
@@ -45,13 +45,13 @@
             >
               <div
                 class="basket-img-container"
-                @click="$router.push(`/product/${product.slug}`)"
+                @click="$router.push(localePath(`/product/${product.slug}`))"
               >
                 <img :src="product.images[0]?.sm_img" alt="" />
               </div>
               <div class="basket-card-body">
                 <div class="basket-card-text-block">
-                  <h4 @click="$router.push(`/product/${product.slug}`)">
+                  <h4 @click="$router.push(localePath(`/product/${product.slug}`))">
                     {{ product?.info?.name }}
                   </h4>
                   <p>
@@ -129,7 +129,7 @@
                           : product?.real_price
                       }`.replace(/\B(?=(\d{3})+(?!\d))/g, " ")
                     }}
-                    so’mdan/donasi
+                    {{ $store.state.translations["main.som-count"] }}
                   </p>
                 </div>
                 <div class="basket-price-block">
@@ -173,8 +173,7 @@
                     >
                     <h4>
                       {{ productTotalPrice(product) }}
-                      so’m
-                    </h4>
+                      {{ $store.state.translations["main.som"] }}                    </h4>
                   </div>
                 </div>
               </div>
@@ -412,9 +411,9 @@
       </div>
     </div>
     <div class="categories-app-banner-container">
-      <div class="container_xl">
+        <!--<div class="container_xl">
         <CategoriesAppCard />
-      </div>
+      </div>-->
     </div>
   </div>
 </template>

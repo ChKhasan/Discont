@@ -232,6 +232,7 @@
   white-space: nowrap;
   align-items: center;
 }
+
 .winter_discount {
   /* color: #ffffff !important; */
   /* background: linear-gradient(to right, #018ce1, #216bfd) !important; */
@@ -243,6 +244,12 @@
 /* .winter_discount svg path {
   fill: #ffffff;
 } */
+.header-category_container ul li a img {
+  margin-right: 13px;
+  /* display: flex; */
+  /* align-items: center; */
+  height: 20px;
+}
 .header-category_container ul li a span {
   margin-right: 13px;
   display: flex;

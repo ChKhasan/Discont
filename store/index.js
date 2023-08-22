@@ -108,13 +108,11 @@ export const actions = {
         },
       })
       .then((res) => {
-        console.log(res);
         commit("getProfileInfo", res?.user);
       });
   },
   dicoinInfo({ commit }, payload) {
     this.$axios.$get("/dicoins").then((res) => {
-      console.log(res);
       commit("getDiCoinInfo", res?.dicoin);
     });
   },

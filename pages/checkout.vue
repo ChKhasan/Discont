@@ -358,8 +358,7 @@
                 ><p>Tovarlar</p>
                 <p>
                   {{ `${totalRealPrice}`.replace(/\B(?=(\d{3})+(?!\d))/g, " ") }}
-                  so’m
-                </p></span
+                  {{ $store.state.translations["main.som"] }}                </p></span
               >
 
               <span
@@ -371,8 +370,7 @@
                       " "
                     )
                   }}
-                  so’m
-                </p></span
+                  {{ $store.state.translations["main.som"] }}                </p></span
               >
               <span
                 ><p>Di Coin</p>
@@ -382,8 +380,7 @@
                       sendDicoin ? dicoinSumm * $store.state.dicoin?.dicoin_to_sum : 0
                     }`.replace(/\B(?=(\d{3})+(?!\d))/g, " ")
                   }}
-                  so’m
-                </p></span
+                  {{ $store.state.translations["main.som"] }}                </p></span
               >
               <span
                 ><p>Yetkazib berish</p>
@@ -394,8 +391,7 @@
                       " "
                     )
                   }}
-                  so’m
-                </p></span
+                  {{ $store.state.translations["main.som"] }}                </p></span
               >
               <span
                 ><p>Umumiy narx</p>
@@ -408,8 +404,7 @@
                         : reduceTotalPrice) + deliveryCost
                     }`.replace(/\B(?=(\d{3})+(?!\d))/g, " ")
                   }}
-                  so’m
-                </p></span
+                  {{ $store.state.translations["main.som"] }}                </p></span
               >
             </div>
             <div
@@ -431,8 +426,7 @@
                     " "
                   )
                 }}
-                so’m
-              </p>
+                {{ $store.state.translations["main.som"] }}              </p>
             </div>
             <div
               class="checkout_dicoin"
@@ -495,8 +489,7 @@
                 >
                   -
                   {{ dicoinSumm * $store.state.dicoin?.dicoin_to_sum }}
-                  so’m
-                </p>
+                  {{ $store.state.translations["main.som"] }}                </p>
                 <p
                   style="color: red"
                   v-if="
@@ -506,8 +499,7 @@
                 >
                   -
                   {{ dicoinSumm * $store.state.dicoin?.dicoin_to_sum }}
-                  so’m
-                </p>
+                  {{ $store.state.translations["main.som"] }}                </p>
               </div>
               <button
                 @click="currentDicoin"
@@ -1230,7 +1222,7 @@ export default {
           this.$store.commit("reloadStore");
         }
       } catch (e) {
-        console.log(e);
+        // console.log(e);
       }
     },
     async __POST_ADDRESSS(formData) {
@@ -1254,7 +1246,7 @@ export default {
         this.$store.dispatch("profileInfo");
         this.visible = false;
       } catch (e) {
-        console.log(e);
+        // console.log(e);
       }
     },
     handleOk() {
@@ -1263,7 +1255,6 @@ export default {
     },
     onChange(e) {
       this.checkboxVal = e.target.checked;
-      console.log(this.checkboxVal);
     },
   },
   watch: {
@@ -1306,7 +1297,6 @@ export default {
             this.deliveryCost = currentGroup.group.delivery_price;
           }
         }
-        console.log(this.deliveryCost);
       } else {
         this.deliveryCost = null;
       }

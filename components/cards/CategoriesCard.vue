@@ -1,7 +1,7 @@
 <template lang="html">
   <div
     class="categoies-card"
-    @click="$router.push(`/categories-inner/${category?.slug}`)"
+    @click="$router.push(localePath(`/categories-inner/${category?.slug}`))"
   >
     <div class="categoies-card-img">
       <img v-if="category?.md_img" :src="category?.md_img" alt="" />

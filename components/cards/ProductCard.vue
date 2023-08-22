@@ -26,8 +26,12 @@
           }"
           @click="$store.commit('addToStore', { id: product?.id, name: 'comparison' })"
         ></span>
-        <div class="fast_show" @click="visible = true">Tezkor ko'rish</div>
-        <span class="pc-img-container" @click="$router.push(`/product/${product?.slug}`)"
+        <div class="fast_show" @click="visible = true">
+          {{ $store.state.translations["main.quick-view"] }}
+        </div>
+        <span
+          class="pc-img-container"
+          @click="$router.push(localePath(`/product/${product?.slug}`))"
           ><img
             v-if="product?.images[0]?.md_img"
             :src="product?.images[0]?.md_img"
@@ -36,7 +40,27 @@
           <img v-else src="../../assets/images/empty-img.png" alt="" />
         </span>
       </div>
-      <div class="product_badges" v-if="product?.badges">
+      <div class="product_promotions" v-if="product?.promotions">
+        <span v-for="promotion in product?.promotions">
+          <span></span>
+          <span
+            :style="`background-color: ${promotion?.product_card_back_color};color: ${promotion?.product_card_text_color}`"
+            class="promotion-name"
+            v-if="promotion?.name?.ru"
+          >
+            {{ promotion?.name?.ru }}
+          </span>
+          <span class="promotion-img" v-if="promotion?.md_sticker"
+            ><img :src="promotion?.md_sticker" alt=""
+          /></span>
+          <span
+            class="promotion-img"
+            v-if="promotion?.sticker_svg"
+            v-html="promotion?.sticker_svg"
+          ></span>
+        </span>
+      </div>
+      <div class="product_badges" v-if="product?.badges || product?.discount">
         <span>
           <span
             v-if="product?.discount"
@@ -44,14 +68,17 @@
             :style="{ background: 'red', color: '#fff' }"
             ><p>
               {{
-                product?.discount?.amount
-                  ? `${product?.discount?.amount} so'm`
-                  : `-${product?.discount?.percent}%`
+                product?.discount?.pivot?.amount
+                  ? `-${(
+                      (product?.discount?.pivot?.amount * 100) /
+                      product?.real_price
+                    ).toFixed()}%`
+                  : `-${product?.discount?.pivot?.percent}%`
               }}
             </p></span
           >
         </span>
-        <span v-for="badge in product?.badges" :key="badge.id">
+        <span v-if="product?.badges" v-for="badge in product?.badges" :key="badge.id">
           <span
             class="product_badges_item"
             :style="{
@@ -79,7 +106,7 @@
               product?.discount_price ? product?.discount_price : product?.real_price
             }`.replace(/\B(?=(\d{3})+(?!\d))/g, " ")
           }}
-          so’m
+          {{ $store.state.translations["main.som"] }}
         </h4>
         <!-- <span> +5 ta dicoin</span> -->
       </span>
@@ -126,7 +153,8 @@
         v-else
         @click="($event) => addToCart($event, product)"
       >
-        <span>Savatchaga</span>Savatchaga
+        <span>{{ $store.state.translations["main.to-basket"] }}</span
+        >{{ $store.state.translations["main.to-basket"] }}
       </div>
     </div>
     <a-modal
@@ -202,7 +230,8 @@
                   'active-like-comp-btn': $store.state.like.includes(product?.id),
                 }"
                 @click="$store.commit('addToStore', { id: product?.id, name: 'like' })"
-                ><span v-html="activeHeart"></span> Sevimlilarga</span
+                ><span v-html="activeHeart"></span
+                >{{ $store.state.translations["main.to-favorites"] }}</span
               >
               <span
                 :class="{
@@ -214,7 +243,8 @@
                     name: 'comparison',
                   })
                 "
-                ><span v-html="comp"></span> Taqqoslash</span
+                ><span v-html="comp"></span>
+                {{ $store.state.translations["main.comparison"] }}</span
               >
             </div>
 
@@ -226,9 +256,12 @@
                       - {{ product?.discount?.pivot?.percent }}%
                     </p>
                     <p v-if="product?.discount?.pivot?.amount" class="dis__price">
-                      - {{ product?.discount?.pivot?.amount }} so’m
+                      - {{ product?.discount?.pivot?.amount }}
+                      {{ $store.state.translations["main.som"] }}
                     </p>
-                    <p class="dis__txt">Chegirma narxida</p>
+                    <p class="dis__txt">
+                      {{ $store.state.translations["main.at-discount-price"] }}
+                    </p>
                   </div>
 
                   <p class="price">
@@ -237,11 +270,11 @@
                         .replace(".", ",")
                         .replace(/\B(?=(\d{3})+(?!\d))/g, " ")
                     }}
-                    so’m
+                    {{ $store.state.translations["main.som"] }}
                   </p>
 
                   <p class="delivery">
-                    Yetkazib berish narxi viloyatga qarab belgilanadi
+                    {{ $store.state.translations["main.depends-region"] }}
                   </p>
 
                   <!-- <p class="coin">
@@ -260,7 +293,7 @@
                             : 1)
                       )
                     }}
-                    ta di coin
+                    {{ $store.state.translations["main.cout-di-coin"] }}
                   </p>
                 </div>
 
@@ -279,16 +312,16 @@
                       })
                     "
                   >
-                    Savatchaga solish
+                    {{ $store.state.translations["main.add-to-cart"] }}
                   </button>
                   <button class="click" @click="visibleOc = true">
-                    Birgina click orqali sotib olish
+                    {{ $store.state.translations["main.boc-title"] }}
                   </button>
                 </div>
               </div>
             </div>
             <div class="product-modal-characteristic">
-              <h4>Mahsulot haqida qisqacha</h4>
+              <h4>{{ $store.state.translations["main.short-info"] }}</h4>
               <div>
                 <p>Бренд</p>
                 <p>Samsung</p>
@@ -309,7 +342,7 @@
             <nuxt-link
               class="product-modal-show-more"
               :to="localePath(`/product/${product?.slug}`)"
-              >Maxsulotni ko’proq ko’rish
+              >{{ $store.state.translations["main.more-products-info"] }}
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 width="19"
@@ -425,7 +458,8 @@
                       name: 'like',
                     })
                   "
-                  ><span v-html="activeHeart"></span> Sevimlilarga</span
+                  ><span v-html="activeHeart"></span>
+                  {{ $store.state.translations["main.to-favorites"] }}</span
                 >
                 <span
                   :class="{
@@ -437,7 +471,8 @@
                       name: 'comparison',
                     })
                   "
-                  ><span v-html="comp"></span> Taqqoslash</span
+                  ><span v-html="comp"></span>
+                  {{ $store.state.translations["main.comparison"] }}</span
                 >
               </div>
               <div class="product-modal-attribut-block">
@@ -513,12 +548,15 @@
                       +
                     </button>
                   </div>
-                  <p>Sotuvda bor {{ productInner?.stock }}</p>
+                  <p>
+                    {{ $store.state.translations["main.available-sale"] }}
+                    {{ productInner?.stock }}
+                  </p>
                 </div>
                 <nuxt-link
                   class="product-modal-show-more"
                   :to="localePath(`/product/${product?.slug}`)"
-                  >Maxsulotni ko’proq ko’rish
+                  >{{ $store.state.translations["main.more-products-info"] }}
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
                     width="19"
@@ -546,7 +584,9 @@
               </div>
             </div>
             <div class="product-modal-buy-mode-btns">
-              <div @click="visibleOc = true">Birgina click orqali sotib olish</div>
+              <div @click="visibleOc = true">
+                {{ $store.state.translations["main.boc-title"] }}
+              </div>
               <span
                 :class="{
                   'disabled-btn': $store.state.cart.find((item) => item.id == product.id),
@@ -612,7 +652,7 @@
       @ok="handleOkName"
     >
       <div class="vmodal-header auth-modal oc-modal-header">
-        <h5>Birgina click orqali sotib olish</h5>
+        <h5>{{ $store.state.translations["main.boc-title"] }}</h5>
         <span @click="handleOkName"
           ><svg
             xmlns="http://www.w3.org/2000/svg"
@@ -648,7 +688,8 @@
               <h5>{{ product?.info?.name }}</h5>
               <Transition name="oc-bounce">
                 <p class="oc-code" v-if="callBox">
-                  Tovar kodi: <span>{{ product?.id }}</span>
+                  {{ $store.state.translations["main.product-code"] }}:
+                  <span>{{ product?.id }}</span>
                 </p>
               </Transition>
             </div>
@@ -686,7 +727,10 @@
                   </svg>
                 </button>
               </div>
-              <p>{{ product?.real_price }} so’mdan/donasi</p>
+              <p>
+                {{ product?.real_price }}
+                {{ $store.state.translations["main.som-count"] }}
+              </p>
             </div>
           </div>
         </div>
@@ -700,10 +744,14 @@
           <div class="oc-modal-form">
             <a-form-model-item
               class="form-item register-input mb-0 pb-0"
-              label="Ismingizni kiriting"
+              :label="$store.state.translations['main.enter-your-name']"
               prop="name"
             >
-              <a-input v-model="formName.name" type="text" placeholder="Name" />
+              <a-input
+                v-model="formName.name"
+                type="text"
+                :placeholder="$store.state.translations['main.enter-your-name']"
+              />
             </a-form-model-item>
             <a-form-model-item
               class="form-item register-input mb-0 pb-0"
@@ -724,10 +772,10 @@
         v-if="!callBox"
         @click="submitOc()"
       >
-        Ma`lumotlarni yuborish
+        {{ $store.state.translations["main.send-info"] }}
       </div>
       <div class="vmodal-forget-password" v-if="!callBox" @click="callBox = true">
-        O’zim bog’lanaman
+        {{ $store.state.translations["main.contact-you"] }}
       </div>
       <a href="tel:+998712077788">
         <Transition name="oc-bounce">
@@ -756,7 +804,7 @@
                 /></svg
             ></span>
             <div class="call-number">
-              <p>Call centre Diskont:</p>
+              <p>{{ $store.state.translations["main.call-centre"] }}:</p>
               <a href="tel:+998712077788">
                 <h4>71 207 77 88</h4>
               </a>
@@ -775,7 +823,7 @@
       @ok="handleOkSuccess"
     >
       <div class="vmodal-header">
-        <h5>Yangi sharh</h5>
+        <h5>{{ $store.state.translations["main.new-comment"] }}</h5>
         <span @click="handleOkSuccess"
           ><svg
             xmlns="http://www.w3.org/2000/svg"
@@ -802,9 +850,11 @@
       </div>
       <div class="vmodal-body comment-modal-success">
         <img src="../../assets/images/modal-success.png" alt="" />
-        <p>Buyurtma tasdiqlandi. Tez orada siz bilan bog'lanamiz</p>
+        <p>{{ $store.state.translations["main.comment-succes-text"] }}</p>
       </div>
-      <div class="vmodal-btn" @click="handleOkSuccess">Yaxshi raxmat</div>
+      <div class="vmodal-btn" @click="handleOkSuccess">
+        {{ $store.state.translations["main.comment-succes-btn"] }}
+      </div>
       <template slot="footer"> <h3></h3></template>
     </a-modal>
   </div>
@@ -900,7 +950,7 @@ export default {
         // this.compToast = true;
         this.visibleSuccess = true;
       } catch (e) {
-        console.log(e);
+        // console.log(e);
       }
     },
     productPrice(product) {
@@ -933,7 +983,6 @@ export default {
       // let element = document.getElementById("cart");
       // let x = element.offsetLeft;
       // let y = element.offsetTop;
-      // console.log(x, y, xPos, yPos);
       this.$store.commit("addToCart", {
         obj: { id: product?.id, count: this.productCount },
         name: "cart",
@@ -1415,6 +1464,16 @@ export default {
   display: flex;
   flex-direction: column;
 }
+.product_promotions {
+  position: absolute;
+  top: 5px;
+  left: 1px;
+  pointer-events: none;
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  align-items: center;
+}
 .product_badges_item {
   transform: rotate(-2.91deg);
   padding: 6px 6px;
@@ -1517,6 +1576,25 @@ export default {
   color: white;
   border-radius: 20px;
   text-align: center;
+}
+.promotion-img {
+  display: flex;
+  width: 60px;
+  /* height: 60px; */
+}
+.promotion-name {
+  font-family: var(--SB_400);
+  display: flex;
+  line-height: 21px;
+  font-size: 0.75rem;
+  padding-left: 0.5rem;
+  padding-right: 0.5rem;
+  border-radius: 4px;
+}
+.promotion-img img {
+  height: 100%;
+  width: 100%;
+  object-fit: contain;
 }
 @keyframes xAxis {
   0% {

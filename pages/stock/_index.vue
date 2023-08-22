@@ -2,7 +2,7 @@
   <div class="page-container">
     <div class="container_xl">
       <div class="page-breadcrumb">
-        <nuxt-link :to="localePath('/')">Diskont main page</nuxt-link>
+        <nuxt-link :to="localePath('/')">{{ $store.state.translations["main.home-page"] }}</nuxt-link>
         <nuxt-link :to="localePath('/')"> {{ promotion?.name }} </nuxt-link>
       </div>
       <div class="d-flex page-container-title">
@@ -30,7 +30,7 @@
       <div class="categories-products categories-page-inner-grid">
         <div class="categories-filter-list">
           <div>
-            <h5>Kategoriyalar</h5>
+            <h5>{{ $store.state.translations["main.categories"] }}</h5>
             <div
               v-for="firstCategory in allCategories"
               :key="firstCategory?.id"
@@ -147,7 +147,7 @@
               </ul>
             </div>
 
-            <!-- <span class="categories-list_show-more">Показать еще</span> -->
+            <!-- <span class="categories-list_show-more">{{ $store.state.translations["main.show-more"] }}</span> -->
           </div>
         </div>
         <div class="categories-card-grid" v-if="promotion?.products.length > 0">
@@ -165,7 +165,7 @@
           <h4>Mahsulot topilmadi</h4>
         </div>
         <div class="categories-products-show-more" v-if="promotion?.products.length > 30">
-          Показать еще 44
+          {{ $store.state.translations["main.show-more"] }} 44
         </div>
         <div class="products-pagination" v-if="promotion?.products.length > 30">
           <a-pagination size="small" :default-current="6" :total="500" />

@@ -3,12 +3,12 @@
     <div class="container_xl">
       <div class="categories-page-grid">
         <div class="categories-list">
-          <h5>Kategoriyalar</h5>
+          <h5>{{ $store.state.translations["main.categories"] }}</h5>
           <ul>
             <li
               v-for="category in categories"
               :key="category.id"
-              @click="$router.push(`/categories/${category?.slug}`)"
+              @click="$router.push(localePath(`/categories/${category?.slug}`))"
             >
               <span>{{ category?.name }}</span>
               <div
@@ -38,19 +38,32 @@
               </div>
             </li>
           </ul>
-          <span class="categories-list_show-more">Показать еще</span>
+          <div class="d-flex justify-content-center" v-if="loading">
+            <a-spin size="small" />
+          </div>
+          <span
+            class="categories-list_show-more"
+            v-if="!allCategories && categories.length <= 10"
+            @click="__GET_ALL_CATEGORIES"
+            >{{ $store.state.translations["main.show-more"] }}</span
+          >
         </div>
         <div>
           <div>
             <div class="page-breadcrumb">
-              <nuxt-link :to="localePath('/')">Diskont main page</nuxt-link>
+              <nuxt-link :to="localePath('/')">{{
+                $store.state.translations["main.home-page"]
+              }}</nuxt-link>
               <nuxt-link :to="localePath('/')">
                 {{ categoryChilds?.name }}
               </nuxt-link>
             </div>
             <div class="d-flex categories-page-title">
-              <MainTitle :title="categoryChilds?.name" />
-              <span>{{ categoryChilds?.children?.length }} kategoriya</span>
+              <MainTitle class="mb-0" :title="categoryChilds?.name" />
+              <span
+                >{{ categoryChilds?.children?.length }}
+                {{ $store.state.translations["main.category"] }}</span
+              >
             </div>
           </div>
           <div class="categories-card-grid">
@@ -70,49 +83,12 @@
           <ProductCard v-for="product in products" :key="product.id" :product="product" />
         </div>
       </div>
-      <div class="categories-page-info">
-        <h5>
-          ШИРОКИЙ АССОРТИМЕНТ МЕБЕЛИ В ТАШКЕНТЕ ПРЕДСТАВЛЕН В ИНТЕРНЕТ-МАГАЗИНЕ DISKONT
-          (ТАШКЕНТ, УЗБЕКИСТАН) ПО ВЫГОДНЫМ ЦЕНАМ ОТ ПРОИЗВОДИТЕЛЯ.
-        </h5>
-        <p>
-          DISKONT предлагает: мебель для гостиной, шкафы и комоды, кровати и матрасы,
-          мягкую мебель, стулья, кресла и столы, садовую мебель и мебель для офиса.
-        </p>
-        <p>
-          В нашем интернет-магазине представлен широкий ассортимент предметов мебели на
-          любой вкус и бюджет. Мы предлагаем удобный выбор непосредственно на сайте, минуя
-          долгие утомительные разъезды по множеству мебельных магазинов и рынков Ташкента,
-          где можно купить хорошую недорогую мебель. Но! Поскольку их ассортимент сильно
-          отличается, и вы вынуждены тратить время и силы на перемещения из одной точки
-          Ташкента в другую. А на DISKONT собраны лучшие предложения многих производителей
-          по выгодным ценам! Покупая мебель у нас вы гарантированно получаете качественный
-          товар, оперативную доставку и сборку мебели у вас дома.
-        </p>
-        <p>
-          Модельный ряд мебели пополняется практически ежедневно, следите за нашими
-          новостями и подписывайтесь на нашу рассылку в форме ниже.
-        </p>
-        <p>
-          Условия доставки вашего заказа: мы доставляем заказанные товары по Ташкенту и в
-          радиусе 5 км от большой кольцевой дороги.
-        </p>
-        <p>
-          Форма оплаты заказа: вы производите оплату своего заказа при его получении
-          наличными, пластиковой картой или перечислением (просим уточнить возможность
-          безналичной оплаты у консультанта).
-        </p>
-        <p>
-          Оформить заказ можно через Telegram или позвонив в нашу единую службу поддержки
-          по номеру 200 7 002. Добро пожаловать в интернет-магазин tovarlar для дома
-          DISKONT!
-        </p>
-      </div>
+      <div class="categories-page-info" v-html="categoryChilds?.desc"></div>
     </div>
     <div class="categories-app-banner-container">
-      <div class="container_xl">
+        <!--<div class="container_xl">
         <CategoriesAppCard />
-      </div>
+      </div>-->
     </div>
   </div>
 </template>
@@ -126,6 +102,8 @@ export default {
   data() {
     return {
       arrow: require("../../assets/svg/dropdown-icon.svg?raw"),
+      loading: false,
+      allCategories: false,
       //   categoryChilds: [],
     };
   },
@@ -154,7 +132,13 @@ export default {
     };
   },
   methods: {
-    test() {},
+    async __GET_ALL_CATEGORIES() {
+      this.allCategories = true;
+      this.loading = true;
+      const data = await this.$axios.$get(`/categories`, {});
+      this.categories = data?.data;
+      this.loading = false;
+    },
   },
   components: {
     MainTitle,

@@ -249,6 +249,7 @@
                   <li
                     v-for="category in categories"
                     :key="category?.id"
+                    @click="$router.push(`/categories/${category?.slug}`)"
                     @mouseover="targetCategory(category)"
                     :class="{
                       'catalog-menu-list-active': activeCategory?.id == category?.id,
@@ -736,7 +737,11 @@
             :label="$store.state.translations['main.enter-your-name']"
             prop="name"
           >
-            <a-input v-model="formName.name" type="text" placeholder="Name" />
+            <a-input
+              v-model="formName.name"
+              type="text"
+              :placeholder="$store.state.translations['main.enter-your-name']"
+            />
           </a-form-model-item>
           <a-form-model-item
             class="form-item register-input mb-0 pb-0"
@@ -943,7 +948,7 @@ export default {
     },
     lastSearchResoultAction(res) {
       this.search = res;
-      this.$router.push(`/search/${this.search}`);
+      this.$router.push(this.localePath(`/search/${this.search}`));
     },
     searchResoultDelete(id) {
       this.searchResoults = this.searchResoults.filter((item) => item.id != id);
@@ -960,7 +965,7 @@ export default {
       });
       localStorage.setItem("search_resoults", JSON.stringify(this.searchResoults));
 
-      this.$router.push(`/search/${this.search}`);
+      this.$router.push(this.localePath(`/search/${this.search}`));
     },
     chunkIntoN(arr, n) {
       const size = Math.ceil(arr.length / n);
@@ -1086,7 +1091,7 @@ export default {
 
         this.smsCodeError = false;
       } catch (e) {
-        console.log(e);
+        // console.log(e);
         if (e.response.status == 422) this.smsCodeError = true;
       }
     },
@@ -1098,7 +1103,7 @@ export default {
         this.visibleName = false;
         this.visibleSuccess = true;
       } catch (e) {
-        console.log(e);
+        // console.log(e);
       }
     },
     again_sms_code() {
@@ -1128,7 +1133,7 @@ export default {
             ? `998${this.formCheckNumber.phone_number}`
             : this.formCheckNumber.phone_number;
       } catch (e) {
-        console.log(e);
+        // console.log(e);
       }
     },
     async __CHECK_NUMBER(formData) {
@@ -1148,7 +1153,7 @@ export default {
             ? `998${this.formCheckNumber.phone_number}`
             : this.formCheckNumber.phone_number;
       } catch (e) {
-        console.log(e);
+        // console.log(e);
       }
     },
     async __LOGIN(formData) {

@@ -295,9 +295,9 @@
     </div>
     <div class="container_xl classic mb-120" v-if="posts?.length > 0">
       <div class="d-flex justify-content-between align-items-end">
-        <MainTitle title="Yangiliklar va bloglar" />
-        <nuxt-link class="to-page-underline" :to="localePath('/all-news')"
-          >Barcha yangiliklar</nuxt-link
+        <MainTitle :title="$store.state.translations['main.news-blogs']" />
+        <nuxt-link class="to-page-underline" :to="localePath('/all-news')">
+          {{ $store.state.translations["main.all-posts"] }}</nuxt-link
         >
       </div>
       <PostsCarousel>
@@ -309,9 +309,9 @@
     <div class="rising container_xl mb-120">
       <DiscontBanner />
     </div>
-    <div class="nope rising container_xl mb-120">
+    <!-- <div class="nope rising container_xl mb-120">
       <ApplicationBanner />
-    </div>
+    </div> -->
     <div class="location container_xl mb-120">
       <div class="home-bottom-desc">
         <p>
@@ -438,7 +438,7 @@ export default {
     };
   },
   mounted() {
-    this.$store.dispatch("fetchBanners/getBanners", {
+    this.$store.dispatch("fetchProducts/getShowcases", {
       headers: {
         Language: this.$i18n.locale,
       },

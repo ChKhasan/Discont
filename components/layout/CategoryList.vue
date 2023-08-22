@@ -25,7 +25,10 @@
                       : `/stock/${topBar?.promotion?.slug}`
                   )
                 "
-                ><span v-html="topBar?.icon_svg"></span>{{ topBar?.name }}</nuxt-link
+                ><img :src="topBar?.icon_svg" alt="">
+                
+                <!-- <span v-html="topBar?.icon_svg"></span> -->
+                {{ topBar?.name }}</nuxt-link
               >
             </li>
             <!-- <li>
@@ -121,7 +124,6 @@ export default {
       }),
     ]);
     this.topBars = topBarsData?.bars?.data;
-    console.log(this.topBars);
   },
 };
 </script>

@@ -2,7 +2,7 @@
   <div class="identification-page">
     <div class="container_xl">
       <div class="page-breadcrumb">
-        <nuxt-link :to="localePath('/')">Diskont main page</nuxt-link>
+        <nuxt-link :to="localePath('/')">{{ $store.state.translations["main.home-page"] }}</nuxt-link>
         <nuxt-link :to="localePath('/')"> Savatcham </nuxt-link>
         <nuxt-link :to="localePath('/')"> Identifikatsiya </nuxt-link>
       </div>

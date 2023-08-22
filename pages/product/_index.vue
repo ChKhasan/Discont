@@ -100,7 +100,7 @@
                   />
                 </svg>
 
-                Sevimlilarga
+                {{ $store.state.translations["main.to-favorites"] }}
               </button>
               <button
                 :class="{
@@ -375,7 +375,7 @@
                   class="color"
                   v-for="colorOption in atributColor?.options"
                   :key="colorOption?.id"
-                  @click="$router.push(`/product/${colorOption?.slug}`)"
+                  @click="$router.push(localePath(`/product/${colorOption?.slug}`))"
                   :class="{
                     'active-attribute': colorOption?.active,
                     'disabled-attribute': !colorOption?.available,
@@ -417,7 +417,7 @@
                 <div
                   class="variation"
                   v-for="(option, optionIndex) in atribut?.options"
-                  @click="$router.push(`/product/${option?.slug}`)"
+                  @click="$router.push(localePath(`/product/${option?.slug}`))"
                   :class="{
                     'active-attribute': option?.active,
                     'disabled-attribute': !option?.available,
@@ -454,7 +454,10 @@
                     <a-icon type="plus" />
                   </button>
                 </div>
-                <p>Sotuvda bor {{ product?.stock }}</p>
+                <p>
+                  {{ $store.state.translations["main.available-sale"] }}
+                  {{ product?.stock }}
+                </p>
               </div>
             </div>
           </div>
@@ -477,7 +480,9 @@
                   {{ `${product?.real_price}`.replace(/\B(?=(\d{3})+(?!\d))/g, " ") }}
                   so'm
                 </p>
-                <p class="dis__txt">Chegirma narxida</p>
+                <p class="dis__txt">
+                  {{ $store.state.translations["main.at-discount-price"] }}
+                </p>
               </div>
               <p class="price" v-if="skeleton">
                 <b-skeleton width="50%" height="100%"> </b-skeleton>
@@ -490,10 +495,12 @@
                       : product?.real_price
                   }`.replace(/\B(?=(\d{3})+(?!\d))/g, " ")
                 }}
-                so’m
+                {{ $store.state.translations["main.som"] }}
               </p>
 
-              <p class="delivery">Yetkazib berish narxi viloyatga qarab belgilanadi</p>
+              <p class="delivery">
+                {{ $store.state.translations["main.depends-region"] }}
+              </p>
 
               <p class="coin" v-if="skeleton">
                 <b-skeleton width="150px" height="100%"> </b-skeleton>
@@ -525,7 +532,7 @@
                   })
                 "
               >
-                <p>Savatchaga solish</p>
+                <p>{{ $store.state.translations["main.add-to-cart"] }}</p>
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   width="18"
@@ -852,7 +859,7 @@
         @ok="handleOkName"
       >
         <div class="vmodal-header auth-modal oc-modal-header">
-          <h5>Birgina click orqali sotib olish</h5>
+          <h5>{{ $store.state.translations["main.boc-title"] }}</h5>
           <span @click="handleOkName"
             ><svg
               xmlns="http://www.w3.org/2000/svg"
@@ -888,7 +895,8 @@
                 <h5>{{ product?.info?.name }}</h5>
                 <Transition name="oc-bounce">
                   <p class="oc-code" v-if="callBox">
-                    Tovar kodi: <span>{{ product?.id }}</span>
+                    {{ $store.state.translations["main.product-code"] }}:
+                    <span>{{ product?.id }}</span>
                   </p>
                 </Transition>
               </div>
@@ -926,7 +934,10 @@
                     </svg>
                   </button>
                 </div>
-                <p>{{ productPrice(product) }} so’mdan/donasi</p>
+                <p>
+                  {{ productPrice(product) }}
+                  {{ $store.state.translations["main.som-count"] }}
+                </p>
               </div>
             </div>
           </div>
@@ -940,10 +951,14 @@
             <div class="oc-modal-form">
               <a-form-model-item
                 class="form-item register-input mb-0 pb-0"
-                label="Ismingizni kiriting"
+                :label="$store.state.translations['main.enter-your-name']"
                 prop="name"
               >
-                <a-input v-model="formOc.name" type="text" placeholder="Name" />
+                <a-input
+                  v-model="formOc.name"
+                  type="text"
+                  :placeholder="$store.state.translations['main.enter-your-name']"
+                />
               </a-form-model-item>
               <a-form-model-item
                 class="form-item register-input mb-0 pb-0"
@@ -964,10 +979,10 @@
           v-if="!callBox"
           @click="submitName()"
         >
-          Ma`lumotlarni yuborish
+          {{ $store.state.translations["main.send-info"] }}
         </div>
         <div class="vmodal-forget-password" v-if="!callBox" @click="callBox = true">
-          O’zim bog’lanaman
+          {{ $store.state.translations["main.contact-you"] }}
         </div>
         <a href="#">
           <Transition name="oc-bounce">
@@ -996,7 +1011,7 @@
                   /></svg
               ></span>
               <div class="call-number">
-                <p>Call centre Diskont:</p>
+                <p>{{ $store.state.translations["main.call-centre"] }}:</p>
                 <a href="tel:+998712077788">
                   <h4>71 207 77 88</h4>
                 </a>
@@ -1025,7 +1040,7 @@
       @ok="handleOkComment"
     >
       <div class="vmodal-header comment-modal-header">
-        <h5>Yangi sharh</h5>
+        <h5>{{ $store.state.translations["main.new-comment"] }}</h5>
         <span @click="handleOkComment"
           ><svg
             xmlns="http://www.w3.org/2000/svg"
@@ -1106,7 +1121,7 @@
       @ok="handleOkSuccess"
     >
       <div class="vmodal-header">
-        <h5>Yangi sharh</h5>
+        <h5>{{ $store.state.translations["main.new-comment"] }}</h5>
         <span @click="handleOkSuccess"
           ><svg
             xmlns="http://www.w3.org/2000/svg"
@@ -1135,7 +1150,9 @@
         <img src="../../assets/images/modal-success.png" alt="" />
         <p>Заказ оформлен. Мы свяжемся с вами в ближайшее время</p>
       </div>
-      <div class="vmodal-btn" @click="handleOkSuccess">Yaxshi raxmat</div>
+      <div class="vmodal-btn" @click="handleOkSuccess">
+        {{ $store.state.translations["main.comment-succes-btn"] }}
+      </div>
       <template slot="footer"> <h3></h3></template>
     </a-modal>
   </div>
@@ -1380,7 +1397,7 @@ export default {
         });
         this.visibleComment = false;
       } catch (e) {
-        console.log(e);
+        // console.log(e);
       }
     },
     async __POST_ORDER(formData) {
@@ -1390,7 +1407,7 @@ export default {
         // this.compToast = true;
         this.visibleSuccess = true;
       } catch (e) {
-        console.log(e);
+        // console.log(e);
       }
     },
     swiperReload() {

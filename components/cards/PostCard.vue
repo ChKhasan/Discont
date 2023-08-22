@@ -1,5 +1,5 @@
 <template lang="html">
-  <div @click="$router.push(`/news/${post?.slug}`)" class="post-card">
+  <div @click="$router.push(localePath(`/news/${post?.slug}`))" class="post-card">
     <div class="post-card-img">
       <img v-if="post?.md_img" :src="post?.md_img" alt="" />
       <img v-else src="../../assets/images/Rectangle 24083.png" alt="" />
