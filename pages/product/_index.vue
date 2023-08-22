@@ -1279,9 +1279,14 @@ export default {
   // },
   async mounted() {
     this.skeleton = true;
-    await this.$getLocation().then((coordinates) => {
-      this.locations = coordinates;
-    });
+    try {
+      await this.$getLocation().then((coordinates) => {
+        this.locations = coordinates;
+      });
+    } catch (e) {
+      console.log(e);
+    }
+
     const [productData, productsData] = await Promise.all([
       this.$store.dispatch("fetchProducts/getProductsBySlug", {
         id: this.$route.params.index,
@@ -1303,6 +1308,7 @@ export default {
         },
       }),
     ]);
+
     this.skeleton = false;
     this.product = productData.product;
     this.productsOthers = productsData?.products?.data;

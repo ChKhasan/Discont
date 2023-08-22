@@ -6,7 +6,7 @@ export default {
       totalPage: 1,
       params: {
         page: 1,
-        pageSize: 1,
+        pageSize: 30,
       },
       value: "",
     };
@@ -30,7 +30,7 @@ export default {
       if (!Object.keys(this.$route.query).includes("page")) {
         await this.$router.replace({
           path: this.$route.path,
-          query: { page: this.params.page,limit: 1 },
+          query: { page: this.params.page },
         });
       }
       this[dataFunc]();

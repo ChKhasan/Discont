@@ -1645,7 +1645,7 @@ export default {
     width: 473px;
   }
   .header-top {
-    background: transparent;
+    background: #f2f5f7;
   }
   .header-navbar_container > div:first-child {
     width: auto !important;
