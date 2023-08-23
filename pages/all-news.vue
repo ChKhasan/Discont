@@ -5,12 +5,16 @@
         <nuxt-link :to="localePath('/')">{{
           $store.state.translations["main.home-page"]
         }}</nuxt-link>
-        <nuxt-link :to="localePath('/')"> Barcha yangiliklar </nuxt-link>
+        <nuxt-link :to="localePath('/')">
+          {{ $store.state.translations["main.all-posts"] }}
+        </nuxt-link>
       </div>
       <div class="d-flex page-container-title">
         <div class="d-flex align-items-end">
-          <MainTitle title="Barcha yangiliklar" />
-          <span class="d-flex align-items-end">{{ totalCount }} yangiliklar</span>
+          <MainTitle :title="$store.state.translations['main.all-posts']" />
+          <span class="d-flex align-items-end"
+            >{{ totalCount }} {{ $store.state.translations["main.news"] }}</span
+          >
         </div>
       </div>
       <div class="posts-page-body" v-if="posts.length > 0">
@@ -18,7 +22,7 @@
       </div>
       <div class="empty-box-app" v-else>
         <img src="../assets/images/comments-empty.png" alt="" />
-        <h2>Yangiliklar mavjud emas</h2>
+        <h2>{{ $store.state.translations["main.no-news"] }}</h2>
       </div>
       <div class="products-pagination">
         <a-pagination

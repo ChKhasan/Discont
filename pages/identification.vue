@@ -8,7 +8,7 @@
       </div>
       <div class="d-flex page-container-title">
         <div class="d-flex align-items-end">
-          <MainTitle title="Identifikatsiya" />
+          <MainTitle :title="$store.state.translations['main.home']" />
         </div>
       </div>
       <div class="identification-page-body">
@@ -44,6 +44,7 @@
                     fill="#09454f"
                   /></svg
                 >Rasimni yuklash
+                {{ $store.state.translations["main.home"] }}
               </div>
             </div>
           </div>

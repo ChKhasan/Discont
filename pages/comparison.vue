@@ -2,13 +2,20 @@
   <div class="page-container">
     <div class="container_xl">
       <div class="page-breadcrumb">
-        <nuxt-link :to="localePath('/')">{{ $store.state.translations["main.home-page"] }}</nuxt-link>
-        <nuxt-link class="disabled" :to="localePath('/')"> Solishtirish </nuxt-link>
+        <nuxt-link :to="localePath('/')">{{
+          $store.state.translations["main.home-page"]
+        }}</nuxt-link>
+        <nuxt-link class="disabled" :to="localePath('/')">
+          {{ $store.state.translations["main.comparison"] }}
+        </nuxt-link>
       </div>
       <div class="d-flex page-container-title">
         <div class="d-flex align-items-end">
-          <MainTitle title="Solishtirish" />
-          <span class="d-flex align-items-end">{{ compProducts?.length }} tovar</span>
+          <MainTitle :title="$store.state.translations['main.comparison']" />
+          <span class="d-flex align-items-end"
+            >{{ compProducts?.length }}
+            {{ $store.state.translations["category.product-count"] }}</span
+          >
         </div>
         <a-select
           v-model="filterValue"
@@ -49,15 +56,14 @@
       </div>
       <div v-else class="empty-box-app no">
         <img src="../assets/images/parcel.png" alt="" />
-        <h2>Biror narsani solishtiraylikmi?</h2>
+        <h2>{{ $store.state.translations["main.comp-empty-title"] }}</h2>
         <p>
-          Xususiyatlarni taqqoslash uchun mahsulotlarni qo'shing <br />
-          va sizga eng mos keladigan mahsulotni tanlang
+          {{ $store.state.translations["main.comp-empty-text"] }}
         </p>
       </div>
     </div>
     <div class="categories-app-banner-container">
-        <!--<div class="container_xl">
+      <!--<div class="container_xl">
         <CategoriesAppCard />
       </div>-->
     </div>

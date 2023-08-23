@@ -12,7 +12,7 @@
               :title="`Результаты поиска по запросу “${$route.params.index}”`"
               class="mb-0"
             />
-            <span class="align-items-end">{{ searchProducts?.length }} tovar</span>
+            <span class="align-items-end">{{ searchProducts?.length }} {{ $store.state.translations["category.product-count"] }}</span>
           </div>
           <a-select
             v-model="value"

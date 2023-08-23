@@ -9,7 +9,7 @@
         <div class="d-flex categories-page-title justify-content-between">
           <div class="d-flex justify-content-between">
             <MainTitle :title="`Каталог ${brand?.name}`" />
-            <span>{{ brandProducts?.length }} tovar</span>
+            <span>{{ brandProducts?.length }} {{ $store.state.translations["category.product-count"] }}</span>
           </div>
           <a-select
             v-model="value"
@@ -48,7 +48,7 @@
             > -->
           </div>
           <div class="filter-range">
-            <h5>Narxi</h5>
+            <h5>{{ $store.state.translations["category.price"] }}</h5>
             <a-slider
               range
               :step="10"
@@ -84,7 +84,7 @@
           </div>
           <div class="comments-empty" v-else>
             <img src="../../assets/images/comments-empty.png" alt="" />
-            <h4>Mahsulot topilmadi</h4>
+            <h4>{{ $store.state.translations["category.product-not-found"] }}</h4>
           </div>
           <div class="categories-products-show-more" v-if="false">{{ $store.state.translations["main.show-more"] }} 44</div>
           <div class="products-pagination" v-if="false">

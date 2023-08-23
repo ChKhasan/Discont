@@ -2,14 +2,19 @@
   <div class="page-container">
     <div class="container_xl">
       <div class="page-breadcrumb">
-        <nuxt-link :to="localePath('/')">{{ $store.state.translations["main.home-page"] }}</nuxt-link>
-        <nuxt-link class="disabled" :to="localePath('/')"> Savatcha </nuxt-link>
+        <nuxt-link :to="localePath('/')">{{
+          $store.state.translations["main.home-page"]
+        }}</nuxt-link>
+        <nuxt-link class="disabled" :to="localePath('/')">
+          {{ $store.state.translations["main.cart"] }}
+        </nuxt-link>
       </div>
       <div class="d-flex page-container-title">
         <div class="d-flex align-items-end">
-          <MainTitle title="Savatcha" />
+          <MainTitle :title="$store.state.translations['main.cart']" />
           <span class="d-flex align-items-end"
-            >{{ $store.state.cart.length }} tovar</span
+            >{{ $store.state.cart.length }}
+            {{ $store.state.translations["category.product-count"] }}</span
           >
         </div>
       </div>
@@ -55,7 +60,7 @@
                     {{ product?.info?.name }}
                   </h4>
                   <p>
-                    Category:
+                    {{ $store.state.translations["main.category"] }}:
                     {{
                       product?.info?.category?.name
                         ? product?.info?.category?.name
@@ -63,12 +68,8 @@
                     }}
                   </p>
                   <p>
-                    Brend:
-                    {{
-                      product?.info?.brand?.name
-                        ? product?.info?.brand?.name
-                        : "---"
-                    }}
+                    {{ $store.state.translations["main.brand"] }}:
+                    {{ product?.info?.brand?.name ? product?.info?.brand?.name : "---" }}
                   </p>
                 </div>
                 <div class="basket-card-count">
@@ -76,8 +77,7 @@
                     <span
                       v-ripple="'rgba(9, 69, 79, 0.1)'"
                       @click="
-                        $store.state.cart.find((item) => item.id == product.id)
-                          ?.count > 1
+                        $store.state.cart.find((item) => item.id == product.id)?.count > 1
                           ? $store.commit('productCountDown', {
                               id: product.id,
                             })
@@ -96,15 +96,12 @@
                         /></svg
                     ></span>
 
-                    {{
-                      $store.state.cart.find((item) => item.id == product.id)
-                        ?.count
-                    }}
+                    {{ $store.state.cart.find((item) => item.id == product.id)?.count }}
                     <span
                       v-ripple="'rgba(9, 69, 79, 0.1)'"
                       @click="
-                        $store.state.cart.find((item) => item.id == product?.id)
-                          ?.count < product?.stock &&
+                        $store.state.cart.find((item) => item.id == product?.id)?.count <
+                          product?.stock &&
                           $store.commit('productCountUp', { id: product.id })
                       "
                       ><svg
@@ -156,7 +153,8 @@
                       "
                     ></span>
                     <p @click="deleteProduct(product.id)">
-                      <span v-html="deleteIcon"></span>O’chirish
+                      <span v-html="deleteIcon"></span>
+                      {{ $store.state.translations["main.delete"] }}
                     </p>
                   </span>
                   <div class="basket-card-price">
@@ -165,15 +163,15 @@
                         Math.floor(
                           (product?.discount_price
                             ? product?.discount_price
-                            : product?.real_price) /
-                            $store.state.dicoin.sum_to_dicoin
+                            : product?.real_price) / $store.state.dicoin.sum_to_dicoin
                         )
                       }}
-                      ta dicoin</span
+                      {{ $store.state.translations["main.cout-di-coin"] }}</span
                     >
                     <h4>
                       {{ productTotalPrice(product) }}
-                      {{ $store.state.translations["main.som"] }}                    </h4>
+                      {{ $store.state.translations["main.som"] }}
+                    </h4>
                   </div>
                 </div>
               </div>
@@ -193,7 +191,7 @@
                     <p class="name">{{ product?.info?.name }}</p>
 
                     <p class="category">
-                      Category:
+                      {{ $store.state.translations["main.category"] }}:
                       {{
                         product?.info?.category?.name
                           ? product?.info?.category?.name
@@ -201,11 +199,9 @@
                       }}
                     </p>
                     <p class="brand">
-                      Brend:
+                      {{ $store.state.translations["main.brand"] }}:
                       {{
-                        product?.info?.brand?.name
-                          ? product?.info?.brand?.name
-                          : "---"
+                        product?.info?.brand?.name ? product?.info?.brand?.name : "---"
                       }}
                     </p>
                   </div>
@@ -258,8 +254,7 @@
                   <div class="basket-count-btn">
                     <span
                       @click="
-                        $store.state.cart.find((item) => item.id == product.id)
-                          ?.count > 1
+                        $store.state.cart.find((item) => item.id == product.id)?.count > 1
                           ? $store.commit('productCountDown', {
                               id: product.id,
                             })
@@ -277,14 +272,8 @@
                           fill="#1F8A70"
                         /></svg
                     ></span>
-                    {{
-                      $store.state.cart.find((item) => item.id == product.id)
-                        ?.count
-                    }}
-                    <span
-                      @click="
-                        $store.commit('productCountUp', { id: product.id })
-                      "
+                    {{ $store.state.cart.find((item) => item.id == product.id)?.count }}
+                    <span @click="$store.commit('productCountUp', { id: product.id })"
                       ><svg
                         width="11"
                         height="11"
@@ -301,7 +290,10 @@
                   </div>
                 </div>
                 <div class="price">
-                  <p>{{ productTotalPrice(product) }} so’m</p>
+                  <p>
+                    {{ productTotalPrice(product) }}
+                    {{ $store.state.translations["main.som"] }}
+                  </p>
                 </div>
               </div>
             </div>
@@ -310,7 +302,7 @@
         <div class="basket-checkout-container">
           <div class="basket-checkout-block">
             <div class="basket-checkout-price">
-              <h3>Jami:</h3>
+              <h3>{{ $store.state.translations["main.total"] }}:</h3>
               <b-skeleton v-if="skeletonLoad" width="40%"></b-skeleton>
               <h3 v-else>
                 {{
@@ -318,16 +310,13 @@
                     .reduce((summ, item) => {
                       return (
                         summ +
-                        (item.discount_price
-                          ? item.discount_price
-                          : item.real_price) *
-                          $store.state.cart.find((elem) => elem.id == item.id)
-                            ?.count
+                        (item.discount_price ? item.discount_price : item.real_price) *
+                          $store.state.cart.find((elem) => elem.id == item.id)?.count
                       );
                     }, 0)
                     .toFixed(2)}`.replace(/\B(?=(\d{3})+(?!\d))/g, " ")
                 }}
-                сум
+                {{ $store.state.translations["main.som"] }}
               </h3>
             </div>
             <!-- <div class="basket-promo-input">
@@ -336,23 +325,20 @@
             </div> -->
             <div class="basket-checkout-body">
               <span
-                ><p>Narxi:</p>
+                ><p>{{ $store.state.translations["category.price"] }}:</p>
                 <p>
                   {{
                     `${products
                       .reduce((summ, item) => {
                         return (
                           summ +
-                          (item.discount_price
-                            ? item.discount_price
-                            : item.real_price) *
-                            $store.state.cart.find((elem) => elem.id == item.id)
-                              ?.count
+                          (item.discount_price ? item.discount_price : item.real_price) *
+                            $store.state.cart.find((elem) => elem.id == item.id)?.count
                         );
                       }, 0)
                       .toFixed(2)}`.replace(/\B(?=(\d{3})+(?!\d))/g, " ")
                   }}
-                  сум
+                  {{ $store.state.translations["main.som"] }}
                 </p></span
               >
               <!-- <span
@@ -369,13 +355,10 @@
               > -->
             </div>
             <div class="basket-checkout-btn" @click="checkoutCheck()">
-              Buyurtmani rasmiylshtirish
+              {{ $store.state.translations["checkout.order-processing"] }}
             </div>
             <div class="basket-checkout-bottom">
-              <p>
-                “Buyurtmani rasmiylshtirish” tugmasini bosish orqali men
-                <span> {{ $store.state.translations["main.footertext2"] }} shartnomasiga rozilik bildiraman</span>
-              </p>
+              <p v-html="$store.state.translations['checkout.cart-access-text']"></p>
             </div>
           </div>
           <div class="basket-coin-block">
@@ -388,30 +371,28 @@
                     return (
                       sum +
                       Math.floor(
-                        (item.discount_price
-                          ? item.discount_price
-                          : item.real_price) / $store.state.dicoin.sum_to_dicoin
+                        (item.discount_price ? item.discount_price : item.real_price) /
+                          $store.state.dicoin.sum_to_dicoin
                       ) *
-                        $store.state.cart.find((item) => item.id == item.id)
-                          ?.count
+                        $store.state.cart.find((item) => item.id == item.id)?.count
                     );
                   }, 0)
                 )
               }}
-              ta Dicoin
+              {{ $store.state.translations["main.cout-di-coin"] }}
             </h3>
-            <p>Dicoinlar to’plang va keyingi xaridingizdan tejang!</p>
+            <p>{{ $store.state.translations["checkout.cart-text"] }}</p>
           </div>
         </div>
       </div>
       <div class="empty-box-app" v-else>
         <img src="../assets/images/packaging cancel.png" alt="" />
-        <h2>Savatingiz bo'sh holatda</h2>
-        <p>Buyurtma qilingan narsalar shu yerda paydo bo'ladi.</p>
+        <h2>{{ $store.state.translations["checkout.cart-empty-title"] }}</h2>
+        <p>{{ $store.state.translations["checkout.cart-empty-text"] }}</p>
       </div>
     </div>
     <div class="categories-app-banner-container">
-        <!--<div class="container_xl">
+      <!--<div class="container_xl">
         <CategoriesAppCard />
       </div>-->
     </div>
@@ -456,17 +437,14 @@ export default {
   methods: {
     async __GET_PRODUCTS_BY_ID(dataForm) {
       try {
-        const data = await this.$store.dispatch(
-          "fetchProducts/getProductsById",
-          {
-            data: dataForm,
-            params: {
-              headers: {
-                Language: this.$i18n.locale,
-              },
+        const data = await this.$store.dispatch("fetchProducts/getProductsById", {
+          data: dataForm,
+          params: {
+            headers: {
+              Language: this.$i18n.locale,
             },
-          }
-        );
+          },
+        });
         this.products = data?.products;
         this.skeletonLoad = false;
       } catch (e) {

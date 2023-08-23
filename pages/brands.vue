@@ -7,7 +7,7 @@
       </div>
       <div class="d-flex categories-page-title">
         <MainTitle title="Barcha brendlar" />
-        <span>8 288 tovar</span>
+        <span>8 288 {{ $store.state.translations["category.product-count"] }}</span>
       </div>
       <div class="brands-grid">
         <div class="d-flex justify-content-center flex-column">

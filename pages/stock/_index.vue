@@ -162,7 +162,7 @@
         </div>
         <div class="comments-empty" v-else>
           <img src="../../assets/images/comments-empty.png" alt="" />
-          <h4>Mahsulot topilmadi</h4>
+          <h4>{{ $store.state.translations["category.product-not-found"] }}</h4>
         </div>
         <div class="categories-products-show-more" v-if="promotion?.products.length > 30">
           {{ $store.state.translations["main.show-more"] }} 44

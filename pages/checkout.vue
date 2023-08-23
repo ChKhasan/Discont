@@ -349,7 +349,7 @@
           <div class="checkout-info">
             <div class="checkout-info-header">
               <h4>Sizning buyurtmangiz</h4>
-              <h5 class="cursor-pointer" @click="$router.push('/basket')">
+              <h5 class="cursor-pointer" @click="$router.push(localePath('/basket'))">
                 Savatchaga o’tish
               </h5>
             </div>
@@ -358,7 +358,8 @@
                 ><p>Tovarlar</p>
                 <p>
                   {{ `${totalRealPrice}`.replace(/\B(?=(\d{3})+(?!\d))/g, " ") }}
-                  {{ $store.state.translations["main.som"] }}                </p></span
+                  {{ $store.state.translations["main.som"] }}
+                </p></span
               >
 
               <span
@@ -370,7 +371,8 @@
                       " "
                     )
                   }}
-                  {{ $store.state.translations["main.som"] }}                </p></span
+                  {{ $store.state.translations["main.som"] }}
+                </p></span
               >
               <span
                 ><p>Di Coin</p>
@@ -380,7 +382,8 @@
                       sendDicoin ? dicoinSumm * $store.state.dicoin?.dicoin_to_sum : 0
                     }`.replace(/\B(?=(\d{3})+(?!\d))/g, " ")
                   }}
-                  {{ $store.state.translations["main.som"] }}                </p></span
+                  {{ $store.state.translations["main.som"] }}
+                </p></span
               >
               <span
                 ><p>Yetkazib berish</p>
@@ -391,7 +394,8 @@
                       " "
                     )
                   }}
-                  {{ $store.state.translations["main.som"] }}                </p></span
+                  {{ $store.state.translations["main.som"] }}
+                </p></span
               >
               <span
                 ><p>Umumiy narx</p>
@@ -404,7 +408,8 @@
                         : reduceTotalPrice) + deliveryCost
                     }`.replace(/\B(?=(\d{3})+(?!\d))/g, " ")
                   }}
-                  {{ $store.state.translations["main.som"] }}                </p></span
+                  {{ $store.state.translations["main.som"] }}
+                </p></span
               >
             </div>
             <div
@@ -426,7 +431,8 @@
                     " "
                   )
                 }}
-                {{ $store.state.translations["main.som"] }}              </p>
+                {{ $store.state.translations["main.som"] }}
+              </p>
             </div>
             <div
               class="checkout_dicoin"
@@ -489,7 +495,8 @@
                 >
                   -
                   {{ dicoinSumm * $store.state.dicoin?.dicoin_to_sum }}
-                  {{ $store.state.translations["main.som"] }}                </p>
+                  {{ $store.state.translations["main.som"] }}
+                </p>
                 <p
                   style="color: red"
                   v-if="
@@ -499,7 +506,8 @@
                 >
                   -
                   {{ dicoinSumm * $store.state.dicoin?.dicoin_to_sum }}
-                  {{ $store.state.translations["main.som"] }}                </p>
+                  {{ $store.state.translations["main.som"] }}
+                </p>
               </div>
               <button
                 @click="currentDicoin"
@@ -911,7 +919,7 @@
           </button>
           <button
             class="vmodal-btn os-vmodal-btn"
-            @click="$router.push('/profile/my-orders')"
+            @click="$router.push(localePath('/profile/my-orders'))"
           >
             Перейти к просмотру
           </button>

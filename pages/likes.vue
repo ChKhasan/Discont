@@ -2,19 +2,24 @@
   <div class="page-container">
     <div class="container_xl">
       <div class="page-breadcrumb">
-        <nuxt-link :to="localePath('/')">{{ $store.state.translations["main.home-page"] }}</nuxt-link>
+        <nuxt-link :to="localePath('/')">{{
+          $store.state.translations["main.home-page"]
+        }}</nuxt-link>
         <nuxt-link class="disabled" :to="localePath('/')">
-          Menga yoqqan tovarlar
+          {{ $store.state.translations["main.liked"] }}
         </nuxt-link>
       </div>
       <div class="d-flex page-container-title">
         <div class="d-flex align-items-end">
-          <MainTitle title="Menga yoqqan tovarlar" />
-          <span class="d-flex align-items-end">{{ likeProducts.length }} tovar</span>
+          <MainTitle :title="$store.state.translations['main.liked']" />
+          <span class="d-flex align-items-end"
+            >{{ likeProducts.length }}
+            {{ $store.state.translations["category.product-count"] }}</span
+          >
         </div>
         <div class="likes-delete" @click="deleteAll" v-if="likeProducts.length > 0">
           <span v-html="deleteIcon"></span>
-          Barchasini o’chirish
+          {{ $store.state.translations["main.delete-all"] }}
         </div>
       </div>
       <div class="likes-page-body" v-if="likeProducts.length > 0">
@@ -26,10 +31,9 @@
       </div>
       <div class="empty-box-app" v-else>
         <img src="../assets/images/packaging love.png" alt="" />
-        <h2>Hali sotib olishga tayyor emasmisiz?</h2>
+        <h2>{{ $store.state.translations["main.like-empty-title"] }}</h2>
         <p>
-          Mahsulot sahifasida ♡ tugmasini bosing va <br />
-          o'zingizga yoqqan narsani shu yerga qo'shing.
+          {{ $store.state.translations["main.like-empty-text"] }}
         </p>
       </div>
       <div class="categories-products-show-more" v-if="likeProducts.length > 44">
@@ -40,7 +44,7 @@
       </div>
     </div>
     <div class="categories-app-banner-container">
-        <!--<div class="container_xl">
+      <!--<div class="container_xl">
         <CategoriesAppCard />
       </div>-->
     </div>

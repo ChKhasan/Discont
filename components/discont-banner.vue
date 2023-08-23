@@ -16,7 +16,7 @@
       <div class="cursor-pointer">
         {{ $store.state.translations["main.d-banner-contact"] }}
       </div>
-      <div class="cursor-pointer" @click="$router.push('/info/trade-nation')">
+      <div class="cursor-pointer" @click="$router.push(localePath('/info/trade-nation'))">
         {{ $store.state.translations["main.d-banner-btn"] }}
       </div>
     </div>

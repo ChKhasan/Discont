@@ -17,7 +17,7 @@
           <div class="d-flex categories-page-title mb-0">
             <b-skeleton width="200px" v-if="loading"></b-skeleton>
             <MainTitle :title="showcases?.name" class="mb-0" v-else />
-            <!-- <span class="align-items-end">{{ showcases?.products?.length }} tovar</span> -->
+            <!-- <span class="align-items-end">{{ showcases?.products?.length }} {{ $store.state.translations["category.product-count"] }}</span> -->
           </div>
           <a-select
             v-model="value"
@@ -38,7 +38,7 @@
       <div class="categories-page-inner-grid">
         <div class="categories-filter-list">
           <div class="filter-range">
-            <h5>Narxi</h5>
+            <h5>{{ $store.state.translations["category.price"] }}</h5>
             <a-slider
               range
               :step="10000"
@@ -83,7 +83,7 @@
           </div>
           <div class="comments-empty" v-else>
             <img src="../../assets/images/comments-empty.png" alt="" />
-            <h4>Mahsulot topilmadi</h4>
+            <h4>{{ $store.state.translations["category.product-not-found"] }}</h4>
           </div>
           <!-- <div
             class="categories-products-show-more"

@@ -130,7 +130,7 @@
                                 stroke-linejoin="round"
                               /></svg
                           ></span>
-                          {{ product?.info?.name }}
+                          {{ product?.name }}
                         </nuxt-link>
                       </div>
                     </div>
@@ -145,7 +145,7 @@
             <li
               @click="
                 $store.state.auth
-                  ? $router.push('/profile/my-orders')
+                  ? $router.push(localePath('/profile/my-orders'))
                   : $store.commit('authVisibleChange', true)
               "
             >
@@ -154,7 +154,7 @@
               >{{ $store.state.translations["main.orders"] }}
             </li>
             <li
-              @click="$router.push('/likes')"
+              @click="$router.push(localePath('/likes'))"
               :class="{ navbar_block_active: $route.name == 'likes' }"
             >
               <span class="count-index" v-if="$store.state.like.length > 0">{{
@@ -166,7 +166,7 @@
             </li>
             <li
               id="cart"
-              @click="$router.push('/basket')"
+              @click="$router.push(localePath('/basket'))"
               :class="{ navbar_block_active: $route.name == 'basket' }"
             >
               <span class="count-index" v-if="$store.state.cart.length > 0">{{
@@ -177,7 +177,7 @@
               {{ $store.state.translations["main.cart"] }}
             </li>
             <li
-              @click="$router.push('/comparison')"
+              @click="$router.push(localePath('/comparison'))"
               :class="{ navbar_block_active: $route.name == 'comparison' }"
             >
               <span class="count-index" v-if="$store.state.comparison.length > 0">{{
@@ -948,7 +948,8 @@ export default {
     },
     lastSearchResoultAction(res) {
       this.search = res;
-      this.$router.push(this.localePath(`/search/${this.search}`));
+      let searchVal = this.search.split("/").join("%2F");
+      this.$router.push(this.localePath(`/search/${searchVal}`));
     },
     searchResoultDelete(id) {
       this.searchResoults = this.searchResoults.filter((item) => item.id != id);
@@ -963,9 +964,9 @@ export default {
             : 1,
         resoult: this.search,
       });
+      let searchVal = this.search.split("/").join("%2F");
       localStorage.setItem("search_resoults", JSON.stringify(this.searchResoults));
-
-      this.$router.push(this.localePath(`/search/${this.search}`));
+      this.$router.push(this.localePath(`/search/${searchVal}`));
     },
     chunkIntoN(arr, n) {
       const size = Math.ceil(arr.length / n);
