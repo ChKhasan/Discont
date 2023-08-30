@@ -55,25 +55,6 @@ export default {
         page: 1,
         pageSize: 16,
       },
-      status: [
-        {
-          value: "all",
-          label: "Barchasi",
-        },
-        {
-          value: "qwerty1",
-          label: "Others",
-        },
-        {
-          value: "qwerty2",
-          label: "Others",
-        },
-        {
-          value: "qwerty3",
-          label: "Others",
-        },
-      ],
-      value: "all",
     };
   },
   async asyncData({ store, route, i18n }) {

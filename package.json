@@ -27,5 +27,8 @@
     "vue-template-compiler": "^2.7.10",
     "vue-the-mask": "^0.11.1",
     "vue3-fortune-wheel": "^1.1.37"
+  },
+  "devDependencies": {
+    "@nuxt/image": "^0.7.1"
   }
 }

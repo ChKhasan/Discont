@@ -2,7 +2,9 @@
   <div class="categories-page-inner">
     <div class="container_xl">
       <div class="page-breadcrumb">
-        <nuxt-link :to="localePath('/')">{{ $store.state.translations["main.home-page"] }}</nuxt-link>
+        <nuxt-link :to="localePath('/')">{{
+          $store.state.translations["main.home-page"]
+        }}</nuxt-link>
         <nuxt-link class="disabled" :to="localePath('/')"> Smartfonlar </nuxt-link>
       </div>
       <div class="d-flex categories-page-title">
@@ -10,46 +12,18 @@
         <span>8 288 {{ $store.state.translations["category.product-count"] }}</span>
       </div>
       <div class="brands-grid">
-        <div class="d-flex justify-content-center flex-column">
-          <BrandCard />
-          <p class="brand-title">Samsung</p>
-        </div>
-        <div class="d-flex justify-content-center flex-column">
-          <BrandCard />
-          <p class="brand-title">Samsung</p>
-        </div>
-        <div class="d-flex justify-content-center flex-column">
-          <BrandCard />
-          <p class="brand-title">Samsung</p>
-        </div>
-        <div class="d-flex justify-content-center flex-column">
-          <BrandCard />
-          <p class="brand-title">Samsung</p>
-        </div>
-        <div class="d-flex justify-content-center flex-column">
-          <BrandCard />
-          <p class="brand-title">Samsung</p>
-        </div>
-        <div class="d-flex justify-content-center flex-column">
-          <BrandCard />
-          <p class="brand-title">Samsung</p>
-        </div>
-        <div class="d-flex justify-content-center flex-column">
-          <BrandCard />
-          <p class="brand-title">Samsung</p>
-        </div>
-        <div class="d-flex justify-content-center flex-column">
-          <BrandCard />
-          <p class="brand-title">Samsung</p>
-        </div>
-        <div class="d-flex justify-content-center flex-column">
-          <BrandCard />
-          <p class="brand-title">Samsung</p>
+        <div
+          class="d-flex justify-content-center flex-column"
+          v-for="brand in brands"
+          :key="brand?.id"
+        >
+          <BrandCard :brand="brand" />
+          <p class="brand-title">{{ brand?.name }}</p>
         </div>
       </div>
     </div>
     <div class="categories-app-banner-container">
-        <!--<div class="container_xl">
+      <!--<div class="container_xl">
         <CategoriesAppCard />
       </div>-->
     </div>
@@ -69,26 +43,18 @@ export default {
     return {
       arrow: require("../assets/svg/dropdown-icon.svg?raw"),
       filterX: require("../assets/svg/selected-filter-x.svg?raw"),
-      value: "all",
       disabled: false,
-      status: [
-        {
-          value: "all",
-          label: "Barchasi",
-        },
-        {
-          value: "qwerty1",
-          label: "value",
-        },
-        {
-          value: "qwerty2",
-          label: "value",
-        },
-        {
-          value: "qwerty3",
-          label: "value",
-        },
-      ],
+    };
+  },
+  async asyncData({ store, params, i18n }) {
+    const [brandsData] = await Promise.all([store.dispatch("fetchBrands/getBrands")]);
+    let brands = [...brandsData.brands?.data];
+    let brandsAll = brandsData.brands?.data;
+    brands = [...brandsData.brands?.data];
+
+    return {
+      brandsAll,
+      brands,
     };
   },
   methods: {

@@ -45,15 +45,15 @@
         <h4 class="title" v-if="skeleton">
           <b-skeleton width="40%" height="100%"></b-skeleton>
         </h4>
-        <h4 class="title" v-else>{{ product?.info?.name }}</h4>
+        <h4 class="title" v-else>{{ product?.name }}</h4>
         <div class="flexer">
           <div class="left">
             <div class="stars">
-              <div v-if="product?.info?.stars != null">
+              <div v-if="product?.info?.stars">
                 <a-rate class="product-rate" v-model="product.info.stars" disabled />
               </div>
               <div v-else>
-                <a-rate class="product-rate" v-model="nolVal" disabled />
+                <a-rate class="product-rate" v-model="fullRate" disabled />
               </div>
             </div>
             <p class="reviews" v-if="product?.info?.stars != null">
@@ -281,7 +281,7 @@
 
           <div class="world" v-else>
             <div thumbsSlider="" class="swiper mySwiper">
-              <div class="swiper-wrapper flex-column">
+              <div class="swiper-wrapper flex-column swiper_thumb">
                 <div class="swiper-slide" v-for="img in product?.images" :key="img.id">
                   <img :src="img?.md_img" />
                 </div>
@@ -324,11 +324,23 @@
         </div>
         <div class="col-md-4 col-xs-12 stats">
           <div class="widther">
-            <div class="specs">
+            <div class="specs" v-if="productCharacteristic.length > 0">
               <p class="lil">Maxsulot haqida qisqacha</p>
+              <div v-if="skeleton">
+                <div
+                  v-for="(characteristic, chIndex) in [1, 2, 3, 4]"
+                  :key="characteristic"
+                  class="spec main-character w-100"
+                  :class="{ 'last-character': chIndex == 3 }"
+                >
+                  <b-skeleton width="100%"></b-skeleton>
+                </div>
+              </div>
               <div
-                class="spec"
-                v-for="characteristic in productCharacteristic"
+                v-else
+                class="spec main-character"
+                v-for="(characteristic, chIndex) in productCharacteristic"
+                :class="{ 'last-character': chIndex == productCharacteristic.length - 1 }"
                 :key="characteristic.id"
               >
                 <p class="question">
@@ -339,9 +351,7 @@
               <p
                 class="all"
                 @click="scrollElement('characteristic')"
-                v-if="
-                  productCharacteristic?.length < product?.characteristic_options?.length
-                "
+                v-if="productCharacteristic.length > 0"
               >
                 Barcha xarakteristikalar
               </p>
@@ -403,7 +413,6 @@
                   <b-skeleton width="40px"></b-skeleton>
                 </div>
               </div>
-              Xalol bo’lib to’lashga olish
             </div>
             <div
               class="variations"
@@ -816,24 +825,24 @@
                 </div>
                 <div class="rating_list">
                   <div class="rating_row">
-                    <a-rate value="5" disabled /><span></span>
-                    <p>5</p>
+                    <a-rate :value="5" disabled /><span></span>
+                    <p>{{ commetItems[0] }}</p>
                   </div>
                   <div class="rating_row">
-                    <a-rate value="4" disabled /><span></span>
-                    <p>5</p>
+                    <a-rate :value="4" disabled /><span></span>
+                    <p>{{ commetItems[1] }}</p>
                   </div>
                   <div class="rating_row">
-                    <a-rate value="3" disabled /><span></span>
-                    <p>5</p>
+                    <a-rate :value="3" disabled /><span></span>
+                    <p>{{ commetItems[2] }}</p>
                   </div>
                   <div class="rating_row">
-                    <a-rate value="2" disabled /><span></span>
-                    <p>5</p>
+                    <a-rate :value="2" disabled /><span></span>
+                    <p>{{ commetItems[3] }}</p>
                   </div>
                   <div class="rating_row">
-                    <a-rate value="1" disabled /><span></span>
-                    <p>5</p>
+                    <a-rate :value="1" disabled /><span></span>
+                    <p>{{ commetItems[4] }}</p>
                   </div>
                 </div>
               </div>
@@ -1176,6 +1185,7 @@ export default {
 
   data() {
     return {
+      fullRate: 5,
       imageModal: false,
       month: [
         "Январь",
@@ -1277,6 +1287,29 @@ export default {
   //   );
   //   this.productAttributes = productData?.attributes;
   // },
+  computed: {
+    commetItems() {
+      const arr = [1, 2, 3, 4, 5];
+      let rates = [0, 0, 0, 0, 0];
+      if (this.product?.info?.comments?.length > 0) {
+        arr.forEach((item, index) => {
+          const currentComment = this.product?.info?.comments.filter(
+            (elem) => elem.stars == item
+          );
+          rates[index] = currentComment?.length > 0 ? currentComment?.length : 0;
+        });
+      }
+      const totalRes =
+        rates.reduce((summ, elem, index) => {
+          return summ + elem * (index + 1);
+        }) /
+        (5 *
+          rates.reduce((summ, elem, index) => {
+            return summ + elem;
+          }));
+      return rates;
+    },
+  },
   async mounted() {
     this.skeleton = true;
     try {
@@ -1368,7 +1401,7 @@ export default {
       return `${price}`.replace(/\B(?=(\d{3})+(?!\d))/g, " ");
     },
     submitComment() {
-      this.formComment.product_id = this.product.id;
+      this.formComment.product_id = this.product.info.id;
       if (this.formComment.product_id) {
         this.$refs["ruleFormComment"].validate((valid) => {
           if (valid) {
@@ -1472,7 +1505,9 @@ export default {
 
 <style scoped>
 @import "../../assets/css/pages/product.css";
-
+.last-character {
+  border-bottom: 0 !important;
+}
 .swiper-button-prev-product-inner,
 .swiper-button-next-product-inner,
 .carousel-hide {
@@ -1657,10 +1692,15 @@ export default {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding-bottom: 10px;
-  margin-bottom: 10px;
+  /* padding-bottom: 10px; */
+  /* margin-bottom: 10px; */
   /* border-bottom: 1px dashed rgba(0, 0, 0, 0.1); */
   position: relative;
+}
+.grider {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
 }
 .spec span {
   position: absolute;
@@ -2210,6 +2250,17 @@ tbody .img {
   font-size: 14px;
   font-style: normal;
   line-height: 20px; /* 142.857% */
+}
+.main-character {
+  padding-bottom: 10px;
+  margin-bottom: 10px;
+  border-bottom: 1px dashed rgba(0, 0, 0, 0.1);
+}
+.swiper_thumb {
+  overflow-y: scroll;
+}
+.swiper_thumb::-webkit-scrollbar {
+  display: none;
 }
 @media screen and (max-width: 1024px) {
   .image-modal-container {

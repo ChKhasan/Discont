@@ -3,22 +3,27 @@
     <div class="container_xl">
       <div>
         <div class="page-breadcrumb">
-          <nuxt-link :to="localePath('/')">{{ $store.state.translations["main.home-page"] }}</nuxt-link>
+          <nuxt-link :to="localePath('/')">{{
+            $store.state.translations["main.home-page"]
+          }}</nuxt-link>
           <nuxt-link :to="localePath('/')"> {{ brand?.name }} </nuxt-link>
         </div>
         <div class="d-flex categories-page-title justify-content-between">
           <div class="d-flex justify-content-between">
-            <MainTitle :title="`Каталог ${brand?.name}`" />
-            <span>{{ brandProducts?.length }} {{ $store.state.translations["category.product-count"] }}</span>
+            <MainTitle :title="`${brand?.name}`" class="mb-0" />
+            <span
+              >{{ brandProducts?.length }}
+              {{ $store.state.translations["category.product-count"] }}</span
+            >
           </div>
           <a-select
-            v-model="value"
-            class="categories-filter-select"
+            v-model="sort"
+            class="categories-filter-select mb-0"
             placeholder="Select good person"
             style="width: 252px"
           >
             <a-select-option
-              v-for="item in status"
+              v-for="item in sortItems"
               :key="item?.value"
               :label="item.label"
               :value="item.value"
@@ -51,18 +56,20 @@
             <h5>{{ $store.state.translations["category.price"] }}</h5>
             <a-slider
               range
-              :step="10"
-              :default-value="[20, 50]"
-              @change="onChange"
+              :step="10000"
+              :max="20000000"
+              :min="10000"
+              v-model="sliderValue"
+              :default-value="[10000, 20000000]"
               @afterChange="onAfterChange"
             />
             <div class="filter-slider-inputs">
               <span>
-                <input type="text" placeholder="от" />
+                <input type="text" v-model="sliderValue[0]" placeholder="от" />
                 <span></span>
               </span>
               <span>
-                <input type="text" placeholder="до" />
+                <input type="text" placeholder="до" v-model="sliderValue[1]" />
                 <span></span>
               </span>
             </div>
@@ -72,9 +79,9 @@
           <div class="d-flex justify-content-end w-100"></div>
           <div class="categories-card-grid" v-if="brandProducts.length > 0">
             <ProductCard
-              v-for="product in brandProducts"
+              v-for="product in products"
               :product="{
-                ...product?.default_product,
+                ...product,
                 info: {
                   name: product?.name,
                 },
@@ -86,9 +93,16 @@
             <img src="../../assets/images/comments-empty.png" alt="" />
             <h4>{{ $store.state.translations["category.product-not-found"] }}</h4>
           </div>
-          <div class="categories-products-show-more" v-if="false">{{ $store.state.translations["main.show-more"] }} 44</div>
-          <div class="products-pagination" v-if="false">
-            <a-pagination size="small" :default-current="6" :total="500" />
+          <div class="categories-products-show-more" v-if="false">
+            {{ $store.state.translations["main.show-more"] }} 44
+          </div>
+          <div class="products-pagination" v-if="totalPage > params.pageSize">
+            <a-pagination
+              size="small"
+              v-model.number="current"
+              :total="totalPage"
+              :page-size.sync="params.pageSize"
+            />
           </div>
         </div>
       </div>
@@ -136,7 +150,7 @@
       </div>
     </div>
     <div class="categories-app-banner-container">
-        <!--<div class="container_xl">
+      <!--<div class="container_xl">
         <CategoriesAppCard />
       </div>-->
     </div>
@@ -150,21 +164,38 @@ import CategoriesAppCard from "../../components/categories/categories-app-banner
 import CategoriesInnerBannerCarousel from "../../components/categories/categoriesInner-banner-carousel.vue";
 import CategoriesInnerBanner from "../../components/categories/categoriesInner-banner.vue";
 import CategoriesTabCarousel from "../../components/categories/categoriesInner-tab-carousel.vue";
+import global from "../../mixins/global";
 export default {
+  mixins: [global],
   data() {
     return {
+      sliderValue: [10000, 10000000],
       arrow: require("../../assets/svg/dropdown-icon.svg?raw"),
       filterX: require("../../assets/svg/selected-filter-x.svg?raw"),
-      value: "all",
+      sort: "all",
       disabled: false,
+      loading: false,
+      products: [],
       // brands: [],
       // brandProducts: [],
       // brandsAll: [],
       // brand: {},
-      status: [
+      sortItems: [
         {
           value: "all",
           label: "Barchasi",
+        },
+        {
+          value: "popular",
+          label: "По популярности",
+        },
+        {
+          value: "cheap",
+          label: "Подешевле",
+        },
+        {
+          value: "expensive",
+          label: "Подороже",
         },
       ],
     };
@@ -194,15 +225,68 @@ export default {
       brand,
     };
   },
+  mounted() {
+    this.getFirstData("__GET_PRODUCTS");
+  },
   methods: {
+    async __GET_PRODUCTS() {
+      this.loading = true;
+      const data = await this.$store.dispatch("fetchProducts/getProducts", {
+        params: { ...this.$route.query, brand: this.$route.params.index },
+      });
+      this.totalPage = data?.products?.total;
+      this.products = data?.products?.data;
+      this.loading = false;
+    },
     onChange(value) {
       // console.log("change: ", value);
     },
-    onAfterChange(value) {
-      // console.log("afterChange: ", value);
+    async onAfterChange(value) {
+      if (
+        !this.$route.query.max_price ||
+        this.$route.query.min_price != value[0] ||
+        this.$route.query.max_price != value[1]
+      ) {
+        let query = {
+          ...this.$route.query,
+          min_price: value[0],
+          max_price: value[1],
+        };
+        await this.$router.replace({
+          path: `/categories-inner/${this.$route.params.index}`,
+          query: query,
+        });
+        this.__GET_PRODUCTS();
+      }
     },
     showAll() {
       this.brands = this.brandsAll;
+    },
+  },
+  watch: {
+    async current(val) {
+      this.changePagination(val, "__GET_PRODUCTS");
+    },
+    async sort(val) {
+      let filterObj = {
+        sort: val,
+        ...this.$route.query,
+      };
+      if (val == "all") {
+        delete filterObj["sort"];
+        await this.$router.replace({
+          path: this.$route.path,
+          query: { ...filterObj },
+        });
+      } else {
+        if (this.$route.query.sort != filterObj.sort) {
+          await this.$router.replace({
+            path: this.$route.path,
+            query: { ...filterObj },
+          });
+        }
+        this.__GET_PRODUCTS({ ...this.$route.query });
+      }
     },
   },
   components: {

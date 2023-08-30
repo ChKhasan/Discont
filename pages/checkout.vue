@@ -1236,7 +1236,6 @@ export default {
     async __POST_ADDRESSS(formData) {
       try {
         const data = await this.$store.dispatch("fetchRegions/postAddress", formData);
-
         this.$store.dispatch("profileInfo");
         this.visible = false;
       } catch (e) {

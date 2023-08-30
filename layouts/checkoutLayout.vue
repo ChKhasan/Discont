@@ -14,7 +14,6 @@ export default {
     this.$store.commit("reloadStore");
     this.$store.dispatch("dicoinInfo");
     this.$store.dispatch("profileInfo");
-    this.$store.commit("authHandler");
   },
   components: { Header, CheckOutFooter },
 };

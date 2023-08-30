@@ -45,7 +45,10 @@
               <div
                 class="seach-resoult-container"
                 v-if="
-                  searchBlockHide && (searchResoults.length > 0 || searchProducts.length)
+                  searchBlockHide &&
+                  (searchResoults.length > 0 ||
+                    searchProducts.length ||
+                    searchCategories.length)
                 "
               >
                 <div class="search-resoult-scroll">
@@ -94,44 +97,89 @@
                       </div>
                     </div>
                   </div>
-                  <div v-if="searchProducts.length > 0 && search.length > 3">
-                    <div class="search-popular">
-                      <h6>{{ $store.state.translations["main.popular"] }}</h6>
+                  <div class="search-grid">
+                    <div v-if="searchProducts.length > 0 && search.length > 2">
+                      <div class="search-popular">
+                        <h6>{{ $store.state.translations["main.popular"] }}</h6>
+                      </div>
+                      <div class="search-resoults-list">
+                        <div
+                          class="search-resoults"
+                          v-for="product in searchProducts"
+                          :key="product?.id"
+                        >
+                          <nuxt-link :to="localePath(`/product/${product?.slug}`)">
+                            <span
+                              ><svg
+                                xmlns="http://www.w3.org/2000/svg"
+                                width="20"
+                                height="20"
+                                viewBox="0 0 20 20"
+                                fill="none"
+                              >
+                                <circle
+                                  cx="9.80492"
+                                  cy="9.80492"
+                                  r="7.49047"
+                                  stroke="#727474"
+                                  stroke-width="1.2"
+                                  stroke-linecap="round"
+                                  stroke-linejoin="round"
+                                />
+                                <path
+                                  d="M15.0156 15.4043L17.9523 18.3334"
+                                  stroke="#727474"
+                                  stroke-width="1.2"
+                                  stroke-linecap="round"
+                                  stroke-linejoin="round"
+                                /></svg
+                            ></span>
+                            {{ product?.name }}
+                          </nuxt-link>
+                        </div>
+                      </div>
                     </div>
-                    <div class="search-resoults-list">
-                      <div
-                        class="search-resoults"
-                        v-for="product in searchProducts"
-                        :key="product?.id"
-                      >
-                        <nuxt-link :to="localePath(`/product/${product?.slug}`)">
-                          <span
-                            ><svg
-                              xmlns="http://www.w3.org/2000/svg"
-                              width="20"
-                              height="20"
-                              viewBox="0 0 20 20"
-                              fill="none"
-                            >
-                              <circle
-                                cx="9.80492"
-                                cy="9.80492"
-                                r="7.49047"
-                                stroke="#727474"
-                                stroke-width="1.2"
-                                stroke-linecap="round"
-                                stroke-linejoin="round"
-                              />
-                              <path
-                                d="M15.0156 15.4043L17.9523 18.3334"
-                                stroke="#727474"
-                                stroke-width="1.2"
-                                stroke-linecap="round"
-                                stroke-linejoin="round"
-                              /></svg
-                          ></span>
-                          {{ product?.name }}
-                        </nuxt-link>
+                    <div v-if="searchCategories.length > 0 && search.length > 2">
+                      <div class="search-popular">
+                        <h6>{{ $store.state.translations["main.categories"] }}</h6>
+                      </div>
+                      <div class="search-resoults-list">
+                        <div
+                          class="search-resoults"
+                          v-for="category in searchCategories"
+                          :key="category?.id"
+                        >
+                          <nuxt-link
+                            :to="localePath(`/categories-inner/${category?.slug}`)"
+                          >
+                            <span
+                              ><svg
+                                xmlns="http://www.w3.org/2000/svg"
+                                width="20"
+                                height="20"
+                                viewBox="0 0 20 20"
+                                fill="none"
+                              >
+                                <circle
+                                  cx="9.80492"
+                                  cy="9.80492"
+                                  r="7.49047"
+                                  stroke="#727474"
+                                  stroke-width="1.2"
+                                  stroke-linecap="round"
+                                  stroke-linejoin="round"
+                                />
+                                <path
+                                  d="M15.0156 15.4043L17.9523 18.3334"
+                                  stroke="#727474"
+                                  stroke-width="1.2"
+                                  stroke-linecap="round"
+                                  stroke-linejoin="round"
+                                /></svg
+                            ></span>
+                            {{ category?.name }}
+                          </nuxt-link>
+                        </div>
                       </div>
                     </div>
                   </div>
@@ -904,6 +952,7 @@ export default {
       arrow: require("../../assets/svg/dropdown-icon.svg?raw"),
       categories: [],
       searchProducts: [],
+      searchCategories: [],
       activeCategory: null,
       targetPage: false,
       smsCodeError: false,
@@ -1079,7 +1128,7 @@ export default {
           formData
         );
         localStorage.setItem("dis_auth_token", data.token);
-        this.$store.commit("authHandler");
+        // this.$store.commit("authHandler");
 
         if (!this.forgetPassStatus) {
           this.visibleName = true;
@@ -1161,7 +1210,6 @@ export default {
       try {
         const data = await this.$store.dispatch("fetchAuth/postLogin", formData);
         localStorage.setItem("dis_auth_token", data.token);
-        this.$store.commit("authHandler");
         this.$store.dispatch("profileInfo");
         this.$store.commit("authVisibleChange", false);
         // if (this.$route.name != "basket" && this.targetPage) {
@@ -1184,6 +1232,8 @@ export default {
           headers: { Language: this.$i18n.locale },
         });
         this.searchProducts = data?.products;
+        this.searchCategories = data?.categories;
+        console.log(this.searchCategories);
       } catch (e) {}
     },
   },
@@ -1219,11 +1269,12 @@ export default {
       }
     },
     search(val) {
-      if (val.length > 3) {
+      if (val.length > 2) {
         this.__GET_SEARCH();
         this.searchLastResoults = false;
       } else {
         this.searchProducts = [];
+        this.searchCategories = [];
       }
     },
     routerPath() {
@@ -1320,6 +1371,7 @@ export default {
 }
 .catalog-menu-list {
   min-width: 253px;
+  max-width: 255px;
   margin-right: 28px;
   max-height: 100vh;
   overflow-y: scroll;
@@ -1353,7 +1405,9 @@ export default {
   position: relative;
   white-space: nowrap;
 }
-
+.catalog-menu-list ul li span {
+  margin-left: 7px;
+}
 .catalog-menu-list-active {
   background: #f7f7f7;
   color: #09454f !important;
@@ -1629,6 +1683,11 @@ export default {
   /* backdrop-filter: blur(2.5px); */
   z-index: 1000;
   top: 100%;
+}
+.search-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
 }
 @media screen and (max-width: 1600px) {
   .coin_btn {

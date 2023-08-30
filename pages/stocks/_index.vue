@@ -329,7 +329,7 @@ export default {
   border: 1px solid #ececec !important;
   border-radius: 4px !important;
 }
-.bounce-enter-active {
+/* .bounce-enter-active {
   animation: bounce-in2 0.5s;
 }
 .bounce-leave-active {
@@ -348,5 +348,5 @@ export default {
     transform: translateY(0);
     opacity: 1;
   }
-}
+} */
 </style>

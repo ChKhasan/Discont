@@ -59,25 +59,6 @@ export default {
     return {
       arrow: require("../assets/svg/dropdown-icon.svg?raw"),
       deleteIcon: require("../assets/svg/Delete.svg?raw"),
-      status: [
-        {
-          value: "all",
-          label: "Barchasi",
-        },
-        {
-          value: "qwerty1",
-          label: "Others",
-        },
-        {
-          value: "qwerty2",
-          label: "Others",
-        },
-        {
-          value: "qwerty3",
-          label: "Others",
-        },
-      ],
-      value: "all",
       likeProducts: [],
     };
   },

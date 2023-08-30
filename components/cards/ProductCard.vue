@@ -32,7 +32,14 @@
         <span
           class="pc-img-container"
           @click="$router.push(localePath(`/product/${product?.slug}`))"
-          ><img
+        >
+          <!-- <NuxtImg
+            format="webp"
+            v-if="product?.images[0]?.md_img"
+            :src="product?.images[0]?.md_img"
+            loading="lazy"
+          /> -->
+          <img
             v-if="product?.images[0]?.md_img"
             :src="product?.images[0]?.md_img"
             alt=""
@@ -96,15 +103,22 @@
           {{ product?.info?.name ? product?.info?.name : "---" }}
         </h3>
       </nuxt-link>
-      <p>
-        <span v-html="star"></span>{{ product?.info?.stars ? product?.info?.stars : "0" }}
+      <p v-if="product.info.stars">
+        <!-- <span v-html="star"></span>{{ product?.info?.stars ? product?.info?.stars : "0" }} -->
+        <a-rate class="product-card-rate" v-model="product.info.stars" disabled />
       </p>
+      <p v-else>
+        <!-- <span v-html="star"></span>{{ product?.info?.stars ? product?.info?.stars : "0" }} -->
+        <a-rate class="product-card-rate" v-model="fullRating" disabled />
+      </p>
+
       <span class="product-card-price"
         ><h4>
           {{
-            `${
-              product?.discount_price ? product?.discount_price : product?.real_price
-            }`.replace(/\B(?=(\d{3})+(?!\d))/g, " ")
+            `${(product?.discount_price
+              ? product?.discount_price
+              : product?.real_price
+            ).toFixed()}`.replace(/\B(?=(\d{3})+(?!\d))/g, " ")
           }}
           {{ $store.state.translations["main.som"] }}
         </h4>
@@ -865,6 +879,7 @@ export default {
   props: ["product"],
   data() {
     return {
+      fullRating: 5,
       count: 1,
       productCount: 1,
       visibleSuccess: false,

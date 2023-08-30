@@ -27,8 +27,8 @@ export const mutations = {
   getDiCoinInfo(state, payload) {
     state.dicoin = payload;
   },
-  authHandler(state) {
-    const token = localStorage.getItem("dis_auth_token");
+  authHandler(state, payload) {
+    const token = payload;
     token ? (state.auth = true) : (state.auth = false);
   },
   authVisibleChange(state, payload) {
@@ -109,6 +109,7 @@ export const actions = {
       })
       .then((res) => {
         commit("getProfileInfo", res?.user);
+        commit("authHandler", res?.user);
       });
   },
   dicoinInfo({ commit }, payload) {

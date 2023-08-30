@@ -225,7 +225,6 @@ export default {
     this.$store.dispatch("dicoinInfo");
     await this.$store.commit("reloadStore");
     this.afterReload = true;
-    this.$store.commit("authHandler");
     this.$getLocation().then((coordinates) => {
       this.$store.commit("getLocations", coordinates);
     });

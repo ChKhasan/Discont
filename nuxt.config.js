@@ -31,9 +31,10 @@ export default {
 
   components: true,
 
-  buildModules: ["@nuxtjs/svg"],
+  buildModules: ["@nuxtjs/svg", "@nuxt/image"],
 
   modules: ["bootstrap-vue/nuxt", "@nuxtjs/axios", "@nuxtjs/i18n"],
+  // target: "static",
   // server: {
   //   port: 8000,
   //   host: "localhost",
@@ -44,6 +45,9 @@ export default {
       axios.defaults.withCredentials = true;
     },
     baseURL: "https://api.e-shop.ndc.uz/api",
+  },
+  image: {
+    dir: "assets/images",
   },
   i18n: {
     locales: ["uz", "en", "ru"],

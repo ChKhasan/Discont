@@ -46,6 +46,7 @@
               class="basket-card"
               v-for="(product, index) in products"
               :key="index"
+              :class="{ 'last-basket-card': index == products.length - 1 }"
               v-if="!skeletonLoad"
             >
               <div
@@ -495,20 +496,27 @@ export default {
   background: #ffffff;
   box-shadow: 0px 2px 24px rgba(0, 0, 0, 0.06);
   border-radius: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
   padding: 32px;
+}
+.last-basket-card {
+  padding-bottom: 0 !important;
+  border-bottom: 0 !important;
 }
 .basket-card {
   display: grid;
   grid-template-columns: 118px auto;
   grid-gap: 21px;
   padding-bottom: 18px;
-  margin-bottom: 18px;
+  /* margin-bottom: 18px; */
   border-bottom: 2px solid #f2f5f7;
 }
-.basket-card:last-child {
+
+.basket-card:last-of-type {
   padding-bottom: 0;
-  margin-bottom: 0;
-  border-bottom: none;
+  border: none;
 }
 .basket-img-container {
   padding-top: 13px;

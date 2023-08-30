@@ -2,10 +2,7 @@
   <div class="categories-page-inner">
     <div class="container_xl">
       <div>
-        <div class="page-breadcrumb" v-if="loading">
-          <b-skeleton width="20%"></b-skeleton>
-        </div>
-        <div class="page-breadcrumb" v-else>
+        <div class="page-breadcrumb">
           <nuxt-link :to="localePath('/')">{{
             $store.state.translations["main.home-page"]
           }}</nuxt-link>
@@ -22,17 +19,17 @@
           >
             {{ categoryChilds?.parent?.name }}
           </nuxt-link>
-          <nuxt-link v-if="loading" :to="localePath(`/`)">
-            <b-skeleton width="100px" v-if="loading"></b-skeleton>
-          </nuxt-link>
-          <nuxt-link :to="localePath('/')" v-else>
+
+          <nuxt-link :to="localePath('/')">
             {{ categoryChilds?.name }}
           </nuxt-link>
         </div>
         <div class="d-flex categories-page-title">
-          <b-skeleton width="30%" v-if="loading"></b-skeleton>
-          <MainTitle :title="categoryChilds?.name" v-else class="mb-0" />
-          <span>{{ products?.length }} {{ $store.state.translations["category.product-count"] }}</span>
+          <MainTitle :title="categoryChilds?.name" class="mb-0" />
+          <span
+            >{{ products?.length }}
+            {{ $store.state.translations["category.product-count"] }}</span
+          >
         </div>
         <div class="mobile__filter">
           <button @click="filterHandle = true" class="filter">
@@ -329,19 +326,19 @@
               <div
                 class="clear-filter"
                 @click="clearFilter"
-                v-if="Object.keys($route.query).length > 2"
+                v-if="Object.keys($route.query).length > 1"
               >
                 {{ $store.state.translations["category.cleaning-filter"] }}
               </div>
             </div>
             <a-select
-              v-model="value"
+              v-model="sort"
               class="categories-filter-select"
               placeholder="Select good person"
-              style="width: 252px"
+              style="width: 252px;"
             >
               <a-select-option
-                v-for="item in status"
+                v-for="item in sortItems"
                 :key="item?.value"
                 :label="item.label"
                 :value="item.value"
@@ -588,7 +585,9 @@
               >
             </div>
           </div>
-          <button class="confirm">{{ $store.state.translations["category.show-resoult"] }}</button>
+          <button class="confirm">
+            {{ $store.state.translations["category.show-resoult"] }}
+          </button>
         </div>
       </div>
     </div>
@@ -612,7 +611,7 @@ export default {
       sliderValue: [10000, 10000000],
       arrow: require("../../assets/svg/dropdown-icon.svg?raw"),
       filterX: require("../../assets/svg/selected-filter-x.svg?raw"),
-      value: "all",
+      sort: "all",
       disabled: false,
       filterOptions: [],
       products: [],
@@ -622,16 +621,33 @@ export default {
       options: [],
       atributDrop: [],
       categoryChilds: [],
-      status: [
+      sortItems: [
         {
           value: "all",
           label: "Barchasi",
+        },
+        {
+          value: "popular",
+          label: "По популярности",
+        },
+        {
+          value: "cheap",
+          label: "Подешевле",
+        },
+        {
+          value: "expensive",
+          label: "Подороже",
         },
       ],
     };
   },
   async asyncData({ $axios, params, query, store, i18n }) {
-    const [productsData, allCategoriesData, bannersData] = await Promise.all([
+    const [
+      productsData,
+      allCategoriesData,
+      bannersData,
+      categoryData,
+    ] = await Promise.all([
       store.dispatch("fetchProducts/getProducts", {
         params: { ...query },
         headers: {
@@ -651,19 +667,44 @@ export default {
           Language: i18n.locale,
         },
       }),
+      $axios.$get(`/categories/${params.index}`, {
+        params: { ...query, limit: 1 },
+      }),
     ]);
     const productsOthers = productsData?.products?.data;
     const allCategories = allCategoriesData?.categories;
     const banners = bannersData?.banners?.data;
+
+    const categoryChilds = categoryData?.category;
+    const attributes = categoryData?.attributes;
+    const options = [];
+    categoryData?.attributes.forEach((item) => {
+      options.push(...item.options);
+    });
+    const filterOptions = [];
+    if (query.attributes) {
+      let atr = query.attributes.split(",");
+      atr.forEach((item) => {
+        let findItem = options.find((elem) => elem.id == item);
+        filterOptions.push(findItem);
+      });
+    }
+    const allInfo = categoryData;
     return {
       productsOthers,
       allCategories,
       banners,
+      options,
+      categoryChilds,
+      attributes,
+      filterOptions,
+      allInfo,
     };
   },
 
   mounted() {
     this.getFirstData("__GET_PRODUCTS");
+    // this.getFirstData("__GET_CATEGORY");
   },
   computed: {
     filterAtributs() {
@@ -699,28 +740,38 @@ export default {
     },
     async __GET_PRODUCTS() {
       this.loading = true;
-      const data = await this.$axios.$get(`/categories/${this.$route.params.index}`, {
-        params: { ...this.$route.query },
+      const data = await this.$store.dispatch("fetchProducts/getProducts", {
+        params: { ...this.$route.query, category: this.$route.params.index },
       });
-      this.loading = false;
-      this.products = data?.products?.data;
-      this.categoryChilds = data?.category;
-      this.attributes = data?.attributes;
-      this.options = [];
       this.totalPage = data?.products?.total;
-      data?.attributes.forEach((item) => {
-        this.options.push(...item.options);
-      });
-      this.filterOptions = [];
-      if (this.$route.query.attributes) {
-        let atr = this.$route.query.attributes.split(",");
-        atr.forEach((item) => {
-          let findItem = this.options.find((elem) => elem.id == item);
-          this.filterOptions.push(findItem);
-        });
-      }
-      this.allInfo = data;
+      this.products = data?.products?.data;
+      this.loading = false;
+
+      console.log(data);
     },
+    // async __GET_CATEGORY() {
+    //   this.loading = true;
+    //   const data = await this.$axios.$get(`/categories/${this.$route.params.index}`, {
+    //     params: { ...this.$route.query, limit: 1 },
+    //   });
+    //   this.loading = false;
+    //   this.categoryChilds = data?.category;
+    //   this.attributes = data?.attributes;
+    //   this.options = [];
+    //   this.totalPage = data?.products?.total;
+    //   data?.attributes.forEach((item) => {
+    //     this.options.push(...item.options);
+    //   });
+    //   this.filterOptions = [];
+    //   if (this.$route.query.attributes) {
+    //     let atr = this.$route.query.attributes.split(",");
+    //     atr.forEach((item) => {
+    //       let findItem = this.options.find((elem) => elem.id == item);
+    //       this.filterOptions.push(findItem);
+    //     });
+    //   }
+    //   this.allInfo = data;
+    // },
     async onChange(value) {
       let atr = [];
       if (this.$route.query.attributes) {
@@ -783,6 +834,27 @@ export default {
     },
   },
   watch: {
+    async sort(val) {
+      let filterObj = {
+        sort: val,
+        ...this.$route.query,
+      };
+      if (val == "all") {
+        delete filterObj["sort"];
+        await this.$router.replace({
+          path: this.$route.path,
+          query: { ...filterObj },
+        });
+      } else {
+        if (this.$route.query.sort != filterObj.sort) {
+          await this.$router.replace({
+            path: this.$route.path,
+            query: { ...filterObj },
+          });
+        }
+        this.__GET_PRODUCTS({ ...this.$route.query });
+      }
+    },
     async current(val) {
       this.changePagination(val, "__GET_PRODUCTS");
     },

@@ -1,6 +1,13 @@
 <template lang="html">
   <div @click="$router.push(localePath(`/news/${post?.slug}`))" class="post-card">
     <div class="post-card-img">
+      <nuxt-img
+        format="webp"
+        v-if="post?.md_img"
+        :src="post?.md_img"
+        alt="image"
+        loading="lazy"
+      />
       <img v-if="post?.md_img" :src="post?.md_img" alt="" />
       <img v-else src="../../assets/images/Rectangle 24083.png" alt="" />
     </div>
