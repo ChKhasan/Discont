@@ -262,17 +262,26 @@
                 :max="20000000"
                 :min="10000"
                 v-model="sliderValue"
-                :default-value="[10000, 20000000]"
                 @change="onChangeSlider"
                 @afterChange="onAfterChange"
               />
               <div class="filter-slider-inputs">
                 <span>
-                  <input type="text" v-model="sliderValue[0]" placeholder="от" />
+                  <input
+                    type="text"
+                    v-model="sliderValue[0]"
+                    placeholder="от"
+                    @keyup.enter="onAfterChange(sliderValue)"
+                  />
                   <span></span>
                 </span>
                 <span>
-                  <input type="text" placeholder="до" v-model="sliderValue[1]" />
+                  <input
+                    type="text"
+                    placeholder="до"
+                    v-model="sliderValue[1]"
+                    @keyup.enter="onAfterChange(sliderValue)"
+                  />
                   <span></span>
                 </span>
               </div>
@@ -335,7 +344,7 @@
               v-model="sort"
               class="categories-filter-select"
               placeholder="Select good person"
-              style="width: 252px;"
+              style="width: 252px"
             >
               <a-select-option
                 v-for="item in sortItems"
@@ -422,17 +431,26 @@
               :max="20000000"
               :min="10000"
               v-model="sliderValue"
-              :default-value="[10000, 20000000]"
               @change="onChangeSlider"
               @afterChange="onAfterChange"
             />
             <div class="filter-slider-inputs">
               <span>
-                <input type="text" v-model="sliderValue[0]" placeholder="от" />
+                <input
+                  type="text"
+                  v-model="sliderValue[0]"
+                  placeholder="от"
+                  @keyup.enter="onAfterChange(sliderValue)"
+                />
                 <span></span>
               </span>
               <span>
-                <input type="text" placeholder="до" v-model="sliderValue[1]" />
+                <input
+                  type="text"
+                  placeholder="до"
+                  v-model="sliderValue[1]"
+                  @keyup.enter="onAfterChange(sliderValue)"
+                />
                 <span></span>
               </span>
             </div>
@@ -651,7 +669,7 @@ export default {
       store.dispatch("fetchProducts/getProducts", {
         params: { ...query },
         headers: {
-          Language: i18n.locale,
+          lang: i18n.locale,
         },
       }),
       $axios.$get(`/categories`, {
@@ -659,12 +677,12 @@ export default {
           all: 1,
         },
         headers: {
-          Language: i18n.locale,
+          lang: i18n.locale,
         },
       }),
       store.dispatch("fetchBanners/getBanners", {
         headers: {
-          Language: i18n.locale,
+          lang: i18n.locale,
         },
       }),
       $axios.$get(`/categories/${params.index}`, {
@@ -704,7 +722,12 @@ export default {
 
   mounted() {
     this.getFirstData("__GET_PRODUCTS");
-    // this.getFirstData("__GET_CATEGORY");
+    if (this.$route.query.min_price) {
+      this.sliderValue[0] = Number(this.$route.query.min_price);
+    }
+    if (this.$route.query.max_price) {
+      this.sliderValue[1] = Number(this.$route.query.max_price);
+    }
   },
   computed: {
     filterAtributs() {
@@ -836,8 +859,8 @@ export default {
   watch: {
     async sort(val) {
       let filterObj = {
-        sort: val,
         ...this.$route.query,
+        sort: val,
       };
       if (val == "all") {
         delete filterObj["sort"];

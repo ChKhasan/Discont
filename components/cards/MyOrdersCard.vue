@@ -17,6 +17,7 @@
           'pending-order': order?.status == 'pending',
           'returned-order': order?.status == 'returned',
           'accepted-order': order?.status == 'accepted',
+          'done-order': order?.status == 'done',
         }"
         >{{
           order?.status == "new"
@@ -27,6 +28,8 @@
             ? "Qaytarildi"
             : order?.status == "accepted"
             ? "Qabul qilindi"
+            : order?.status == "done"
+            ? "Yetkazib berildi"
             : ""
         }}</span
       >
@@ -176,6 +179,9 @@ export default {
 .success-order::after {
   background: #09454f;
 }
+.done-order::after {
+  background: #18b3bd;
+}
 .pending-order {
   color: #fbc100;
   background: #fafafa;
@@ -200,6 +206,10 @@ export default {
 .accepted-order {
   color: #3699ff;
   background-color: #e1f0ff;
+}
+.done-order {
+  background: #c9f7f5;
+  color: #18b3bd;
 }
 .accepted-order::after {
   background: #3699ff;

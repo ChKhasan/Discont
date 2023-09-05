@@ -967,7 +967,7 @@ export default {
     const [categoriesData] = await Promise.all([
       this.$store.dispatch("fetchCategories/getCategories", {
         headers: {
-          Language: this.$i18n.locale,
+          lang: this.$i18n.locale,
         },
       }),
     ]);
@@ -1229,7 +1229,7 @@ export default {
       try {
         const data = await this.$store.dispatch("fetchSearch/getSearch", {
           params: { search: this.search },
-          headers: { Language: this.$i18n.locale },
+          headers: { lang: this.$i18n.locale },
         });
         this.searchProducts = data?.products;
         this.searchCategories = data?.categories;

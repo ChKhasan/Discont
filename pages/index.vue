@@ -373,48 +373,48 @@ export default {
           limit: 6,
         },
         headers: {
-          Language: i18n.locale,
+          lang: i18n.locale,
         },
       }),
       store.dispatch("fetchProducts/getProducts", {
         params: { limit: 10 },
         headers: {
-          Language: i18n.locale,
+          lang: i18n.locale,
         },
       }),
       store.dispatch("fetchProducts/getProducts", {
         params: { type: "popular", limit: 6 },
         headers: {
-          Language: i18n.locale,
+          lang: i18n.locale,
         },
       }),
       store.dispatch("fetchCategories/getCategories", {
         // params: { limit: 6 },
         headers: {
-          Language: i18n.locale,
+          lang: i18n.locale,
         },
       }),
       store.dispatch("fetchBrands/getBrands", {
         params: { limit: 10, top: 1 },
         headers: {
-          Language: i18n.locale,
+          lang: i18n.locale,
         },
       }),
       store.dispatch("fetchPosts/getPosts", {
         params: { limit: 10 },
         headers: {
-          Language: i18n.locale,
+          lang: i18n.locale,
         },
       }),
       store.dispatch("fetchProducts/getShowcases", {
-        params: { limit: 4 },
+        params: { limit: 6 },
         headers: {
-          Language: i18n.locale,
+          lang: i18n.locale,
         },
       }),
       store.dispatch("fetchBanners/getBanners", {
         headers: {
-          Language: i18n.locale,
+          lang: i18n.locale,
         },
       }),
     ]);
@@ -426,6 +426,7 @@ export default {
     const posts = posts1?.posts?.data;
     const showcases = showcasesData.showcases;
     const banners = bannersData?.banners?.data;
+    console.log(banners);
     return {
       bestsellersProducts,
       byCategoryProducts,
@@ -440,7 +441,7 @@ export default {
   mounted() {
     this.$store.dispatch("fetchProducts/getShowcases", {
       headers: {
-        Language: this.$i18n.locale,
+        lang: this.$i18n.locale,
       },
     });
   },

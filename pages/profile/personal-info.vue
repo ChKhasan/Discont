@@ -289,7 +289,7 @@ export default {
     },
     async __GET_REGIONS() {
       const data = await this.$store.dispatch("fetchRegions/getRegions", {
-        headers: { Language: this.$i18n.locale },
+        headers: { lang: this.$i18n.locale },
       });
       this.regions = data?.regions;
     },

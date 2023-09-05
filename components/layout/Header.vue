@@ -8,13 +8,22 @@
               <span v-html="location" class="nav-location"></span>
               {{ $store.state.translations["main.tashkent"] }}
             </li>
-            <li>{{ $store.state.translations["main.store-address"] }}</li>
-            <li @click="$router.push(localePath('/info/about-us'))">
+            <li @click="$router.push(localePath('/stores'))">
+              {{ $store.state.translations["main.store-address"] }}
+            </li>
+            <li @click="$router.push(localePath('/about'))">
               {{ $store.state.translations["main.aboutus"] }}
             </li>
           </ul>
           <div class="d-flex header-top__right">
-            <a href="tel:+998712077788">+998 71 207 77 88</a>
+            <a :href="`tel:${$store.state.siteInfo?.phone_number}`"
+              >+{{
+                `${$store.state.siteInfo?.phone_number}`
+                  .match(/(\d{3})(\d{2})(\d{3})(\d{2})(\d{2})/)
+                  ?.filter((item, index) => index != 0)
+                  .join(" ")
+              }}</a
+            >
             <p class="d-flex align-items-center lang_locales">
               <span
                 v-for="locale in locales"
@@ -81,7 +90,7 @@ export default {
         }
         // headerTop.style.marginTop = "-100%";
         // header2.style.marginTop = `-${header2.offsetHeight}px`;
-        header2.style.display = 'none'
+        header2.style.display = "none";
         header3.style.boxShadow = " 0 0.5rem 1rem rgb(0 0 0 / 15%)";
         // header.style.background = "#04babe";
         header.style.marginTop = "0";

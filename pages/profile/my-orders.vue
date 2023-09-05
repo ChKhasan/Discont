@@ -2,7 +2,9 @@
   <div class="personal-info">
     <div class="container_xl">
       <div class="page-breadcrumb">
-        <nuxt-link :to="localePath('/')">{{ $store.state.translations["main.home-page"] }}</nuxt-link>
+        <nuxt-link :to="localePath('/')">{{
+          $store.state.translations["main.home-page"]
+        }}</nuxt-link>
         <nuxt-link :to="localePath('/')"> Mening buyurtmalarim </nuxt-link>
       </div>
       <div><MainTitle title="Mening buyurtmalarim" /></div>
@@ -11,12 +13,18 @@
           <ProfileMenu />
         </div>
         <div>
+          <div class="my-orders-grid" v-if="loading">
+            <div class="order-card-grid w-100" v-if="loading">
+              <b-skeleton width="100%" height="300px" />
+              <b-skeleton width="100%" height="300px" />
+            </div>
+          </div>
           <div class="my-orders-grid" v-if="orders.length > 0">
             <div class="order-card-grid">
               <MyOrdersCard v-for="order in orders" :key="order.id" :order="order" />
             </div>
           </div>
-          <div class="orders-empty" v-else>
+          <div class="orders-empty" v-if="orders.length == 0 && !loading">
             <img src="../../assets/images/orders-empty.png" alt="" />
             <h4>Sizda hali buyurtmalar mavjud emas</h4>
             <p>
@@ -41,7 +49,7 @@ export default {
     return {
       empty: true,
       orders: [],
-
+      loading: false,
       edit: require("../../assets/svg/Edit.svg?raw"),
       arrow: require("../../assets/svg/dropdown-icon.svg?raw"),
     };
@@ -58,9 +66,12 @@ export default {
     moment,
     async __GET_PROFILE_INFO() {
       try {
+        this.loading = true;
         const profileData = await this.$store.dispatch("fetchAuth/getProfileInfo");
         this.orders = profileData?.user?.orders;
+        this.loading = false;
       } catch (e) {
+        this.loading = false;
         if (e.response.status == 401) this.$store.commit("logout");
       }
     },

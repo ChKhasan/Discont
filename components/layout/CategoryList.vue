@@ -119,7 +119,7 @@ export default {
     const [topBarsData] = await Promise.all([
       this.$store.dispatch(`fetchTopBars/getTopBars`, {
         headers: {
-          Language: this.$i18n.locale,
+          lang: this.$i18n.locale,
         },
       }),
     ]);

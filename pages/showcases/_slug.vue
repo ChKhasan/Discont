@@ -20,13 +20,13 @@
             <!-- <span class="align-items-end">{{ showcases?.products?.length }} {{ $store.state.translations["category.product-count"] }}</span> -->
           </div>
           <a-select
-            v-model="value"
+            v-model="sort"
             class="categories-filter-select mb-0"
             placeholder="Select good person"
             style="width: 252px"
           >
             <a-select-option
-              v-for="item in status"
+              v-for="item in sortItems"
               :key="item?.value"
               :label="item.label"
               :value="item.value"
@@ -51,11 +51,21 @@
             />
             <div class="filter-slider-inputs">
               <span>
-                <input type="text" v-model="sliderValue[0]" placeholder="от" />
+                <input
+                  type="text"
+                  v-model="sliderValue[0]"
+                  placeholder="от"
+                  @keyup.enter="onAfterChange(sliderValue)"
+                />
                 <span></span>
               </span>
               <span>
-                <input type="text" placeholder="до" v-model="sliderValue[1]" />
+                <input
+                  type="text"
+                  placeholder="до"
+                  v-model="sliderValue[1]"
+                  @keyup.enter="onAfterChange(sliderValue)"
+                />
                 <span></span>
               </span>
             </div>
@@ -76,7 +86,7 @@
             v-if="showcases?.products?.length > 0 && !loading"
           >
             <ProductCard
-              v-for="product in showcases?.products"
+              v-for="product in products"
               :key="product.id"
               :product="product"
             />
@@ -163,24 +173,36 @@ export default {
   mixins: [global],
   data() {
     return {
+      sortItems: [
+        {
+          value: "all",
+          label: "Barchasi",
+        },
+        {
+          value: "popular",
+          label: "По популярности",
+        },
+        {
+          value: "cheap",
+          label: "Подешевле",
+        },
+        {
+          value: "expensive",
+          label: "Подороже",
+        },
+      ],
       loading: false,
       showAllAtr: [],
       sliderValue: [10000, 10000000],
       arrow: require("../../assets/svg/dropdown-icon.svg?raw"),
       filterX: require("../../assets/svg/selected-filter-x.svg?raw"),
-      value: "all",
+      sort: "all",
       disabled: false,
       filterOptions: [],
       products: [],
       showcases: [],
       atr: [],
       atributDrop: [],
-      status: [
-        {
-          value: "all",
-          label: "Barchasi",
-        },
-      ],
     };
   },
   async asyncData({ params, query, store, i18n }) {
@@ -190,7 +212,7 @@ export default {
         params: {
           params: { ...query },
           headers: {
-            Language: i18n.locale,
+            lang: i18n.locale,
           },
         },
       }),
@@ -237,17 +259,12 @@ export default {
     },
     async __GET_PRODUCTS() {
       this.loading = true;
-      const data = await this.$store.dispatch("fetchShowcases/getShowcasesBySlug", {
-        slug: this.$route.params.slug,
-        params: {
-          params: { ...this.$route.query },
-          headers: {
-            Language: this.$i18n.locale,
-          },
-        },
+      const data = await this.$store.dispatch("fetchProducts/getProducts", {
+        params: { ...this.$route.query, showcase: this.$route.params.slug },
       });
+      this.totalPage = data?.products?.total;
+      this.products = data?.products?.data;
       this.loading = false;
-      this.showcases = data?.showcase;
     },
     async onChange(value) {
       let atr = [];
@@ -305,6 +322,27 @@ export default {
     },
   },
   watch: {
+    async sort(val) {
+      let filterObj = {
+        ...this.$route.query,
+        sort: val,
+      };
+      if (val == "all") {
+        delete filterObj["sort"];
+        await this.$router.replace({
+          path: this.$route.path,
+          query: { ...filterObj },
+        });
+      } else {
+        if (this.$route.query.sort != filterObj.sort) {
+          await this.$router.replace({
+            path: this.$route.path,
+            query: { ...filterObj },
+          });
+        }
+        this.__GET_PRODUCTS({ ...this.$route.query });
+      }
+    },
     async current(val) {
       this.changePagination(val, "__GET_PRODUCTS");
     },

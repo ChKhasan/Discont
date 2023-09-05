@@ -133,7 +133,7 @@ export default {
       const data = await this.$store.dispatch("fetchProducts/getProductsById", {
         data: dataForm,
         params: {
-          headers: { Language: this.$i18n.locale },
+          headers: { lang: this.$i18n.locale },
         },
       });
       this.compProducts = data?.products;
@@ -162,7 +162,7 @@ export default {
         data: dataForm,
         params: {
           params: { ...this.$route.query },
-          headers: { Language: this.$i18n.locale },
+          headers: { lang: this.$i18n.locale },
         },
       });
       this.comparisonData = data?.data;

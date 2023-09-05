@@ -10,9 +10,9 @@
         </div>
         <div class="d-flex categories-page-title justify-content-between">
           <div class="d-flex justify-content-between">
-            <MainTitle :title="`${brand?.name}`" class="mb-0" />
+            <MainTitle :title="brand?.name" class="mb-0" />
             <span
-              >{{ brandProducts?.length }}
+              >{{ totalPage }}
               {{ $store.state.translations["category.product-count"] }}</span
             >
           </div>
@@ -36,7 +36,7 @@
         <div class="categories-filter-list">
           <div class="categories-list">
             <h5>{{ $store.state.translations["main.categories"] }}</h5>
-            <ul>
+            <ul class="brand-list">
               <li v-for="brand in brandsAll" :key="brand?.id">
                 <span
                   @click="$router.push(localePath(`/brand-categories/${brand?.slug}`))"
@@ -65,11 +65,21 @@
             />
             <div class="filter-slider-inputs">
               <span>
-                <input type="text" v-model="sliderValue[0]" placeholder="от" />
+                <input
+                  type="text"
+                  v-model="sliderValue[0]"
+                  placeholder="от"
+                  @keyup.enter="onAfterChange(sliderValue)"
+                />
                 <span></span>
               </span>
               <span>
-                <input type="text" placeholder="до" v-model="sliderValue[1]" />
+                <input
+                  type="text"
+                  placeholder="до"
+                  v-model="sliderValue[1]"
+                  @keyup.enter="onAfterChange(sliderValue)"
+                />
                 <span></span>
               </span>
             </div>
@@ -77,7 +87,16 @@
         </div>
         <div class="categories-products">
           <div class="d-flex justify-content-end w-100"></div>
-          <div class="categories-card-grid" v-if="brandProducts.length > 0">
+          <div class="categories-card-grid" v-if="loading">
+            <div
+              class="empty-card"
+              v-for="product in [1, 2, 4, 5, 6, 7, 8]"
+              :key="product"
+            >
+              <b-skeleton width="100%" height="100%"></b-skeleton>
+            </div>
+          </div>
+          <div class="categories-card-grid" v-if="products.length > 0 && !loading">
             <ProductCard
               v-for="product in products"
               :product="{
@@ -176,6 +195,7 @@ export default {
       disabled: false,
       loading: false,
       products: [],
+      totalPage: 0,
       // brands: [],
       // brandProducts: [],
       // brandsAll: [],
@@ -207,21 +227,19 @@ export default {
         id: params.index,
         params: {
           headers: {
-            Language: i18n.locale,
+            lang: i18n.locale,
           },
         },
       }),
     ]);
-    let brands = [...brandsData.brands?.data];
-    let brandsAll = brandsData.brands?.data;
-    brands = [...brandsData.brands?.data];
+    let brands = [...brandsData.brands];
+    let brandsAll = brandsData.brands;
+    brands = [...brandsData.brands];
     brands = [...brands.splice(0, 6)];
-    let brandProducts = brandData.products?.data;
     let brand = brandData.brand;
     return {
       brandsAll,
       brands,
-      brandProducts,
       brand,
     };
   },
@@ -235,6 +253,7 @@ export default {
         params: { ...this.$route.query, brand: this.$route.params.index },
       });
       this.totalPage = data?.products?.total;
+      console.log(this.totalPage);
       this.products = data?.products?.data;
       this.loading = false;
     },
@@ -253,7 +272,7 @@ export default {
           max_price: value[1],
         };
         await this.$router.replace({
-          path: `/categories-inner/${this.$route.params.index}`,
+          path: this.$route.path,
           query: query,
         });
         this.__GET_PRODUCTS();
@@ -269,8 +288,8 @@ export default {
     },
     async sort(val) {
       let filterObj = {
-        sort: val,
         ...this.$route.query,
+        sort: val,
       };
       if (val == "all") {
         delete filterObj["sort"];
@@ -304,5 +323,9 @@ export default {
 @import "../../assets/css/pages/categories.css";
 .active-brand {
   color: #09454f !important;
+}
+.brand-list {
+  max-height: 500px;
+  overflow-y: scroll;
 }
 </style>

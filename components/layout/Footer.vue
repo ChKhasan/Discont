@@ -77,7 +77,8 @@
                   'mt-0': !activeDrop.includes(3),
                 }"
               >
-                 {{ $store.state.translations["main.customersupport"] }} <span v-html="dropArrow"></span>
+                {{ $store.state.translations["main.customersupport"] }}
+                <span v-html="dropArrow"></span>
               </h4>
               <ul
                 class="footer-drop-board mt-0"
@@ -85,20 +86,26 @@
               >
                 <div class="mt-3">
                   <li>
-                    <nuxt-link :to="localePath('/info/trade-nation')"
-                      > {{ $store.state.translations["main.installmentpayment"] }}</nuxt-link
+                    <nuxt-link :to="localePath('/info/trade-nation')">
+                      {{
+                        $store.state.translations["main.installmentpayment"]
+                      }}</nuxt-link
                     >
                   </li>
                   <li>
-                    <nuxt-link :to="localePath('/')"> {{ $store.state.translations["main.productreturn"] }}</nuxt-link>
-                  </li>
-                  <li>
-                    <nuxt-link :to="localePath('/info/warranty')"
-                      > {{ $store.state.translations["main.warrantyproducts"] }}</nuxt-link
+                    <nuxt-link :to="localePath('/')">
+                      {{ $store.state.translations["main.productreturn"] }}</nuxt-link
                     >
                   </li>
                   <li>
-                    <nuxt-link :to="localePath('/')"> {{ $store.state.translations["main.faq"] }}</nuxt-link>
+                    <nuxt-link :to="localePath('/info/warranty')">
+                      {{ $store.state.translations["main.warrantyproducts"] }}</nuxt-link
+                    >
+                  </li>
+                  <li>
+                    <nuxt-link :to="localePath('/')">
+                      {{ $store.state.translations["main.faq"] }}</nuxt-link
+                    >
                   </li>
                 </div>
               </ul>
@@ -107,15 +114,24 @@
           <div class="main_info d-flex flex-column">
             <span class="footer-logo" v-html="footerLogo"></span>
             <span class="footer-tel"
-              ><p> {{ $store.state.translations["main.feedback"] }}</p>
-              <a href="tel:+998712077788"> +998 (71) 207 77 88</a></span
+              ><p>{{ $store.state.translations["main.feedback"] }}</p>
+              <a :href="`tel:${$store.state.siteInfo?.phone_number}`"
+                >+{{
+                  `${$store.state.siteInfo?.phone_number}`
+                    .match(/(\d{3})(\d{2})(\d{3})(\d{2})(\d{2})/)
+                    ?.filter((item, index) => index != 0)
+                    .map((elem, index) => (index == 1 ? `(${elem})` : elem))
+                    .join(" ")
+                }}</a
+              ></span
             >
-            <nuxt-link class="footer-links" :to="localePath('/')"
-              ><span v-html="footerLocation"></span>  {{ $store.state.translations["main.ourstores"] }}</nuxt-link
+            <nuxt-link class="footer-links" :to="localePath('/stores')"
+              ><span v-html="footerLocation"></span>
+              {{ $store.state.translations["main.ourstores"] }}</nuxt-link
             >
-            <nuxt-link class="footer-links" :to="localePath('/')"
+            <a :href="`mailto:${$store.state.siteInfo?.email}`" class="footer-links"
               ><span v-html="footerEmail" style="margin-right: 7px"></span
-              >Info@diskont.com</nuxt-link
+              >{{ $store.state.siteInfo?.email }}</a
             >
           </div>
           <div class="footer_menu footer_list">
@@ -142,7 +158,9 @@
             <h4>{{ $store.state.translations["main.newsreviews"] }}</h4>
             <ul>
               <li>
-                <nuxt-link :to="localePath('/info/delivery')"> {{ $store.state.translations["main.tohelp"] }}</nuxt-link>
+                <nuxt-link :to="localePath('/info/delivery')">
+                  {{ $store.state.translations["main.tohelp"] }}</nuxt-link
+                >
               </li>
               <li>
                 <nuxt-link :to="localePath('/')">
@@ -157,23 +175,27 @@
             </ul>
           </div>
           <div class="footer_menu footer_list">
-            <h4> {{ $store.state.translations["main.customersupport"] }}</h4>
+            <h4>{{ $store.state.translations["main.customersupport"] }}</h4>
             <ul>
               <li>
-                <nuxt-link :to="localePath('/info/trade-nation')"
-                  > {{ $store.state.translations["main.installmentpayment"] }}</nuxt-link
+                <nuxt-link :to="localePath('/info/trade-nation')">
+                  {{ $store.state.translations["main.installmentpayment"] }}</nuxt-link
                 >
               </li>
               <li>
-                <nuxt-link :to="localePath('/')"> {{ $store.state.translations["main.productreturn"] }}</nuxt-link>
-              </li>
-              <li>
-                <nuxt-link :to="localePath('/info/warranty')"
-                  > {{ $store.state.translations["main.warrantyproducts"] }}</nuxt-link
+                <nuxt-link :to="localePath('/')">
+                  {{ $store.state.translations["main.productreturn"] }}</nuxt-link
                 >
               </li>
               <li>
-                <nuxt-link :to="localePath('/')"> {{ $store.state.translations["main.faq"] }}</nuxt-link>
+                <nuxt-link :to="localePath('/info/warranty')">
+                  {{ $store.state.translations["main.warrantyproducts"] }}</nuxt-link
+                >
+              </li>
+              <li>
+                <nuxt-link :to="localePath('/')">
+                  {{ $store.state.translations["main.faq"] }}</nuxt-link
+                >
               </li>
             </ul>
           </div>
@@ -208,9 +230,16 @@
       <div class="container_xl">
         <div class="d-flex justify-content-between">
           <p class="footer-date">{{ $store.state.translations["main.footertext1"] }}</p>
-          <p class="foooter-bottom-text cursor-pointer">{{ $store.state.translations["main.footertext2"] }}</p>
-          <p class="cursor-pointer foooter-bottom-text">{{ $store.state.translations["main.footertext3"] }}</p>
-          <p><span v-html="footerBottom"></span> {{ $store.state.translations["main.footertext4"] }}</p>
+          <p class="foooter-bottom-text cursor-pointer">
+            {{ $store.state.translations["main.footertext2"] }}
+          </p>
+          <p class="cursor-pointer foooter-bottom-text">
+            {{ $store.state.translations["main.footertext3"] }}
+          </p>
+          <p>
+            <span v-html="footerBottom"></span>
+            {{ $store.state.translations["main.footertext4"] }}
+          </p>
         </div>
       </div>
     </div>

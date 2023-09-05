@@ -8,6 +8,7 @@ export const state = () => ({
   dicoin: {},
   translations: {},
   locations: {},
+  siteInfo: {},
 });
 
 export const mutations = {
@@ -26,6 +27,9 @@ export const mutations = {
   },
   getDiCoinInfo(state, payload) {
     state.dicoin = payload;
+  },
+  getSiteInfo(state, payload) {
+    state.siteInfo = payload;
   },
   authHandler(state, payload) {
     const token = payload;
@@ -115,6 +119,11 @@ export const actions = {
   dicoinInfo({ commit }, payload) {
     this.$axios.$get("/dicoins").then((res) => {
       commit("getDiCoinInfo", res?.dicoin);
+    });
+  },
+  siteInfo({ commit }, payload) {
+    this.$axios.$get("/info", { ...payload }).then((res) => {
+      commit("getSiteInfo", res?.info);
     });
   },
 };

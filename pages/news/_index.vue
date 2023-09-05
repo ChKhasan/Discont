@@ -61,7 +61,7 @@ export default {
         id: params.index,
         params: {
           headers: {
-            Language: i18n.locale,
+            lang: i18n.locale,
           },
         },
       }),

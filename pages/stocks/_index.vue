@@ -179,12 +179,12 @@ export default {
     const [promotionsData, bannersData] = await Promise.all([
       store.dispatch("fetchPromotions/getPromotions", {
         headers: {
-          Language: i18n.locale,
+          lang: i18n.locale,
         },
       }),
       store.dispatch("fetchBanners/getBanners", {
         headers: {
-          Language: i18n.locale,
+          lang: i18n.locale,
         },
       }),
     ]);

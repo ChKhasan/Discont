@@ -118,7 +118,7 @@ export default {
       store.dispatch("fetchProducts/getProducts", {
         params: { limit: 12 },
         headers: {
-          Language: i18n.locale,
+          lang: i18n.locale,
         },
       }),
     ]);

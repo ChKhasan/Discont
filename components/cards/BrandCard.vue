@@ -1,7 +1,10 @@
 <template lang="html">
-  <div class="brand-card" @click="$router.push(localePath(`/brand-categories/${brand?.slug}`))">
-    <!-- <img v-if="brand?.logo" :src="brand?.logo" alt="" /> -->
-    <img src="../../assets/images/image 56.png" alt="" />
+  <div
+    class="brand-card"
+    @click="$router.push(localePath(`/brand-categories/${brand?.slug}`))"
+  >
+    <img v-if="brand?.logo" :src="brand?.md_logo" alt="" />
+    <img v-else src="../../assets/images/image 56.png" alt="" />
   </div>
 </template>
 <script>
@@ -18,5 +21,10 @@ export default {
   border-radius: 20px;
   height: 106px;
   cursor: pointer;
+}
+.brand-card img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
 }
 </style>

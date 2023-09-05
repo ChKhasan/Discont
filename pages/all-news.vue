@@ -13,7 +13,7 @@
         <div class="d-flex align-items-end">
           <MainTitle :title="$store.state.translations['main.all-posts']" />
           <span class="d-flex align-items-end"
-            >{{ totalCount }} {{ $store.state.translations["main.news"] }}</span
+            >{{ totalPage }} {{ $store.state.translations["main.news"] }}</span
           >
         </div>
       </div>
@@ -24,11 +24,11 @@
         <img src="../assets/images/comments-empty.png" alt="" />
         <h2>{{ $store.state.translations["main.no-news"] }}</h2>
       </div>
-      <div class="products-pagination">
+      <div class="products-pagination" v-if="totalPage > params.pageSize">
         <a-pagination
           size="small"
           v-model.number="current"
-          :total="50"
+          :total="totalPage"
           :page-size.sync="params.pageSize"
         />
       </div>
@@ -45,83 +45,61 @@ import MainTitle from "../components/Main-title.vue";
 import CategoriesAppCard from "../components/categories/categories-app-banner.vue";
 import ProductCard from "../components/cards/ProductCard.vue";
 import PostCard from "../components/cards/PostCard.vue";
+import global from "../mixins/global";
 export default {
+  mixins: [global],
   data() {
     return {
       arrow: require("../assets/svg/dropdown-icon.svg?raw"),
       deleteIcon: require("../assets/svg/Delete.svg?raw"),
-      current: 1,
-      params: {
-        page: 1,
-        pageSize: 16,
-      },
     };
   },
-  async asyncData({ store, route, i18n }) {
+  async asyncData({ store, i18n, query }) {
     const [posts1] = await Promise.all([
       store.dispatch("fetchPosts/getPosts", {
         params: {
-          limit: 4,
-          page: route.query.page,
-          pageSize: route.query.pageSize,
+          ...query,
         },
         headers: {
-          Language: i18n.locale,
+          lang: i18n.locale,
         },
       }),
     ]);
     const posts = posts1?.posts?.data;
-    const totalCount = posts1?.posts?.total;
+    const totalPage = posts1?.posts?.total;
     return {
       posts,
-      totalCount,
+      totalPage,
     };
   },
   async mounted() {
-    if (
-      !Object.keys(this.$route.query).includes("page") ||
-      !Object.keys(this.$route.query).includes("per_page")
-    ) {
+    if (!Object.keys(this.$route.query).includes("page")) {
       await this.$router.replace({
         path: "all-news",
-        query: { page: this.params.page, per_page: this.params.pageSize },
+        query: { page: this.params.page },
       });
     }
-    // this[dataFunc]();
     this.current = Number(this.$route.query.page);
-    this.params.pageSize = Number(this.$route.query.per_page);
   },
   methods: {
     async __GET_NEWS() {
       try {
-        const data = this.$store.dispatch("fetchPosts/getPosts", {
-          limit: 4,
-          page: this.$route.query.page,
-          pageSize: this.$route.query.pageSize,
+        const data = await this.$store.dispatch("fetchPosts/getPosts", {
+          params: {
+            ...this.$route.query,
+          },
+          headers: {
+            lang: this.$i18n.locale,
+          },
         });
         this.posts = data?.posts?.data;
         this.totalCount = data?.posts?.total;
       } catch (e) {}
     },
-    async changePagination(val, url, dataFunc) {
-      if (this.$route.query.page != val) {
-        await this.$router.replace({
-          path: url,
-          query: {
-            ...this.$route.query,
-            page: val,
-            per_page: this.params.pageSize,
-          },
-        });
-        // this[dataFunc]();
-      }
-      document.body.scrollTop = 0;
-      document.documentElement.scrollTop = 0;
-    },
   },
   watch: {
     async current(val) {
-      this.changePagination(val, "/all-news", "__GET_NEWS");
+      this.changePagination(val, "__GET_NEWS");
     },
   },
   components: { MainTitle, CategoriesAppCard, ProductCard, PostCard },

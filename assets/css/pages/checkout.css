@@ -307,6 +307,7 @@
   font-size: 18px;
   line-height: 150%;
   color: #000000;
+  text-transform: capitalize;
 }
 .checkout-info-product-card .checkout-info-product-card-img {
   width: 118px;

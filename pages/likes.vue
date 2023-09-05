@@ -82,7 +82,7 @@ export default {
         data: dataForm,
         params: {
           headers: {
-            Language: this.$i18n.locale,
+            lang: this.$i18n.locale,
           },
         },
       });

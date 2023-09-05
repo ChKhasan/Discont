@@ -188,7 +188,7 @@ export default {
         slug: params.index,
         params: {
           headers: {
-            Language: i18n.locale,
+            lang: i18n.locale,
           },
         },
       }),
@@ -212,7 +212,7 @@ export default {
       slug: this.$route.params.index,
       params: {
         headers: {
-          Language: this.$i18n.locale,
+          lang: this.$i18n.locale,
         },
       },
     });
@@ -227,7 +227,7 @@ export default {
               ...this.$route.query,
             },
             headers: {
-              Language: this.$i18n.locale,
+              lang: this.$i18n.locale,
             },
           },
         }),

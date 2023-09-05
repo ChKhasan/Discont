@@ -12,6 +12,14 @@ export const actions = {
     });
     return res;
   },
+  async getProfileDiCoins({}) {
+    const res = await this.$axios.$get(`/profile/dicoins`, {
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem("dis_auth_token")}`,
+      },
+    });
+    return res;
+  },
   async postLogOut({}) {
     const res = await this.$axios.$post(
       `/auth/logout`,

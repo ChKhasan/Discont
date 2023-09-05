@@ -2,7 +2,9 @@
   <div class="page-container d-coin-page">
     <div class="container_xl">
       <div class="page-breadcrumb">
-        <nuxt-link :to="localePath('/')">{{ $store.state.translations["main.home-page"] }}</nuxt-link>
+        <nuxt-link :to="localePath('/')">{{
+          $store.state.translations["main.home-page"]
+        }}</nuxt-link>
         <nuxt-link :to="localePath('/')"> Di Coin </nuxt-link>
       </div>
       <div class="d-flex page-container-title">
@@ -48,49 +50,59 @@
           <div><p>Tushgan Di coin</p></div>
           <div><p>Vaqti va sanasi</p></div>
         </div>
-        <div class="d-coin__table-row">
+        <div class="d-coin__table-row" v-for="dicoin in dicoinIn" :key="dicoin?.id">
           <div>
-            <p><span v-html="upload"></span>+15 {{ $store.state.translations["main.cout-di-coin"] }}</p>
+            <p>
+              <span v-html="upload"></span>{{ dicoin?.type == "plus" ? "+" : "-"
+              }}{{ dicoin?.quantity }}
+              {{ $store.state.translations["main.cout-di-coin"] }}
+            </p>
           </div>
-          <div><p>Buyurtma #85852</p></div>
           <div>
-            <p>21.05.2023 <span>16:15</span></p>
+            <p v-if="dicoin?.order_id">Buyurtma #{{ dicoin?.order_id }}</p>
+            <p v-else>Empty</p>
           </div>
-        </div>
-        <div class="d-coin__table-row">
           <div>
-            <p><span v-html="upload"></span>+15 {{ $store.state.translations["main.cout-di-coin"] }}</p>
-          </div>
-          <div><p>Buyurtma #85852</p></div>
-          <div>
-            <p>21.05.2023 <span>16:15</span></p>
-          </div>
-        </div>
-        <div class="d-coin__table-row">
-          <div>
-            <p><span v-html="upload"></span>+15 {{ $store.state.translations["main.cout-di-coin"] }}</p>
-          </div>
-          <div><p>Buyurtma #85852</p></div>
-          <div>
-            <p>21.05.2023 <span>16:15</span></p>
+            <p>
+              {{ moment(dicoin?.created_at).format("DD.MM.YYYY") }}
+              <span class="di-coin-hours">
+                {{ moment(dicoin?.created_at).format("HH:mm") }}</span
+              >
+            </p>
           </div>
         </div>
-        <div class="d-coin__table-row">
-          <div>
-            <p><span v-html="upload"></span>+15 {{ $store.state.translations["main.cout-di-coin"] }}</p>
+        <div
+          class="d-coin__table-row_mobile"
+          v-for="dicoin in dicoinIn"
+          :key="dicoin?.id"
+        >
+          <div class="d-coin__table-row_mobile-header">
+            <span v-html="upload"></span>
+            <span v-if="dicoin?.order_id">
+              #{{ dicoin?.order_id }}
+              <h6>Buyurtma</h6></span
+            >
+            <span v-else>Empty</span>
           </div>
-          <div><p>Buyurtma #85852</p></div>
-          <div>
-            <p>21.05.2023 <span>16:15</span></p>
-          </div>
-        </div>
-        <div class="d-coin__table-row">
-          <div>
-            <p><span v-html="upload"></span>+15 {{ $store.state.translations["main.cout-di-coin"] }}</p>
-          </div>
-          <div><p>Buyurtma #85852</p></div>
-          <div>
-            <p>21.05.2023 <span>16:15</span></p>
+          <div class="d-coin__table-row_mobile-body">
+            <div>
+              <span
+                >Vaqti va sanasi
+                <p>
+                  {{ moment(dicoin?.created_at).format("DD.MM.YYYY") }}
+                  {{ moment(dicoin?.created_at).format("HH:mm") }}
+                </p></span
+              >
+            </div>
+            <div>
+              <span
+                >Буюртма нархи
+                <p>
+                  {{ dicoin?.type == "plus" ? "+" : "-" }}{{ dicoin?.quantity }}
+                  {{ $store.state.translations["main.cout-di-coin"] }}
+                </p></span
+              >
+            </div>
           </div>
         </div>
       </div>
@@ -99,13 +111,24 @@
 </template>
 <script>
 import MainTitle from "../../components/Main-title.vue";
+import moment from "moment";
 export default {
   data() {
     return {
       dcoin: require("../../assets/svg/d-coin-tab.svg?raw"),
       upload: require("../../assets/svg/upload.svg?raw"),
       download: require("../../assets/svg/download.svg?raw"),
+      dicoinIn: [],
     };
+  },
+  async mounted() {
+    const [dicoins] = await Promise.all([
+      this.$store.dispatch("fetchAuth/getProfileDiCoins"),
+    ]);
+    this.dicoinIn = dicoins.in;
+  },
+  methods: {
+    moment,
   },
   components: { MainTitle },
 };

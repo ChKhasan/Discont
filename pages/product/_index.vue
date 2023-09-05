@@ -1176,13 +1176,59 @@ import ProductCarousel from "../../components/product-carousel.vue";
 import moment from "moment";
 export default {
   name: "DiscontSlug",
-
-  components: {
-    ProductCardVue,
-    applicationBannerVue,
-    ProductCarousel,
+  head() {
+    return {
+      title: this.product.name,
+      meta: [
+        {
+          name: "title",
+          content: `${this.product.name},${this.product.info?.desc}`,
+        },
+        {
+          name: "keywords",
+          content: this.product.name,
+        },
+        {
+          name: "description",
+          content: `${this.product.info?.desc}`,
+        },
+      ],
+    };
   },
+  // async asyncData({ store, params, i18n }) {
+  //   const [productData] = await Promise.all([
+  //     store.dispatch("fetchProducts/getProductsBySlug", {
+  //       id: params.index,
+  //       params: {
+  //         params: {
+  //           lat: this.locations.lat,
+  //           lon: this.locations.lng,
+  //         },
+  //         headers: {
+  //           lang: i18n.locale,
+  //         },
+  //       },
+  //     }),
+  //   ]);
+  //   const product = productData.product;
+  //   const productCharacteristic = productData?.product?.characteristic_options.splice(
+  //     0,
+  //     4
+  //   );
+  //   const productAttributes = productData?.attributes;
+  //   const characteristics = productData?.characteristics;
+  //   const branches = productData?.branches;
+  //   const carouselImages = [...product.images];
 
+  //   return {
+  //     product,
+  //     productCharacteristic,
+  //     productAttributes,
+  //     characteristics,
+  //     branches,
+  //     carouselImages,
+  //   };
+  // },
   data() {
     return {
       fullRate: 5,
@@ -1260,33 +1306,46 @@ export default {
       },
     };
   },
-  // async asyncData({ store, params }) {
-  //   const [productData] = await Promise.all([
-  //     store.dispatch("fetchProducts/getProductsBySlug", params.index),
-  //   ]);
-  //   const product = productData.product;
-  //   const productCharacteristic = productData?.product?.characteristic_options.splice(
-  //     0,
-  //     4
-  //   );
-  //   const productAttributes = productData?.attributes;
-  //   return {
-  //     product,
-  //     productCharacteristic,
-  //     productAttributes,
-  //   };
-  // },
-  // async fetch() {
-  //   const [productData] = await Promise.all([
-  //     this.$store.dispatch("fetchProducts/getProductsBySlug", this.$route.params.index),
-  //   ]);
-  //   this.product = productData.product;
-  //   this.productCharacteristic = productData?.product?.characteristic_options.splice(
-  //     0,
-  //     4
-  //   );
-  //   this.productAttributes = productData?.attributes;
-  // },
+
+  async fetch() {
+    try {
+      await this.$getLocation().then((coordinates) => {
+        this.locations = coordinates;
+      });
+    } catch (e) {
+      console.log(e);
+    }
+    const [productData, productsData] = await Promise.all([
+      this.$store.dispatch("fetchProducts/getProductsBySlug", {
+        id: this.$route.params.index,
+        params: {
+          params: {
+            lat: this.locations.lat,
+            lon: this.locations.lng,
+          },
+          headers: {
+            lang: this.$i18n.locale,
+          },
+        },
+      }),
+      this.$store.dispatch("fetchProducts/getProducts", {
+        params: { limit: 12 },
+        headers: {
+          lang: this.$i18n.locale,
+        },
+      }),
+    ]);
+    this.product = productData.product;
+    this.productCharacteristic = productData?.product?.characteristic_options.splice(
+      0,
+      4
+    );
+    this.productAttributes = productData?.attributes;
+    this.characteristics = productData?.characteristics;
+    this.branches = productData?.branches;
+    this.carouselImages = [...this.product.images];
+    this.productsOthers = productsData?.products?.data;
+  },
   computed: {
     commetItems() {
       const arr = [1, 2, 3, 4, 5];
@@ -1311,48 +1370,48 @@ export default {
     },
   },
   async mounted() {
-    this.skeleton = true;
-    try {
-      await this.$getLocation().then((coordinates) => {
-        this.locations = coordinates;
-      });
-    } catch (e) {
-      console.log(e);
-    }
+    // this.skeleton = true;
+    // try {
+    //   await this.$getLocation().then((coordinates) => {
+    //     this.locations = coordinates;
+    //   });
+    // } catch (e) {
+    //   console.log(e);
+    // }
 
-    const [productData, productsData] = await Promise.all([
-      this.$store.dispatch("fetchProducts/getProductsBySlug", {
-        id: this.$route.params.index,
-        params: {
-          params: {
-            lat: this.locations.lat,
-            lon: this.locations.lng,
-          },
-          headers: {
-            Language: this.$i18n.locale,
-          },
-        },
-      }),
+    // const [productsData] = await Promise.all([
+    // this.$store.dispatch("fetchProducts/getProductsBySlug", {
+    //   id: this.$route.params.index,
+    //   params: {
+    //     params: {
+    //       lat: this.locations.lat,
+    //       lon: this.locations.lng,
+    //     },
+    //     headers: {
+    //       lang: this.$i18n.locale,
+    //     },
+    //   },
+    // }),
 
-      this.$store.dispatch("fetchProducts/getProducts", {
-        params: { limit: 12 },
-        headers: {
-          Language: this.$i18n.locale,
-        },
-      }),
-    ]);
+    //   this.$store.dispatch("fetchProducts/getProducts", {
+    //     params: { limit: 12 },
+    //     headers: {
+    //       lang: this.$i18n.locale,
+    //     },
+    //   }),
+    // ]);
 
-    this.skeleton = false;
-    this.product = productData.product;
-    this.productsOthers = productsData?.products?.data;
-    this.productCharacteristic = productData?.product?.characteristic_options.splice(
-      0,
-      4
-    );
-    this.productAttributes = productData?.attributes;
-    this.characteristics = productData?.characteristics;
-    this.branches = productData?.branches;
-    this.carouselImages = [...this.product.images];
+    // this.skeleton = false;
+    // this.productsOthers = productsData?.products?.data;
+    // this.product = productData.product;
+    // this.productCharacteristic = productData?.product?.characteristic_options.splice(
+    //   0,
+    //   4
+    // );
+    // this.productAttributes = productData?.attributes;
+    // this.characteristics = productData?.characteristics;
+    // this.branches = productData?.branches;
+    // this.carouselImages = [...this.product.images];
 
     setTimeout(() => {
       this.swiperReload();
@@ -1499,6 +1558,11 @@ export default {
         }, 2000);
       }
     },
+  },
+  components: {
+    ProductCardVue,
+    applicationBannerVue,
+    ProductCarousel,
   },
 };
 </script>

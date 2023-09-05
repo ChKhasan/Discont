@@ -442,7 +442,7 @@ export default {
           data: dataForm,
           params: {
             headers: {
-              Language: this.$i18n.locale,
+              lang: this.$i18n.locale,
             },
           },
         });
@@ -468,7 +468,7 @@ export default {
     checkoutCheck() {
       const auth = localStorage.getItem("dis_auth_token");
       if (auth) {
-        this.$router.push("/checkout");
+        this.$router.push(this.localePath("/checkout"));
       } else {
         this.$store.commit("authVisibleChange", true);
       }

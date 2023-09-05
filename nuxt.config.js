@@ -49,6 +49,11 @@ export default {
   image: {
     dir: "assets/images",
   },
+  seoMeta: {
+    title: "My site title",
+    keywords: "keyword1, keyword2, keyword3",
+    description: "My site description",
+  },
   i18n: {
     locales: ["uz", "en", "ru"],
     defaultLocale: "uz",

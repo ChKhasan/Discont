@@ -20,7 +20,7 @@
                 /></svg
             ></span>
             <span v-else>1</span>
-            <h4>Ma`lumotlaringizni kiriting</h4>
+            <h4>{{ $store.state.translations["checkout.step1-title"] }}</h4>
           </div>
           <a-form-model :model="form" ref="ruleForm" :rules="rules" layout="vertical">
             <div class="checkout-form">
@@ -28,16 +28,22 @@
                 <input
                   class="w-100"
                   v-mask="'+998 ## ### ## ##'"
-                  placeholder="Telefon raqamingiz*"
+                  :placeholder="`${$store.state.translations['main.your-phone-number']}*`"
                   v-model="form.phone_number"
                 />
               </a-form-model-item>
               <div class="checkout-input-grid">
                 <a-form-model-item class="mb-0" prop="name">
-                  <a-input placeholder="Ismingiz (to’liq)*" v-model="form.name" />
+                  <a-input
+                    :placeholder="`${$store.state.translations['main.enter-your-name']}*`"
+                    v-model="form.name"
+                  />
                 </a-form-model-item>
                 <a-form-model-item class="mb-0" prop="surname">
-                  <a-input placeholder="Familiyangiz (to’liq)*" v-model="form.surname" />
+                  <a-input
+                    :placeholder="`${$store.state.translations['main.enter-your-last-name']}*`"
+                    v-model="form.surname"
+                  />
                 </a-form-model-item>
               </div>
             </div>
@@ -59,7 +65,7 @@
                 /></svg
             ></span>
             <span v-else>2</span>
-            <h4>Ma`lumotlaringizni kiriting</h4>
+            <h4>{{ $store.state.translations["checkout.step2-title"] }}</h4>
           </div>
           <div class="radio-card-grid">
             <div class="radio-card cursor-pointer" @click="typePayment = 'cash'">
@@ -71,10 +77,9 @@
               >
               </span>
               <div class="radio-card-body">
-                <h6>Naqd pul bilan to’lash</h6>
+                <h6>{{ $store.state.translations["checkout.step2-card1-title"] }}</h6>
                 <p>
-                  Lorem Ipsum has been the industry's standard dummy text ever since the
-                  1500s, when an unknown Lorem Ipsum has been the industry's standard
+                  {{ $store.state.translations["checkout.step2-card1-text"] }}
                 </p>
               </div>
             </div>
@@ -87,10 +92,9 @@
               >
               </span>
               <div class="radio-card-body">
-                <h6>Bank kartasi orqali to’lash</h6>
+                <h6>{{ $store.state.translations["checkout.step2-card2-title"] }}</h6>
                 <p>
-                  Lorem Ipsum has been the industry's standard dummy text ever since the
-                  1500s, when an unknown Lorem Ipsum has been the industry's standard
+                  {{ $store.state.translations["checkout.step2-card2-text"] }}
                 </p>
                 <div class="pay-cards-grid" v-if="typePayment == 'pay'">
                   <!-- <div class="pay-card" @click="form.payment_method = 'uzum'">
@@ -222,7 +226,7 @@
                 /></svg
             ></span>
             <span v-else>3</span>
-            <h4>Yetkazib berish usulini tanlang</h4>
+            <h4>{{ $store.state.translations["checkout.step3-title"] }}</h4>
           </div>
           <div class="radio-card-grid-horizontal">
             <div
@@ -237,9 +241,9 @@
               >
               </span>
               <div class="radio-card-body">
-                <h6>Diskont do’konlaridan borib olib ketish</h6>
+                <h6>{{ $store.state.translations["checkout.step3-card1-title"] }}</h6>
                 <p>
-                  Lorem Ipsum has been the industry's standard dummy text ever since the
+                  {{ $store.state.translations["checkout.step3-card1-text"] }}
                 </p>
               </div>
             </div>
@@ -255,14 +259,14 @@
               >
               </span>
               <div class="radio-card-body">
-                <h6>Diskont yetkazib berish xizmati</h6>
-                <p>Lorem Ipsum has been the industry's stand</p>
+                <h6>{{ $store.state.translations["checkout.step3-card2-title"] }}</h6>
+                <p>{{ $store.state.translations["checkout.step3-card2-text"] }}</p>
               </div>
             </div>
           </div>
           <div class="adress-space">
             <div v-if="form.delivery_method == 'courier'">
-              <h6>Sizning manzillaringiz ro’yxati</h6>
+              <h6>{{ $store.state.translations["checkout.address-list"] }}</h6>
               {{ $store.state.profile.address }}
               <div
                 class="radio-card radio-card-horizontal mb-3 position-relative"
@@ -322,7 +326,7 @@
                       fill="white"
                     /></svg
                 ></span>
-                Yangi Manzil qo’shish
+                {{ $store.state.translations["checkout.add-new-address"] }}
               </div>
             </div>
             <div class="bottom-text">
@@ -333,29 +337,35 @@
                 >
                 </a-checkbox>
                 <p>
-                  Barcha ma`lumotlarni tasdiqlayman, <span>foydalanish</span> va
-                  <span @click="visibleConsent = true">sotib olish shartlariga</span>
-                  roziman
+                  {{ $store.state.translations["checkout.check-text1"] }},
+                  <span>{{ $store.state.translations["checkout.check-text2"] }}</span>
+                  {{ $store.state.translations["checkout.check-text3"] }}
+                  <span @click="visibleConsent = true">{{
+                    $store.state.translations["checkout.check-text4"]
+                  }}</span>
+                  {{ $store.state.translations["checkout.check-text5"] }}
                 </p></span
               >
-              <span class="checkout-prob" @click="visibleCheckoutProblem = true"
-                >Sotib olishda muammoga duch keldizmi?</span
-              >
+              <span class="checkout-prob" @click="visibleCheckoutProblem = true">{{
+                $store.state.translations["checkout.problem-buy"]
+              }}</span>
             </div>
-            <div class="checkout-btn" @click="submit()">Xaridni rasmiylashtirish</div>
+            <div class="checkout-btn" @click="submit()">
+              {{ $store.state.translations["checkout.purchase-formalization"] }}
+            </div>
           </div>
         </div>
         <div class="checkout-info-block">
           <div class="checkout-info">
             <div class="checkout-info-header">
-              <h4>Sizning buyurtmangiz</h4>
+              <h4>{{ $store.state.translations["checkout.your-order"] }}</h4>
               <h5 class="cursor-pointer" @click="$router.push(localePath('/basket'))">
-                Savatchaga o’tish
+                {{ $store.state.translations["checkout.to-cart"] }}
               </h5>
             </div>
             <div class="checkout-info-body">
               <span
-                ><p>Tovarlar</p>
+                ><p>{{ $store.state.translations["main.products"] }}</p>
                 <p>
                   {{ `${totalRealPrice}`.replace(/\B(?=(\d{3})+(?!\d))/g, " ") }}
                   {{ $store.state.translations["main.som"] }}
@@ -363,7 +373,7 @@
               >
 
               <span
-                ><p>Chegirma</p>
+                ><p>{{ $store.state.translations["checkout.discount"] }}</p>
                 <p>
                   {{
                     `-${totalRealPrice - reduceTotalPrice}`.replace(
@@ -375,7 +385,7 @@
                 </p></span
               >
               <span
-                ><p>Di Coin</p>
+                ><p>{{ $store.state.translations["main.dicoin"] }}</p>
                 <p>
                   {{
                     `- ${
@@ -386,7 +396,7 @@
                 </p></span
               >
               <span
-                ><p>Yetkazib berish</p>
+                ><p>{{ $store.state.translations["main.delivery"] }}</p>
                 <p>
                   {{
                     `${deliveryCost ? deliveryCost : 0}`.replace(
@@ -398,7 +408,7 @@
                 </p></span
               >
               <span
-                ><p>Umumiy narx</p>
+                ><p>{{ $store.state.translations["checkout.total-sum"] }}</p>
                 <p>
                   {{
                     `${
@@ -420,7 +430,8 @@
               <div class="d-flex">
                 <img src="../assets/images/d-coin.png" alt="" />
                 <h6 class="active_dicoin">
-                  <span>{{ dicoinSumm }}</span> Di Coin
+                  <span>{{ dicoinSumm }}</span
+                  >{{ $store.state.translations["main.dicoin"] }}
                 </h6>
               </div>
               <p>
@@ -440,7 +451,7 @@
             >
               <div class="d-flex">
                 <p>
-                  Umumiy dicoinlar soni:
+                  {{ $store.state.translations["checkout.total-count-dicoin"] }}:
                   <span
                     ><img src="../assets/images/d-coin.png" alt="" />{{
                       $store.state.profile?.dicoin?.quantity
@@ -448,7 +459,7 @@
                   >
                 </p>
                 <p>
-                  1 dicoin qiymati:
+                  {{ $store.state.translations["checkout.one-dicoin"] }}:
                   <span
                     >{{
                       `${$store.state.dicoin?.dicoin_to_sum}`.replace(
@@ -456,18 +467,16 @@
                         " "
                       )
                     }}
-                    сум
+                    {{ $store.state.translations["main.som"] }}
                   </span>
                 </p>
               </div>
               <div class="max-dicoin-sum">
                 <p>
-                  Max:
+                  {{ $store.state.translations["checkout.max"] }}:
                   <span
-                    >{{
-                      `${priceWithDiCoin}`.replace(/\B(?=(\d{3})+(?!\d))/g, " ")
-                    }}
-                    so’m</span
+                    >{{ `${priceWithDiCoin}`.replace(/\B(?=(\d{3})+(?!\d))/g, " ") }}
+                    {{ $store.state.translations["main.som"] }}</span
                   >
                 </p>
               </div>
@@ -517,7 +526,7 @@
                     $store.state.profile?.dicoin?.quantity < dicoinSumm,
                 }"
               >
-                Qabul qilish
+                {{ $store.state.translations["checkout.acceptance"] }}
               </button>
             </div>
             <div class="checkout-info-products">
@@ -532,9 +541,9 @@
                 <div class="checkout-info-product-card-body">
                   <p>{{ product?.info?.name }}</p>
                   <span
-                    >Soni:
+                    >{{ $store.state.translations["checkout.count"] }}:
                     {{ $store.state.cart.find((item) => item.id == product.id)?.count }}
-                    dona</span
+                    {{ $store.state.translations["checkout.piece"] }}</span
                   >
                   <h5>
                     {{
@@ -545,7 +554,7 @@
                             $store.state.cart.find((item) => item.id == product.id)?.count
                       }`.replace(/\B(?=(\d{3})+(?!\d))/g, " ")
                     }}
-                    сўм
+                    {{ $store.state.translations["main.som"] }}
                   </h5>
                 </div>
               </div>
@@ -554,7 +563,7 @@
         </div>
         <div class="what adress-space">
           <div v-if="form.delivery_method == 'courier'">
-            <h6>Sizning manzillaringiz ro’yxati</h6>
+            <h6>{{ $store.state.translations["checkout.address-list"] }}</h6>
             {{ $store.state.profile.address }}
             <div
               class="radio-card radio-card-horizontal mb-3 position-relative"
@@ -608,7 +617,7 @@
                     fill="white"
                   /></svg
               ></span>
-              Yangi Manzil qo’shish
+              {{ $store.state.translations["checkout.add-new-address"] }}
             </div>
           </div>
           <div class="bottom-text">
@@ -620,16 +629,22 @@
               >
               </a-checkbox>
               <p>
-                Barcha ma`lumotlarni tasdiqlayman, <span>foydalanish</span> va
-                <span @click="visibleConsent = true">sotib olish shartlariga</span>
-                roziman
+                {{ $store.state.translations["checkout.check-text1"] }},
+                <span>{{ $store.state.translations["checkout.check-text2"] }}</span>
+                {{ $store.state.translations["checkout.check-text3"] }}
+                <span @click="visibleConsent = true">{{
+                  $store.state.translations["checkout.check-text4"]
+                }}</span>
+                {{ $store.state.translations["checkout.check-text5"] }}
               </p></span
             >
-            <span class="checkout-prob" @click="visibleCheckoutProblem = true"
-              >Sotib olishda muammoga duch keldizmi?</span
-            >
+            <span class="checkout-prob" @click="visibleCheckoutProblem = true">{{
+              $store.state.translations["checkout.problem-buy"]
+            }}</span>
           </div>
-          <div class="checkout-btn" @click="submit()">Xaridni rasmiylashtirish</div>
+          <div class="checkout-btn" @click="submit()">
+            {{ $store.state.translations["checkout.purchase-formalization"] }}
+          </div>
         </div>
       </div>
     </div>
@@ -642,7 +657,7 @@
       @ok="handleOk"
     >
       <div class="vmodal-header">
-        <h5>Yangi manzil qo’shish</h5>
+        <h5>{{ $store.state.translations["checkout.add-new-address"] }}</h5>
         <span @click="handleOk"
           ><svg
             xmlns="http://www.w3.org/2000/svg"
@@ -682,7 +697,7 @@
               <a-select
                 class="checkout-select"
                 v-model="formAddress.region_id"
-                placeholder="Viloyatni tanlang"
+                :placeholder="$store.state.translations['checkout.select-region']"
               >
                 <a-select-option v-for="(region, index) in regions" :key="region.id">
                   {{ region.name }}
@@ -697,7 +712,7 @@
                 class="checkout-select"
                 :class="{ disabled: districts.length == 0 }"
                 v-model="formAddress.district_id"
-                placeholder="Shaharni tanlang"
+                :placeholder="$store.state.translations['checkout.select-city']"
               >
                 <a-select-option v-for="(city, index) in districts" :key="city.id">
                   {{ city.name }}
@@ -712,12 +727,14 @@
               type="textarea"
               rows="5"
               v-model="formAddress.address"
-              placeholder="Ko’cha uy va manzil haqida ma’lumot"
+              :placeholder="$store.state.translations['checkout.enter-address']"
             />
           </a-form-model-item>
         </a-form-model>
       </div>
-      <div class="vmodal-btn" @click="submitAddress">Manzilni qo’shish</div>
+      <div class="vmodal-btn" @click="submitAddress">
+        {{ $store.state.translations["checkout.add-adress"] }}
+      </div>
       <template slot="footer"> <h3></h3></template>
     </a-modal>
     <a-modal
@@ -729,7 +746,7 @@
       @ok="handleOkErr"
     >
       <div class="vmodal-header">
-        <h5>Siz 3 tadan ortiq manzil qo'sha olmaysiz</h5>
+        <h5>{{ $store.state.translations["checkout.count-3"] }}</h5>
         <span @click="handleOkErr"
           ><svg
             xmlns="http://www.w3.org/2000/svg"
@@ -755,7 +772,9 @@
         ></span>
       </div>
       <div class="vmodal-body"></div>
-      <div class="vmodal-btn" @click="handleOkErr">Orqaga qaytish</div>
+      <div class="vmodal-btn" @click="handleOkErr">
+        {{ $store.state.translations["checkout.to-back"] }}
+      </div>
       <template slot="footer"> <h3></h3></template>
     </a-modal>
     <!-- <a-modal
@@ -767,7 +786,7 @@
       @ok="handleOk"
     >
       <div class="vmodal-header">
-        <h5>Yangi manzil qo’shish</h5>
+        <h5>{{ $store.state.translations["checkout.add-new-address"] }}</h5>
         <span @click="handleOk"
           ><svg
             xmlns="http://www.w3.org/2000/svg"
@@ -873,7 +892,7 @@
       @ok="handleOk"
     >
       <div class="vmodal-header so-modal-header">
-        <h5>Заказ принят</h5>
+        <h5>{{ $store.state.translations["checkout.order-accepted"] }}</h5>
         <span @click="handleOk"
           ><svg
             xmlns="http://www.w3.org/2000/svg"
@@ -912,16 +931,20 @@
             fill="#009A10"
           />
         </svg>
-        <p>Заказ №{{ orderId }} оформлен. Мы свяжемся с вами в ближайшее время</p>
+        <p>
+          {{ $store.state.translations["checkout.order"] }} №{{ orderId }}
+          {{ $store.state.translations["checkout.framed"] }}.
+          {{ $store.state.translations["checkout.order-text"] }}
+        </p>
         <div class="os-vmodal-btns">
           <button class="vmodal-btn os-vmodal-btn-close" @click="handleOk">
-            Продолжить покупку
+            {{ $store.state.translations["checkout.continue-shopping"] }}
           </button>
           <button
             class="vmodal-btn os-vmodal-btn"
             @click="$router.push(localePath('/profile/my-orders'))"
           >
-            Перейти к просмотру
+            {{ $store.state.translations["checkout.go-view"] }}
           </button>
         </div>
       </div>
@@ -940,9 +963,17 @@
       @ok="handleOkProblem"
     >
       <div class="checkout-problems">
-        <h4>Sotib olishda muammoga duch keldizmi?</h4>
-        <p>Biz bilan bog’laning</p>
-        <a href="tel:+998990118934">+998 (99) 011 89 34</a>
+        <h4>{{ $store.state.translations["checkout.problem-buy"] }}</h4>
+        <p>{{ $store.state.translations["checkout.contact-us"] }}</p>
+        <a :href="`tel:${$store.state.siteInfo?.phone_number}`"
+          >+{{
+            `${$store.state.siteInfo?.phone_number}`
+              .match(/(\d{3})(\d{2})(\d{3})(\d{2})(\d{2})/)
+              ?.filter((item, index) => index != 0)
+              .map((elem, index) => (index == 1 ? `(${elem})` : elem))
+              .join(" ")
+          }}</a
+        >
       </div>
       <template slot="footer"> <h3></h3></template>
     </a-modal>
@@ -960,9 +991,9 @@
       @ok="handleOkConsent"
     >
       <div class="checkout-consent">
-        <h4>Diskont sotib olish qoidalariga rozilik kiritasizmi?</h4>
-        <p>foydalanish va sotib olish shartlariga shartlari</p>
-        <button>Ha, Qoidalar bilan tanishdim</button>
+        <h4>{{ $store.state.translations["checkout.consent-text1"] }}</h4>
+        <p>{{ $store.state.translations["checkout.consent-text2"] }}</p>
+        <button>{{ $store.state.translations["checkout.consent-text3"] }}</button>
       </div>
       <template slot="footer"> <h3></h3></template>
     </a-modal>
@@ -979,6 +1010,7 @@ export default {
         cash: false,
         checkbox: false,
         delivery: false,
+        address: false,
       },
       checkboxVal: false,
       dicoinSumm: null,
@@ -1129,6 +1161,16 @@ export default {
       } else {
         this.required.delivery = false;
       }
+      if (this.form.delivery_method == "courier" && this.form.user_address_id == null) {
+        this.required.address = true;
+
+        this.$notification.warning({
+          message: "Required",
+          description: "Manzil kiritilmagan",
+        });
+      } else {
+        this.required.address = false;
+      }
       if (!this.checkboxVal) {
         this.required.checkbox = true;
       } else {
@@ -1180,6 +1222,7 @@ export default {
         ...this.form,
         name: this.profile.name ? this.profile.name : "",
         phone_number: this.profile.login ? `+${this.profile.login}` : "",
+        surname: this.profile.surname ? this.profile.surname : "",
       };
     },
     async __GET_PRODUCTS_BY_ID(dataForm) {
@@ -1187,7 +1230,7 @@ export default {
         data: dataForm,
         params: {
           headers: {
-            Language: this.$i18n.locale,
+            lang: this.$i18n.locale,
           },
         },
       });
@@ -1211,7 +1254,7 @@ export default {
     async __GET_REGIONS() {
       const data = await this.$store.dispatch("fetchRegions/getRegions", {
         headers: {
-          Language: this.$i18n.locale,
+          lang: this.$i18n.locale,
         },
       });
       this.regions = data?.regions;

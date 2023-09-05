@@ -8,8 +8,10 @@
         <nuxt-link class="disabled" :to="localePath('/')"> Smartfonlar </nuxt-link>
       </div>
       <div class="d-flex categories-page-title">
-        <MainTitle title="Barcha brendlar" />
-        <span>8 288 {{ $store.state.translations["category.product-count"] }}</span>
+        <MainTitle title="Barcha brendlar" class="mb-0" />
+        <span
+          >{{ brands?.length }} {{ $store.state.translations["category.product-count"] }}</span
+        >
       </div>
       <div class="brands-grid">
         <div
@@ -38,7 +40,9 @@ import CategoriesInnerBannerCarousel from "../components/categories/categoriesIn
 import CategoriesInnerBanner from "../components/categories/categoriesInner-banner.vue";
 import CategoriesTabCarousel from "../components/categories/categoriesInner-tab-carousel.vue";
 import BrandCard from "../components/cards/BrandCard.vue";
+import global from "../mixins/global";
 export default {
+  mixins: [global],
   data() {
     return {
       arrow: require("../assets/svg/dropdown-icon.svg?raw"),
@@ -48,10 +52,9 @@ export default {
   },
   async asyncData({ store, params, i18n }) {
     const [brandsData] = await Promise.all([store.dispatch("fetchBrands/getBrands")]);
-    let brands = [...brandsData.brands?.data];
-    let brandsAll = brandsData.brands?.data;
-    brands = [...brandsData.brands?.data];
-
+    let brands = [...brandsData.brands];
+    let brandsAll = brandsData.brands;
+    brands = [...brandsData.brands];
     return {
       brandsAll,
       brands,

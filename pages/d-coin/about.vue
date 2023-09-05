@@ -2,12 +2,14 @@
   <div class="page-container d-coin-page">
     <div class="container_xl">
       <div class="page-breadcrumb">
-        <nuxt-link :to="localePath('/')">{{ $store.state.translations["main.home-page"] }}</nuxt-link>
+        <nuxt-link :to="localePath('/')">{{
+          $store.state.translations["main.home-page"]
+        }}</nuxt-link>
         <nuxt-link :to="localePath('/')"> Di Coin </nuxt-link>
       </div>
-      <div class="d-flex page-container-title">
+      <div class="d-flex page-container-title d-coin-title">
         <div class="d-flex align-items-end">
-          <MainTitle title="Di Coin" />
+          <MainTitle title="Di Coin" class="mb-0" />
         </div>
       </div>
       <div class="d-coin__tab">
@@ -112,6 +114,7 @@ export default {
       download: require("../../assets/svg/download.svg?raw"),
     };
   },
+
   components: { MainTitle },
 };
 </script>

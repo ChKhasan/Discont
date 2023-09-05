@@ -210,6 +210,24 @@ export default {
       errorMessage: "",
     };
   },
+  head() {
+    return {
+      meta: [
+        {
+          name: "title",
+          content: this.$store.state.siteInfo.meta_desc,
+        },
+        {
+          name: "keywords",
+          content: this.$store.state.siteInfo.meta_keywords,
+        },
+        {
+          name: "description",
+          content: this.$store.state.siteInfo.meta_desc,
+        },
+      ],
+    };
+  },
   async fetch() {
     const [translationsData] = await Promise.all([
       this.$store.dispatch("fetchTranslations/getTranslations", {
@@ -218,6 +236,11 @@ export default {
         },
       }),
     ]);
+    this.$store.dispatch("siteInfo", {
+      headers: {
+        lang: this.$i18n.locale,
+      },
+    });
     this.$store.commit("getTranslations", translationsData?.translates);
   },
   async mounted() {
@@ -280,6 +303,11 @@ export default {
           },
         }),
       ]);
+      this.$store.dispatch("siteInfo", {
+        headers: {
+          lang: this.$i18n.locale,
+        },
+      });
       this.$store.commit("getTranslations", translationsData?.translates);
     },
     buyToast(val) {
