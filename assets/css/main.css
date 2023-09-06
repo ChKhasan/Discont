@@ -89,6 +89,7 @@ body::-webkit-scrollbar-thumb {
 .page-breadcrumb {
   display: flex;
   align-items: center;
+  flex-wrap: wrap;
 }
 .page-breadcrumb a {
   display: flex;

@@ -158,7 +158,7 @@
       </div>
       <template slot="footer"> <h3></h3></template>
     </a-modal>
-    <a-back-top>
+    <a-back-top class="antd-to-top">
       <div class="ant-back-top-inner">
         <svg
           xmlns="http://www.w3.org/2000/svg"
@@ -545,6 +545,9 @@ export default {
     100% {
       right: 16px;
     }
+  }
+  .antd-to-top {
+    display: none !important;
   }
 }
 .ant-back-top-inner {

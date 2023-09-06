@@ -2,7 +2,9 @@
   <div class="stocks-page">
     <div class="container_xl">
       <div class="page-breadcrumb">
-        <nuxt-link :to="localePath('/')">{{ $store.state.translations["main.home-page"] }}</nuxt-link>
+        <nuxt-link :to="localePath('/')">{{
+          $store.state.translations["main.home-page"]
+        }}</nuxt-link>
         <nuxt-link :to="localePath('/')"> Aksiyalar </nuxt-link>
       </div>
       <div class="stocks-body">
@@ -158,7 +160,7 @@
       </div>
     </div>
     <div class="categories-app-banner-container">
-        <!--<div class="container_xl">
+      <!--<div class="container_xl">
         <CategoriesAppCard />
       </div>-->
     </div>
@@ -329,6 +331,7 @@ export default {
   border: 1px solid #ececec !important;
   border-radius: 4px !important;
 }
+
 /* .bounce-enter-active {
   animation: bounce-in2 0.5s;
 }

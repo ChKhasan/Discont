@@ -354,6 +354,7 @@
 .select-filters {
   display: flex;
   align-items: center;
+  margin-bottom: 24px;
 }
 .select-filters > span {
   background: #09454f;
@@ -468,5 +469,10 @@
   }
   .categories-page-grid {
     grid-template-columns: repeat(1, 1fr);
+  }
+}
+@media (max-width: 576px) {
+  .categories-page-info {
+    width: 100%;
   }
 }

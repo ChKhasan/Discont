@@ -1,7 +1,12 @@
 <template lang="html">
-  <div class="stocks-card" @click="$router.push(localePath(`/stock/${promotion?.slug}`))">
+  <div
+    class="stocks-card"
+    v-if="promotion?.slug"
+    @click="$router.push(localePath(`/stock/${promotion?.slug}`))"
+  >
     <div class="stocks-card-img">
-      <img :src="promotion?.md_banner" alt="" />
+      <img v-if="promotion?.md_banner" :src="promotion?.md_banner" alt="" />
+      <img class="empty-img" v-else src="../../assets/images/empty-img.png" alt="" />
     </div>
 
     <div class="stocks-card-body">
@@ -29,6 +34,7 @@ export default {
 };
 </script>
 <style lang="css">
+
 .stocks-card {
   cursor: pointer;
   background: #ffffff;
@@ -118,6 +124,8 @@ export default {
 }
 .stocks-card-type span svg {
   margin-right: 6px;
+  width: 10px;
+  height: 10px;
 }
 .stocks-card-type-new {
   /* background: #09454f;
@@ -127,5 +135,29 @@ export default {
 .stocks-card-type-seasonal {
   background: radial-gradient(98.96% 220.15% at 98.96% 100%, #ffdd6a 0%, #fbc100 100%);
   color: #ff3a3a;
+}
+.empty-img {
+  object-fit: contain !important;
+}
+@media (max-width: 576px) {
+  .stocks-card {
+    padding: 16px;
+  }
+  .stocks-card-img {
+    height: 270px;
+  }
+  .stocks-card-type p {
+    font-size: 11px;
+  }
+  .stocks-card-body h2 {
+    font-size: 16.721px;
+    font-weight: 600;
+    line-height: 23.811px;
+  }
+  .stocks-card-body p {
+    font-size: 13.005px;
+    font-weight: 400;
+    line-height: 15.874px;
+  }
 }
 </style>

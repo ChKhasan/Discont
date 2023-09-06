@@ -46,7 +46,7 @@
               /></svg
             >{{ $store.state.translations["category.filters"] }}
           </button>
-          <button class="sort">
+          <button class="sort" @click="sortHande = true">
             <svg
               xmlns="http://www.w3.org/2000/svg"
               width="18"
@@ -397,7 +397,7 @@
     </div>
     <div class="categories-app-banner-container">
       <!--<div class="container_xl">
-        <CategoriesAppCard />
+        <CategoriesAppCard />F
       </div>-->
     </div>
 
@@ -519,48 +519,6 @@
                     >
                   </div>
                 </li>
-                <!-- <li>
-                  <span
-                    :class="{
-                      'active-category':
-                        $route.params.index ==
-                        (!categoryChilds?.parent?.parent?.slug && categoryChilds.slug),
-                    }"
-                    @click="
-                      $router.push(
-                        categoryChilds?.parent?.parent.id
-                          ? `/categories-inner/${categoryChilds?.parent?.slug}`
-                          : `/categories-inner/${categoryChilds?.slug}`
-                      )
-                    "
-                    >{{
-                      categoryChilds?.parent?.parent?.name
-                        ? categoryChilds?.parent?.name
-                        : categoryChilds?.name
-                    }}</span
-                  >
-                  <div class="child-categories-list">
-                    <nuxt-link
-                      v-if="
-                        categoryChilds?.parent?.parent?.name &&
-                        categoryChilds?.children.length == 0
-                      "
-                      :to="`/categories-inner/${categoryChilds?.slug}`"
-                      :class="{
-                        'active-category': $route.params.index == categoryChilds?.slug,
-                      }"
-                      >{{ categoryChilds?.name }}</nuxt-link
-                    >
-                    <nuxt-link
-                      v-if="categoryChilds?.children.length > 0"
-                      v-for="childs in categoryChilds?.children"
-                      :to="`/categories-inner/${childs?.slug}`"
-                      :class="{ 'active-category': $route.params.index == childs?.slug }"
-                      :key="childs.id"
-                      >{{ childs?.name }}</nuxt-link
-                    >
-                  </div>
-                </li> -->
               </ul>
             </Transition>
           </div>
@@ -603,7 +561,67 @@
               >
             </div>
           </div>
-          <button class="confirm">
+          <button class="confirm" @click="filterHandle = false">
+            {{ $store.state.translations["category.show-resoult"] }}
+          </button>
+        </div>
+      </div>
+    </div>
+    <div :class="{ show: sortHande }" class="hidden__filter">
+      <div class="filter-list">
+        <div>
+          <div class="filter__header">
+            <h5>Saralash</h5>
+            <div @click="sortHande = false" class="x">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="26"
+                height="26"
+                viewBox="0 0 26 26"
+                fill="none"
+              >
+                <path
+                  d="M4.2213 4.38536C4.15114 4.31 4.09548 4.22054 4.05751 4.12208C4.01954 4.02362 4 3.91809 4 3.81152C4 3.70495 4.01954 3.59943 4.05751 3.50097C4.09548 3.40251 4.15114 3.31305 4.2213 3.23769C4.29146 3.16233 4.37475 3.10256 4.46642 3.06177C4.55809 3.02099 4.65634 3 4.75556 3C4.85478 3 4.95303 3.02099 5.0447 3.06177C5.13636 3.10256 5.21966 3.16233 5.28982 3.23769L13.0562 11.581L20.8226 3.23769C20.8927 3.16233 20.976 3.10256 21.0677 3.06177C21.1594 3.02099 21.2576 3 21.3568 3C21.456 3 21.5543 3.02099 21.646 3.06177C21.7376 3.10256 21.8209 3.16233 21.8911 3.23769C21.9612 3.31305 22.0169 3.40251 22.0549 3.50097C22.0928 3.59943 22.1124 3.70495 22.1124 3.81152C22.1124 3.91809 22.0928 4.02362 22.0549 4.12208C22.0169 4.22054 21.9612 4.31 21.8911 4.38536L14.1232 12.727L21.8911 21.0687C21.9612 21.144 22.0169 21.2335 22.0549 21.332C22.0928 21.4304 22.1124 21.5359 22.1124 21.6425C22.1124 21.7491 22.0928 21.8546 22.0549 21.9531C22.0169 22.0515 21.9612 22.141 21.8911 22.2164C21.8209 22.2917 21.7376 22.3515 21.646 22.3923C21.5543 22.433 21.456 22.454 21.3568 22.454C21.2576 22.454 21.1594 22.433 21.0677 22.3923C20.976 22.3515 20.8927 22.2917 20.8226 22.2164L13.0562 13.8731L5.28982 22.2164C5.21966 22.2917 5.13636 22.3515 5.0447 22.3923C4.95303 22.433 4.85478 22.454 4.75556 22.454C4.65634 22.454 4.55809 22.433 4.46642 22.3923C4.37475 22.3515 4.29146 22.2917 4.2213 22.2164C4.15114 22.141 4.09548 22.0515 4.05751 21.9531C4.01954 21.8546 4 21.7491 4 21.6425C4 21.5359 4.01954 21.4304 4.05751 21.332C4.09548 21.2335 4.15114 21.144 4.2213 21.0687L11.9892 12.727L4.2213 4.38536Z"
+                  fill="#020105"
+                />
+              </svg>
+            </div>
+          </div>
+          <div class="mobile-sorts">
+            <div
+              class="sort-item"
+              v-for="(item, index) in sortItems"
+              :key="index"
+              @click="sort = item.value"
+            >
+              <span
+                ><svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="28"
+                  height="28"
+                  viewBox="0 0 28 28"
+                  fill="none"
+                >
+                  <circle cx="14" cy="14" r="13.5" stroke="#1F8A70" />
+                </svg>
+                <svg
+                  v-if="sort == item.value"
+                  class="position-absolute"
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="20"
+                  height="20"
+                  viewBox="0 0 20 20"
+                  fill="none"
+                >
+                  <circle cx="10" cy="10" r="10" fill="#1F8A70" />
+                </svg> </span
+              >{{ item.label }}
+            </div>
+          </div>
+          <!-- <span class="categories-list_show-more">{{ $store.state.translations["main.show-more"] }}</span> -->
+        </div>
+        <div class="categories-atribute-box">
+          <button class="confirm" @click="sortHande = false">
             {{ $store.state.translations["category.show-resoult"] }}
           </button>
         </div>
@@ -625,6 +643,7 @@ export default {
   data() {
     return {
       filterHandle: false,
+      sortHande: false,
       showAllAtr: [],
       sliderValue: [10000, 10000000],
       arrow: require("../../assets/svg/dropdown-icon.svg?raw"),
@@ -878,6 +897,7 @@ export default {
         this.__GET_PRODUCTS({ ...this.$route.query });
       }
     },
+
     async current(val) {
       this.changePagination(val, "__GET_PRODUCTS");
     },
@@ -917,7 +937,33 @@ export default {
 </script>
 <style lang="css">
 @import "../../assets/css/pages/categories.css";
-
+.mobile-sorts {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+  margin-top: 32px;
+}
+.sort-item {
+  padding: 16px 18px;
+  border-radius: 12px;
+  border: 1px solid #f1f1f1;
+  background: #fff;
+  color: #000;
+  font-family: var(--SB_500);
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: normal;
+  display: flex;
+  gap: 18px;
+  align-items: center;
+}
+.sort-item span {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
 .comments-empty h4 {
   font-family: var(--SF_500);
   font-style: normal;
@@ -944,7 +990,7 @@ export default {
 .hidden__filter {
   transition: 0.4s;
   transform: translateX(-100%);
-  padding: 80px 16px 48px 16px;
+  padding: 148px 16px 99px 16px;
   position: fixed;
   top: 0;
   left: 0;
@@ -967,6 +1013,7 @@ export default {
   font-weight: 600;
   line-height: 20px; /* 111.111% */
   letter-spacing: -0.28px;
+  margin-bottom: 12px;
 }
 .confirm {
   color: #fff;
