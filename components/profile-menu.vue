@@ -104,13 +104,7 @@ export default {
       this.visibleLogOut = false;
     },
     async logOut() {
-      try {
-        const data = await this.$store.dispatch("fetchAuth/postLogOut");
-        this.$store.commit("logout");
-        this.handleOkSuccess();
-        this.$router.push("/");
-      } catch (e) {
-      }
+      this.$store.dispatch("logout");
     },
   },
 };

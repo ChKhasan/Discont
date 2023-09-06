@@ -284,7 +284,7 @@ export default {
         };
         this.skeleton = false;
       } catch (e) {
-        if (e.response.status == 401) this.$store.commit("logout");
+        if (e.response.status == 401) this.$store.dispatch("logout");
       }
     },
     async __GET_REGIONS() {

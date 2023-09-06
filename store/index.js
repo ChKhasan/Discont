@@ -114,7 +114,31 @@ export const actions = {
       .then((res) => {
         commit("getProfileInfo", res?.user);
         commit("authHandler", res?.user);
+      })
+      .catch(() => {
+        try {
+          this.$axios.$get("/auth/logout", {
+            headers: {
+              Authorization: `Bearer ${localStorage.getItem("dis_auth_token")}`,
+            },
+          });
+          commit("logout");
+        } catch (e) {
+          commit("logout");
+        }
       });
+  },
+  logout({ commit }, payload) {
+    try {
+      this.$axios.$get("/auth/logout", {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("dis_auth_token")}`,
+        },
+      });
+      commit("logout");
+    } catch (e) {
+      commit("logout");
+    }
   },
   dicoinInfo({ commit }, payload) {
     this.$axios.$get("/dicoins").then((res) => {

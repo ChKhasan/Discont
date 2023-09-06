@@ -72,7 +72,7 @@ export default {
         this.loading = false;
       } catch (e) {
         this.loading = false;
-        if (e.response.status == 401) this.$store.commit("logout");
+        if (e.response.status == 401) this.$store.dispatch("logout");
       }
     },
   },

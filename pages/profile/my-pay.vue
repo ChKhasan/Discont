@@ -44,7 +44,7 @@ export default {
         const profileData = await this.$store.dispatch("fetchAuth/getProfileInfo");
         this.orders = profileData?.user?.orders;
       } catch (e) {
-        if (e.response.status == 401) this.$store.commit("logout");
+        if (e.response.status == 401) this.$store.dispatch("logout");
       }
     },
   },
