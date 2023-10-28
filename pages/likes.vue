@@ -18,7 +18,7 @@
           >
         </div>
         <div class="likes-delete" @click="deleteAll" v-if="likeProducts.length > 0">
-          <span v-html="deleteIcon"></span>
+          <!-- <span v-html="deleteIcon"></span> -->
           {{ $store.state.translations["main.delete-all"] }}
         </div>
       </div>
@@ -30,7 +30,7 @@
         />
       </div>
       <div class="empty-box-app" v-else>
-        <img src="../assets/images/packaging love.png" alt="" />
+        <nuxt-img format="webp" src="/packaging love.png" alt="" />
         <h2>{{ $store.state.translations["main.like-empty-title"] }}</h2>
         <p>
           {{ $store.state.translations["main.like-empty-text"] }}
@@ -103,6 +103,9 @@ export default {
 </script>
 <style lang="css">
 @import "../assets/css/pages/comparison.css";
+.page-container-title span {
+  white-space: nowrap;
+}
 .likes-page-body {
   display: grid;
   grid-template-columns: repeat(6, 1fr);
@@ -110,7 +113,7 @@ export default {
   margin-bottom: 60px;
 }
 .likes-delete {
-  background: #f8f8f8;
+  /* background: #f8f8f8; */
   border-radius: 9px;
   padding: 0 12px;
   height: 42px;
@@ -123,8 +126,28 @@ export default {
   line-height: 20px;
   color: #fc4141;
   cursor: pointer;
+  text-decoration: underline;
 }
 .likes-delete span {
   margin-right: 13px;
+}
+@media (max-width: 1024px) {
+  .likes-page-body {
+    grid-template-columns: repeat(5, 1fr);
+  }
+}
+@media (max-width: 768px) {
+  .likes-page-body {
+    grid-template-columns: repeat(4, 1fr);
+  }
+}
+@media (max-width: 576px) {
+  .likes-page-body {
+    grid-template-columns: 1fr 1fr;
+    grid-gap: 16px;
+  }
+  .likes-delete {
+    display: none !important;
+  }
 }
 </style>

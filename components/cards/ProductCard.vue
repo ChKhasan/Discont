@@ -131,7 +131,7 @@
         <!-- .slice(0, product?.price?.indexOf("."))
             .replace(".", ",")
             .replace(/\B(?=(\d{3})+(?!\d))/g, " ") -->
-        so'm
+        {{ $store.state.translations["main.som"] }}
       </p>
     </div>
     <!-- <div class="cart-anim"></div> -->
@@ -176,7 +176,7 @@
       :body-style="{
         padding: '24px',
         borderRadius: '14px',
-        minHeight: '613px',
+        minHeight: '672px',
       }"
       centered
       :closable="false"
@@ -265,9 +265,16 @@
             <div class="product-modal-price-block">
               <div class="cardo">
                 <div class="cardo__header">
-                  <div class="discount" v-if="product?.discount">
-                    <p v-if="product?.discount?.pivot?.percent" class="tag">
-                      - {{ product?.discount?.pivot?.percent }}%
+                  <div class="discount" v-if="product?.discount?.pivot">
+                    <p v-if="product?.discount?.pivot" class="tag">
+                      {{
+                        product?.discount?.pivot?.amount
+                          ? `-${(
+                              (product?.discount?.pivot?.amount * 100) /
+                              product?.real_price
+                            ).toFixed()}%`
+                          : `-${product?.discount?.pivot?.percent}%`
+                      }}
                     </p>
                     <p v-if="product?.discount?.pivot?.amount" class="dis__price">
                       - {{ product?.discount?.pivot?.amount }}
@@ -291,13 +298,10 @@
                     {{ $store.state.translations["main.depends-region"] }}
                   </p>
 
-                  <!-- <p class="coin">
-                    <img src="@/assets/images/coin.svg" alt="" /> +5 ta dis coin
-                  </p> -->
-                  <p class="coin" v-if="skeleton">
+                  <!-- <p class="coin" v-if="skeleton">
                     <b-skeleton width="150px" height="100%"> </b-skeleton>
                   </p>
-                  <p v-else class="coin">
+                  <p v-else class="coin" >
                     <img src="@/assets/images/coin.svg" alt="" />
                     {{
                       Math.floor(
@@ -308,16 +312,16 @@
                       )
                     }}
                     {{ $store.state.translations["main.cout-di-coin"] }}
-                  </p>
+                  </p> -->
+                  <p style="color: transparent">.</p>
                 </div>
 
                 <div class="buttons">
                   <button
                     class="cart"
                     :class="{
-                      'disabled-btn': $store.state.cart.find(
-                        (item) => item.id == product?.id
-                      ),
+                      disabled: $store.state.cart.find((item) => item.id == product?.id),
+                      'disabled disabled-btn': !product?.stock,
                     }"
                     @click="
                       $store.commit('addToCart', {
@@ -328,29 +332,33 @@
                   >
                     {{ $store.state.translations["main.add-to-cart"] }}
                   </button>
-                  <button class="click" @click="visibleOc = true">
+                  <button
+                    class="click"
+                    :class="{
+                      'disabled disabled-btn': !product?.stock,
+                    }"
+                    @click="visibleOc = true"
+                  >
                     {{ $store.state.translations["main.boc-title"] }}
                   </button>
                 </div>
               </div>
             </div>
-            <div class="product-modal-characteristic">
+            <div class="product-modal-characteristic" v-if="skeleton">
+              <h4><b-skeleton width="100%" height="100%"> </b-skeleton></h4>
+              <div v-for="item in [1, 2, 3, 4]" :key="item">
+                <p><b-skeleton width="150px" height="100%"> </b-skeleton></p>
+                <p><b-skeleton width="150px" height="100%"> </b-skeleton></p>
+              </div>
+            </div>
+            <div class="product-modal-characteristic" v-else>
               <h4>{{ $store.state.translations["main.short-info"] }}</h4>
-              <div>
-                <p>Бренд</p>
-                <p>Samsung</p>
-              </div>
-              <div>
-                <p>Диагональ</p>
-                <p>6,5"</p>
-              </div>
-              <div>
-                <p>Экран тури</p>
-                <p>PLS</p>
-              </div>
-              <div>
-                <p>Экраннинг янгиланиш тезлиги</p>
-                <p>60 Гц</p>
+              <div
+                v-for="characteristicItem in characteristics"
+                :key="characteristicItem?.id"
+              >
+                <p>{{ characteristicItem?.characteristic?.name }}</p>
+                <p>{{ characteristicItem?.name }}</p>
               </div>
             </div>
             <nuxt-link
@@ -378,7 +386,7 @@
       :body-style="{
         padding: '24px',
         borderRadius: '14px',
-        minHeight: '613px',
+        minHeight: '672px',
       }"
       centered
       :closable="false"
@@ -415,7 +423,7 @@
                 <img :src="item?.md_img" />
               </div>
               <div v-for="item in [1, 2, 3, 4]" v-else>
-                <img src="../../assets/images/empty-img.png" alt="" />
+                <nuxt-img format="webp" src="/empty-img.png" alt="" />
               </div>
             </a-carousel>
             <!-- <a-carousel arrows dots-class="slick-dots slick-thumb">
@@ -429,7 +437,7 @@
                 <img :src="item?.md_img" />
               </div>
               <div v-for="item in [1, 2, 3, 4]" v-else>
-                <img src="../../assets/images/empty-img.png" alt="" />
+                <nuxt-img format="webp" src="/empty-img.png" alt="" />
               </div>
             </a-carousel> -->
           </div>
@@ -591,9 +599,9 @@
                     {{
                       `${productInner?.real_price}`.replace(/\B(?=(\d{3})+(?!\d))/g, " ")
                     }}
-                    СУМ
+                    {{ $store.state.translations["main.som"] }}
                   </h4>
-                  <!-- <p>28 880 000 СУМ</p> -->
+                  <!-- <p>28 880 000 {{ $store.state.translations["main.som"] }}</p> -->
                 </div>
               </div>
             </div>
@@ -603,7 +611,7 @@
               </div>
               <span
                 :class="{
-                  'disabled-btn': $store.state.cart.find((item) => item.id == product.id),
+                  disabled: $store.state.cart.find((item) => item.id == product.id),
                 }"
                 @click="
                   $store.commit('addToCart', {
@@ -694,7 +702,7 @@
       <div class="vmodal-body">
         <div class="oc-product">
           <div class="oc-product-img" v-if="product?.images?.length > 0">
-            <img :src="product?.images[0]?.md_img" alt="" />
+            <img v-if="product?.images[0]" :src="product?.images[0]?.md_img" alt="" />
           </div>
 
           <div class="oc-product-body">
@@ -791,7 +799,7 @@
       <div class="vmodal-forget-password" v-if="!callBox" @click="callBox = true">
         {{ $store.state.translations["main.contact-you"] }}
       </div>
-      <a href="tel:+998712077788">
+      <a :href="`tel:${$store.state.siteInfo?.phone_number}`">
         <Transition name="oc-bounce">
           <div class="oc-product-call" v-if="callBox">
             <span
@@ -819,8 +827,15 @@
             ></span>
             <div class="call-number">
               <p>{{ $store.state.translations["main.call-centre"] }}:</p>
-              <a href="tel:+998712077788">
-                <h4>71 207 77 88</h4>
+              <a :href="`tel:${$store.state.siteInfo?.phone_number}`">
+                <h4>
+                  +{{
+                    `${$store.state.siteInfo?.phone_number}`
+                      .match(/(\d{3})(\d{2})(\d{3})(\d{2})(\d{2})/)
+                      ?.filter((item, index) => index != 0)
+                      .join(" ")
+                  }}
+                </h4>
               </a>
             </div>
           </div>
@@ -837,7 +852,7 @@
       @ok="handleOkSuccess"
     >
       <div class="vmodal-header">
-        <h5>{{ $store.state.translations["main.new-comment"] }}</h5>
+        <h5>{{ $store.state.translations["product.oc-success-title"] }}</h5>
         <span @click="handleOkSuccess"
           ><svg
             xmlns="http://www.w3.org/2000/svg"
@@ -863,11 +878,11 @@
         ></span>
       </div>
       <div class="vmodal-body comment-modal-success">
-        <img src="../../assets/images/modal-success.png" alt="" />
-        <p>{{ $store.state.translations["main.comment-succes-text"] }}</p>
+        <nuxt-img format="webp" src="/modal-success.png" alt="" />
+        <p>{{ $store.state.translations["product.oc-success-text"] }}</p>
       </div>
       <div class="vmodal-btn" @click="handleOkSuccess">
-        {{ $store.state.translations["main.comment-succes-btn"] }}
+        {{ $store.state.translations["product.oc-success-btn"] }}
       </div>
       <template slot="footer"> <h3></h3></template>
     </a-modal>
@@ -876,9 +891,11 @@
 <script>
 import "swiper/swiper-bundle.min.css";
 export default {
+  name: "ProductCard",
   props: ["product"],
   data() {
     return {
+      characteristics: [],
       fullRating: 5,
       count: 1,
       productCount: 1,
@@ -990,6 +1007,7 @@ export default {
 
       this.productInner = productData.product;
       this.productAttributes = productData?.attributes;
+      this.characteristics = productData?.product?.characteristic_options.splice(0, 4);
       this.skeleton = false;
     },
     addToCart(event, product) {
@@ -998,14 +1016,18 @@ export default {
       // let element = document.getElementById("cart");
       // let x = element.offsetLeft;
       // let y = element.offsetTop;
-      this.$store.commit("addToCart", {
-        obj: { id: product?.id, count: this.productCount },
-        name: "cart",
-      });
+      if (product?.stock) {
+        this.$store.commit("addToCart", {
+          obj: { id: product?.id, count: this.productCount },
+          name: "cart",
+        });
+      } else {
+        this.$router.push(this.localePath(`/product/${product?.slug}`));
+      }
     },
   },
   watch: {
-    visibleBuy(val) {
+    visible(val) {
       if (val) {
         this.__GET_PRODUCTS_BY_SLUG(this.product.slug);
       }
@@ -1054,6 +1076,16 @@ export default {
 }
 .ant-carousel .slick-dots {
   height: auto;
+  overflow-x: scroll;
+  position: static;
+  margin-top: 16px;
+  top: 0;
+}
+.ant-carousel .slick-dots::-webkit-scrollbar {
+  display: none;
+}
+.ant-carousel .slick-dots li {
+  min-width: 86px;
 }
 .ant-carousel .slick-slide img {
   border: 5px solid #fff;
@@ -1061,11 +1093,11 @@ export default {
   margin: auto;
 }
 .ant-carousel .slick-thumb {
-  bottom: -102px;
+  /* bottom: -102px; */
   display: flex !important;
 }
 .ant-carousel .slick-thumb .slick-active {
-  border: 1.5px solid #09454f;
+  border: 1.5px solid var(--color_green);
 }
 .ant-carousel .slick-thumb li {
   width: 86px;
@@ -1091,6 +1123,8 @@ export default {
   position: relative;
   overflow: hidden;
   cursor: pointer;
+  top: 0;
+  /* margin-top: 16px; */
 }
 
 .product-card-header:hover .pc-img-container {
@@ -1174,7 +1208,7 @@ export default {
   font-weight: 400;
   font-size: 14px;
   line-height: 16px;
-  color: #09454f;
+  color: var(--color_green);
   z-index: 10;
   bottom: -100%;
   transition: 0.3s linear;
@@ -1237,6 +1271,7 @@ export default {
 .product-modal-characteristic {
   margin-bottom: 21px;
   margin-top: 16px;
+  min-height: 170px;
 }
 .product-modal-characteristic h4 {
   font-family: var(--SB_500);
@@ -1452,15 +1487,15 @@ export default {
   align-items: center;
   text-align: center;
   justify-content: center;
-  color: #09454f;
-  border: 1px solid #09454f;
+  color: var(--color_green);
+  border: 1px solid var(--color_green);
   border-radius: 10px;
   padding-top: 16px;
   padding-bottom: 16px;
   cursor: pointer;
 }
 .product-modal-buy-mode-btns span {
-  background: #09454f;
+  background: var(--color_green);
   border-radius: 10px;
   height: 100%;
   display: flex;
@@ -1468,9 +1503,7 @@ export default {
   justify-content: center;
   cursor: pointer;
 }
-.disabled-btn {
-  pointer-events: none;
-}
+
 .product_badges {
   position: absolute;
   bottom: 5px;
@@ -1487,7 +1520,7 @@ export default {
   display: flex;
   flex-direction: column;
   gap: 5px;
-  align-items: center;
+  align-items: flex-start;
 }
 .product_badges_item {
   transform: rotate(-2.91deg);
@@ -1519,12 +1552,21 @@ export default {
 .default-thumb li:last-child {
   display: none;
 }
+@media (max-width: 1440px) {
+  .product-card-header:hover .fast_show {
+    bottom: 33%;
+  }
+  .fast_show {
+    font-size: 12px;
+    padding: 10px 12px;
+  }
+}
 @media screen and (max-width: 1024px) {
   .product-card-header {
     height: 150px;
   }
   .product-card-body p {
-    margin-top: 14px;
+    margin-top: 8px;
   }
   .product-card-price h4 {
     font-size: 14px !important;
@@ -1647,5 +1689,13 @@ export default {
   top: 600px;
   z-index: 10;
   transition: 0.3s;
+}
+@media (max-width: 576px) {
+  .hover-btns:first-child {
+    top: 10px;
+  }
+  .hover-btns:nth-child(2) {
+  top: 46px;
+}
 }
 </style>

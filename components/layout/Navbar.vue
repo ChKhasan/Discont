@@ -3,9 +3,13 @@
     <div class="container_xl header-navbar_web">
       <div class="d-flex header-navbar_container">
         <div class="d-flex align-items-center">
-          <nuxt-link :to="localePath('/')"
-            ><span v-html="navLogo" class="nav_logo"></span
-          ></nuxt-link>
+          <nuxt-link :to="localePath('/')">
+            <!-- <span v-html="navLogo" class="nav_logo"> </span
+          > -->
+            <span class="nav_logo">
+              <img :src="$store.state.siteInfo?.sm_logo" alt=""
+            /></span>
+          </nuxt-link>
           <button class="catalog-btn" @click="catalogMenu = !catalogMenu">
             <span v-if="catalogMenu"
               ><svg
@@ -28,7 +32,7 @@
             <input
               type="text"
               ref="search"
-              placeholder="Search ..."
+              :placeholder="`${$store.state.translations['main.search']} ...`"
               v-on:keyup.enter="searchAction"
               v-model="search"
               @focus="searchBlockHide = true"
@@ -280,31 +284,42 @@
           ><span class="nav_logo" v-html="navLogoMobile"></span
         ></nuxt-link>
       </div>
-      <div class="coin_btn" @click="$router.push(localePath('/d-coin/about'))">
-        <span><img src="../../assets/images/coin.png" alt="" /></span>
+      <!-- <div class="coin_btn" @click="$router.push(localePath('/d-coin/about'))">
+        <span><nuxt-img format="webp" src="/coin.png" alt="" /></span>
         {{ $store.state.profile?.dicoin?.quantity }}
         {{ $store.state.translations["main.dicoin"] }}
-      </div>
+      </div> -->
     </div>
     <Transition duration="550" name="nested">
       <div class="catalog-menu-container outer" v-if="catalogMenu">
         <div class="position-relative w-100 inner">
           <div class="catalog-menu-left-bg"></div>
-          <div class="container_xl d-flex position-relative" style="z-index: 2">
-            <div class="catalog-menu-content">
+          <div
+            class="container_xl d-flex position-relative menu-scroll"
+            style="z-index: 2"
+          >
+            <div class="catalog-menu-content web_categories">
               <div class="catalog-menu-list">
                 <ul>
                   <li
                     v-for="category in categories"
                     :key="category?.id"
-                    @click="$router.push(`/categories/${category?.slug}`)"
+                    @click="$router.push(localePath(`/categories/${category?.slug}`))"
                     @mouseover="targetCategory(category)"
                     :class="{
                       'catalog-menu-list-active': activeCategory?.id == category?.id,
                     }"
                   >
-                    {{ category?.name
-                    }}<span v-if="activeCategory?.id == category?.id"
+                    <p class="category-name">
+                      <img v-if="category?.md_icon" :src="category?.md_icon" alt="" />
+                      <span
+                        class="mx-0"
+                        v-if="category?.icon_svg"
+                        v-html="category?.icon_svg"
+                      ></span
+                      >{{ category?.name }}
+                    </p>
+                    <span v-if="activeCategory?.id == category?.id"
                       ><svg
                         xmlns="http://www.w3.org/2000/svg"
                         width="8"
@@ -401,466 +416,91 @@
                 </div>
               </div>
             </div>
+            <div class="catalog-menu-content mobile_categories">
+              <div v-if="currentCategory" class="category_drop cuurent-box">
+                <h4
+                  @click="
+                    dropAction(
+                      categories.find((elem) => elem?.id == currentCategory?.parent_id)
+                    )
+                  "
+                  class="current-category"
+                >
+                  <span v-html="dropArrow" class="rotate90 back-svg"></span>
+                  <p class="category-name">
+                    <img
+                      v-if="currentCategory?.md_icon"
+                      :src="currentCategory?.md_icon"
+                      alt=""
+                    />
+                    <span
+                      class="mx-0"
+                      v-if="currentCategory?.icon_svg"
+                      v-html="currentCategory?.icon_svg"
+                    ></span
+                    >{{ currentCategory?.name }}
+                  </p>
+                </h4>
+                <ul class="category-drop-board mt-0" :class="{ 'height-auto': true }">
+                  <div class="mt-3">
+                    <li v-for="childCat in currentCategory.children" :key="childCat?.id">
+                      <h5
+                        @click="dropAction(childCat)"
+                        v-if="childCat?.children?.length > 0"
+                      >
+                        {{ childCat?.name }}
+                      </h5>
+                      <nuxt-link
+                        v-else
+                        :to="
+                          localePath(
+                            currentCategory?.parent_id
+                              ? `/categories-inner/${childCat?.slug}`
+                              : `/categories/${childCat?.slug}`
+                          )
+                        "
+                        >{{ childCat?.name }}</nuxt-link
+                      >
+                    </li>
+                  </div>
+                </ul>
+              </div>
+              <div
+                v-if="!currentCategory"
+                class="category_drop"
+                v-for="category in categories"
+                :key="category?.id"
+              >
+                <h4 @click="dropAction(category)">
+                  <p class="category-name">
+                    <img v-if="category?.md_icon" :src="category?.md_icon" alt="" />
+                    <span
+                      class="mx-0"
+                      v-if="category?.icon_svg"
+                      v-html="category?.icon_svg"
+                    ></span
+                    >{{ category?.name }}
+                  </p>
+                  <span v-html="dropArrow" class="rotatem90"></span>
+                </h4>
+              </div>
+            </div>
             <div class="close-space" @click="catalogMenu = false"></div>
+          </div>
+          <div class="mobile_lang">
+            <div
+              v-for="locale in locales"
+              :class="{ active: $i18n.locale == locale.code }"
+              :key="locale.id"
+              @click="$router.push(switchLocalePath(locale.code))"
+            >
+              {{ locale.name }}
+            </div>
           </div>
         </div>
       </div>
     </Transition>
-    <!-- chech number -->
-    <a-modal
-      v-model="visibleCheck"
-      :body-style="{ padding: '32px', borderRadius: '14px' }"
-      centered
-      :closable="false"
-      width="670px"
-      @ok="handleOk"
-    >
-      <div class="vmodal-anim-header">
-        <img class="shadow-ell-1" src="../../assets/images/Ellipse 57.png" alt="" />
-        <img class="shadow-ell-2" src="../../assets/images/Ellipse 59.png" alt="" />
-        <h5>{{ $store.state.translations["main.login-register"] }}</h5>
-        <span @click="handleOk"
-          ><svg
-            xmlns="http://www.w3.org/2000/svg"
-            width="20"
-            height="20"
-            viewBox="0 0 20 20"
-            fill="none"
-          >
-            <path
-              d="M17.9958 1.98438L2.00391 17.9762"
-              stroke="#09454f"
-              stroke-width="3.28586"
-              stroke-linecap="round"
-              stroke-linejoin="round"
-            />
-            <path
-              d="M18.0003 17.9861L1.99512 1.97754"
-              stroke="#09454f"
-              stroke-width="3.28586"
-              stroke-linecap="round"
-              stroke-linejoin="round"
-            /></svg
-        ></span>
-      </div>
-      <div class="vmodal-body">
-        <a-form-model
-          :model="formCheckNumber"
-          ref="ruleFormCheckNumber"
-          :rules="rulesCheckNumber"
-          layout="vertical"
-        >
-          <a-form-model-item
-            class="form-item register-input mb-0 pb-0"
-            :label="$store.state.translations['main.your-phone-number']"
-            prop="phone_number"
-          >
-            <span class="position-relative d-flex align-items-center justify-content-end">
-              <!-- <span class="position-absolute number-error" v-if="checkNumberError"
-                >Raqam noto’g’ri kiritildi</span
-              > -->
-              <!-- <the-mask
-                @keyup.enter="submitCheckNumber()"
-                :mask="['+998 (##) ### ## ##', '+998 (##) ### ## ##']"
-                placeholder="+998 (__) ___ __ __"
-              /> -->
-              <input
-                type="text"
-                v-mask="'+998 ## ### ## ##'"
-                @keyup.enter="submitCheckNumber()"
-                v-model="formCheckNumber.phone_number"
-                placeholder="+998 (__) ___ __ __"
-              />
-            </span>
-            <!-- <a-input v-model="form.name" placeholder="Telefon raqamingiz" /> -->
-          </a-form-model-item>
-        </a-form-model>
-      </div>
-      <div
-        class="vmodal-btn vmodal-btn-height"
-        v-ripple="'rgba(255, 255, 255, 0.35)'"
-        @click="submitCheckNumber()"
-      >
-        {{ $store.state.translations["main.login-text"] }}
-      </div>
-      <!-- <div class="vmodal-btn-outline" @click="visibleLogin = true">Manzilni qo’shish</div> -->
-      <template slot="footer"> <h3></h3></template>
-    </a-modal>
-    <!-- chech number -->
-    <!-- check number forget password -->
-    <a-modal
-      v-model="visibleForgetPass"
-      :body-style="{ padding: '32px', borderRadius: '14px' }"
-      centered
-      :closable="false"
-      width="670px"
-      @ok="handleOkForgetPass"
-    >
-      <div class="vmodal-anim-header">
-        <img class="shadow-ell-1" src="../../assets/images/Ellipse 57.png" alt="" />
-        <img class="shadow-ell-2" src="../../assets/images/Ellipse 59.png" alt="" />
-        <h5>{{ $store.state.translations["main.login-register"] }}</h5>
-        <span @click="handleOkForgetPass"
-          ><svg
-            xmlns="http://www.w3.org/2000/svg"
-            width="20"
-            height="20"
-            viewBox="0 0 20 20"
-            fill="none"
-          >
-            <path
-              d="M17.9958 1.98438L2.00391 17.9762"
-              stroke="#09454f"
-              stroke-width="3.28586"
-              stroke-linecap="round"
-              stroke-linejoin="round"
-            />
-            <path
-              d="M18.0003 17.9861L1.99512 1.97754"
-              stroke="#09454f"
-              stroke-width="3.28586"
-              stroke-linecap="round"
-              stroke-linejoin="round"
-            /></svg
-        ></span>
-      </div>
-      <div class="vmodal-body">
-        <a-form-model
-          :model="formCheckNumber"
-          ref="ruleFormCheckNumber"
-          :rules="rulesCheckNumber"
-          layout="vertical"
-        >
-          <a-form-model-item
-            class="form-item register-input mb-0 pb-0"
-            :label="$store.state.translations['main.your-phone-number']"
-            prop="phone_number"
-          >
-            <span class="position-relative d-flex align-items-center justify-content-end">
-              <!-- <the-mask
-                @keyup.enter="submitForgetPass()"
-                :mask="['+998 (##) ### ## ##', '+998 (##) ### ## ##']"
-                placeholder="+998 (__) ___ __ __"
-                v-model="formCheckNumber.phone_number"
-              /> -->
-              <input
-                @keyup.enter="submitForgetPass()"
-                v-mask="'+998 ## ### ## ##'"
-                placeholder="+998 (__) ___ __ __"
-                v-model="formCheckNumber.phone_number"
-              />
-            </span>
-          </a-form-model-item>
-        </a-form-model>
-      </div>
-      <div class="vmodal-btn vmodal-btn-height" @click="submitForgetPass()">
-        {{ $store.state.translations["main.login-text"] }}
-      </div>
-      <!-- <div class="vmodal-btn-outline" @click="visibleLogin = true">Manzilni qo’shish</div> -->
-      <template slot="footer"> <h3></h3></template>
-    </a-modal>
-    <!-- check number forget password -->
-    <!-- login profile  -->
-    <a-modal
-      v-model="visibleLogin"
-      :body-style="{ padding: '32px', borderRadius: '14px' }"
-      centered
-      :closable="false"
-      width="670px"
-      @ok="handleOkLogin"
-    >
-      <div class="vmodal-header auth-modal">
-        <h5>{{ $store.state.translations["main.login-register"] }}</h5>
-        <span @click="handleOkLogin"
-          ><svg
-            xmlns="http://www.w3.org/2000/svg"
-            width="20"
-            height="20"
-            viewBox="0 0 20 20"
-            fill="none"
-          >
-            <path
-              d="M17.9958 1.98438L2.00391 17.9762"
-              stroke="#09454f"
-              stroke-width="3.28586"
-              stroke-linecap="round"
-              stroke-linejoin="round"
-            />
-            <path
-              d="M18.0003 17.9861L1.99512 1.97754"
-              stroke="#09454f"
-              stroke-width="3.28586"
-              stroke-linecap="round"
-              stroke-linejoin="round"
-            /></svg
-        ></span>
-      </div>
-      <div class="vmodal-body">
-        <a-form-model
-          :model="formLogin"
-          ref="ruleFormLogin"
-          :rules="rulesLogin"
-          layout="vertical"
-        >
-          <a-form-model-item
-            class="form-item register-input mb-3 pb-0"
-            :label="$store.state.translations['main.your-phone-number']"
-          >
-            <!-- <the-mask
-              class="disabled"
-              v-model="formLogin.phone_number"
-              :mask="['+998 (##) ### ## ##', '+998 (##) ### ## ##']"
-              placeholder="+998 (__) ___ __ __"
-            /> -->
-            <input
-              class="disabled"
-              v-mask="'+998 ## ### ## ##'"
-              v-model="formLogin.phone_number"
-              placeholder="+998 (__) ___ __ __"
-            />
-          </a-form-model-item>
-          <a-form-model-item
-            class="form-item register-input mb-0 pb-0"
-            label="Parol"
-            :class="{ sms_code_error: loginPassError }"
-            prop="password"
-          >
-            <a-input
-              v-model="formLogin.password"
-              type="password"
-              placeholder="Password"
-            />
-            <span class="sms_code_error_text" v-if="loginPassError">{{
-              $store.state.translations["main.pass-error"]
-            }}</span>
-          </a-form-model-item>
-        </a-form-model>
-      </div>
-      <div class="vmodal-btn vmodal-btn-height" @click="submitLogin()">
-        {{ $store.state.translations["main.login-text"] }}
-      </div>
-      <div class="vmodal-forget-password" @click="forgetPassword()">
-        {{ $store.state.translations["main.forget-pass"] }}
-      </div>
-      <template slot="footer"> <h3></h3></template>
-    </a-modal>
-    <!-- login profile  -->
-    <!-- login width sm  -->
-    <a-modal
-      v-model="visibleSms"
-      :body-style="{ padding: '32px', borderRadius: '14px' }"
-      centered
-      :closable="false"
-      width="670px"
-      @ok="handleOkSms"
-    >
-      <div class="vmodal-header auth-modal">
-        <h5>{{ $store.state.translations["main.login-register"] }}</h5>
-        <span @click="handleOkSms"
-          ><svg
-            xmlns="http://www.w3.org/2000/svg"
-            width="20"
-            height="20"
-            viewBox="0 0 20 20"
-            fill="none"
-          >
-            <path
-              d="M17.9958 1.98438L2.00391 17.9762"
-              stroke="#09454f"
-              stroke-width="3.28586"
-              stroke-linecap="round"
-              stroke-linejoin="round"
-            />
-            <path
-              d="M18.0003 17.9861L1.99512 1.97754"
-              stroke="#09454f"
-              stroke-width="3.28586"
-              stroke-linecap="round"
-              stroke-linejoin="round"
-            /></svg
-        ></span>
-      </div>
-      <div class="vmodal-body">
-        <a-form-model
-          :model="formSms"
-          ref="ruleFormSms"
-          :rules="rulesSms"
-          layout="vertical"
-        >
-          <a-form-model-item
-            class="form-item register-input mb-3 pb-0 sms_code_number"
-            :label="$store.state.translations['main.your-phone-number']"
-            @keyup.enter="submitSms()"
-          >
-            <!-- <the-mask
-              class="disabled"
-              @keyup.enter="submitSms()"
-              v-model="formSms.phone_number"
-              :mask="['+998 (##) ### ## ##', '+998 (##) ### ## ##']"
-              placeholder="+998 (__) ___ __ __"
-            /> -->
-            <input
-              class="disabled"
-              v-mask="'+998 ## ### ## ##'"
-              @keyup.enter="submitSms()"
-              v-model="formSms.phone_number"
-              placeholder="+998 (__) ___ __ __"
-            />
-            <span class="change_number" @click="replaceNumber()">{{
-              $store.state.translations["main.change"]
-            }}</span>
-          </a-form-model-item>
-          <a-form-model-item
-            class="form-item register-input mb-0 pb-0"
-            :class="{ sms_code_error: smsCodeError }"
-            :label="$store.state.translations['main.enter-sms-code']"
-            prop="sms_code"
-          >
-            <a-input
-              focus
-              @keyup.enter="submitSms()"
-              v-model="formSms.sms_code"
-              type="text"
-              placeholder="sms"
-            />
-            <span class="sms_code_error_text" v-if="smsCodeError">{{
-              $store.state.translations["main.code-incorrect"]
-            }}</span>
-          </a-form-model-item>
-        </a-form-model>
-      </div>
-      <div class="vmodal-btn vmodal-btn-height" @click="submitSms()">
-        {{ $store.state.translations["main.send-sms-code"] }}
-      </div>
-      <div class="vmodal-forget-password" @click="again_sms_code()">
-        {{ $store.state.translations["main.resend-code"] }}
-      </div>
-      <template slot="footer"> <h3></h3></template>
-    </a-modal>
-    <!-- login width sm  -->
-    <!-- profile user name  -->
-    <a-modal
-      v-model="visibleName"
-      :body-style="{ padding: '32px', borderRadius: '14px' }"
-      centered
-      :closable="false"
-      width="670px"
-      @ok="handleOkName"
-    >
-      <div class="vmodal-header auth-modal">
-        <h5>{{ $store.state.translations["main.login-register"] }}</h5>
-        <span @click="handleOkName"
-          ><svg
-            xmlns="http://www.w3.org/2000/svg"
-            width="20"
-            height="20"
-            viewBox="0 0 20 20"
-            fill="none"
-          >
-            <path
-              d="M17.9958 1.98438L2.00391 17.9762"
-              stroke="#09454f"
-              stroke-width="3.28586"
-              stroke-linecap="round"
-              stroke-linejoin="round"
-            />
-            <path
-              d="M18.0003 17.9861L1.99512 1.97754"
-              stroke="#09454f"
-              stroke-width="3.28586"
-              stroke-linecap="round"
-              stroke-linejoin="round"
-            /></svg
-        ></span>
-      </div>
-      <div class="vmodal-body">
-        <a-form-model
-          :model="formName"
-          ref="ruleFormName"
-          :rules="rulesName"
-          layout="vertical"
-        >
-          <a-form-model-item
-            class="form-item register-input mb-3 pb-0"
-            :label="$store.state.translations['main.enter-your-name']"
-            prop="name"
-          >
-            <a-input
-              v-model="formName.name"
-              type="text"
-              :placeholder="$store.state.translations['main.enter-your-name']"
-            />
-          </a-form-model-item>
-          <a-form-model-item
-            class="form-item register-input mb-0 pb-0"
-            :label="$store.state.translations['main.your-phone-number']"
-          >
-            <the-mask
-              class="disabled"
-              v-model="formName.phone_number"
-              :mask="['+998 (##) ### ## ##', '+998 (##) ### ## ##']"
-              placeholder="+998 (__) ___ __ __"
-            />
-            <input
-              class="disabled"
-              v-mask="'+998 ## ### ## ##'"
-              v-model="formName.phone_number"
-              placeholder="+998 (__) ___ __ __"
-            />
-          </a-form-model-item>
-        </a-form-model>
-      </div>
-      <div class="vmodal-btn vmodal-btn-height" @click="submitName()">
-        {{ $store.state.translations["main.login-text"] }}
-      </div>
-      <template slot="footer"> <h3></h3></template>
-    </a-modal>
-    <!-- profile user name  -->
-    <!-- access profile register  -->
-    <a-modal
-      v-model="visibleSuccess"
-      :body-style="{ padding: '32px', borderRadius: '14px' }"
-      centered
-      :closable="false"
-      width="671px"
-      @ok="handleOkSuccess"
-    >
-      <div class="vmodal-header">
-        <h5></h5>
-        <span @click="handleOkSuccess"
-          ><svg
-            xmlns="http://www.w3.org/2000/svg"
-            width="20"
-            height="20"
-            viewBox="0 0 20 20"
-            fill="none"
-          >
-            <path
-              d="M17.9958 1.98438L2.00391 17.9762"
-              stroke="#09454f"
-              stroke-width="3.28586"
-              stroke-linecap="round"
-              stroke-linejoin="round"
-            />
-            <path
-              d="M18.0003 17.9861L1.99512 1.97754"
-              stroke="#09454f"
-              stroke-width="3.28586"
-              stroke-linecap="round"
-              stroke-linejoin="round"
-            /></svg
-        ></span>
-      </div>
-      <div class="vmodal-body success-vmodal">
-        <img src="../../assets/images/modal-success.png" alt="" />
-        <p>{{ $store.state.translations["main.auth-success-text"] }}</p>
-      </div>
-      <div class="vmodal-btn" @click="handleOkSuccess()">
-        {{ $store.state.translations["main.continue-shopping"] }}
-      </div>
-      <template slot="footer"> <h3></h3></template>
-    </a-modal>
-    <!-- access profile register  -->
+    <AuthModals />
     <div
       class="seach-resoult-mask"
       v-if="searchBlockHide"
@@ -873,71 +513,29 @@
 <script>
 import MainTitle from "../Main-title.vue";
 import Vnotification from "../vnotification.vue";
-
+import AuthModals from "./AuthModals.vue";
 export default {
   name: "Navbar",
+  props: ["categoryVisible"],
   data() {
     return {
+      locales: [
+        { id: 1, code: "uz", name: "O'z" },
+        // {
+        //   id: 2,
+        //   code: "en",
+        //   name: "ENG",
+        // },
+        {
+          id: 3,
+          code: "ru",
+          name: "Ру",
+        },
+      ],
       searchLastResoults: true,
       searchBlockHide: false,
       catalogMenu: false,
-      visibleSuccess: false,
-      visibleCheck: false,
-      visibleLogin: false,
-      visibleSms: false,
-      visibleName: false,
       search: "",
-      formLogin: {
-        phone_number: "",
-        password: "",
-      },
-      formCheckNumber: {
-        phone_number: "",
-      },
-      formName: {
-        name: "",
-      },
-      formSms: {
-        phone_number: "",
-        sms_code: "",
-      },
-      rulesLogin: {
-        password: [
-          {
-            required: true,
-            message: "Password is required",
-            trigger: "change",
-          },
-        ],
-      },
-      rulesCheckNumber: {
-        phone_number: [
-          {
-            required: true,
-            message: "Number is required",
-            trigger: "change",
-          },
-          { min: 9, message: "Raqam noto’g’ri kiritildi", trigger: "blur" },
-        ],
-      },
-      rulesSms: {
-        sms_code: [
-          {
-            required: true,
-            message: "sms code is required",
-            trigger: "change",
-          },
-        ],
-      },
-      rulesName: {
-        name: [
-          {
-            required: true,
-            message: "Name is required",
-            trigger: "change",
-          },
-        ],
-      },
       navLogo: require("../../assets/svg/green-logo.svg?raw"),
       navLogoMobile: require("../../assets/svg/green-logo-mobile.svg?raw"),
       searchClock: require("../../assets/svg/searchClock.svg?raw"),
@@ -954,15 +552,25 @@ export default {
       searchProducts: [],
       searchCategories: [],
       activeCategory: null,
+      currentCategory: null,
       targetPage: false,
-      smsCodeError: false,
-      loginPassError: false,
-      checkNumberError: false,
-      visibleForgetPass: false,
-      forgetPassStatus: false,
       searchResoults: [],
+      activeDrop: [],
+      dropArrow: `<svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="20"
+                    height="12"
+                    viewBox="0 0 20 12"
+                    fill="none"
+                  >
+                    <path
+                      d="M9.11612 10.8839C9.60427 11.372 10.3957 11.372 10.8839 10.8839L18.8388 2.92893C19.327 2.44078 19.327 1.64932 18.8388 1.16116C18.3507 0.67301 17.5592 0.67301 17.0711 1.16116L10 8.23223L2.92893 1.16117C2.44078 0.67301 1.64932 0.67301 1.16116 1.16117C0.67301 1.64932 0.67301 2.44078 1.16116 2.92893L9.11612 10.8839ZM8.75 9L8.75 10L11.25 10L11.25 9L8.75 9Z"
+                      fill="black"
+                    /></svg
+                >`,
     };
   },
+
   async fetch() {
     const [categoriesData] = await Promise.all([
       this.$store.dispatch("fetchCategories/getCategories", {
@@ -971,19 +579,19 @@ export default {
         },
       }),
     ]);
-
     this.categories = categoriesData?.data;
     this.activeCategory = categoriesData?.data[0];
   },
+
   computed: {
     routerPath() {
       return this.$route.path;
     },
-    authVisible() {
-      return this.$store.state.authVisible;
+    langChange() {
+      return this.$i18n.locale;
     },
   },
-  mounted() {
+  async mounted() {
     if (!localStorage.getItem("search_resoults")) {
       localStorage.setItem("search_resoults", JSON.stringify([]));
     } else {
@@ -991,6 +599,14 @@ export default {
     }
   },
   methods: {
+    dropAction(obj) {
+      if (this.currentCategory?.id != obj?.id && obj?.id) {
+        this.currentCategory = { ...obj };
+      } else {
+        this.currentCategory = null;
+      }
+      console.log("val", this.currentCategory);
+    },
     clearSearchResoults() {
       localStorage.setItem("search_resoults", JSON.stringify([]));
       this.searchResoults = JSON.parse(localStorage.getItem("search_resoults"));
@@ -1021,13 +637,6 @@ export default {
       const size = Math.ceil(arr.length / n);
       return Array.from({ length: n }, (v, i) => arr.slice(i * size, i * size + size));
     },
-    handleOkForgetPass() {
-      this.visibleForgetPass = false;
-    },
-    replaceNumber() {
-      this.visibleSms = false;
-      this.visibleCheck = true;
-    },
     toProfile(name) {
       this.targetPage = name;
       if (this.$store.state.auth) {
@@ -1036,195 +645,11 @@ export default {
         this.$store.commit("authVisibleChange", true);
       }
     },
-    forgetPassword() {
-      this.formCheckNumber.phone_number = `998${this.formCheckNumber.phone_number}`;
-      this.visibleLogin = false;
-      this.visibleForgetPass = true;
-      this.forgetPassStatus = true;
-    },
+
     targetCategory(obj) {
       this.activeCategory = obj;
     },
-    handleOkSuccess() {
-      this.visibleSuccess = false;
-    },
-    handleOk() {
-      this.visibleCheck = false;
-    },
-    handleOkLogin() {
-      this.visibleLogin = false;
-      this.$store.commit("authVisibleChange", false);
-    },
-    handleOkSms() {
-      this.visibleSms = false;
-    },
-    handleOkName() {
-      this.visibleName = false;
-    },
-    submitCheckNumber() {
-      const data = {
-        phone_number: this.formCheckNumber.phone_number
-          .split(" ")
-          .join("")
-          .replace("+", ""),
-      };
-      this.$refs["ruleFormCheckNumber"].validate((valid) => {
-        valid ? this.__CHECK_NUMBER(data) : false;
-      });
-    },
-    submitForgetPass() {
-      const data = {
-        phone_number: this.formCheckNumber.phone_number
-          .split(" ")
-          .join("")
-          .replace("+", ""),
-      };
-      this.$refs["ruleFormCheckNumber"].validate((valid) => {
-        valid ? this.__FORGET_PASSWORD(data) : false;
-      });
-    },
-    submitSms() {
-      const data = {
-        ...this.formSms,
-        phone_number: this.formSms.phone_number.split(" ").join("").replace("+", ""),
-      };
-      this.formName.phone_number =
-        this.formSms.phone_number.length == 9
-          ? `998${this.formSms.phone_number}`
-          : this.formSms.phone_number;
-      this.$refs["ruleFormSms"].validate((valid) => {
-        valid ? this.__REGISTER_SMS(data) : false;
-      });
-    },
-    submitLogin() {
-      const data = {
-        phone_number: this.formLogin.phone_number.split(" ").join("").replace("+", ""),
-        password: this.formLogin.password,
-      };
-      this.$refs["ruleFormLogin"].validate((valid) => {
-        if (valid) {
-          this.__LOGIN(data);
-        } else {
-          return false;
-        }
-      });
-    },
-    submitName() {
-      const data = {
-        name: this.formName.name,
-      };
-      this.$refs["ruleFormName"].validate((valid) => {
-        if (valid) {
-          this.__PROFILE_NAME(data);
-        } else {
-          return false;
-        }
-      });
-    },
-    async __REGISTER_SMS(formData) {
-      try {
-        const data = await this.$store.dispatch(
-          "fetchAuth/postRegisterWithSms",
-          formData
-        );
-        localStorage.setItem("dis_auth_token", data.token);
-        // this.$store.commit("authHandler");
 
-        if (!this.forgetPassStatus) {
-          this.visibleName = true;
-        } else {
-          this.visibleName = false;
-          this.visibleSuccess = true;
-        }
-        this.forgetPassStatus = false;
-        this.visibleSms = false;
-
-        this.smsCodeError = false;
-      } catch (e) {
-        // console.log(e);
-        if (e.response.status == 422) this.smsCodeError = true;
-      }
-    },
-    // putProfileName
-    async __PROFILE_NAME(formData) {
-      try {
-        const data = await this.$store.dispatch("fetchAuth/putProfileName", formData);
-        this.$store.dispatch("profileInfo");
-        this.visibleName = false;
-        this.visibleSuccess = true;
-      } catch (e) {
-        // console.log(e);
-      }
-    },
-    again_sms_code() {
-      const data = {
-        phone_number: this.formCheckNumber.phone_number
-          .split(" ")
-          .join("")
-          .replace("+", ""),
-      };
-
-      this.__FORGET_PASSWORD(data);
-    },
-    async __FORGET_PASSWORD(formData) {
-      try {
-        const data = await this.$store.dispatch(
-          "fetchAuth/postCheckNumberForget",
-          formData
-        );
-        this.handleOkForgetPass();
-        this.visibleSms = true;
-        this.formLogin.phone_number =
-          this.formCheckNumber.phone_number.length == 9
-            ? `998${this.formCheckNumber.phone_number}`
-            : this.formCheckNumber.phone_number;
-        this.formSms.phone_number =
-          this.formCheckNumber.phone_number.length == 9
-            ? `998${this.formCheckNumber.phone_number}`
-            : this.formCheckNumber.phone_number;
-      } catch (e) {
-        // console.log(e);
-      }
-    },
-    async __CHECK_NUMBER(formData) {
-      try {
-        const data = await this.$store.dispatch("fetchAuth/postCheckNumber", formData);
-        if (data?.authorized) {
-          this.visibleLogin = true;
-        } else {
-          this.visibleSms = true;
-        }
-        this.formLogin.phone_number =
-          this.formCheckNumber.phone_number.length == 9
-            ? `998${this.formCheckNumber.phone_number}`
-            : this.formCheckNumber.phone_number;
-        this.formSms.phone_number =
-          this.formCheckNumber.phone_number.length == 9
-            ? `998${this.formCheckNumber.phone_number}`
-            : this.formCheckNumber.phone_number;
-      } catch (e) {
-        // console.log(e);
-      }
-    },
-    async __LOGIN(formData) {
-      try {
-        const data = await this.$store.dispatch("fetchAuth/postLogin", formData);
-        localStorage.setItem("dis_auth_token", data.token);
-        this.$store.dispatch("profileInfo");
-        this.$store.commit("authVisibleChange", false);
-        // if (this.$route.name != "basket" && this.targetPage) {
-        //   this.$router.push("/profile/personal-info");
-        // } else {
-        //   this.$router.push("/checkout");
-        // }
-        this.loginPassError = false;
-        this.visibleLogin = false;
-      } catch (e) {
-        if (e.response.status == 422) {
-          this.loginPassError = true;
-        }
-      }
-    },
     async __GET_SEARCH() {
       try {
         const data = await this.$store.dispatch("fetchSearch/getSearch", {
@@ -1233,40 +658,12 @@ export default {
         });
         this.searchProducts = data?.products;
         this.searchCategories = data?.categories;
-        console.log(this.searchCategories);
       } catch (e) {}
     },
   },
   watch: {
-    // searchBlockHide(val) {
-    //   if (val) {
-    //     document.body.style.height = "100vh";
-    //     document.body.style.overflow = "hidden";
-    //   } else {
-    //     document.body.style.height = "auto";
-    //     document.body.style.overflow = "auto";
-    //   }
-    // },
-    authVisible(val) {
-      this.visibleCheck = val;
-    },
-    visibleSuccess(val) {
-      if (val) {
-        (this.formLogin = {
-          phone_number: "",
-          password: "",
-        }),
-          (this.formCheckNumber = {
-            phone_number: "",
-          }),
-          (this.formName = {
-            name: "",
-          }),
-          (this.formSms = {
-            phone_number: "",
-            sms_code: "",
-          });
-      }
+    categoryVisible() {
+      this.catalogMenu = true;
     },
     search(val) {
       if (val.length > 2) {
@@ -1277,56 +674,112 @@ export default {
         this.searchCategories = [];
       }
     },
-    routerPath() {
+    async langChange() {
+      const [categoriesData] = await Promise.all([
+        this.$store.dispatch("fetchCategories/getCategories", {
+          headers: {
+            lang: this.$i18n.locale,
+          },
+        }),
+      ]);
+      this.categories = categoriesData?.data;
+      this.activeCategory = categoriesData?.data[0];
+    },
+    async routerPath(val) {
+      if (val == "/") this.search = "";
       this.searchBlockHide = false;
-      (this.formLogin = {
-        phone_number: "",
-        password: "",
-      }),
-        (this.formCheckNumber = {
-          phone_number: "",
-        }),
-        (this.formName = {
-          name: "",
-        }),
-        (this.formSms = {
-          phone_number: "",
-          sms_code: "",
-        }),
-        (this.targetPage = false);
+      this.targetPage = false;
       this.catalogMenu = false;
-
       document.body.style.height = "auto";
       document.body.style.overflow = "auto";
     },
-    visibleCheck(val) {
-      this.$store.commit("authVisibleChange", val);
-      if (val) this.visibleLogin = false;
-    },
-    visibleLogin(val) {
-      this.$store.commit("authVisibleChange", val);
-      if (val) this.visibleCheck = false;
-    },
-    visibleSms(val) {
-      if (val) this.visibleCheck = false;
-    },
+
     catalogMenu(val) {
       if (val) {
         document.body.style.height = "100vh";
         document.body.style.overflow = "hidden";
       } else {
+        this.currentCategory = null;
+
         document.body.style.height = "auto";
         document.body.style.overflow = "auto";
       }
     },
   },
-  components: { MainTitle, Vnotification },
+  components: { MainTitle, Vnotification, AuthModals },
 };
 </script>
 <style lang="css">
 /* .nav-icons svg path {
-  fill: #09454f;
+  fill: var(--color_green);
 } */
+.cuurent-box {
+  padding-left: 16px;
+}
+
+.current-category span {
+  position: absolute;
+  left: 10px;
+}
+.back-svg svg {
+  width: 15px;
+}
+.rotate90 {
+  transform: rotate(90deg);
+}
+.rotatem90 {
+  transform: rotate(-90deg);
+}
+.category-name {
+  display: flex;
+  gap: 7px;
+  white-space: initial;
+}
+.category-name span,
+.category-name img {
+  width: 23px;
+  height: 23px;
+}
+.height-auto.category-drop-board {
+  padding-bottom: 34px;
+}
+.category-drop-board {
+  max-height: 0;
+  overflow: hidden;
+  position: relative;
+  transition: max-height 0.25s ease-out;
+  /* padding-bottom: 34px; */
+}
+.category-drop-board div {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  margin-left: 12px;
+}
+.category-drop-board a,
+.category-drop-board h5 {
+  color: #00162c;
+  font-family: var(--SB_400);
+  font-size: 16px;
+  font-style: normal;
+  line-height: 20px; /* 125% */
+  letter-spacing: 0.2px;
+}
+
+.category_drop h4 {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  padding: 13px 8px;
+  border-radius: 11.732px;
+  color: #5f5f5f;
+  font-family: var(--SB_600);
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 19.554px; /* 122.21% */
+  letter-spacing: 0.196px;
+}
 .close-space {
   width: 33%;
 }
@@ -1349,7 +802,7 @@ export default {
   height: 100vh;
   top: 100%;
   background: rgba(0, 0, 0, 0.25);
-  backdrop-filter: blur(2.5px);
+  /* backdrop-filter: blur(2.5px); */
   position: absolute;
 }
 .catalog-menu-content {
@@ -1410,11 +863,11 @@ export default {
 }
 .catalog-menu-list-active {
   background: #f7f7f7;
-  color: #09454f !important;
+  color: var(--color_green) !important;
 }
 .catalog-menu-list ul li:hover {
   background: #f7f7f7;
-  color: #09454f;
+  color: var(--color_green);
 }
 .nested-enter-active,
 .nested-leave-active {
@@ -1443,6 +896,9 @@ export default {
   transform: translateX(30px);
   transition: all 0.25s ease-out;
   opacity: 0.001;
+}
+.mobile_lang {
+  display: none;
 }
 @keyframes menu-in {
   0% {
@@ -1485,7 +941,7 @@ export default {
   transition: 0.3s;
 }
 .catalog-menu-items ul h4:hover {
-  color: var(--color_dark_green);
+  color: var(--color_green);
 }
 .catalog-menu-items ul a {
   font-family: var(--SB_400);
@@ -1515,7 +971,7 @@ export default {
   line-height: 150%;
   text-align: center;
   letter-spacing: -0.02em;
-  color: #09454f;
+  color: var(--color_green);
   position: relative;
   display: flex;
   justify-content: center;
@@ -1537,7 +993,7 @@ export default {
   left: 50px;
 }
 .vmodal-btn-outline {
-  border: 2px solid #09454f;
+  border: 2px solid var(--color_green);
   border-radius: 16px;
   height: 59px;
   display: flex;
@@ -1548,7 +1004,7 @@ export default {
   font-size: 18px;
   line-height: 150%;
   letter-spacing: -0.02em;
-  color: #09454f;
+  color: var(--color_green);
   margin-top: 10px;
   cursor: pointer;
 }
@@ -1613,8 +1069,8 @@ export default {
   font-size: 10px;
   line-height: 120%;
   color: #ffffff;
-  right: 2px;
-  top: -6px;
+  right: 8px;
+  top: -4px;
   position: absolute;
 }
 .auth-modal {
@@ -1689,6 +1145,33 @@ export default {
   flex-direction: column;
   gap: 24px;
 }
+.mobile_lang {
+  grid-template-columns: repeat(2, 1fr);
+  position: fixed;
+  gap: 16px;
+  bottom: 0;
+  background-color: #fff;
+  width: 100%;
+  padding: 0 30px;
+  padding-top: 8px;
+  z-index: 1000;
+  padding-bottom: 24px;
+}
+.mobile_lang div {
+  padding: 12px 0;
+  color: var(--diskont-yashil, #06858c);
+  border: 1px solid #ebebeb;
+  background: #fcfffe;
+  display: flex;
+  justify-content: center;
+  border-radius: 12px;
+}
+.mobile_lang .active {
+  color: #fff;
+  border: 1px solid #06858c;
+  background: #06858c;
+}
+
 @media screen and (max-width: 1600px) {
   .coin_btn {
     padding: 0 12px 0 40px;
@@ -1721,8 +1204,8 @@ export default {
     padding: 10px 22px;
   }
   .count-index {
-    top: 6px;
-    right: 22px;
+    top: -2px;
+    right: 18px;
   }
   .user_profile p {
     width: unset;
@@ -1734,7 +1217,7 @@ export default {
   }
   .user_profile {
     border-radius: 41px;
-    background: var(--color_dark_green);
+    background: var(--color_green);
   }
   .header-category_container ul li a {
     margin-right: 8px;
@@ -1747,17 +1230,15 @@ export default {
     white-space: nowrap;
   }
 }
-@media screen and (max-width: 1024px) {
+@media (max-width: 1200px) {
   .catalog-menu-content {
-    padding: 0;
-    display: grid;
-    grid-template-columns: repeat(1, 1fr);
-    width: 100%;
-    gap: 32px;
+    min-width: 100%;
   }
+}
+@media screen and (max-width: 1024px) {
   .catalog-menu-items {
     gap: 0;
-    grid-template-columns: repeat(1, 1fr);
+    grid-template-columns: repeat(2, 1fr);
     overflow: hidden;
     height: auto;
     padding-bottom: 32px;
@@ -1766,17 +1247,56 @@ export default {
     display: none;
   }
   .categories-page-title {
-    margin-bottom: 16px !important;
+    margin-bottom: 16px;
   }
   .catalog-menu-items ul {
     margin-bottom: 16px;
   }
   .catalog-menu-container {
-    overflow: scroll;
+    /* overflow: scroll; */
+    /* height: 100%; */
     background: white;
+  }
+  .menu-scroll {
+    height: calc(100vh - 164px);
+    overflow: scroll;
+    background-color: #fff;
   }
   .catalog-menu-body {
     padding: 0 12px;
+  }
+}
+.mobile_categories {
+  display: none;
+}
+@media (max-width: 768px) {
+  .catalog-menu-content {
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    gap: 14px;
+  }
+  .web_categories {
+    display: none;
+  }
+  .mobile_categories {
+    display: block;
+  }
+  .mobile_lang {
+    display: grid;
+  }
+}
+@media screen and (max-width: 576px) {
+  .search_input_container {
+    width: 100%;
+  }
+  .vmodal-anim-header h5 {
+    font-size: 24px;
+    width: 100%;
+  }
+  .vmodal-anim-header {
+    height: 200px;
   }
 }
 </style>

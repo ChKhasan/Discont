@@ -2,8 +2,8 @@
   <div class="wrap">
     <div class="container p-0">
       <ul>
-        <li>
-          <NuxtLink to="/categories/telefony" class="link">
+        <li @click="$emit('openCategory')">
+          <button class="link">
             <svg
               xmlns="http://www.w3.org/2000/svg"
               width="28"
@@ -29,7 +29,7 @@
               />
             </svg>
             {{ $store.state.translations["main.category"] }}
-          </NuxtLink>
+          </button>
         </li>
         <li>
           <NuxtLink to="/likes" class="link">
@@ -56,6 +56,9 @@
               />
             </svg>
             {{ $store.state.translations["main.likes"] }}
+            <span class="count-index" v-if="$store.state.like.length > 0">{{
+              $store.state.like.length
+            }}</span>
           </NuxtLink>
         </li>
         <li>
@@ -154,10 +157,13 @@
               />
             </svg>
             {{ $store.state.translations["main.comparison"] }}
+            <span class="count-index" v-if="$store.state.comparison.length > 0">{{
+              $store.state.comparison.length
+            }}</span>
           </NuxtLink>
         </li>
         <li>
-          <button @click="$store.commit('authVisibleChange', true)" class="link">
+          <button @click="toProfile(true)" class="link">
             <svg
               xmlns="http://www.w3.org/2000/svg"
               width="29"
@@ -178,7 +184,11 @@
                 stroke-linecap="round"
               />
             </svg>
-            {{ $store.state.translations["main.access"] }}
+            {{
+              $store.state.auth && $store.state.profile.name
+                ? $store.state.profile.name
+                : $store.state.translations["main.access"]
+            }}
           </button>
         </li>
       </ul>
@@ -187,7 +197,18 @@
 </template>
 
 <script>
-export default {};
+export default {
+  methods: {
+    toProfile(name) {
+      this.targetPage = name;
+      if (this.$store.state.auth) {
+        this.$router.push("/profile/personal-info");
+      } else {
+        this.$store.commit("authVisibleChange", true);
+      }
+    },
+  },
+};
 </script>
 
 <style scoped>

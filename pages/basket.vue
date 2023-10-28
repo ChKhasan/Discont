@@ -76,7 +76,6 @@
                 <div class="basket-card-count">
                   <div class="basket-count-btn">
                     <span
-                      v-ripple="'rgba(9, 69, 79, 0.1)'"
                       @click="
                         $store.state.cart.find((item) => item.id == product.id)?.count > 1
                           ? $store.commit('productCountDown', {
@@ -99,7 +98,6 @@
 
                     {{ $store.state.cart.find((item) => item.id == product.id)?.count }}
                     <span
-                      v-ripple="'rgba(9, 69, 79, 0.1)'"
                       @click="
                         $store.state.cart.find((item) => item.id == product?.id)?.count <
                           product?.stock &&
@@ -159,7 +157,7 @@
                     </p>
                   </span>
                   <div class="basket-card-price">
-                    <span
+                    <!-- <span
                       >{{
                         Math.floor(
                           (product?.discount_price
@@ -168,7 +166,7 @@
                         )
                       }}
                       {{ $store.state.translations["main.cout-di-coin"] }}</span
-                    >
+                    > -->
                     <h4>
                       {{ productTotalPrice(product) }}
                       {{ $store.state.translations["main.som"] }}
@@ -208,8 +206,21 @@
                   </div>
                 </div>
                 <div class="right">
-                  <button class="like">
+                  <button
+                    class="like"
+                    @click="
+                      $store.commit('addToStore', {
+                        id: product.id,
+                        name: 'like',
+                      })
+                    "
+                  >
+                    <span
+                      v-html="activeHeart"
+                      v-if="$store.state.like.includes(product.id)"
+                    ></span>
                     <svg
+                      v-else
                       xmlns="http://www.w3.org/2000/svg"
                       width="28"
                       height="28"
@@ -315,7 +326,7 @@
                           $store.state.cart.find((elem) => elem.id == item.id)?.count
                       );
                     }, 0)
-                    .toFixed(2)}`.replace(/\B(?=(\d{3})+(?!\d))/g, " ")
+                    .toFixed()}`.replace(/\B(?=(\d{3})+(?!\d))/g, " ")
                 }}
                 {{ $store.state.translations["main.som"] }}
               </h3>
@@ -337,22 +348,22 @@
                             $store.state.cart.find((elem) => elem.id == item.id)?.count
                         );
                       }, 0)
-                      .toFixed(2)}`.replace(/\B(?=(\d{3})+(?!\d))/g, " ")
+                      .toFixed()}`.replace(/\B(?=(\d{3})+(?!\d))/g, " ")
                   }}
                   {{ $store.state.translations["main.som"] }}
                 </p></span
               >
               <!-- <span
                 ><p>Промокод:</p>
-                <p>0 сум</p></span
+                <p>0 {{ $store.state.translations["main.som"] }}</p></span
               >
               <span
                 ><p>Di Coinlar:</p>
-                <p>0 сум</p></span
+                <p>0 {{ $store.state.translations["main.som"] }}</p></span
               > -->
               <!-- <span
                 ><p>Стоимость доставки:</p>
-                <p>25 000 сум</p></span
+                <p>25 000 {{ $store.state.translations["main.som"] }}</p></span
               > -->
             </div>
             <div class="basket-checkout-btn" @click="checkoutCheck()">
@@ -362,8 +373,8 @@
               <p v-html="$store.state.translations['checkout.cart-access-text']"></p>
             </div>
           </div>
-          <div class="basket-coin-block">
-            <img src="../assets/images/basket-2coin.png" alt="" />
+          <!-- <div class="basket-coin-block">
+            <nuxt-img format="webp" src="/basket-2coin.png" alt="" />
             <h3>
               +
               {{
@@ -383,11 +394,11 @@
               {{ $store.state.translations["main.cout-di-coin"] }}
             </h3>
             <p>{{ $store.state.translations["checkout.cart-text"] }}</p>
-          </div>
+          </div> -->
         </div>
       </div>
       <div class="empty-box-app" v-else>
-        <img src="../assets/images/packaging cancel.png" alt="" />
+        <nuxt-img format="webp" src="/packaging cancel.png" alt="" />
         <h2>{{ $store.state.translations["checkout.cart-empty-title"] }}</h2>
         <p>{{ $store.state.translations["checkout.cart-empty-text"] }}</p>
       </div>
@@ -411,7 +422,6 @@ export default {
       like: require("../assets/svg/card-like.svg?raw"),
       deleteIcon: require("../assets/svg/basket-delete.svg?raw"),
       activeHeart: require("../assets/svg/active-heart.svg?raw"),
-      // twoCoin: require("../assets/svg/basket-2coin.svg?raw"),
       products: [],
     };
   },
@@ -477,9 +487,6 @@ export default {
       return `${
         product.discount_price ? product.discount_price : product.real_price
       }`.replace(/\B(?=(\d{3})+(?!\d))/g, " ");
-      // .slice(0, product?.price?.indexOf("."))
-      // .replace(".", ",")
-      // .replace(/\B(?=(\d{3})+(?!\d))/g, " ");
     },
   },
   components: { MainTitle, CategoriesAppCard },
@@ -714,7 +721,7 @@ export default {
   font-style: normal;
   font-size: 14.9343px;
   line-height: 22px;
-  color: #09454f;
+  color: var(--color_green);
   height: 100%;
   display: flex;
   align-items: center;
@@ -741,7 +748,7 @@ export default {
   justify-content: space-between;
 }
 .basket-checkout-btn {
-  background: #09454f;
+  background: var(--color_green);
   border-radius: 11.2007px;
   height: 52px;
   font-family: var(--SB_500);
@@ -785,7 +792,7 @@ export default {
   font-size: 22px;
   line-height: 20px;
   letter-spacing: -0.28px;
-  color: #09454f;
+  color: var(--color_green);
   margin-bottom: 24px;
 }
 .basket-coin-block p {
@@ -793,7 +800,7 @@ export default {
   font-style: normal;
   font-size: 14px;
   line-height: 18px;
-  color: #09454f;
+  color: var(--color_green);
   text-align: center;
 }
 .basket-coin-block img {
@@ -865,6 +872,10 @@ export default {
   .mobile__card .trash {
     background: transparent;
     border: none;
+  }
+  .mobile__card .like svg {
+    width: 28px;
+    height: 28px;
   }
   .mobile__card .right {
     display: flex;

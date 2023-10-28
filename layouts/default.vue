@@ -1,8 +1,8 @@
 <template lang="html">
   <div class="layout-back">
-    <Header />
+    <Header :categoryVisible="categoryVisible" />
     <Nuxt />
-    <MobileBottomBar />
+    <MobileBottomBar @openCategory="openCategory" />
     <Footer />
     <Transition name="bounce-toast">
       <Vnotification
@@ -32,70 +32,17 @@
       :body-style="{ padding: '0', borderRadius: '16px' }"
       centered
       :closable="false"
-      width="1200px"
+      width="900px"
       @ok="handleWheelModal"
     >
       <div class="wrapper">
         <div class="left">
-          <div class="arrow">
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              width="56"
-              height="31"
-              viewBox="0 0 56 31"
-              fill="none"
-            >
-              <path
-                d="M2.10202 14.0722L53.3994 0.775295C53.6453 0.711669 53.9024 0.705098 54.1512 0.756094C54.4 0.80709 54.6338 0.914292 54.8348 1.06952C55.0358 1.22474 55.1987 1.42388 55.3109 1.65169C55.4232 1.87949 55.4818 2.12994 55.4824 2.38389V28.9778C55.4825 29.232 55.4243 29.4828 55.3123 29.711C55.2003 29.9392 55.0374 30.1386 54.8362 30.294C54.635 30.4493 54.4009 30.5565 54.1518 30.6072C53.9027 30.6579 53.6453 30.6508 53.3994 30.5864L2.10202 17.2895C1.74587 17.1969 1.43052 16.9887 1.20543 16.6976C0.980331 16.4064 0.858219 16.0488 0.858219 15.6809C0.858219 15.3129 0.980331 14.9553 1.20543 14.6642C1.43052 14.373 1.74587 14.1649 2.10202 14.0722Z"
-                fill="#E01717"
-              />
-            </svg>
-          </div>
-          <div id="wheel" class="wheel">
-            <div class="cover"></div>
-            <div class="numbers">
-              <div style="--i: 1" class="num">
-                <p>1</p>
-              </div>
-              <div style="--i: 2" class="num">
-                <p>2</p>
-              </div>
-              <div style="--i: 3" class="num">
-                <p>3</p>
-              </div>
-              <div style="--i: 4" class="num">
-                <p>4</p>
-              </div>
-              <div style="--i: 5" class="num">
-                <p>5</p>
-              </div>
-              <div style="--i: 6" class="num">
-                <p>6</p>
-              </div>
-              <div style="--i: 7" class="num">
-                <p>7</p>
-              </div>
-              <div style="--i: 8" class="num">
-                <p>8</p>
-              </div>
-              <div style="--i: 9" class="num">
-                <p>9</p>
-              </div>
-              <div style="--i: 10" class="num">
-                <p>10</p>
-              </div>
-              <div style="--i: 11" class="num">
-                <p>11</p>
-              </div>
-              <div style="--i: 12" class="num">
-                <p>12</p>
-              </div>
-            </div>
-            <div id="button" @click="rotate" class="button">
+          <div class="wheel-box">
+            <div id="button" class="button" @click="rotate">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
-                width="56"
-                height="56"
+                width="80"
+                height="80"
                 viewBox="0 0 56 56"
                 fill="none"
               >
@@ -117,6 +64,61 @@
                   </linearGradient>
                 </defs>
               </svg>
+            </div>
+            <div class="arrow">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="56"
+                height="31"
+                viewBox="0 0 56 31"
+                fill="none"
+              >
+                <path
+                  d="M2.10202 14.0722L53.3994 0.775295C53.6453 0.711669 53.9024 0.705098 54.1512 0.756094C54.4 0.80709 54.6338 0.914292 54.8348 1.06952C55.0358 1.22474 55.1987 1.42388 55.3109 1.65169C55.4232 1.87949 55.4818 2.12994 55.4824 2.38389V28.9778C55.4825 29.232 55.4243 29.4828 55.3123 29.711C55.2003 29.9392 55.0374 30.1386 54.8362 30.294C54.635 30.4493 54.4009 30.5565 54.1518 30.6072C53.9027 30.6579 53.6453 30.6508 53.3994 30.5864L2.10202 17.2895C1.74587 17.1969 1.43052 16.9887 1.20543 16.6976C0.980331 16.4064 0.858219 16.0488 0.858219 15.6809C0.858219 15.3129 0.980331 14.9553 1.20543 14.6642C1.43052 14.373 1.74587 14.1649 2.10202 14.0722Z"
+                  fill="#E01717"
+                />
+              </svg>
+            </div>
+            <div id="wheel" class="wheel">
+              <div class="cover"></div>
+              <div class="numbers">
+                <div style="--i: 1" class="num">
+                  <p>1</p>
+                </div>
+                <div style="--i: 2" class="num">
+                  <p>2</p>
+                </div>
+                <div style="--i: 3" class="num">
+                  <p>3</p>
+                </div>
+                <div style="--i: 4" class="num">
+                  <p>4</p>
+                </div>
+                <div style="--i: 5" class="num">
+                  <p>5</p>
+                </div>
+                <div style="--i: 6" class="num">
+                  <p>6</p>
+                </div>
+                <div style="--i: 7" class="num">
+                  <p>7</p>
+                </div>
+                <div style="--i: 8" class="num">
+                  <p>8</p>
+                </div>
+                <div style="--i: 9" class="num">
+                  <p>9</p>
+                </div>
+                <div style="--i: 10" class="num">
+                  <p>10</p>
+                </div>
+                <div style="--i: 11" class="num">
+                  <p>11</p>
+                </div>
+                <div style="--i: 12" class="num">
+                  <p>12</p>
+                </div>
+              </div>
             </div>
           </div>
         </div>
@@ -142,18 +144,18 @@
             sovgalar yutib olisng
           </p>
 
-          <form action="">
-            <input type="text" placeholder="Raqamingizni yozib qoldiring" />
+          <!-- <form action=""> -->
+          <!-- <input type="text" placeholder="Raqamingizni yozib qoldiring" /> -->
 
-            <p class="txt">
+          <!-- <p class="txt">
               Malumotlaringiz konfedintialnosti Discont administration tomonidan
               taminlanadi va sizga 10ta discoin taqdim etiladi
-            </p>
-            <div class="buttons">
-              <button class="send">Yuborish va 10 ta Discoin yutish</button>
-              <button class="share">Do’stlarga ulshish</button>
-            </div>
-          </form>
+            </p> -->
+          <div class="buttons">
+            <button class="send" @click="rotate">Aylantirish</button>
+            <button class="share" @click="wheelModal = false">Yopish</button>
+          </div>
+          <!-- </form> -->
         </div>
       </div>
       <template slot="footer"> <h3></h3></template>
@@ -185,6 +187,12 @@
         </svg>
       </div>
     </a-back-top>
+    <div
+      class="loader-container d-flex justify-content-center align-items-center"
+      v-if="$store.state.loader"
+    >
+      <span class="loader"></span>
+    </div>
   </div>
 </template>
 
@@ -196,6 +204,7 @@ import MobileBottomBar from "../components/layout/MobileBottomBar.vue";
 export default {
   data() {
     return {
+      categoryVisible: false,
       buyToast: false,
       likeToast: false,
       compToast: false,
@@ -208,10 +217,16 @@ export default {
       region: "",
       country: "",
       errorMessage: "",
+      loader: false,
     };
   },
   head() {
+    const i18nHead = this.$nuxtI18nHead({ addSeoAttributes: true });
     return {
+      htmlAttrs: {
+        lang: this.$i18n.locale,
+        ...i18nHead.htmlAttrs,
+      },
       meta: [
         {
           name: "title",
@@ -225,6 +240,19 @@ export default {
           name: "description",
           content: this.$store.state.siteInfo.meta_desc,
         },
+        {
+          name: "theme-color",
+          content: "#09454f",
+        },
+        ...i18nHead.meta,
+      ],
+      link: [
+        {
+          rel: "icon",
+          type: "image/x-icon",
+          href: this.$store.state.siteInfo?.sm_favicon,
+        },
+        ...i18nHead.link,
       ],
     };
   },
@@ -236,21 +264,27 @@ export default {
         },
       }),
     ]);
-    this.$store.dispatch("siteInfo", {
-      headers: {
-        lang: this.$i18n.locale,
-      },
-    });
     this.$store.commit("getTranslations", translationsData?.translates);
   },
   async mounted() {
-    this.$store.dispatch("profileInfo");
-    this.$store.dispatch("dicoinInfo");
+    try {
+      await this.$getLocation().then((coordinates) => {
+        this.locations = coordinates;
+      });
+    } catch (e) {}
+
+    this.$store.dispatch("siteInfo", {
+      params: {
+        lat: this.locations?.lat,
+        lon: this.locations?.lng,
+      },
+      headers: {
+        lang: this.$i18n.locale,
+      },
+    }),
+      this.$store.dispatch("profileInfo", this.$route.path);
     await this.$store.commit("reloadStore");
     this.afterReload = true;
-    this.$getLocation().then((coordinates) => {
-      this.$store.commit("getLocations", coordinates);
-    });
   },
   computed: {
     targetLang() {
@@ -273,6 +307,9 @@ export default {
     },
   },
   methods: {
+    openCategory() {
+      this.categoryVisible = !this.categoryVisible;
+    },
     toastClose() {
       this.buyToast = false;
       this.likeToast = false;
@@ -283,19 +320,18 @@ export default {
     },
     rotate() {
       let wheel = document.getElementById("wheel");
-      let button = document.getElementById("button");
       let value = Math.ceil(Math.random() * 3600);
-
-      wheel.style.transform = " translate(-50%, -50%) rotate( " + value + "deg  )";
+      wheel.style.transform = "rotate( " + value + "deg  )";
       this.detectRange(value);
     },
     detectRange(value) {
       let detectedValue = value % 360;
-      let finalValue = Math.ceil(detectedValue / 30) + 7;
+      let finalValue = Math.ceil(detectedValue / 30);
     },
   },
   watch: {
     async targetLang() {
+      this.loader = true;
       const [translationsData] = await Promise.all([
         this.$store.dispatch("fetchTranslations/getTranslations", {
           headers: {
@@ -303,12 +339,17 @@ export default {
           },
         }),
       ]);
-      this.$store.dispatch("siteInfo", {
+      await this.$store.dispatch("siteInfo", {
+        params: {
+          lat: this.locations?.lat,
+          lon: this.locations?.lng,
+        },
         headers: {
           lang: this.$i18n.locale,
         },
       });
       this.$store.commit("getTranslations", translationsData?.translates);
+      this.loader = false;
     },
     buyToast(val) {
       if (val) {
@@ -352,6 +393,61 @@ export default {
 };
 </script>
 <style lang="css" scoped>
+.loader-container {
+  height: 100vh;
+  width: 100%;
+  background-color: #fff;
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 10000;
+}
+.loader {
+  width: 48px;
+  height: 48px;
+  display: block;
+  margin: 15px auto;
+  position: relative;
+  color: #fff;
+  box-sizing: border-box;
+  animation: rotation 1s linear infinite;
+}
+.loader::after,
+.loader::before {
+  content: "";
+  box-sizing: border-box;
+  position: absolute;
+  width: 24px;
+  height: 24px;
+  top: 0;
+  background-color: #1f8a70;
+  border-radius: 50%;
+  animation: scale50 1s infinite ease-in-out;
+}
+.loader::before {
+  top: auto;
+  bottom: 0;
+  background-color: var(--color_green);
+  animation-delay: 0.5s;
+}
+
+@keyframes rotation {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+@keyframes scale50 {
+  0%,
+  100% {
+    transform: scale(0);
+  }
+  50% {
+    transform: scale(1);
+  }
+}
 .bounce-toast-enter-active {
   animation: bounce-toast-in 0.5s;
 }
@@ -376,25 +472,35 @@ export default {
   position: relative;
   z-index: 9;
 }
-.wheel {
+.wheel-box {
   width: 578px;
   height: 578px;
   position: absolute;
+  border-radius: 50%;
+  transform: translate(-50%, -50%);
   left: 27%;
   top: 50%;
-  transform: translate(-50%, -50%);
+  overflow: hidden;
+  border: 8px solid white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.wheel {
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+
   background: #001f30;
   border-radius: 50%;
-  border: 8px solid white;
-  overflow: hidden;
   transition: 5s ease-in-out;
 }
 .arrow {
   position: absolute;
-  top: 50%;
-  transform: translateY(-50%) rotate(180deg);
+  top: auto;
+  transform: translateY(-56px) rotate(90deg);
   right: auto;
-  left: -132px;
+  left: auto;
   z-index: 9;
 }
 .cover {
@@ -415,11 +521,13 @@ export default {
   transform: translate(-50%, -50%);
   cursor: pointer;
   z-index: 99;
+  display: flex;
+  justify-content: center;
 }
 .num {
   width: 10px;
   height: 10px;
-  background: #09454f;
+  background: var(--color_green);
   position: absolute;
   width: 50%;
   height: 50%;
@@ -446,7 +554,7 @@ export default {
 }
 .wrapper {
   display: grid;
-  grid-template-columns: 4fr 6fr;
+  grid-template-columns: repeat(2, 1fr);
 }
 .right {
   max-width: 540px;
@@ -532,6 +640,10 @@ export default {
   font-weight: 400;
   line-height: normal;
 }
+.ant-back-top {
+  bottom: 108px;
+  right: 35px;
+}
 @media screen and (max-width: 1024px) {
   @keyframes bounce-toast-in {
     0% {
@@ -546,14 +658,73 @@ export default {
       right: 16px;
     }
   }
-  .antd-to-top {
+  /* .antd-to-top {
     display: none !important;
-  }
+  } */
 }
 .ant-back-top-inner {
   width: 67px;
   height: 67px;
   box-shadow: 0 0 5px 0px rgba(0, 0, 0, 0.2);
   border-radius: 50%;
+}
+@media (max-width: 1024px) {
+  .wheel-box {
+    width: 450px;
+    height: 450px;
+    transform: translate(-50%, -50%);
+    left: -10px;
+  }
+  .wrapper {
+    grid-template-columns: 450px 1fr;
+  }
+}
+@media (max-width: 768px) {
+  .wheel-box {
+    left: calc(50% - 50px);
+    width: 450px;
+    height: 450px;
+    transform: translate(-50%, -50%);
+    top: 0;
+    position: relative;
+  }
+  .left {
+    height: 160px;
+    display: flex;
+    justify-content: center;
+  }
+  .wrapper {
+    grid-template-columns: 1fr;
+  }
+  .right {
+    max-width: 100%;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+  }
+  .right .svg {
+    display: none;
+  }
+  .right {
+    padding: 64px 0 24px 0;
+  }
+}
+@media (max-width: 576px) {
+  .wheel-box {
+    width: 400px;
+    height: 400px;
+  }
+  .right {
+    padding: 64px 0 24px 0;
+  }
+}
+@media (max-width: 414px) {
+  .wheel-box {
+    width: 340px;
+    height: 340px;
+  }
+  .right {
+    padding: 32px 0 24px 0;
+  }
 }
 </style>

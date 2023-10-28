@@ -88,7 +88,7 @@ export default {
 }
 
 .stocks-card-body h2:hover {
-  color: var(--color_dark_green);
+  color: var(--color_green);
 }
 
 .stocks-card-body p {
@@ -98,6 +98,7 @@ export default {
   font-size: 14px;
   line-height: 17px;
   margin-top: 7px;
+  white-space: nowrap;
 }
 
 .stocks-card-type {
@@ -128,7 +129,7 @@ export default {
   height: 10px;
 }
 .stocks-card-type-new {
-  /* background: #09454f;
+  /* background: var(--color_green);
   color: #fff; */
 }
 

@@ -13,12 +13,12 @@
             {{ categoryChilds?.parent?.parent?.name }}
           </nuxt-link>
 
-          <nuxt-link
-            v-if="categoryChilds?.parent?.slug"
-            :to="localePath(`/categories-inner/${categoryChilds?.parent?.slug}`)"
-          >
-            {{ categoryChilds?.parent?.name }}
-          </nuxt-link>
+            <nuxt-link
+              v-if="categoryChilds?.parent?.slug"
+              :to="localePath(`/categories-inner/${categoryChilds?.parent?.slug}`)"
+            >
+              {{ categoryChilds?.parent?.name }}
+            </nuxt-link>
 
           <nuxt-link :to="localePath('/')">
             {{ categoryChilds?.name }}
@@ -286,7 +286,12 @@
                 </span>
               </div>
             </div>
-            <div v-for="attribit in attributes" :key="attribit.id">
+            <div
+              v-for="attribit in attributes.filter(
+                (item) => !item?.name?.includes('Цвет')
+              )"
+              :key="attribit.id"
+            >
               <h5 @click="atributDropAction(attribit.id)">
                 {{ attribit?.name }}<span v-html="arrow"></span>
               </h5>
@@ -321,6 +326,40 @@
                 >
               </div>
             </div>
+            <div
+              v-for="attribit in attributes.filter((item) =>
+                item?.name?.includes('Цвет')
+              )"
+              :key="attribit.id"
+            >
+              <h5 @click="atributDropAction(attribit.id)">
+                {{ attribit?.name }}<span v-html="arrow"></span>
+              </h5>
+              <div
+                class="categories-checkbox-list filter-colors"
+                :class="{ 'height-auto': atributDrop.includes(attribit.id) }"
+              >
+                <button
+                  :class="{ active: filterOptions.find((item) => item.id == option.id) }"
+                  v-for="option in attribit.options"
+                  :key="option.id"
+                  @click="onChange(option.id)"
+                  :style="
+                    option?.name == '#ffffff'
+                      ? `border: 1px solid #EBEBEB`
+                      : `background-color: ${option?.name}`
+                  "
+                >
+                  <span
+                    :style="
+                      option?.name == '#ffffff'
+                        ? `background-color: #EBEBEB`
+                        : `background-color: ${option?.name}`
+                    "
+                  ></span>
+                </button>
+              </div>
+            </div>
           </div>
         </div>
         <div class="categories-products">
@@ -329,8 +368,22 @@
               <span
                 v-for="filterItem in filterOptions"
                 :key="filterItem.id"
+                v-if="!filterItem?.name.includes('#')"
                 @click="deleteFilterItem(filterItem.id)"
                 >{{ filterItem?.name }}<span v-html="filterX"></span
+              ></span>
+              <span
+                v-for="filterItem in filterOptions"
+                :key="filterItem.id"
+                v-if="filterItem?.name.includes('#')"
+                @click="deleteFilterItem(filterItem.id)"
+                ><div
+                  class="color-pic"
+                  :style="`color:${filterItem?.name};background-color:${filterItem?.name}`"
+                >
+                  {{ filterItem?.name }}
+                </div>
+                <span v-html="filterX"></span
               ></span>
               <div
                 class="clear-filter"
@@ -372,7 +425,7 @@
             />
           </div>
           <div class="comments-empty" v-if="products.length == 0 && !loading">
-            <img src="../../assets/images/comments-empty.png" alt="" />
+            <nuxt-img format="webp" src="/comments-empty.png" alt="" />
             <h4>{{ $store.state.translations["category.product-not-found"] }}</h4>
           </div>
           <!-- <div class="categories-products-show-more" v-if="products.length > 30">
@@ -526,9 +579,12 @@
           <!-- <span class="categories-list_show-more">{{ $store.state.translations["main.show-more"] }}</span> -->
         </div>
         <div class="categories-atribute-box">
-          <div v-for="attribit in attributes" :key="attribit.id">
+          <div
+            v-for="attribit in attributes.filter((item) => !item?.name?.includes('Цвет'))"
+            :key="attribit.id"
+          >
             <h5 @click="atributDropAction(attribit.id)">
-              {{ attribit?.name }} <span v-html="arrow"></span>
+              {{ attribit?.name }}<span v-html="arrow"></span>
             </h5>
             <div
               class="categories-checkbox-list"
@@ -559,6 +615,38 @@
                 @click="showAllAtributs(attribit.id)"
                 >{{ $store.state.translations["main.show-more"] }}</span
               >
+            </div>
+          </div>
+          <div
+            v-for="attribit in attributes.filter((item) => item?.name?.includes('Цвет'))"
+            :key="attribit.id"
+          >
+            <h5 @click="atributDropAction(attribit.id)">
+              {{ attribit?.name }}<span v-html="arrow"></span>
+            </h5>
+            <div
+              class="categories-checkbox-list filter-colors"
+              :class="{ 'height-auto': atributDrop.includes(attribit.id) }"
+            >
+              <button
+                :class="{ active: filterOptions.find((item) => item.id == option.id) }"
+                v-for="option in attribit.options"
+                :key="option.id"
+                @click="onChange(option.id)"
+                :style="
+                  option?.name == '#ffffff'
+                    ? `border: 1px solid #EBEBEB`
+                    : `background-color: ${option?.name}`
+                "
+              >
+                <span
+                  :style="
+                    option?.name == '#ffffff'
+                      ? `background-color: #EBEBEB`
+                      : `background-color: ${option?.name}`
+                  "
+                ></span>
+              </button>
             </div>
           </div>
           <button class="confirm" @click="filterHandle = false">
@@ -661,7 +749,7 @@ export default {
       sortItems: [
         {
           value: "all",
-          label: "Barchasi",
+          label: "Все товары",
         },
         {
           value: "popular",
@@ -679,6 +767,7 @@ export default {
     };
   },
   async asyncData({ $axios, params, query, store, i18n }) {
+    store.commit("loaderHandler", true);
     const [
       productsData,
       allCategoriesData,
@@ -706,6 +795,9 @@ export default {
       }),
       $axios.$get(`/categories/${params.index}`, {
         params: { ...query, limit: 1 },
+        headers: {
+          lang: i18n.locale,
+        },
       }),
     ]);
     const productsOthers = productsData?.products?.data;
@@ -727,6 +819,9 @@ export default {
       });
     }
     const allInfo = categoryData;
+    setTimeout(() => {
+      store.commit("loaderHandler", false);
+    },0)
     return {
       productsOthers,
       allCategories,
@@ -741,6 +836,24 @@ export default {
 
   mounted() {
     this.getFirstData("__GET_PRODUCTS");
+    this.sortItems = [
+      {
+        value: "all",
+        label: this.$store.state.translations["category.all"],
+      },
+      {
+        value: "popular",
+        label: this.$store.state.translations["category.popular"],
+      },
+      {
+        value: "cheap",
+        label: this.$store.state.translations["category.cheap"],
+      },
+      {
+        value: "expensive",
+        label: this.$store.state.translations["category.expensive"],
+      },
+    ];
     if (this.$route.query.min_price) {
       this.sliderValue[0] = Number(this.$route.query.min_price);
     }
@@ -788,8 +901,6 @@ export default {
       this.totalPage = data?.products?.total;
       this.products = data?.products?.data;
       this.loading = false;
-
-      console.log(data);
     },
     // async __GET_CATEGORY() {
     //   this.loading = true;
@@ -937,33 +1048,7 @@ export default {
 </script>
 <style lang="css">
 @import "../../assets/css/pages/categories.css";
-.mobile-sorts {
-  display: flex;
-  flex-direction: column;
-  gap: 18px;
-  margin-top: 32px;
-}
-.sort-item {
-  padding: 16px 18px;
-  border-radius: 12px;
-  border: 1px solid #f1f1f1;
-  background: #fff;
-  color: #000;
-  font-family: var(--SB_500);
-  font-size: 16px;
-  font-style: normal;
-  font-weight: 500;
-  line-height: normal;
-  display: flex;
-  gap: 18px;
-  align-items: center;
-}
-.sort-item span {
-  position: relative;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
+
 .comments-empty h4 {
   font-family: var(--SF_500);
   font-style: normal;
@@ -980,60 +1065,43 @@ export default {
   color: var(--color_green) !important;
 }
 .text-test {
-  color: red;
+  /* color: red; */
 }
 .categories-atribute-box {
   display: flex;
   flex-direction: column;
   gap: 24px;
 }
-.hidden__filter {
-  transition: 0.4s;
-  transform: translateX(-100%);
-  padding: 148px 16px 99px 16px;
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  background: white;
-  z-index: 9;
-  height: 100%;
-  overflow: auto;
-}
-.hidden__filter.show {
-  transform: translateX(0);
-}
-.hidden__filter h5 {
+
+.filter-colors {
   display: flex;
-  align-items: center;
-  justify-content: space-between;
-  color: #1c1f22;
-  font-size: 18px;
-  font-style: normal;
-  font-weight: 600;
-  line-height: 20px; /* 111.111% */
-  letter-spacing: -0.28px;
-  margin-bottom: 12px;
+  gap: 16px;
+  flex-wrap: wrap;
 }
-.confirm {
-  color: #fff;
-  text-align: center;
-  font-size: 20px;
-  font-style: normal;
-  font-weight: 500;
-  line-height: normal;
-  background: var(--color_green);
-  border-radius: 12px;
-  padding: 16px 0;
+.filter-colors button {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
   border: none;
-  margin-top: 32px;
-}
-.hidden__filter .filter-range {
-  margin: 32px 0 56px 0;
-}
-.filter__header {
+  background-color: transparent;
+  position: relative;
   display: flex;
   align-items: center;
-  justify-content: space-between;
+  justify-content: center;
+}
+.filter-colors .active span {
+  position: absolute;
+  top: 1px;
+  bottom: 1px;
+  left: 1px;
+  right: 1px;
+  border-radius: 50%;
+  border: 5px solid #fff;
+  display: flex;
+}
+@media (max-width: 576px) {
+  .categories-atribute-box {
+ margin-top: 24px;
+}
 }
 </style>

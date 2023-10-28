@@ -5,7 +5,9 @@
         <nuxt-link :to="localePath('/')">{{
           $store.state.translations["main.home-page"]
         }}</nuxt-link>
-        <nuxt-link :to="localePath('/')"> {{ promotion?.name }} </nuxt-link>
+        <nuxt-link :to="localePath('/stocks/discounts')">
+          {{ $store.state.translations["main.promotions"] }}</nuxt-link
+        >
       </div>
       <div class="d-flex page-container-title">
         <MainTitle :title="promotion?.name" />
@@ -16,18 +18,23 @@
         </div>
         <div class="stock-page__static">
           <p>
-            Akisya davomiyligi:
+            {{ $store.state.translations["main.promotion-duration"] }}:
             <span
-              >{{ moment(promotion?.start_date).format("DD.MM") }} dan
-              {{ moment(promotion?.end_date).format("DD.MM") }} gacha</span
-            >
+              >{{ $store.state.translations["main.from"] }}
+              {{ moment(promotion?.start_date).format("DD.MM") }}
+              {{ $store.state.translations["main.until"] }}
+              {{ moment(promotion?.end_date).format("DD.MM") }}
+            </span>
           </p>
-          <p>Akisya bo’ladigan filiallar: <span>Barcha filiallar</span></p>
+          <p>
+            {{ $store.state.translations["main.promotions-stores"] }}:
+            <span>{{ $store.state.translations["main.all-stores"] }}</span>
+          </p>
         </div>
         <div class="stock-page__info" v-html="promotion?.desc"></div>
       </div>
       <div class="d-flex justify-content-between align-items-end">
-        <ProductListTitle title="Aksiyadagi mahsulotlar" />
+        <ProductListTitle :title="$store.state.translations['main.promotion-products']" />
       </div>
       <div class="categories-products categories-page-inner-grid">
         <div class="categories-filter-list d-block">
@@ -54,16 +61,16 @@
                   class="first-category"
                   >{{ firstCategory?.name }}</nuxt-link
                 >
-                <ul
+                <!-- <ul
                   class="categories-list-inner"
                   v-if="
                     (firstCategory?.children.length > 0 &&
                       firstCategory?.slug == $route.query?.category) ||
-                    firstCategory.children.find(
+                    firstCategory.children?.find(
                       (item) => item.slug == $route.query?.category
                     ) ||
-                    firstCategory.children.find((item) =>
-                      item.children.find((elem) => elem.slug == $route.query?.category)
+                    firstCategory.children?.find((item) =>
+                      item.children?.find((elem) => elem.slug == $route.query?.category)
                     )
                   "
                 >
@@ -86,7 +93,7 @@
                       class="child-categories-list"
                       v-if="
                         middCategory?.slug == $route.query?.category ||
-                        middCategory?.children.find(
+                        middCategory?.children?.find(
                           (item) => item.slug == $route.query?.category
                         )
                       "
@@ -108,7 +115,7 @@
                       >
                     </div>
                   </li>
-                </ul>
+                </ul> -->
               </div>
             </div>
 
@@ -119,22 +126,19 @@
           <ProductCard
             v-for="product in promotion?.products"
             :key="product.id"
-            :product="{
-              ...product,
-              ...product?.default_product,
-            }"
+            :product="product"
           />
         </div>
         <div class="comments-empty" v-else>
-          <img src="../../assets/images/comments-empty.png" alt="" />
+          <nuxt-img format="webp" src="/comments-empty.png" alt="" />
           <h4>{{ $store.state.translations["category.product-not-found"] }}</h4>
         </div>
-        <div class="categories-products-show-more" v-if="promotion?.products.length > 30">
+        <!-- <div class="categories-products-show-more" v-if="promotion?.products.length > 30">
           {{ $store.state.translations["main.show-more"] }} 44
-        </div>
-        <div class="products-pagination" v-if="promotion?.products.length > 30">
+        </div> -->
+        <!-- <div class="products-pagination" v-if="promotion?.products.length > 30">
           <a-pagination size="small" :default-current="6" :total="500" />
-        </div>
+        </div> -->
       </div>
       <!-- <div class="product-grid stock-page__products">
         <ProductCard v-for="product in products" :key="product.id" :product="product" />
@@ -149,7 +153,7 @@ import moment from "moment";
 export default {
   data() {
     return {
-      activeDrop: false,
+      activeDrop: true,
       dropArrow: `<svg
                     xmlns="http://www.w3.org/2000/svg"
                     width="14"
@@ -165,6 +169,7 @@ export default {
     };
   },
   async asyncData({ store, params, i18n }) {
+    store.commit("loaderHandler", true);
     const [promotionsData] = await Promise.all([
       store.dispatch("fetchPromotions/getPromotionsBySlug", {
         slug: params.index,
@@ -177,7 +182,11 @@ export default {
     ]);
     const promotion = promotionsData?.promotion;
     const allCategories = promotionsData?.categories;
-
+    console.log(promotion);
+    console.log(promotion);
+    setTimeout(() => {
+      store.commit("loaderHandler", false);
+    }, 0);
     return {
       promotion,
       allCategories,
@@ -188,34 +197,26 @@ export default {
       return this.$route.query?.category;
     },
   },
-  mounted() {
-    this.$store.dispatch("fetchPromotions/getPromotionsBySlug", {
-      slug: this.$route.params.index,
-      params: {
-        headers: {
-          lang: this.$i18n.locale,
-        },
-      },
-    });
-  },
 
   watch: {
-    async currentQuery(val) {
-      const [promotionsData] = await Promise.all([
-        this.$store.dispatch("fetchPromotions/getPromotionsBySlug", {
-          slug: this.$route.params.index,
-          params: {
+    async currentQuery(val, last) {
+      if (val != last) {
+        const [promotionsData] = await Promise.all([
+          this.$store.dispatch("fetchPromotions/getPromotionsBySlug", {
+            slug: this.$route.params.index,
             params: {
-              ...this.$route.query,
+              params: {
+                ...this.$route.query,
+              },
+              headers: {
+                lang: this.$i18n.locale,
+              },
             },
-            headers: {
-              lang: this.$i18n.locale,
-            },
-          },
-        }),
-      ]);
-      this.promotion = promotionsData?.promotion;
-      this.allCategories = promotionsData?.categories;
+          }),
+        ]);
+        this.promotion = promotionsData?.promotion;
+        this.allCategories = promotionsData?.categories;
+      }
     },
   },
   methods: {
@@ -231,6 +232,9 @@ export default {
 @import "../../assets/css/pages/comparison.css";
 @import "../../assets/css/pages/main-page.css";
 @import "../../assets/css/pages/categories.css";
+.active-category {
+  color: var(--color_green) !important;
+}
 
 .stock-page__container {
   width: 85%;
@@ -289,25 +293,7 @@ export default {
 .stock-page__products {
   margin-bottom: 300px;
 }
-@media (max-width: 1320px) {
-  .stocks-grid {
-    grid-template-columns: repeat(3, 1fr);
-  }
-}
-@media (max-width: 1320px) {
-  .stocks-grid {
-    grid-template-columns: repeat(3, 1fr);
-  }
-}
-@media (max-width: 992px) {
-  .stocks-grid {
-    grid-template-columns: repeat(2, 1fr);
-  }
-}
 @media (max-width: 576px) {
-  .stocks-grid {
-    grid-template-columns: repeat(1, 1fr);
-  }
   .stock-page__container {
     width: 100%;
   }
@@ -336,6 +322,10 @@ export default {
     font-size: 14px;
     font-weight: 400;
     line-height: 130%;
+  }
+  .stock-page__image {
+    height: 200px;
+    border-radius: 16px;
   }
 }
 @media (max-width: 512px) {

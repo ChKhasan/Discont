@@ -2,10 +2,16 @@
   <div class="my-orders-card">
     <div class="my-orders-card-header">
       <div class="d-flex flex-column">
-        <h4>Buyurtma #{{ order?.id }}</h4>
+        <div class="d-flex justify-content-between" @click="productDrop = !productDrop">
+          <h4>{{ $store.state.translations["diCoin.order"] }} #{{ order?.id }}</h4>
+          <span class="drop" v-html="arrow" :class="{ rotate180: productDrop }"></span>
+        </div>
         <p>
-          Yangilangan {{ moment(order?.updated_at).format("DD") }}
-          {{ month[moment(order?.updated_at).format("M") - 1] }}
+          {{ $store.state.translations["main.updated"] }}
+          {{ moment(order?.updated_at).format("DD") }}
+          {{
+            $store.state.translations[month[moment(order?.updated_at).format("M") - 1]]
+          }}
           {{ moment(order?.updated_at).format("YYYY") }} y.,
           {{ moment(order?.updated_at).format("HH:mm") }}
         </p>
@@ -21,21 +27,21 @@
         }"
         >{{
           order?.status == "new"
-            ? "Yangi"
+            ? $store.state.translations["checkout.new"]
             : order?.status == "pending"
-            ? "Kutilmoqda"
+            ? $store.state.translations["checkout.pending"]
             : order?.status == "returned"
-            ? "Qaytarildi"
+            ? $store.state.translations["checkout.returned"]
             : order?.status == "accepted"
-            ? "Qabul qilindi"
+            ? $store.state.translations["checkout.accepted"]
             : order?.status == "done"
-            ? "Yetkazib berildi"
+            ? $store.state.translations["checkout.done"]
             : ""
         }}</span
       >
     </div>
     <div class="my-orders-card-body" @click="productDrop = !productDrop">
-      <div class="order-products">
+      <div class="order-products order-products_web">
         <div
           class="order-product"
           v-for="product in order?.products.filter((item, index) => index == 0)"
@@ -53,7 +59,7 @@
       </div>
       <span v-html="arrow" :class="{ rotate180: productDrop }"></span>
     </div>
-    <div class="order-products" v-if="productDrop == true">
+    <div class="order-products order-products_web" v-if="productDrop == true">
       <div
         class="order-product"
         v-for="product in order?.products.filter((item, index) => index != 0)"
@@ -69,29 +75,54 @@
         </div>
       </div>
     </div>
+    <div class="order-products order-products_mobile" v-if="productDrop == true">
+      <div
+        class="order-product"
+        v-for="product in order?.products"
+        :key="product?.product_id"
+      >
+        <div class="order-product-img">
+          <img :src="product?.product?.images[0]?.md_img" alt="" />
+        </div>
+        <div class="order-product-body">
+          <p>
+            {{ product?.product?.info?.name?.ru }}
+          </p>
+        </div>
+      </div>
+    </div>
     <div class="my-orders-card-footer">
       <div>
-        <p>Buyurtma sanasi</p>
+        <p>{{ $store.state.translations["checkout.order-date"] }}</p>
         <span>
-          {{ weekDay[moment(order?.created_at).weekday()] }},
+          {{ $store.state.translations[weekDay[moment(order?.created_at).weekday()]] }},
           {{ moment(order?.created_at).format("DD") }}
-          {{ month[moment(order?.created_at).format("M") - 1] }}
+          {{
+            $store.state.translations[month[moment(order?.created_at).format("M") - 1]]
+          }}
           {{ moment(order?.created_at).format("YYYY") }} y.,
           {{ moment(order?.created_at).format("HH:mm") }}</span
         >
       </div>
       <div>
-        <p>Yetkazib berish turi</p>
-        <span>{{ pickupMethod[order?.delivery_method] }}</span>
+        <p>{{ $store.state.translations["checkout.type-delivery"] }}</p>
+        <span>{{ $store.state.translations[`profile.${order?.delivery_method}`] }}</span>
       </div>
       <div>
-        <p>To'lov turi</p>
-        <span>{{ order?.payment_method }}</span>
+        <p>{{ $store.state.translations["checkout.payment-type"] }}</p>
+        <span>{{
+          order?.payment_method == "cash"
+            ? $store.state.translations[`profile.cash`]
+            : order?.payment_method
+        }}</span>
       </div>
 
       <div>
-        <p>Buyurtma narxi</p>
-        <span>{{ `${order?.amount}`.replace(/\B(?=(\d{3})+(?!\d))/g, " ") }} сум</span>
+        <p>{{ $store.state.translations["checkout.order-price"] }}</p>
+        <span
+          >{{ `${order?.amount}`.replace(/\B(?=(\d{3})+(?!\d))/g, " ") }}
+          {{ $store.state.translations["main.som"] }}</span
+        >
       </div>
     </div>
   </div>
@@ -100,8 +131,24 @@
 import moment from "moment";
 export default {
   props: ["order"],
+  name: "MyOrdersCard",
   data() {
     return {
+      options: [
+        {
+          value: 0,
+          label: "All",
+        },
+        {
+          value: "active",
+          label: "Активный",
+        },
+        {
+          value: "inactive",
+          label: "Неактивный",
+        },
+      ],
+      value: "",
       arrow: require("../../assets/svg/dropdown-icon.svg?raw"),
       productDrop: false,
       pickupMethod: {
@@ -109,27 +156,27 @@ export default {
         courier: "Yetkazib berish",
       },
       weekDay: [
-        "yakshanba",
-        "dushanba",
-        "seshanba",
-        "chorshanba",
-        "payshanba",
-        "juma",
-        "shanba",
+        "options.sunday",
+        "options.monday",
+        "options.tuesday",
+        "options.wednesday",
+        "options.thursday",
+        "options.friday",
+        "options.saturday",
       ],
       month: [
-        "Yanvar",
-        "Fevral",
-        "Mart",
-        "Aprel",
-        "May",
-        "Iyun",
-        "Iyul",
-        "Avgust",
-        "Sentabr",
-        "Oktabr",
-        "Noyabr",
-        "Dekabr",
+        "options.january",
+        "options.february",
+        "options.march",
+        "options.april",
+        "options.may",
+        "options.june",
+        "options.july",
+        "options.august",
+        "options.september",
+        "options.october",
+        "options.november",
+        "options.december",
       ],
     };
   },
@@ -173,11 +220,11 @@ export default {
   max-height: 42px;
 }
 .success-order {
-  color: #09454f;
+  color: var(--color_green);
   background: #fafafa;
 }
 .success-order::after {
-  background: #09454f;
+  background: var(--color_green);
 }
 .done-order::after {
   background: #18b3bd;
@@ -231,6 +278,9 @@ export default {
   color: #727474;
   margin-top: 10px;
 }
+.order-products_mobile {
+  display: none;
+}
 .my-orders-card-body {
   display: flex;
   justify-content: space-between;
@@ -260,15 +310,20 @@ export default {
   margin-top: 4px;
   text-transform: capitalize;
 }
-.my-orders-card-body > span svg {
+.my-orders-card-body > span svg,
+.my-orders-card-header .drop svg {
   width: 20px;
   height: 10px;
+}
+.my-orders-card-header .drop {
+  display: none;
 }
 .my-orders-card-body > span {
   display: flex;
   align-items: center;
   margin-right: 4px;
 }
+
 .order-product {
   display: grid;
   grid-template-columns: 80px auto;
@@ -307,5 +362,31 @@ export default {
   font-size: 14px;
   line-height: 160%;
   color: rgba(114, 116, 116, 0.6);
+}
+@media (max-width: 576px) {
+  .my-orders-card-footer {
+    margin-top: 16px !important;
+  }
+  .my-orders-card-header {
+    margin-bottom: 16px;
+  }
+  .my-orders-card-body {
+    display: none;
+  }
+  .my-orders-card-header > div {
+    width: 100%;
+  }
+  .order-products_mobile {
+    display: grid;
+  }
+  .order-products_web {
+    display: none !important;
+  }
+  .my-orders-card-header .drop {
+    display: block;
+  }
+  .my-orders-card-body > span {
+    display: none;
+  }
 }
 </style>

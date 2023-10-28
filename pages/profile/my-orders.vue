@@ -5,9 +5,11 @@
         <nuxt-link :to="localePath('/')">{{
           $store.state.translations["main.home-page"]
         }}</nuxt-link>
-        <nuxt-link :to="localePath('/')"> Mening buyurtmalarim </nuxt-link>
+        <nuxt-link :to="localePath('/')">
+          {{ $store.state.translations["profile.my-orders"] }}
+        </nuxt-link>
       </div>
-      <div><MainTitle title="Mening buyurtmalarim" /></div>
+      <div><MainTitle :title="$store.state.translations['profile.my-orders']" /></div>
       <div class="profile-page-grid">
         <div>
           <ProfileMenu />
@@ -25,13 +27,14 @@
             </div>
           </div>
           <div class="orders-empty" v-if="orders.length == 0 && !loading">
-            <img src="../../assets/images/orders-empty.png" alt="" />
-            <h4>Sizda hali buyurtmalar mavjud emas</h4>
+            <nuxt-img format="webp" src="/orders-empty.png" alt="" />
+            <h4>{{ $store.state.translations["profile.order-empty-title"] }}</h4>
             <p>
-              xaridlar qilishni davom ettiring bu yerda <br />
-              paydo boladi
+              {{ $store.state.translations["profile.order-empty-text"] }}
             </p>
-            <nuxt-link :to="localePath('/')">Xaridni qilish</nuxt-link>
+            <nuxt-link :to="localePath('/')">{{
+              $store.state.translations["profile.order-empty-btn"]
+            }}</nuxt-link>
           </div>
         </div>
       </div>
@@ -44,7 +47,7 @@ import moment from "moment";
 import ProfileMenu from "../../components/profile-menu.vue";
 export default {
   middleware: "auth",
-
+  name: "my-orders",
   data() {
     return {
       empty: true,
@@ -121,7 +124,7 @@ export default {
   font-weight: 510;
   font-size: 18px;
   line-height: 21px;
-  color: #09454f;
+  color: var(--color_green);
 }
 .orders-price-card-body {
   padding-top: 32px;
@@ -157,7 +160,7 @@ export default {
   border-radius: 10px;
   padding-top: 12px;
   padding-bottom: 12px;
-  font-family: "Inter";
+  font-family: var(--SF_500);
   font-style: normal;
   font-weight: 500;
   font-size: 16px;
@@ -165,7 +168,7 @@ export default {
   display: flex;
   align-items: center;
   justify-content: center;
-  color: #09454f;
+  color: var(--color_green);
   cursor: pointer;
 }
 .orders-empty {
@@ -211,5 +214,10 @@ export default {
   text-align: center;
   letter-spacing: 0.025em;
   color: #ffffff;
+}
+@media (max-width: 576px) {
+  .order-card-grid {
+    grid-template-columns: 1fr;
+  }
 }
 </style>

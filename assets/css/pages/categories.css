@@ -59,7 +59,7 @@
   display: flex;
   align-items: center;
   letter-spacing: -0.28px;
-  color: #09454f;
+  color: var(--color_green);
   cursor: pointer;
 }
 .categories-list_show-more span {
@@ -68,7 +68,7 @@
   align-items: center;
 }
 .categories-list_show-more span svg path {
-  fill: #09454f;
+  fill: var(--color_green);
 }
 
 .categories-page-title {
@@ -86,6 +86,7 @@
   letter-spacing: -0.24px;
   color: #8c959c;
   margin-left: 40px;
+  white-space: nowrap;
   margin-bottom: 9px;
 }
 .categories-card-grid {
@@ -105,7 +106,8 @@
   font-size: 16px;
   line-height: 24px;
   color: #353437;
-  /* margin-bottom: 24px; */
+
+  margin-bottom: 24px;
 }
 .categories-page-info p,
 .categories-page-info span {
@@ -173,11 +175,11 @@
   transition: 0.3s;
 }
 .categories-tab-link:hover {
-  background: #09454f;
+  background: var(--color_green);
   color: #fff;
 }
 .categories-tab-link-active {
-  background: #09454f;
+  background: var(--color_green);
   color: #fff;
 }
 .categories-tab-link-last {
@@ -192,10 +194,10 @@
   top: -3.5px;
 }
 .ant-slider-track {
-  background-color: #09454f;
+  background-color: var(--color_green);
 }
 .ant-slider:hover .ant-slider-track {
-  background-color: #09454f;
+  background-color: var(--color_green);
 }
 .ant-slider-handle:focus {
   border-color: rgb(31, 138, 112);
@@ -255,8 +257,8 @@
   transition: 0.3s;
 }
 .filter-checkbox .ant-checkbox-checked .ant-checkbox-inner {
-  background-color: #09454f;
-  border-color: #09454f;
+  background-color: var(--color_green);
+  border-color: var(--color_green);
   border-radius: 4px;
 }
 .filter-checkbox .ant-checkbox-inner {
@@ -267,10 +269,10 @@
 .filter-checkbox .ant-checkbox-wrapper:hover .ant-checkbox-inner,
 .filter-checkbox .ant-checkbox:hover .ant-checkbox-inner,
 .filter-checkbox .ant-checkbox-input:focus + .ant-checkbox-inner {
-  border-color: #09454f;
+  border-color: var(--color_green);
 }
 .filter-checkbox .ant-checkbox-checked::after {
-  border-color: #09454f;
+  border-color: var(--color_green);
 }
 .filter-checkbox {
   font-family: var(--SB_400);
@@ -357,7 +359,7 @@
   margin-bottom: 24px;
 }
 .select-filters > span {
-  background: #09454f;
+  background: var(--color_green);
   border-radius: 8px;
   font-family: var(--SB_500);
   font-style: normal;
@@ -369,6 +371,9 @@
   padding: 5px 11px 5px 16px;
   margin-right: 13px;
   color: #ffffff;
+}
+.color-pic {
+  border-radius: 4px;
 }
 .select-filters > span > span {
   margin-left: 16px;
@@ -424,7 +429,7 @@
   .categories-products {
     margin-bottom: 0;
   }
-  .main-title {
+  .categories-page .main-title {
     margin: 0;
   }
   .categories-page-title {
@@ -474,5 +479,13 @@
 @media (max-width: 576px) {
   .categories-page-info {
     width: 100%;
+  }
+  .categories-page-title span {
+    margin-left: 0;
+  }
+  .categories-page-title {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
   }
 }

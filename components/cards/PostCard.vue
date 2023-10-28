@@ -9,17 +9,17 @@
         loading="lazy"
       />
       <img v-if="post?.md_img" :src="post?.md_img" alt="" />
-      <img v-else src="../../assets/images/Rectangle 24083.png" alt="" />
+      <!-- <img v-else src="../../assets/images/Rectangle 24083.png" alt="" /> -->
     </div>
     <div class="post-card-body">
       <p v-if="post?.created_at">
         {{ moment(post?.created_at).format("DD.MM.YYYY") }}
       </p>
-      <p v-else>27.03.2023</p>
+      <p v-else>-------</p>
       <h6 v-if="post?.title">
         {{ post?.title }}
       </h6>
-      <h6 v-else>Apple запатентовала складной экран смартфона.</h6>
+      <h6 v-else>------</h6>
     </div>
   </div>
 </template>

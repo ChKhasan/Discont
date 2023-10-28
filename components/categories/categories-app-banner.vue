@@ -1,30 +1,26 @@
 <template lang="html">
   <div class="application-banner">
     <div class="application-banner-info application-banner-info-2">
-      <h2>Yangi Market ilovasida buyurtma bering va bonuslarga ega bo'ling</h2>
-      <p>Diskont mobil ilovasini yuklab olish</p>
+      <h2>{{ $store.state.translations["main.app-title"] }}</h2>
+
       <div class="app-btn-container app-btn-container-2">
         <div class="flexer">
           <span class="app-btns"
-            ><img src="../../assets/images/Store ggp.png" alt=""
+            ><nuxt-img format="webp" src="/Store ggp.png" alt=""
           /></span>
           <span class="app-btns"
-            ><img src="../../assets/images/Store as.png" alt=""
+            ><nuxt-img format="webp" src="/Store as.png" alt=""
           /></span>
         </div>
         <div class="div">
-          <img
-            class="app-qr-code-2 m-0"
-            src="../../assets/images/image 34.png"
-            alt=""
-          />
-          <p>Yuklab olish uchun kamerangizni QR kodga qarating</p>
+          <img class="app-qr-code-2 m-0" src="../../assets/images/image 34.png" alt="" />
+          <p>{{ $store.state.translations["main.app-text"] }}</p>
         </div>
       </div>
     </div>
     <div class="application-banner-images">
       <div class="application-banner-container application-banner-container-2">
-        <img src="../../assets/images/app-aimg.png" alt="" />
+        <nuxt-img format="webp" src="/app-aimg.png" alt="" />
       </div>
     </div>
   </div>

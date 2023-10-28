@@ -1,6 +1,10 @@
 <template lang="html">
   <div class="wrap product-page">
-    <div class="image-modal" :class="{ hideModal: !imageModal }">
+    <div
+      class="image-modal"
+      :class="{ hideModal: !imageModal }"
+      @click="imageModal = false"
+    >
       <div class="image-modal-container">
         <div class="product-inner-swiper">
           <div class="swiper-wrapper">
@@ -46,6 +50,38 @@
           <b-skeleton width="40%" height="100%"></b-skeleton>
         </h4>
         <h4 class="title" v-else>{{ product?.name }}</h4>
+        <div class="page-breadcrumb" v-if="!skeleton">
+          <nuxt-link :to="localePath('/')"
+            >{{ $store.state.translations["main.home-page"] }}
+          </nuxt-link>
+          <nuxt-link
+            v-if="product?.info?.category?.parent?.parent?.slug"
+            :to="
+              localePath(
+                `/categories-inner/${product?.info?.category?.parent?.parent?.slug}`
+              )
+            "
+          >
+            {{ product?.info?.category?.parent?.parent?.name }}
+          </nuxt-link>
+          <nuxt-link
+            v-if="product?.info?.category?.parent?.slug"
+            :to="localePath(`/categories-inner/${product?.info?.category?.parent?.slug}`)"
+          >
+            {{ product?.info?.category?.parent?.name }}
+          </nuxt-link>
+          <nuxt-link
+            :to="localePath(`/categories-inner/${product?.info?.category?.slug}`)"
+          >
+            {{ product?.info?.category?.name }}
+          </nuxt-link>
+          <!-- <nuxt-link :to="localePath(`/product/${product?.slug}`)">
+            {{ product?.name }}
+          </nuxt-link> -->
+        </div>
+        <div v-else>
+          <b-skeleton width="50%"></b-skeleton>
+        </div>
         <div class="flexer">
           <div class="left">
             <div class="stars">
@@ -57,9 +93,12 @@
               </div>
             </div>
             <p class="reviews" v-if="product?.info?.stars != null">
-              ({{ product?.info?.comments.length }} ta feedbacks)
+              ({{ product?.info?.comments.length }}
+              {{ $store.state.translations["product.feedbacks-count"] }})
             </p>
-            <p class="reviews" v-else>(0 ta feedbacks)</p>
+            <p class="reviews" v-else>
+              (0 {{ $store.state.translations["product.feedbacks-count"] }})
+            </p>
           </div>
           <div class="right">
             <div class="bottom">
@@ -164,14 +203,14 @@
                   />
                 </svg>
 
-                Taqqoslash
+                {{ $store.state.translations["product.comparison"] }}
               </button>
             </div>
           </div>
         </div>
         <div class="flexer__mobile">
           <div class="available-sale">
-            <p>
+            <p v-if="product?.stock > 0">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 width="20"
@@ -183,14 +222,71 @@
                 <path
                   d="M15.6536 6.27082L7.90429 14.8278L4.35254 10.9059L5.26308 9.90041L7.90429 12.8098L14.743 5.26538L15.6536 6.27082Z"
                   fill="white"
-                /></svg
-              >Sotuvda mavjud
+                />
+              </svg>
+              {{ $store.state.translations["product.available-sale"] }}
             </p>
-            <span>Код: {{ product?.id }}</span>
+            <p v-else>
+              <img src="@/assets/images/count-none.png" alt="" />
+              {{ $store.state.translations["product.not-available-sale"] }}
+            </p>
+
+            <span
+              >{{ $store.state.translations["product.code"] }}: {{ product?.id }}</span
+            >
           </div>
           <div class="buttons__mobile">
-            <button>
+            <button
+              @click="
+                $store.commit('addToStore', {
+                  id: product?.id,
+                  name: 'comparison',
+                })
+              "
+            >
               <svg
+                v-if="$store.state.comparison.includes(product?.id)"
+                xmlns="http://www.w3.org/2000/svg"
+                width="29"
+                height="29"
+                viewBox="0 0 29 29"
+                fill="none"
+              >
+                <rect
+                  x="2.35115"
+                  y="2.35091"
+                  width="11.6667"
+                  height="9.33333"
+                  rx="2"
+                  stroke="#09454f"
+                  fill="#09454f"
+                  stroke-width="2"
+                />
+                <rect
+                  x="14.0178"
+                  y="16.3509"
+                  width="11.6667"
+                  height="9.33333"
+                  rx="2"
+                  fill="#09454f"
+                  stroke="#09454f"
+                  stroke-width="2"
+                />
+                <path
+                  d="M23.8344 4.68425L25.3428 6.19263C25.7984 6.64824 25.7984 7.38693 25.3428 7.84254L23.8344 9.35092M18.6845 7.01758L25.0011 7.01758"
+                  stroke="#09454f"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                />
+                <path
+                  d="M4.20123 18.6842L2.69286 20.1926C2.23725 20.6482 2.23725 21.3869 2.69286 21.8425L4.20123 23.3509M9.35115 21.0176L3.03457 21.0176"
+                  stroke="#09454f"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                />
+              </svg>
+              <svg
+                v-else
                 xmlns="http://www.w3.org/2000/svg"
                 width="29"
                 height="29"
@@ -229,8 +325,24 @@
                 />
               </svg>
             </button>
-            <button>
+            <button
+              @click="$store.commit('addToStore', { id: product?.id, name: 'like' })"
+            >
               <svg
+                v-if="$store.state.like.includes(product?.id)"
+                xmlns="http://www.w3.org/2000/svg"
+                width="32"
+                height="32"
+                viewBox="0 0 17 16"
+                fill="none"
+              >
+                <path
+                  d="M11.8528 0.5C11.1095 0.5 10.3991 0.67846 9.74137 1.03046C9.29363 1.27002 8.88232 1.58832 8.52941 1.96596C8.17647 1.58832 7.76519 1.27002 7.31745 1.03046C6.65969 0.67846 5.94931 0.5 5.20602 0.5C2.64357 0.5 0.558824 2.68349 0.558824 5.36734C0.558824 7.26827 1.51736 9.2872 3.40779 11.3681C4.9862 13.1056 6.91866 14.5539 8.26183 15.463L8.52941 15.6441L8.79699 15.463C10.1402 14.554 12.0726 13.1056 13.6511 11.3681C15.5415 9.2872 16.5 7.26827 16.5 5.36734C16.5 2.68349 14.4153 0.5 11.8528 0.5Z"
+                  fill="#09454f"
+                />
+              </svg>
+              <svg
+                v-else
                 xmlns="http://www.w3.org/2000/svg"
                 width="33"
                 height="33"
@@ -259,17 +371,17 @@
       </div>
       <div class="row">
         <div class="col-md-5 col-xs-12 images">
-          <div class="world" v-if="skeleton">
-            <div thumbsSlider="" class="swiper mySwiper">
+          <div class="world" v-show="skeleton">
+            <div thumbsSlider="" class="swiper mySwiper11">
               <div class="swiper-wrapper flex-column">
-                <div class="swiper-slide" v-for="img in [1, 2, 3, 4]" :key="img">
+                <div class="swiper-slide w-100" v-for="img in [1, 2, 3, 4]" :key="img">
                   <b-skeleton height="100%" width="100%"></b-skeleton>
                 </div>
               </div>
             </div>
             <div
               style="--swiper-navigation-color: #fff; --swiper-pagination-color: #fff"
-              class="swiper mySwiper2"
+              class="swiper mySwiper22"
             >
               <div class="swiper-wrapper">
                 <div class="swiper-slide" v-for="img in [1, 2, 3, 4]" :key="img">
@@ -279,7 +391,7 @@
             </div>
           </div>
 
-          <div class="world" v-else>
+          <div class="world" v-show="!skeleton">
             <div thumbsSlider="" class="swiper mySwiper">
               <div class="swiper-wrapper flex-column swiper_thumb">
                 <div class="swiper-slide" v-for="img in product?.images" :key="img.id">
@@ -304,7 +416,7 @@
             </div>
           </div>
           <div class="available-sale">
-            <p>
+            <p v-if="product?.stock" :class="{ success: product?.stock }">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 width="20"
@@ -317,15 +429,21 @@
                   d="M15.6536 6.27082L7.90429 14.8278L4.35254 10.9059L5.26308 9.90041L7.90429 12.8098L14.743 5.26538L15.6536 6.27082Z"
                   fill="white"
                 /></svg
-              >Sotuvda mavjud
+              >{{ $store.state.translations["product.available-sale"] }}
             </p>
-            <span>Код: {{ product?.id }}</span>
+            <p v-else :class="{ error: !product?.stock }">
+              <img src="@/assets/images/count-none.png" alt="" />
+              {{ $store.state.translations["product.not-available-sale"] }}
+            </p>
+            <span
+              >{{ $store.state.translations["product.code"] }}: {{ product?.id }}</span
+            >
           </div>
         </div>
         <div class="col-md-4 col-xs-12 stats">
           <div class="widther">
             <div class="specs" v-if="productCharacteristic.length > 0">
-              <p class="lil">Maxsulot haqida qisqacha</p>
+              <p class="lil">{{ $store.state.translations["product.short-info"] }}</p>
               <div v-if="skeleton">
                 <div
                   v-for="(characteristic, chIndex) in [1, 2, 3, 4]"
@@ -353,7 +471,7 @@
                 @click="scrollElement('characteristic')"
                 v-if="productCharacteristic.length > 0"
               >
-                Barcha xarakteristikalar
+                {{ $store.state.translations["product.all-characteristic"] }}
               </p>
             </div>
 
@@ -375,7 +493,7 @@
               v-else
               class="colors"
               v-for="(atributColor, atributColorIndex) in productAttributes.filter(
-                (item) => item.title == 'Цвет'
+                (item) => item.title?.includes('Цвет') || item.title?.includes('Rang')
               )"
               :key="atributColorIndex"
             >
@@ -417,7 +535,7 @@
             <div
               class="variations"
               v-for="(atribut, atributIndex) in productAttributes.filter(
-                (item) => item.title != 'Цвет'
+                (item) => !item.title?.includes('Цвет') && !item.title?.includes('Rang')
               )"
               :key="atributIndex"
             >
@@ -437,14 +555,12 @@
                 </div>
               </div>
             </div>
-            <div
-              class="counter"
-              v-if="$store.state.cart.find((item) => item.id == product?.id)"
-            >
-              <p class="lil">Кол-во</p>
+            <div class="counter" v-if="!skeleton">
+              <p class="lil">{{ $store.state.translations["product.count"] }}</p>
               <div class="grid">
                 <div class="number">
                   <button
+                    v-if="$store.state.cart.find((item) => item.id == product.id)"
                     @click="
                       $store.state.cart.find((item) => item.id == product.id)?.count >
                         1 && $store.commit('productCountDown', { id: product?.id })
@@ -452,8 +568,16 @@
                   >
                     <a-icon type="minus" />
                   </button>
-                  {{ $store.state.cart.find((item) => item.id == product?.id)?.count }}
+                  <button v-else @click="currentCount > 1 && currentCount--">
+                    <a-icon type="minus" />
+                  </button>
+                  {{
+                    $store.state.cart.find((item) => item.id == product?.id)
+                      ? $store.state.cart.find((item) => item.id == product?.id)?.count
+                      : currentCount
+                  }}
                   <button
+                    v-if="$store.state.cart.find((item) => item.id == product.id)"
                     @click="
                       $store.state.cart.find((item) => item.id == product?.id)?.count <
                         product?.stock &&
@@ -462,17 +586,22 @@
                   >
                     <a-icon type="plus" />
                   </button>
+                  <button v-else @click="currentCount < product?.stock && currentCount++">
+                    <a-icon type="plus" />
+                  </button>
                 </div>
                 <p>
                   {{ $store.state.translations["main.available-sale"] }}
-                  {{ product?.stock }}
+                  {{ product?.stock > 0 ? product?.stock:0 }}
                 </p>
               </div>
             </div>
           </div>
         </div>
+
         <div class="col-md-3 col-xs-12 order">
-          <div class="cardo">
+          <!-- <a-affix :offset-bottom="78"> -->
+          <div class="cardo" ref="priceBox">
             <div class="cardo__header">
               <div class="discount" v-if="product?.discount">
                 <p class="tag">
@@ -487,7 +616,7 @@
                 </p>
                 <p class="dis__price" v-if="product?.discount_price">
                   {{ `${product?.real_price}`.replace(/\B(?=(\d{3})+(?!\d))/g, " ") }}
-                  so'm
+                  {{ $store.state.translations["main.som"] }}
                 </p>
                 <p class="dis__txt">
                   {{ $store.state.translations["main.at-discount-price"] }}
@@ -514,7 +643,7 @@
               <p class="coin" v-if="skeleton">
                 <b-skeleton width="150px" height="100%"> </b-skeleton>
               </p>
-              <p v-else class="coin">
+              <!-- <p v-else class="coin">
                 <img src="@/assets/images/Group 1000005199.png" alt="" />
                 +{{
                   Math.floor(
@@ -526,22 +655,90 @@
                         : 1)
                   )
                 }}
-                Di coin
-              </p>
+                {{ $store.state.translations["main.dicoin"] }}
+              </p> -->
             </div>
 
             <div class="buttons">
+              <a-tooltip placement="top">
+                <template slot="title">
+                  <span>{{
+                    $store.state.translations["product.not-available-sale"]
+                  }}</span>
+                </template>
+                <button
+                  v-if="!product?.stock"
+                  :class="{
+                    'disabled-btn':
+                      !product?.stock ||
+                      $store.state.cart.find((item) => item.id == product?.id) || product?.stock < 0
+                  }"
+                  class="cart"
+                >
+                  <p>
+                    {{ $store.state.translations["main.add-to-cart"] }}
+                  </p>
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="18"
+                    height="17"
+                    viewBox="0 0 18 17"
+                    fill="none"
+                  >
+                    <path
+                      d="M1.29175 0.708252L3.02508 1.00825L3.82758 10.5691C3.89175 11.3499 4.54425 11.9491 5.32758 11.9466H14.4184C15.1659 11.9483 15.8001 11.3983 15.9059 10.6583L16.6967 5.19325C16.7851 4.58242 16.3609 4.01575 15.7509 3.92742C15.6976 3.91992 3.30341 3.91575 3.30341 3.91575"
+                      stroke="#09454f"
+                      stroke-width="1.4"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                    />
+                    <path
+                      d="M10.7709 6.99552H13.0817"
+                      stroke="#09454f"
+                      stroke-width="1.4"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                    />
+                    <path
+                      fill-rule="evenodd"
+                      clip-rule="evenodd"
+                      d="M4.96199 14.8354C5.21283 14.8354 5.41533 15.0388 5.41533 15.2888C5.41533 15.5396 5.21283 15.7429 4.96199 15.7429C4.71116 15.7429 4.50866 15.5396 4.50866 15.2888C4.50866 15.0388 4.71116 14.8354 4.96199 14.8354Z"
+                      fill="#09454f"
+                      stroke="#09454f"
+                      stroke-width="1.4"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                    />
+                    <path
+                      fill-rule="evenodd"
+                      clip-rule="evenodd"
+                      d="M14.3623 14.8354C14.6131 14.8354 14.8164 15.0388 14.8164 15.2888C14.8164 15.5396 14.6131 15.7429 14.3623 15.7429C14.1114 15.7429 13.9089 15.5396 13.9089 15.2888C13.9089 15.0388 14.1114 14.8354 14.3623 14.8354Z"
+                      fill="#09454f"
+                      stroke="#09454f"
+                      stroke-width="1.4"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                    />
+                  </svg></button
+              ></a-tooltip>
               <button
-                v-if="!$store.state.cart.find((item) => item.id == product?.id)"
+                v-if="Boolean(product?.stock)"
+                :class="{
+                  'disabled disabled-btn':
+                    !product?.stock ||
+                    $store.state.cart.find((item) => item.id == product?.id) || product?.stock < 0
+                }"
                 class="cart"
                 @click="
                   $store.commit('addToCart', {
-                    obj: { id: product?.id, count: 1 },
+                    obj: { id: product?.id, count: currentCount },
                     name: 'cart',
                   })
                 "
               >
-                <p>{{ $store.state.translations["main.add-to-cart"] }}</p>
+                <p>
+                  {{ $store.state.translations["main.add-to-cart"] }}
+                </p>
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   width="18"
@@ -585,9 +782,26 @@
                   />
                 </svg>
               </button>
-              <button class="click" @click="visibleOc = true">Hoziroq sotib olish</button>
+              <a-tooltip placement="top" v-if="!product?.stock">
+                <template slot="title">
+                  <span>{{
+                    $store.state.translations["product.not-available-sale"]
+                  }}</span> </template
+                ><button :class="{ 'disabled-btn': !product?.stock }" class="click">
+                  {{ $store.state.translations["product.buy-now"] }}
+                </button></a-tooltip
+              >
+              <button
+                v-if="Boolean(product?.stock)"
+                :class="{ 'disabled disabled-btn': !product?.stock }"
+                class="click"
+                @click="visibleOc = true"
+              >
+                {{ $store.state.translations["product.buy-now"] }}
+              </button>
             </div>
           </div>
+          <!-- </a-affix> -->
 
           <!-- <div class="credit">
             <p>{{ $store.state.translations["main.installmentpayment"] }}</p>
@@ -598,15 +812,15 @@
           <div class="credit__items">
             <div>
               <img src="@/assets/images/credit-1.svg" alt="" />
-              <p>100 % Halol nasiya savdo</p>
+              <p>{{ $store.state.translations["product.credit-text1"] }}</p>
             </div>
             <div>
               <img src="@/assets/images/credit-2.svg" alt="" />
-              <p>Hech qanday penyalarsiz</p>
+              <p>{{ $store.state.translations["product.credit-text2"] }}</p>
             </div>
             <div>
               <img src="@/assets/images/credit-3.svg" alt="" />
-              <p>1 yil kafolat va service</p>
+              <p>{{ $store.state.translations["product.credit-text3"] }}</p>
             </div>
           </div>
         </div>
@@ -614,31 +828,31 @@
       <div class="tabs">
         <div class="butns" id="characteristic">
           <button :class="{ active: tabHandle == 'desc' }" @click="tabHandle = 'desc'">
-            Mahsulot haqida
+            {{ $store.state.translations["product.about-product"] }}
           </button>
           <button
             :class="{ active: tabHandle == 'characteristic' }"
             @click="tabHandle = 'characteristic'"
           >
-            Xarakteristikalari
+            {{ $store.state.translations["product.characteristics"] }}
           </button>
           <button
             :class="{ active: tabHandle == 'location' }"
             @click="tabHandle = 'location'"
           >
-            Do'konlarda mavjudligi
+            {{ $store.state.translations["product.availability-stores"] }}
           </button>
           <button
             :class="{ active: tabHandle == 'comment' }"
             @click="tabHandle = 'comment'"
           >
-            Mijozlarning sharhlari
+            {{ $store.state.translations["product.customer-reviews"] }}
           </button>
         </div>
         <div class="contents">
           <div v-if="tabHandle == 'desc'" class="about">
             <div class="about__wrap">
-              <h4 class="paragraph">Tavsif</h4>
+              <h4 class="paragraph">{{ $store.state.translations["product.info"] }}</h4>
               <p v-html="product?.info?.desc"></p>
             </div>
           </div>
@@ -690,8 +904,8 @@
               </div>
             </div>
             <div class="comments-empty" v-if="characteristics.length == 0">
-              <img src="../../assets/images/comments-empty.png" alt="" />
-              <h4>Mahsulotlarga baho qo’yilmagan</h4>
+              <nuxt-img format="webp" src="/comments-empty.png" alt="" />
+              <h4>{{ $store.state.translations["product.no-reting"] }}</h4>
             </div>
           </div>
           <div
@@ -703,13 +917,13 @@
               <thead>
                 <tr>
                   <th>
-                    <p>Manzil</p>
+                    <p>{{ $store.state.translations["product.stores"] }}</p>
                   </th>
                   <th>
-                    <p>Ish vaqti</p>
+                    <p>{{ $store.state.translations["product.working-time"] }}</p>
                   </th>
                   <th>
-                    <p>Telefon raqami</p>
+                    <p>{{ $store.state.translations["product.address"] }}</p>
                   </th>
                 </tr>
               </thead>
@@ -718,11 +932,15 @@
                   <td>
                     <div class="cyber">
                       <div class="img">
-                        <img src="@/assets/images/logo/map.svg" alt="" />
+                        <a :href="branch?.link">
+                          <img src="@/assets/images/logo/map.svg" alt="" />
+                        </a>
                       </div>
-                      <p>
-                        {{ branch?.name }}
-                      </p>
+                      <a :href="branch?.link" target="_blank">
+                        <p>
+                          {{ branch?.name }}
+                        </p>
+                      </a>
                     </div>
                   </td>
                   <td>
@@ -735,16 +953,8 @@
                   </td>
                   <td>
                     <div class="cyber">
-                      <div class="img">
-                        <img src="@/assets/images/logo/call.svg" alt="" />
-                      </div>
-                      <p style="white-space: nowrap">
-                        +{{
-                          `${branch?.phone_number}`
-                            .match(/(\d{3})(\d{2})(\d{3})(\d{4})/)
-                            .filter((item, index) => index != 0)
-                            .join(" ")
-                        }}
+                      <p style="white-space: wrap">
+                        {{ branch?.phone_number }}
                       </p>
                     </div>
                   </td>
@@ -794,20 +1004,21 @@
                 </div>
               </div>
               <div class="comments-empty" v-if="product?.info?.comments.length == 0">
-                <img src="../../assets/images/comments-empty.png" alt="" />
-                <h4>Mahsulotlarga baho qo’yilmagan</h4>
+                <nuxt-img format="webp" src="/comments-empty.png" alt="" />
+                <h4>{{ $store.state.translations["product.no-reting"] }}</h4>
               </div>
             </div>
             <div class="reviews__right">
               <div class="leave">
                 <p class="leave__title">
                   <img src="@/assets/images/like.svg" alt="" />
-                  O’z fikr va izohlaringizni qoldiring
+                  {{ $store.state.translations["product.leave-comment"] }}
                 </p>
-                <button class="leave__btn" @click="commentOpen()">Baho qoldirish</button>
+                <button class="leave__btn" @click="commentOpen()">
+                  {{ $store.state.translations["product.leave-comment-btn"] }}
+                </button>
               </div>
               <div class="rating">
-                <!-- <img src="@/assets/images/cheat.png" alt="" /> -->
                 <div class="total_rating">
                   <div>
                     <a-rate
@@ -816,7 +1027,7 @@
                       disabled
                     />
                     <a-rate v-else disabled />
-                    <p>5 оценок</p>
+                    <p>{{ product?.info?.comments.length }} оценок</p>
                   </div>
                   <p>
                     <span>{{ product?.info?.stars ? product?.info?.stars : 0 }}</span
@@ -826,11 +1037,11 @@
                 <div class="rating_list">
                   <div class="rating_row">
                     <a-rate :value="5" disabled /><span></span>
-                    <p>{{ commetItems[0] }}</p>
+                    <p>{{ commetItems[4] }}</p>
                   </div>
                   <div class="rating_row">
                     <a-rate :value="4" disabled /><span></span>
-                    <p>{{ commetItems[1] }}</p>
+                    <p>{{ commetItems[3] }}</p>
                   </div>
                   <div class="rating_row">
                     <a-rate :value="3" disabled /><span></span>
@@ -838,11 +1049,11 @@
                   </div>
                   <div class="rating_row">
                     <a-rate :value="2" disabled /><span></span>
-                    <p>{{ commetItems[3] }}</p>
+                    <p>{{ commetItems[1] }}</p>
                   </div>
                   <div class="rating_row">
                     <a-rate :value="1" disabled /><span></span>
-                    <p>{{ commetItems[4] }}</p>
+                    <p>{{ commetItems[0] }}</p>
                   </div>
                 </div>
               </div>
@@ -850,8 +1061,8 @@
           </div>
         </div>
       </div>
-      <div class="other pb-5">
-        <h4>O’xshash tovarlar</h4>
+      <div class="other pb-5" v-if="productsOthers.length > 0">
+        <h4>{{ $store.state.translations["product.similar-products"] }}</h4>
         <ProductCarousel>
           <div class="swiper-slide" v-for="product in productsOthers" :key="product.id">
             <ProductCardVue :product="product" />
@@ -1021,8 +1232,15 @@
               ></span>
               <div class="call-number">
                 <p>{{ $store.state.translations["main.call-centre"] }}:</p>
-                <a href="tel:+998712077788">
-                  <h4>71 207 77 88</h4>
+                <a :href="`tel:${$store.state.siteInfo?.phone_number}`">
+                  <h4>
+                    +{{
+                      `${$store.state.siteInfo?.phone_number}`
+                        .match(/(\d{3})(\d{2})(\d{3})(\d{2})(\d{2})/)
+                        ?.filter((item, index) => index != 0)
+                        .join(" ")
+                    }}
+                  </h4>
                 </a>
               </div>
             </div>
@@ -1034,7 +1252,7 @@
     <Transition name="bounce-toast">
       <Vnotification
         v-if="compToast"
-        title="Buyurtma muvaffaqiyatli jo'natildi. "
+        :title="$store.state.translations['main.order-success']"
         @click="toastClose()"
       >
         <span v-html="iconComp"></span>
@@ -1086,9 +1304,9 @@
           </a-form-model-item>
         </a-form-model>
       </div>
-      <div class="comment-modal-btns">
+      <div class="comment-modal-btns comment-modal-btns_web">
         <div class="comment-rate">
-          <p>Sizning Bahoyingiz:</p>
+          <p>{{ $store.state.translations["product.your-rating"] }}:</p>
           <a-rate v-model="formComment.stars">
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -1109,14 +1327,51 @@
           </a-rate>
         </div>
         <div class="comment-btn comment-btn-close" @click="visibleComment = false">
-          Bekor qilish
+          {{ $store.state.translations["product.close"] }}
         </div>
         <div
           class="comment-btn"
           :class="{ disabled: !formComment.stars }"
           @click="submitComment()"
         >
-          Fikr qoldiring
+          {{ $store.state.translations["product.send-comment"] }}
+        </div>
+      </div>
+      <div class="comment-modal-btns comment-modal-btns_mobile">
+        <div class="comment-rate">
+          <p>{{ $store.state.translations["product.your-rating"] }}:</p>
+          <div class="d-flex justify-content-center">
+            <a-rate v-model="formComment.stars">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="13"
+                height="12"
+                viewBox="0 0 13 12"
+                fill="none"
+              >
+                <path
+                  fill-rule="evenodd"
+                  clip-rule="evenodd"
+                  d="M6.80942 0.293887L8.35342 3.39989C8.43075 3.55655 8.58009 3.66589 8.75342 3.69122L12.2101 4.19055C12.3501 4.20922 12.4761 4.28255 12.5621 4.39455C12.7234 4.60455 12.6988 4.90189 12.5054 5.08255L10.0001 7.50522C9.87275 7.62522 9.81609 7.80122 9.84942 7.97255L10.4494 11.3912C10.4914 11.6746 10.2981 11.9399 10.0148 11.9859C9.89742 12.0039 9.77742 11.9852 9.67075 11.9326L6.59209 10.3186C6.43742 10.2346 6.25209 10.2346 6.09742 10.3186L2.99609 11.9412C2.73675 12.0732 2.41942 11.9752 2.27809 11.7212C2.22409 11.6186 2.20542 11.5019 2.22409 11.3879L2.82409 7.96922C2.85409 7.79855 2.79742 7.62322 2.67342 7.50255L0.154753 5.08055C-0.0505808 4.87655 -0.0519141 4.54455 0.152753 4.33922C0.153419 4.33855 0.154086 4.33722 0.154753 4.33655C0.239419 4.25989 0.343419 4.20855 0.456086 4.18855L3.91342 3.68922C4.08609 3.66189 4.23475 3.55389 4.31342 3.39722L5.85609 0.293887C5.91809 0.167887 6.02809 0.0712201 6.16142 0.0272201C6.29542 -0.0174466 6.44209 -0.00677988 6.56809 0.0565534C6.67142 0.107887 6.75609 0.19122 6.80942 0.293887Z"
+                  solid="red"
+                  fill="red"
+                  stroke="red"
+                />
+              </svg>
+            </a-rate>
+          </div>
+        </div>
+        <div class="comment-btn-container">
+          <div class="comment-btn comment-btn-close" @click="visibleComment = false">
+            {{ $store.state.translations["product.close"] }}
+          </div>
+          <div
+            class="comment-btn"
+            :class="{ disabled: !formComment.stars }"
+            @click="submitComment()"
+          >
+            {{ $store.state.translations["product.send-comment"] }}
+          </div>
         </div>
       </div>
       <template slot="footer"> <h3></h3></template>
@@ -1130,7 +1385,7 @@
       @ok="handleOkSuccess"
     >
       <div class="vmodal-header">
-        <h5>{{ $store.state.translations["main.new-comment"] }}</h5>
+        <h5>{{ $store.state.translations["product.oc-success-title"] }}</h5>
         <span @click="handleOkSuccess"
           ><svg
             xmlns="http://www.w3.org/2000/svg"
@@ -1156,11 +1411,11 @@
         ></span>
       </div>
       <div class="vmodal-body comment-modal-success">
-        <img src="../../assets/images/modal-success.png" alt="" />
-        <p>Заказ оформлен. Мы свяжемся с вами в ближайшее время</p>
+        <nuxt-img format="webp" src="/modal-success.png" alt="" />
+        <p>{{ $store.state.translations["product.oc-text"] }}</p>
       </div>
       <div class="vmodal-btn" @click="handleOkSuccess">
-        {{ $store.state.translations["main.comment-succes-btn"] }}
+        {{ $store.state.translations["product.oc-success-btn"] }}
       </div>
       <template slot="footer"> <h3></h3></template>
     </a-modal>
@@ -1177,8 +1432,10 @@ import moment from "moment";
 export default {
   name: "DiscontSlug",
   head() {
+    const i18nHead = this.$nuxtI18nHead({ addSeoAttributes: true });
     return {
       title: this.product.name,
+
       meta: [
         {
           name: "title",
@@ -1192,6 +1449,32 @@ export default {
           name: "description",
           content: `${this.product.info?.desc}`,
         },
+        { hid: "og-title", property: "og:title", content: this.product.name },
+        {
+          hid: "og-description",
+          property: "og:description",
+          content: this.product.info?.desc?.replaceAll("<p>", "")?.replaceAll("</p>", ""),
+        },
+        { hid: "og-type", property: "og:type", content: "website" },
+        {
+          hid: "og-url",
+          property: "og:url",
+          content: process.env.URL + "/" + this.$route.fullPath,
+        },
+        {
+          hid: "og-image",
+          property: "og:image",
+          content: this.product?.images ? this.product?.images[0]?.md_img : "",
+        },
+        ...i18nHead.meta,
+      ],
+      link: [
+        {
+          rel: "icon",
+          type: "image/x-icon",
+          href: this.$store.state.siteInfo?.sm_favicon,
+        },
+        ...i18nHead.link,
       ],
     };
   },
@@ -1231,6 +1514,7 @@ export default {
   // },
   data() {
     return {
+      currentCount: 1,
       fullRate: 5,
       imageModal: false,
       month: [
@@ -1248,7 +1532,7 @@ export default {
         "Декабрь",
       ],
       nolVal: 0,
-      skeleton: false,
+      skeleton: true,
       count: 1,
       value: 5,
       callBox: false,
@@ -1259,7 +1543,14 @@ export default {
       iconComp: require("../../assets/svg/toast-comparison.svg?raw"),
       compToast: false,
       visibleOc: false,
-      product: {},
+      product: {
+        images: [
+          {
+            md_img: "asdasd",
+            id: 1,
+          },
+        ],
+      },
       locations: {},
       branches: [],
       productCharacteristic: [],
@@ -1306,7 +1597,81 @@ export default {
       },
     };
   },
-
+  async mounted() {
+    var header = this.$refs.priceBox;
+    window.addEventListener("scroll", () => {
+      let documentHeight = document.body.scrollHeight;
+      let currentScroll = window.scrollY + window.innerHeight;
+      let modifier = 200;
+      if (window.innerWidth <= 576) {
+        if (currentScroll + modifier > documentHeight) {
+          header.style.display = `none`;
+        } else {
+          header.style.display = `flex`;
+        }
+      }
+    });
+    new Swiper(`.product-inner-swiper`, {
+      slidesPerView: 1,
+      spaceBetween: 24,
+      flipEffect: {
+        slideShadows: false,
+      },
+      pagination: false,
+      autoplay: {
+        delay: 40000,
+      },
+      navigation: {
+        nextEl: ".swiper-button-next-product-inner",
+        prevEl: ".swiper-button-prev-product-inner",
+      },
+    });
+    var swiper = new Swiper(".mySwiper", {
+      slidesPerView: 5,
+      spaceBetween: 12,
+      // freeMode: true,
+      // watchSlidesProgress: true,
+      direction: "horizontal",
+      breakoints: {
+        1024: {
+          direction: "vertical",
+          spaceBetween: 16,
+          slidesPerView: 4,
+        },
+      },
+    });
+    var swiper2 = new Swiper(".mySwiper2", {
+      loop: true,
+      spaceBetween: 10,
+      thumbs: {
+        swiper: swiper,
+      },
+    });
+    var swiper1 = new Swiper(".mySwiper11", {
+      slidesPerView: 5,
+      spaceBetween: 12,
+      // freeMode: true,
+      // watchSlidesProgress: true,
+      direction: "horizontal",
+      breakoints: {
+        1024: {
+          direction: "vertical",
+          spaceBetween: 16,
+          slidesPerView: 4,
+        },
+      },
+    });
+    var swiper2 = new Swiper(".mySwiper22", {
+      loop: true,
+      spaceBetween: 10,
+      thumbs: {
+        swiper: swiper1,
+      },
+    });
+    setTimeout(() => {
+      this.swiperReload();
+    }, 1000);
+  },
   async fetch() {
     try {
       await this.$getLocation().then((coordinates) => {
@@ -1345,6 +1710,7 @@ export default {
     this.branches = productData?.branches;
     this.carouselImages = [...this.product.images];
     this.productsOthers = productsData?.products?.data;
+    this.skeleton = false;
   },
   computed: {
     commetItems() {
@@ -1368,54 +1734,6 @@ export default {
           }));
       return rates;
     },
-  },
-  async mounted() {
-    // this.skeleton = true;
-    // try {
-    //   await this.$getLocation().then((coordinates) => {
-    //     this.locations = coordinates;
-    //   });
-    // } catch (e) {
-    //   console.log(e);
-    // }
-
-    // const [productsData] = await Promise.all([
-    // this.$store.dispatch("fetchProducts/getProductsBySlug", {
-    //   id: this.$route.params.index,
-    //   params: {
-    //     params: {
-    //       lat: this.locations.lat,
-    //       lon: this.locations.lng,
-    //     },
-    //     headers: {
-    //       lang: this.$i18n.locale,
-    //     },
-    //   },
-    // }),
-
-    //   this.$store.dispatch("fetchProducts/getProducts", {
-    //     params: { limit: 12 },
-    //     headers: {
-    //       lang: this.$i18n.locale,
-    //     },
-    //   }),
-    // ]);
-
-    // this.skeleton = false;
-    // this.productsOthers = productsData?.products?.data;
-    // this.product = productData.product;
-    // this.productCharacteristic = productData?.product?.characteristic_options.splice(
-    //   0,
-    //   4
-    // );
-    // this.productAttributes = productData?.attributes;
-    // this.characteristics = productData?.characteristics;
-    // this.branches = productData?.branches;
-    // this.carouselImages = [...this.product.images];
-
-    setTimeout(() => {
-      this.swiperReload();
-    }, 1000);
   },
 
   methods: {
@@ -1488,12 +1806,40 @@ export default {
     handleOkName() {
       this.visibleOc = false;
     },
+    async __GET_PRODUCT() {
+      const [productData] = await Promise.all([
+        this.$store.dispatch("fetchProducts/getProductsBySlug", {
+          id: this.$route.params.index,
+          params: {
+            params: {
+              lat: this.locations.lat,
+              lon: this.locations.lng,
+            },
+            headers: {
+              lang: this.$i18n.locale,
+            },
+          },
+        }),
+      ]);
+      this.product = productData.product;
+    },
     async __POST_COMMENT(formData) {
       try {
         const data = await this.$store.dispatch("fetchProducts/postProductComment", {
           data: formData,
         });
+        this.$notification.success({
+          title: "Success",
+          message: `Спасибо!
+Ваш комментарий успешно отправлен.`,
+        });
         this.visibleComment = false;
+        this.formComment = {
+          product_id: null,
+          comment: "",
+          stars: 5,
+        };
+        this.__GET_PRODUCT();
       } catch (e) {
         // console.log(e);
       }
@@ -1508,7 +1854,7 @@ export default {
         // console.log(e);
       }
     },
-    swiperReload() {
+    async swiperReload() {
       new Swiper(`.product-inner-swiper`, {
         slidesPerView: 1,
         spaceBetween: 24,
@@ -1545,11 +1891,41 @@ export default {
           swiper: swiper,
         },
       });
+      var swiper1 = new Swiper(".mySwiper11", {
+        slidesPerView: 5,
+        spaceBetween: 12,
+        freeMode: true,
+        watchSlidesProgress: true,
+        direction: "horizontal",
+        breakoints: {
+          1024: {
+            direction: "vertical",
+            spaceBetween: 16,
+            slidesPerView: 4,
+          },
+        },
+      });
+      var swiper2 = new Swiper(".mySwiper22", {
+        loop: true,
+        spaceBetween: 10,
+        thumbs: {
+          swiper: swiper,
+        },
+      });
     },
   },
   watch: {
     visibleOc(val) {
-      if (!val) this.count = 1;
+      if (!val) {
+        this.count = 1;
+        this.callBox = false;
+        this.formOc = {
+          name: "",
+          phone_number: "",
+          product_id: null,
+          count: 1,
+        };
+      }
     },
     compToast(val) {
       if (val) {
@@ -1569,6 +1945,22 @@ export default {
 
 <style scoped>
 @import "../../assets/css/pages/product.css";
+.comment-modal-btns_mobile {
+  display: none;
+}
+.comment-modal-btns_mobile .comment-rate {
+  display: flex;
+  flex-direction: column;
+  align-items: start;
+}
+.comment-btn-container {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 15px;
+}
+.swiper_thumb {
+  transform: translate3d(0px, 0px, 0px) !important;
+}
 .last-character {
   border-bottom: 0 !important;
 }
@@ -1676,16 +2068,19 @@ export default {
   background-position: center;
 }
 
-.mySwiper2 {
+.mySwiper2,
+.mySwiper22 {
   height: 515px;
   width: 80%;
 }
-.mySwiper2 .swiper-slide {
+.mySwiper2 .swiper-slide,
+.mySwiper22 .swiper-slide {
   border-radius: 20px;
   overflow: hidden;
   cursor: grab;
 }
-.mySwiper {
+.mySwiper,
+.mySwiper11 {
   width: 20%;
   height: 480px;
   box-sizing: border-box;
@@ -1693,16 +2088,18 @@ export default {
   padding: 0;
 }
 
-.mySwiper .swiper-slide {
+.mySwiper .swiper-slide,
+.mySwiper11 .swiper-slide {
   height: 25%;
   width: 100px;
   opacity: 0.4;
   padding: 8px 0;
 }
 
-.mySwiper .swiper-slide-thumb-active {
+.mySwiper .swiper-slide-thumb-active,
+.mySwiper11 .swiper-slide-thumb-active {
   opacity: 1;
-  border: 1px solid #09454f;
+  border: 1px solid var(--color_green);
   border-radius: 10px;
 }
 .world {
@@ -1928,9 +2325,13 @@ export default {
   border: none;
 }
 .credit__items {
-  display: flex;
+  display: grid;
   align-items: center;
   justify-content: space-between;
+  border-radius: 12px;
+  background: #fcfcfc;
+  grid-template-columns: repeat(3, 1fr);
+  padding: 19px 14px;
 }
 .credit__items div {
   display: flex;
@@ -1953,7 +2354,7 @@ export default {
   object-fit: contain;
 }
 .active-attribute {
-  border: 1px solid #04babe;
+  border: 2px solid #04babe;
 }
 .disabled-attribute {
   pointer-events: none;
@@ -1971,14 +2372,14 @@ export default {
   font-family: var(--SB_500);
   font-size: 14px;
   line-height: 18px;
-  color: var(--color_dark_green);
+  color: var(--color_green);
   padding: 12px 34px;
   border: 1px solid #f1f1f1;
   border-radius: 77px;
   background-color: #fff;
 }
 .butns button.active {
-  background: var(--color_dark_green);
+  background: var(--color_green);
   color: white;
 }
 .paragraph {
@@ -2146,7 +2547,7 @@ tbody .img {
   align-items: center;
   text-align: center;
   justify-content: center;
-  color: var(--color_dark_green);
+  color: var(--color_green);
   background: #e7faf5;
   border-radius: 10px;
   padding: 12px 0;
@@ -2186,9 +2587,11 @@ tbody .img {
   cursor: pointer;
   justify-content: center;
   min-height: 52px;
+  padding: 0 12px;
+  white-space: nowrap;
 }
 .comment-btn-close {
-  color: var(--color_dark_green);
+  color: var(--color_green);
   background: #eaeaea;
 }
 .comment-modal-header {
@@ -2215,7 +2618,6 @@ tbody .img {
   letter-spacing: -0.4px;
 }
 .available-sale p {
-  color: #16c67a;
   font-family: var(--SB_500);
   font-size: 14px;
   font-style: normal;
@@ -2224,7 +2626,14 @@ tbody .img {
   padding: 6px;
   padding-right: 10px;
   border-radius: 68.467px;
+}
+.available-sale .success {
+  color: #16c67a;
   background: #e7f9f1;
+}
+.available-sale .error {
+  color: #ff3a55;
+  background: rgba(255, 58, 85, 0.302);
 }
 .available-sale p svg {
   margin-right: 7px;
@@ -2238,7 +2647,7 @@ tbody .img {
 }
 .available-sale span {
   color: rgb(0, 0, 0, 0.4);
-  font-family: "Inter";
+  font-family: var(--SB_400);
   font-size: 14px;
   font-style: normal;
   font-weight: 400;
@@ -2246,6 +2655,7 @@ tbody .img {
 }
 .flexer__mobile {
   display: none;
+  margin-top: 8px;
 }
 .cart svg {
   display: none;
@@ -2301,7 +2711,7 @@ tbody .img {
 .rating_row ul {
   background: white;
   position: relative;
-  z-index: 100;
+  z-index: 98;
   padding-right: 16px;
 }
 
@@ -2326,7 +2736,20 @@ tbody .img {
 .swiper_thumb::-webkit-scrollbar {
   display: none;
 }
+.disabled {
+  pointer-events: none;
+  border: none;
+}
+.reviews__right {
+  min-width: 390px;
+}
 @media screen and (max-width: 1024px) {
+  .reviews__right {
+    min-width: 100% !important;
+  }
+  .spec__wrap_item {
+    grid-template-columns: repeat(1, 1fr);
+  }
   .image-modal-container {
     max-width: 70%;
   }
@@ -2341,14 +2764,16 @@ tbody .img {
     margin-bottom: 24px;
     color: black;
   }
-  .mySwiper2 {
+  .mySwiper2,
+  .mySwiper22 {
     height: 340px;
     width: 100%;
   }
   .flexer {
     display: none;
   }
-  .mySwiper {
+  .mySwiper,
+  .mySwiper11 {
     width: 100%;
     height: auto;
   }
@@ -2406,6 +2831,7 @@ tbody .img {
     font-weight: 500;
     line-height: 16px;
     margin: 0;
+    color: #020105;
   }
   .delivery,
   .coin {
@@ -2419,7 +2845,7 @@ tbody .img {
   .buttons {
     display: flex;
     align-items: center;
-    gap: 8px;
+    gap: 12px;
   }
   .cart {
     margin-bottom: 0;
@@ -2427,6 +2853,7 @@ tbody .img {
     background: #ebebeb;
     width: 36px;
     height: 36px;
+    border: none;
   }
   .cart svg {
     display: flex;
@@ -2434,10 +2861,14 @@ tbody .img {
   .cart p {
     display: none;
   }
+
   .click {
     width: 147px;
     height: 36px;
     font-size: 14px;
+    background-color: var(--color_green);
+    color: #fff;
+    font-family: var(--SB_400);
   }
   .order {
     padding: 0;
@@ -2458,7 +2889,7 @@ tbody .img {
     line-height: normal;
   }
   .butns button.active {
-    background: #09454f;
+    background: var(--color_green);
   }
   .about::v-deep p {
     color: #414141;
@@ -2521,6 +2952,18 @@ tbody .img {
   }
 }
 @media screen and (max-width: 576px) {
+  .comment-modal-btns_mobile {
+    display: flex;
+    flex-direction: column;
+  }
+  .comment-modal-btns_web {
+    display: none;
+  }
+  .cardo .price {
+    font-size: 13px;
+    font-family: var(--SB_500);
+    color: #020105;
+  }
   .image-modal-container {
     max-width: 100%;
   }

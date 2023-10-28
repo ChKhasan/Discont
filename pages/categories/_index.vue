@@ -14,7 +14,7 @@
               <div
                 class="child-categories-list"
                 v-if="
-                  category?.slug == $route.params.index && category?.children.length > 0
+                  category?.slug == $route.params.index && category?.children?.length > 0
                 "
               >
                 <!-- <span
@@ -29,11 +29,11 @@
                 >
                   {{ childs?.name }}{{ `/categories-inner/${childs.slug}` }}</span
                 > -->
-                <nuxt-link
+                <a
                   v-for="childs in category?.children"
                   :key="childs.id"
-                  :to="localePath(`/categories-inner/${childs?.slug}`)"
-                  >{{ childs?.name }}</nuxt-link
+                  :href="localePath(`/categories-inner/${childs?.slug}`)"
+                  >{{ childs?.name }}</a
                 >
               </div>
             </li>
@@ -86,7 +86,7 @@
       <div class="categories-page-info" v-html="categoryChilds?.desc"></div>
     </div>
     <div class="categories-app-banner-container">
-        <!--<div class="container_xl">
+      <!--<div class="container_xl">
         <CategoriesAppCard />
       </div>-->
     </div>
@@ -104,19 +104,27 @@ export default {
       arrow: require("../../assets/svg/dropdown-icon.svg?raw"),
       loading: false,
       allCategories: false,
+      categories: [],
       //   categoryChilds: [],
     };
   },
   async asyncData({ $axios, params, store, i18n }) {
-    const [categoriesData, categoryChildsData, productsData] = await Promise.all([
+    store.commit("loaderHandler", true);
+    const [categoriesData, productsData] = await Promise.all([
       $axios.$get(`/categories`, {
-        params: {
-          limit: 10,
+        headers: {
+          lang: i18n.locale,
         },
       }),
-      $axios.$get(`/categories/${params.index}`),
       store.dispatch("fetchProducts/getProducts", {
         params: { limit: 12 },
+        headers: {
+          lang: i18n.locale,
+        },
+      }),
+    ]);
+    const [categoryChildsData] = await Promise.all([
+      $axios.$get(`/categories/${params.index}`, {
         headers: {
           lang: i18n.locale,
         },
@@ -125,6 +133,9 @@ export default {
     const categories = categoriesData?.data;
     const categoryChilds = categoryChildsData?.category;
     const products = productsData?.products?.data;
+    setTimeout(() => {
+      store.commit("loaderHandler", false);
+    },0)
     return {
       categories,
       categoryChilds,

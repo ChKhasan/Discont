@@ -11,7 +11,11 @@
 
       <div class="profile-comment-card-header">
         <div>
-          <h4>{{ comment?.product_info?.name?.ru }}</h4>
+          <h4
+            @click="$router.push(`/product/${comment?.product_info?.products[0]?.slug}`)"
+          >
+            {{ comment?.product_info?.name?.ru }}
+          </h4>
           <a-rate
             v-if="comment?.stars"
             disabled
@@ -23,7 +27,10 @@
       </div>
     </div>
     <div class="profile-comment-card-body">
-      <p><span>Sizning izohingiz:</span> {{ comment?.comment }}</p>
+      <p>
+        <span>{{ $store.state.translations["profile.your-comment"] }}:</span>
+        {{ comment?.comment }}
+      </p>
     </div>
   </div>
 </template>
@@ -62,6 +69,7 @@ export default {
   line-height: 21px;
   color: #000000;
   margin-bottom: 14px;
+  cursor: pointer;
 }
 .profile-comment-card-img {
   width: 73px;
@@ -97,5 +105,24 @@ export default {
   background: rgba(241, 241, 241, 0.4);
   mix-blend-mode: normal;
   border-radius: 10px;
+}
+@media (max-width: 576px) {
+  .profile-comment-card {
+    padding: 0;
+    border: none;
+  }
+  .profile-comment-card-header h4 {
+    font-size: 16px;
+  }
+  .profile-comment-card-body p span {
+    display: none;
+  }
+  .profile-comment-card-head {
+    grid-gap: 16px;
+  }
+  .my-orders-card-footer div:last-child,
+  .my-orders-card-footer div:nth-child(3) {
+    display: none;
+  }
 }
 </style>

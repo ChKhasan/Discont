@@ -5,7 +5,9 @@
         <nuxt-link :to="localePath('/')">{{
           $store.state.translations["main.home-page"]
         }}</nuxt-link>
-        <nuxt-link :to="localePath('/')"> Aksiyalar </nuxt-link>
+        <nuxt-link :to="localePath('/')">
+          {{ $store.state.translations["main.promotions"] }}
+        </nuxt-link>
       </div>
       <div class="stocks-body">
         <div
@@ -122,40 +124,10 @@
       </div>
       <div class="categories-page-info">
         <h5>
-          ШИРОКИЙ АССОРТИМЕНТ МЕБЕЛИ В ТАШКЕНТЕ ПРЕДСТАВЛЕН В ИНТЕРНЕТ-МАГАЗИНЕ DISKONT
-          (ТАШКЕНТ, УЗБЕКИСТАН) ПО ВЫГОДНЫМ ЦЕНАМ ОТ ПРОИЗВОДИТЕЛЯ.
+          {{ $store.state.translations["main.promotions-title"] }}
         </h5>
         <p>
-          DISKONT предлагает: мебель для гостиной, шкафы и комоды, кровати и матрасы,
-          мягкую мебель, стулья, кресла и столы, садовую мебель и мебель для офиса.
-        </p>
-        <p>
-          В нашем интернет-магазине представлен широкий ассортимент предметов мебели на
-          любой вкус и бюджет. Мы предлагаем удобный выбор непосредственно на сайте, минуя
-          долгие утомительные разъезды по множеству мебельных магазинов и рынков Ташкента,
-          где можно купить хорошую недорогую мебель. Но! Поскольку их ассортимент сильно
-          отличается, и вы вынуждены тратить время и силы на перемещения из одной точки
-          Ташкента в другую. А на DISKONT собраны лучшие предложения многих производителей
-          по выгодным ценам! Покупая мебель у нас вы гарантированно получаете качественный
-          товар, оперативную доставку и сборку мебели у вас дома.
-        </p>
-        <p>
-          Модельный ряд мебели пополняется практически ежедневно, следите за нашими
-          новостями и подписывайтесь на нашу рассылку в форме ниже.
-        </p>
-        <p>
-          Условия доставки вашего заказа: мы доставляем заказанные товары по Ташкенту и в
-          радиусе 5 км от большой кольцевой дороги.
-        </p>
-        <p>
-          Форма оплаты заказа: вы производите оплату своего заказа при его получении
-          наличными, пластиковой картой или перечислением (просим уточнить возможность
-          безналичной оплаты у консультанта).
-        </p>
-        <p>
-          Оформить заказ можно через Telegram или позвонив в нашу единую службу поддержки
-          по номеру 200 7 002. Добро пожаловать в интернет-магазин tovarlar для дома
-          DISKONT!
+          {{ $store.state.translations["main.promotions-text"] }}
         </p>
       </div>
     </div>
@@ -178,6 +150,7 @@ export default {
     };
   },
   async asyncData({ store, route, i18n }) {
+    store.commit("loaderHandler", true);
     const [promotionsData, bannersData] = await Promise.all([
       store.dispatch("fetchPromotions/getPromotions", {
         headers: {
@@ -192,7 +165,9 @@ export default {
     ]);
     const promotions = promotionsData?.promotions?.data;
     const banners = bannersData?.banners?.data;
-
+    setTimeout(() => {
+      store.commit("loaderHandler", false);
+    }, 0);
     return {
       promotions,
       banners,
@@ -264,7 +239,7 @@ export default {
   background: #f1f1f1;
 }
 .stocks-menu ul li > span {
-  background: #09454f;
+  background: var(--color_green);
   border-radius: 12px;
   padding: 12px 17px;
   display: flex;
@@ -352,4 +327,53 @@ export default {
     opacity: 1;
   }
 } */
+@media (max-width: 1320px) {
+  .stocks-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+@media (max-width: 1320px) {
+  .stocks-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+@media (max-width: 992px) {
+  .stocks-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+@media (max-width: 576px) {
+  .stocks-grid {
+    grid-template-columns: repeat(1, 1fr);
+  }
+  .stock-page__container {
+    width: 100%;
+  }
+  .stocks-banner {
+    max-height: 160px;
+    height: 160px;
+    border-radius: 20px;
+  }
+  .stock-page__static p {
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 130%;
+    gap: 5px;
+  }
+  .stock-page__static p span {
+    font-size: 16px;
+    line-height: 130%;
+  }
+  .stock-page__static {
+    margin-top: 32px;
+  }
+  .stock-page__info {
+    margin-top: 32px;
+  }
+  .stock-page__info p {
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 130%;
+  }
+}
 </style>

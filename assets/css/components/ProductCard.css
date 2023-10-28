@@ -12,7 +12,6 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  background: #f8f8f8;
   border-radius: 12.0073px;
   overflow: hidden;
 }
@@ -39,7 +38,7 @@
   text-align: start;
 }
 .product-card-body p {
-  margin-top: 28px;
+  margin-top: 8px;
   font-family: var(--SB_400);
   font-style: normal;
   font-weight: 400;
@@ -58,7 +57,7 @@
 }
 .product-card-price {
   display: flex;
-  margin-top: 28px;
+  margin-top: 18px;
   align-items: center;
 }
 .product-card-price span {
@@ -98,7 +97,7 @@
   overflow: hidden;
   width: 100%;
   background: #ffffff;
-  border: 1px solid #09454f;
+  border: 1px solid var(--color_green);
   border-radius: 8px;
   cursor: pointer;
   display: flex;
@@ -111,7 +110,7 @@
   line-height: 21px;
   text-align: center;
   letter-spacing: -0.02em;
-  color: #09454f;
+  color: var(--color_green);
   height: 40px;
 }
 .to-basket-count {
@@ -162,13 +161,13 @@
   left: 0;
   width: 100%;
   height: 0%;
-  background: #09454f;
+  background: var(--color_green);
   transition: 0.3s;
 }
 .product-discount {
   height: 10px;
-  margin-top: 14px;
-  margin-bottom: 28px;
+  margin-bottom: 12px;
+  margin-top: 0;
 }
 .product-discount p {
   font-family: var(--SB_400);
@@ -191,7 +190,7 @@
     margin-top: 8px;
   }
   .product-card-body p {
-    margin-top: 16px;
+    margin-top: 8px;
   }
   .product-card-price {
     margin-top: 16px;

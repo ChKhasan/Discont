@@ -25,7 +25,7 @@
       </div>
       <div class="home-categories mb-120">
         <MainTitle :title="$store.state.translations[`main.categories`]" />
-        <div>
+        <div class="category-grid-web">
           <HomeCategoryCarousel>
             <div
               class="swiper-slide"
@@ -35,13 +35,14 @@
               <HomeCategoryCard :category="category" /></div
           ></HomeCategoryCarousel>
         </div>
-        <!-- <div class="category-grid">
+        <div class="category-grid">
           <HomeCategoryCard
+            class="mobile-categories-items"
             v-for="(category, index) in categories"
             :key="category.id"
             :category="category"
           />
-        </div> -->
+        </div>
       </div>
     </div>
     <div class="container_xl product_container" v-if="showcases[0]">
@@ -255,8 +256,7 @@
       <MainTitle :title="showcases[5]?.name" />
       <div class="v-card-products-grid mb-120">
         <div class="v-card-grid">
-          <VProductCard />
-          <VProductCard />
+        
         </div>
         <div class="products-grid-5">
           <ProductCard
@@ -272,17 +272,21 @@
       <div class="last mb-120">
         <div class="products-grid-6">
           <ProductCard
-            v-if="howcases[5]?.products.length > 0"
+            v-if="showcases[5]?.products.length > 0"
             v-for="product in showcases[5]?.products"
             :key="product.id"
             :product="product"
           />
-
-          <span class="grid-banner-card-1">
-            <VProductCard />
-          </span>
-          <span class="grid-banner-card-2">
-            <VProductCard />
+          <span
+            v-if="banners.filter((item) => item.type == 'promo').length > 0"
+            class="d-flex"
+            v-for="(img, index) in banners
+              .filter((item) => item.type == 'promo')
+              .slice(2, 4)"
+            :class="`grid-banner-card-${index + 1}`"
+            :key="img?.id"
+          >
+            <V2ProductCard :img="img" />
           </span>
         </div>
       </div>
@@ -326,7 +330,6 @@
 import BannerCarousel from "../components/Banner-carousel.vue";
 import HomeCategoryCard from "../components/cards/HomeCategoryCard.vue";
 import ProductCard from "../components/cards/ProductCard.vue";
-import VProductCard from "../components/cards/VProductCard.vue";
 import V2ProductCard from "../components/cards/V2ProductCard.vue";
 import DiscountCarousel from "../components/discount-carousel.vue";
 import MainTitle from "../components/Main-title.vue";
@@ -356,7 +359,9 @@ export default {
       // posts: [],
     };
   },
-  async asyncData({ $axios, store, i18n }) {
+  async asyncData({ store, i18n }) {
+    store.commit("loaderHandler", true);
+
     const [
       products,
       byCategory,
@@ -426,7 +431,10 @@ export default {
     const posts = posts1?.posts?.data;
     const showcases = showcasesData.showcases;
     const banners = bannersData?.banners?.data;
-    console.log(banners);
+    setTimeout(() => {
+      store.commit("loaderHandler", false);
+    },0)
+
     return {
       bestsellersProducts,
       byCategoryProducts,
@@ -438,20 +446,34 @@ export default {
       banners,
     };
   },
-  mounted() {
-    this.$store.dispatch("fetchProducts/getShowcases", {
-      headers: {
-        lang: this.$i18n.locale,
-      },
-    });
+  methods: {
+    showmore() {
+      this.__GET_SHOWCASE(this.showcasesLimit + 6);
+    },
+    async __GET_SHOWCASE(limit) {
+      const data = await this.store.dispatch("fetchProducts/getShowcases", {
+        params: { limit: limit },
+        headers: {
+          lang: this.$i18n.locale,
+        },
+      });
+      this.showcases = data.showcases;
+    },
   },
+  // mounted() {
+  //   this.$store.dispatch("fetchProducts/getShowcases", {
+  //     params: { limit: 6 },
+  //     headers: {
+  //       lang: this.$i18n.locale,
+  //     },
+  //   });
+  // },
   components: {
     BannerCarousel,
     ProductCard,
     MainTitle,
     DiscountCarousel,
     HomeCategoryCard,
-    VProductCard,
     ProductCarousel,
     ProductCarousel2,
     MainBigTitle,
@@ -471,22 +493,31 @@ export default {
 </script>
 <style>
 @import "../assets/css/pages/main-page.css";
+.category-grid {
+  display: none;
+  justify-content: start;
+  gap: 12px;
+  overflow-x: scroll;
+}
+.category-grid::-webkit-scrollbar {
+  display: none;
+}
+.mobile-categories-items {
+  width: 110px;
+  min-width: 110px;
+}
 
 .banner-carousel .banner {
   width: 100%;
   height: 354px !important;
-  background: red;
+  /* background: red; */
 }
 /* .home-banner-container .swiper-slide img {
   width: 100%;
   height: 100%;
   object-fit: cover;
 } */
-.products-grid-6 {
-  display: grid;
-  grid-template-columns: repeat(6, 1fr);
-  grid-gap: 20px;
-}
+
 .grid-banner-card-1 {
   grid-row-start: 1;
   grid-column-start: 1;
@@ -497,6 +528,19 @@ export default {
   grid-column-start: 1;
   grid-column-end: 2;
 }
-@media screen and (max-width: 1024px) {
+@media screen and (max-width: 768px) {
+  .grid-banner-card-1,
+  .grid-banner-card-2 {
+    display: none !important;
+  }
+}
+@media (max-width: 576px) {
+
+  .category-grid {
+    display: flex;
+  }
+  .category-grid-web {
+    display: none;
+  }
 }
 </style>

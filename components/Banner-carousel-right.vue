@@ -101,7 +101,7 @@ export default {
 .banner-carousel-right .banner {
   width: 100%;
   height: 354px !important;
-  background: red;
+  /* background: red; */
 }
 .swiper-pagination-banner-right {
   position: static;
@@ -165,7 +165,7 @@ export default {
 }
 @media (max-width: 576px) {
   .banner-carousel-right-box {
-    height: 140px;
+    height: 140px !important;
   }
 }
 </style>

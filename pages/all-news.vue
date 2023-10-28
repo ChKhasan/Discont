@@ -21,7 +21,7 @@
         <PostCard v-for="post in posts" :key="post.id" :post="post" />
       </div>
       <div class="empty-box-app" v-else>
-        <img src="../assets/images/comments-empty.png" alt="" />
+         <nuxt-img format="webp" src="/comments-empty.png" alt="" />
         <h2>{{ $store.state.translations["main.no-news"] }}</h2>
       </div>
       <div class="products-pagination" v-if="totalPage > params.pageSize">
@@ -55,6 +55,7 @@ export default {
     };
   },
   async asyncData({ store, i18n, query }) {
+    store.commit("loaderHandler", true);
     const [posts1] = await Promise.all([
       store.dispatch("fetchPosts/getPosts", {
         params: {
@@ -67,6 +68,9 @@ export default {
     ]);
     const posts = posts1?.posts?.data;
     const totalPage = posts1?.posts?.total;
+    setTimeout(() => {
+      store.commit("loaderHandler", false);
+    },0)
     return {
       posts,
       totalPage,

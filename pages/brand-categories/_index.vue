@@ -109,7 +109,7 @@
             />
           </div>
           <div class="comments-empty" v-else>
-            <img src="../../assets/images/comments-empty.png" alt="" />
+            <nuxt-img format="webp" src="/comments-empty.png" alt="" />
             <h4>{{ $store.state.translations["category.product-not-found"] }}</h4>
           </div>
           <div class="categories-products-show-more" v-if="false">
@@ -125,7 +125,7 @@
           </div>
         </div>
       </div>
-      <div class="categories-page-inner-grid">
+      <!-- <div class="categories-page-inner-grid">
         <div></div>
         <div class="categories-page-info">
           <h5>
@@ -166,7 +166,7 @@
             для дома DISKONT!
           </p>
         </div>
-      </div>
+      </div> -->
     </div>
     <div class="categories-app-banner-container">
       <!--<div class="container_xl">
@@ -203,7 +203,7 @@ export default {
       sortItems: [
         {
           value: "all",
-          label: "Barchasi",
+          label: "Все товары",
         },
         {
           value: "popular",
@@ -221,6 +221,7 @@ export default {
     };
   },
   async asyncData({ store, params, i18n }) {
+    store.commit("loaderHandler", true);
     const [brandsData, brandData] = await Promise.all([
       store.dispatch("fetchBrands/getBrands"),
       store.dispatch("fetchBrands/getBrandsBySlug", {
@@ -237,6 +238,9 @@ export default {
     brands = [...brandsData.brands];
     brands = [...brands.splice(0, 6)];
     let brand = brandData.brand;
+    setTimeout(() => {
+      store.commit("loaderHandler", false);
+    },0)
     return {
       brandsAll,
       brands,
@@ -245,6 +249,24 @@ export default {
   },
   mounted() {
     this.getFirstData("__GET_PRODUCTS");
+    this.sortItems = [
+      {
+        value: "all",
+        label: this.$store.state.translations["category.all"],
+      },
+      {
+        value: "popular",
+        label: this.$store.state.translations["category.popular"],
+      },
+      {
+        value: "cheap",
+        label: this.$store.state.translations["category.cheap"],
+      },
+      {
+        value: "expensive",
+        label: this.$store.state.translations["category.expensive"],
+      },
+    ];
   },
   methods: {
     async __GET_PRODUCTS() {
@@ -253,7 +275,6 @@ export default {
         params: { ...this.$route.query, brand: this.$route.params.index },
       });
       this.totalPage = data?.products?.total;
-      console.log(this.totalPage);
       this.products = data?.products?.data;
       this.loading = false;
     },

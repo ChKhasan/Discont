@@ -6,11 +6,6 @@
 .product_container {
   padding-bottom: 118px;
 }
-.category-grid {
-  display: grid;
-  grid-template-columns: repeat(6, 1fr);
-  grid-gap: 21px;
-}
 
 .to-page-underline {
   font-family: var(--SB_400);
@@ -20,7 +15,7 @@
   line-height: 28px;
   text-align: right;
   text-decoration-line: underline;
-  color: #09454f;
+  color: var(--color_green);
   margin-bottom: 24px;
 }
 .v-card-products-grid {
@@ -49,7 +44,7 @@
   left: 0;
   width: 0%;
   height: 100%;
-  background: #09454f;
+  background: var(--color_green);
   transition: 0.3s;
 }
 .h-catalog-tab ul li span {
@@ -67,7 +62,7 @@
   overflow: hidden;
   position: relative;
   padding: 12px 25px;
-  border: 1px solid #09454f;
+  border: 1px solid var(--color_green);
   border-radius: 22px;
   margin-right: 20px;
   cursor: pointer;
@@ -78,7 +73,7 @@
   font-size: 14px;
   line-height: 17px;
   text-align: center;
-  color: #09454f;
+  color: var(--color_green);
   z-index: 10;
 }
 .h-catalog-tab ul li:hover {
@@ -124,6 +119,11 @@
   grid-gap: 24px;
   margin-bottom: 121px;
 }
+.products-grid-6 {
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  grid-gap: 20px;
+}
 
 @media screen and (max-width: 1600px) {
   .product_container {
@@ -147,6 +147,22 @@
     grid-template-columns: repeat(5, 1fr);
     gap: 8px;
   }
+  .product-grid .product-card,
+  .products-grid-6 .product-card {
+    display: none;
+  }
+  .product-grid .product-card:first-child,
+  .product-grid .product-card:nth-child(2),
+  .product-grid .product-card:nth-child(3),
+  .product-grid .product-card:nth-child(4),
+  .product-grid .product-card:nth-child(5),
+  .product-grid-6 .product-card:first-child,
+  .product-grid-6 .product-card:nth-child(2),
+  .product-grid-6 .product-card:nth-child(3),
+  .product-grid-6 .product-card:nth-child(4),
+  .product-grid-6 .product-card:nth-child(5) {
+    display: grid;
+  }
   .posts.container_xl {
     padding: 0;
   }
@@ -162,7 +178,7 @@
     margin-bottom: 14px;
   }
   .main-title {
-    margin-bottom: 14px !important;
+    margin-bottom: 14px;
   }
   .nope {
     margin: 0;
@@ -176,11 +192,18 @@
   .home-banner-container {
     grid-template-columns: 1fr;
   }
+  .home-categories {
+    margin-bottom: 40px !important;
+  }
   .product-grid {
     grid-template-columns: repeat(2, 1fr);
   }
   .products-grid-6 {
     grid-template-columns: repeat(2, 1fr);
     grid-gap: 16px;
+  }
+  .product-grid .product-card,
+  .products-grid-6 .product-card {
+    display: grid;
   }
 }
